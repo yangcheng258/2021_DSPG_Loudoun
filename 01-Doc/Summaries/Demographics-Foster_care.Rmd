@@ -22,8 +22,10 @@ Some Other Race 24,568 5.8%
 Two or More Races 20,644 4.9% 1.6%
 Total Population 421,636 100% 100%
 
+
 **Age and Sex** 
 [source](https://data.census.gov/cedsci/table?q=loudoun%20county&tid=ACSST1Y2019.S0101 )
+
 
 **Education**
 [source](https://www.towncharts.com/Virginia/Education/Loudoun-County-VA-Education-data.html)
@@ -34,11 +36,14 @@ School Dropout = 6%
 **Religion**
 [source](https://www.thearda.com/rcms2010/rcms2010.asp?U=51107&T=county&Y=2010&S=Name)
 
+
 **Household Income** 
 [CSV](https://datausa.io/api/data?measure=Household%20Income,Household%20Income%20Moe&geo=05000US51107,01000US&drilldowns=Household%20Income%20Bucket)
 
+
 **Home Ownership** 
 [CSV](https://datausa.io/api/data?measure=Household%20Ownership,Household%20Ownership%20Moe&Geography=05000US51107:neighbors:parents,05000US51107&drilldowns=Occupied%20By)
+
 
 **Health Demographics** 
 [source](https://www.livehealthyloudoun.org/index.php?module=indicators&controller=index&action=dashboard&alias=alldata)
@@ -47,7 +52,6 @@ School Dropout = 6%
 
 
 ### make a table for visualization 
-
 
 
 
