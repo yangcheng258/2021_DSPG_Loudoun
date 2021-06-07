@@ -10,3 +10,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+## Health Outcomes in Young Adults From Foster Care and Economically Diverse Background 
+[PDF](https://pediatrics-aappublications-org.ezproxy.lib.vt.edu/content/134/6/1067)
+
+Ahrens, Kym R.
+
+Garrison, Michelle M.
+
+Courtney, Mark E.
+
+Ahrens, Kym R., et al. “Health Outcomes in Young Adults From Foster Care and Economically Diverse Backgrounds.” Pediatrics, vol. 134, no. 6, Dec. 2014, pp. 1067–1074. EBSCOhost, doi:10.1542/peds.2014-1150. 
+
+
+Foster youth have a high rate of health problems in their childhood and this study sought to see if their health problems continued or increased once they transition to adulthood. Three groups were looked at including young adults that were in foster care, those who are economically insecure, and those who come from economically secure backgrounds while concluding that there is certainly an increase in health issues for young adults that were in foster care. The main indicator was access to health care. Adults who were in foster care are most likely to receive Medicaid or have no insurance but also were the least likely to report a health issue. I believe this article is helpful because it provides evidence that young adults aging out of the foster care system are more likely to have chronic illness but not have the ability like insurance to receive aid. This report may also be helpful for future policies on extended insurance or foster care programs that could provide aid for those who have just aged out of the system. 
+
+
+## 
+
+
+
+
+
+
+
