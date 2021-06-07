@@ -14,7 +14,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Julie Bebstock
+# Julie Rebstock
 
 ## Health Outcomes in Young Adults From Foster Care and Economically Diverse Background [PDF](https://pediatrics-aappublications-org.ezproxy.lib.vt.edu/content/pediatrics/134/6/1067.full.pdf)
 
