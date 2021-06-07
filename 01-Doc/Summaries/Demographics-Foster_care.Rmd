@@ -9,22 +9,56 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Whole Population of Loudoun County 
+[source](https://www.loudoun.gov/DocumentCenter/View/122720/LEP-PLAN-CULTURAL-DEMOGRAPHICS---Updated-May-2021?bidId=)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+**Race 2020 2000**
+White 256,903 60.9% 85.5%
+Black/African American 31,925 7.6% 7.1%
+American Indian/Alaskan Native 1,303 .3% .2%
+Asian 85,942 20.4% 5.5%
+Native Hawaiian/Pacific Islander 351 .1% .1%
+Some Other Race 24,568 5.8%
+Two or More Races 20,644 4.9% 1.6%
+Total Population 421,636 100% 100%
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+**Age and Sex** 
+[source](https://data.census.gov/cedsci/table?q=loudoun%20county&tid=ACSST1Y2019.S0101 )
 
-```{r cars}
-summary(cars)
-```
+**Education**
+[source](https://www.towncharts.com/Virginia/Education/Loudoun-County-VA-Education-data.html)
+High School = 94% 
+Bachelor's Degree or Better = 61% 
+School Dropout = 6% 
 
-## Including Plots
+**Religion**
+[source](https://www.thearda.com/rcms2010/rcms2010.asp?U=51107&T=county&Y=2010&S=Name)
 
-You can also embed plots, for example:
+**Household Income** 
+[CSV](https://datausa.io/api/data?measure=Household%20Income,Household%20Income%20Moe&geo=05000US51107,01000US&drilldowns=Household%20Income%20Bucket)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+**Home Ownership** 
+[CSV](https://datausa.io/api/data?measure=Household%20Ownership,Household%20Ownership%20Moe&Geography=05000US51107:neighbors:parents,05000US51107&drilldowns=Occupied%20By)
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+**Health Demographics** 
+[source](https://www.livehealthyloudoun.org/index.php?module=indicators&controller=index&action=dashboard&alias=alldata)
+
+
+
+
+### make a table for visualization 
+
+
+
+
+
+
+## Transitional Aged Youth (18-24)
+
+
+
+
+## Foster Care Transitional Aged Youth (18-24) 
+
+
+
