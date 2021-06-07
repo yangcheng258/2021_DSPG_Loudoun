@@ -1,0 +1,38 @@
+---
+title: "Annotated Bibliographies"
+author: "Yang Cheng"
+date: "6/7/2021"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**This is an example. Everyone will contribute one section to the annotated bib. When you click the Knit button a document will be generated that includes content.**
+
+# Your name (All you review will display in this section)
+## Title of this paper: Mindfulness-based interventions in schools [PDF](https://www.frontiersin.org/articles/10.3389/fpsyg.2014.00603/full)
+**Zenner, C., Herrnleben-Kurz, S., & Walach, H. (2014)**
+
+
+Mental health issues are becoming more aware in the United States especially in public school settings.  One of the ways to improve the mental health of students is by a mindfulness intervention that has evidence-based research.**In this research, interventions such as meditation, yoga, and CBT Mindfulness therapy can be a way to help students in public schools.***  According to the research, it showed progression in the students over time and was proven to be of good use to them.  The data comes from previous trails with this type of intervention and its results.  It shows the improvement and how each trial has a different age range and environment.  I believe that this article is helpful because it is an evidence-based intervention that has positive results over all. The diversity is subjective due to the public school settings, income, etc. However, it is useful for anybody and has CBT as a therapeutic foundation.
+
+
+
+
+## Title of this paper: Mindfulness-based interventions in schools [PDF](https://www.frontiersin.org/articles/10.3389/fpsyg.2014.00603/full)
+**Zenner, C., Herrnleben-Kurz, S., & Walach, H. (2014)**
+
+Mental health issues are becoming more aware in the United States especially in public school settings.  One of the ways to improve the mental health of students is by a mindfulness intervention that has evidence-based research.**In this research, interventions such as meditation, yoga, and CBT Mindfulness therapy can be a way to help students in public schools.***  According to the research, it showed progression in the students over time and was proven to be of good use to them.  The data comes from previous trails with this type of intervention and its results.  It shows the improvement and how each trial has a different age range and environment.  I believe that this article is helpful because it is an evidence-based intervention that has positive results over all. The diversity is subjective due to the public school settings, income, etc. However, it is useful for anybody and has CBT as a therapeutic foundation.
+
+
+## Title of this paper: Mindfulness-based interventions in schools [PDF](https://www.frontiersin.org/articles/10.3389/fpsyg.2014.00603/full)
+**Zenner, C., Herrnleben-Kurz, S., & Walach, H. (2014)**
+
+Mental health issues are becoming more aware in the United States especially in public school settings.  One of the ways to improve the mental health of students is by a mindfulness intervention that has evidence-based research.**In this research, interventions such as meditation, yoga, and CBT Mindfulness therapy can be a way to help students in public schools.***  According to the research, it showed progression in the students over time and was proven to be of good use to them.  The data comes from previous trails with this type of intervention and its results.  It shows the improvement and how each trial has a different age range and environment.  I believe that this article is helpful because it is an evidence-based intervention that has positive results over all. The diversity is subjective due to the public school settings, income, etc. However, it is useful for anybody and has CBT as a therapeutic foundation.
