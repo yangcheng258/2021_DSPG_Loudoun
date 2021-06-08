@@ -12,19 +12,61 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Whole Population of Loudoun County 
 [source](https://www.loudoun.gov/DocumentCenter/View/122720/LEP-PLAN-CULTURAL-DEMOGRAPHICS---Updated-May-2021?bidId=)
 
-**Race 2020 2000**
-White 256,903 60.9% 85.5%
-Black/African American 31,925 7.6% 7.1%
-American Indian/Alaskan Native 1,303 .3% .2%
-Asian 85,942 20.4% 5.5%
-Native Hawaiian/Pacific Islander 351 .1% .1%
-Some Other Race 24,568 5.8%
-Two or More Races 20,644 4.9% 1.6%
-Total Population 421,636 100% 100%
+```{r}
+library(ggplot2)
+```
 
 
-**Age and Sex** 
-[source](https://data.census.gov/cedsci/table?q=loudoun%20county&tid=ACSST1Y2019.S0101 )
+**Race** 
+
+```{r}
+
+white <- c(256903, 60.9) 
+black <- c(31925, 7.6) 
+indian <- c(1303, .3) 
+asian <- c(85942, 20.4) 
+native_hawaiian <- c(351, .1) 
+other <- c(24568, 5.8)  
+two_more <- c(20644 , 4.9) 
+total <- c(421636 , 100) 
+table <- data.frame(rbind(white, black, indian, asian, native_hawaiian, other, two_more, total)) 
+  
+colnames(table) <- c("Population", "Percent")
+table
+
+pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun County")
+
+
+
+```
+
+
+
+**Age and Sex ** 
+[source](https://www.livehealthyloudoun.org/demographicdata?id=2924&sectionId=942)
+
+```{r}
+age <- read.csv("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/Population_by_Age_Group_County_Loudoun.csv")
+colnames(age) <- c("Age Group", "Percent")
+age
+
+barplot(age$Percent, main = "Age in Loudoun County", xlab = "Age Groups", ylab = "Percentage",names.arg = age$`Age Group`,las =2,col = "blue")
+
+male <- c(211323,	49.50)
+female <- c(215631,	50.50)
+
+sex <- data.frame(rbind(male, female)) 
+colnames(sex) <- c("Population", "Percent")
+sex$Group <- c("Male", "Female")
+
+bp<- ggplot(sex, aes(x="", y=Percent, fill=Group))+
+geom_bar(width = 1, stat = "identity")
+
+gender <- bp + coord_polar("y", start=0)
+gender
+
+```
+
 
 
 **Education**
@@ -39,6 +81,12 @@ School Dropout = 6%
 
 **Household Income** 
 [CSV](https://datausa.io/api/data?measure=Household%20Income,Household%20Income%20Moe&geo=05000US51107,01000US&drilldowns=Household%20Income%20Bucket)
+
+```{r}
+household <- read.csv("") 
+
+household
+```
 
 
 **Home Ownership** 
