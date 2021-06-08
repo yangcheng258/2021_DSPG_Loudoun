@@ -40,7 +40,6 @@ pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun Count
 ```
 
 
-
 **Age and Sex ** 
 [source](https://www.livehealthyloudoun.org/demographicdata?id=2924&sectionId=942)
 
@@ -89,14 +88,6 @@ education_percent <- 93.9
 ```
 
 
-**Religion**
-
-```{r}
-## need data 
-```
-
-
-
 **Household Income (2019)** 
 [CSV](https://datausa.io/api/data?measure=Household%20Income,Household%20Income%20Moe&geo=05000US51107,01000US&drilldowns=Household%20Income%20Bucket)
 
@@ -115,31 +106,6 @@ household_clean
 
 **Homes/Household data** 
 [CSV](https://data.census.gov/cedsci/profile?g=0500000US51107)
-
-```{r}
-## need data 
-
-ownership <- .78 
-houses <- 133063 
-h_value <- 508100 
-
-h_total <- 128637 
-uninsured <- .057 
-disabled <- .058 
-
-read_excel("")
-
-
-```
-
-
-**Health Demographics** 
-[source](https://www.livehealthyloudoun.org/index.php?module=indicators&controller=index&action=dashboard&alias=alldata)
-
-```{r}
-## need data 
-```
-
 
 
 ## Transitional Aged Youth (18-24)
@@ -176,12 +142,10 @@ w+b+i+as+nh+o+tw
 
 
 
-## Foster Care Transitional Aged Youth (18-24) 
+## Foster Care
 
 ```{r}
 
-
-## JaiDa
 
 
 ```
