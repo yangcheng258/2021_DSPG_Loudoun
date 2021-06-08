@@ -82,7 +82,7 @@ education_m
 education_f <- education[-c(1:18),]
 education_f
 
-
+education_percent <- 93.9
 ## need visualization 
 
 
@@ -113,11 +113,23 @@ household_clean
 ```
 
 
-**Home Ownership** 
-[CSV](https://datausa.io/api/data?measure=Household%20Ownership,Household%20Ownership%20Moe&Geography=05000US51107:neighbors:parents,05000US51107&drilldowns=Occupied%20By)
+**Homes/Household data** 
+[CSV](https://data.census.gov/cedsci/profile?g=0500000US51107)
 
 ```{r}
 ## need data 
+
+ownership <- .78 
+houses <- 133063 
+h_value <- 508100 
+
+h_total <- 128637 
+uninsured <- .057 
+disabled <- .058 
+
+
+
+
 ```
 
 
