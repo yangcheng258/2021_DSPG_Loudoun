@@ -77,6 +77,38 @@ This study goes along with the previous articles in which it describes how hard 
 
 ## Reference
 
+# Austin Burcham 
+
+## Homelessness During the Transition From Foster Care to Adulthood
+[PDF](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3969135/pdf/AJPH.2013.301455.pdf)
+
+This study estimates the rate of experienced homelessness among those who age out of the foster care system and determines factors correlated with greater risks of homelessness. The authors find a relatively high rate of homelessness among those who age out of the foster care system, estimating that between 31% and 46% of those who age out of the foster care system had been homeless at least once by age 26. The authors found six factors associated with a higher risk of becoming homeless after aging out of the foster care system: running away while in foster care, frequent placement changes, being male, having a history of physical abuse, engaging in more delinquent behaviors, and having symptoms of a mental health disorder. This article illustrates well the great risk of homelessness that those transitioning out of the foster care system face and shows a need to focus not only on ensuring those leaving the foster care system have a plan for a home after aging out, but a need to focus on those in the foster care system at greatest risk of becoming homeless (i.e. those who run away frequently or those who have mental disorders). However, the authors do little to investigate what programs and approaches have been successful in decreasing homelessness among transition aged youth, particularly among those most likely to become homeless exiting the foster care system. 
+
+## Employment outcomes of young parents who age out of foster care
+[PDF](https://reader.elsevier.com/reader/sd/pii/S0190740916303140?token=39B12DEC177248215EBFCEF9B028A6D5C955155739A5E58C8EFAFD70E3FC042EACB8B62D0E3EB36B3E8EDA7A1AF19ED1&originRegion=us-east-1&originCreation=20210608002416)
+
+This study inspects the poor employment outcomes of young parents, both male and female, who age out of the foster care system. The authors found that a large portion of those parents who transition out of the foster care system work infrequently, with nearly 50% of young parents never being employed for the four quarters after the one in which the aged out of the foster care system. Among those who did work, work was infrequent and wages low. Gender differences did not seem to exist regarding the number of quarters worked or total earnings in employed parents. Giving birth at an earlier age and having more children was correlated with lower and less frequent earnings the first four quarters following transitioning out of the foster care system. It was found that employment prior to transitioning out of the foster care system quadrupled employment chances of parents. This article demonstrates well the need for programs targeted not only to reduce unwanted parenthood in foster care programs, but also the need for improved childcare and employment services for foster care youth aging out. Unfortunately, the article has little in the way of analyzing what programs have and have not worked at reducing unwanted parenthood and increasing employment among foster care youth parents.   
+
+## An examination of post-secondary retention and graduation among foster care youth enrolled in a four-year university
+[PDF](https://d1wqtxts1xzle7.cloudfront.net/56876124/1-s2.0-S0190740911002945-main.pdf?1530080951=&response-content-disposition=inline%3B+filename%3DAn_examination_of_post_secondary_retenti.pdf&Expires=1623084870&Signature=g5mjwPHJQegZ3XXvnJ8jZS4xTNqs3mOkEWeZN8ru~f1hp9yQz5t64oakKwX1VCZ5-wdBBmZkI6wzcUFp4XD6t1BwpvPg4kdTijwYRrxih-BaMDj-ptr4St-NzWyYrgKsrt63yKAlXXEqgGWUTr2A3TAAGQNy2BYte1VQd9NqpvACariNIjyqf6oO4UmPphWunbQqQFUyWagBVrIzr8RPOA3pcHxPKfe0WyE6slwPDg2VRW4Or7hrbdZsuKxREoDAhaiSR2g6pYkPeEhUpVImirBDHdt949FhfyVjsrHI81WzFiEEKh6HgAW5w8k6541NRz5rILJX1C9NBcsTwGuu8Q__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA)
+
+This article examines the college drop-out likelihood of former foster care youth as compared to low-income first-generation college students at Michigan State University. The authors determined that former foster care youth, even when controlling for race and gender, were significantly more likely to drop out of college as compared to their low-income first-generation college student counterparts. Drop out rates prior to degree completion were 34% for former foster care youth as compared to 18% for low-income first-generation college students. Reasons for difficulty in attaining a college degree among former foster care students start with issues in primary and secondary education. These issues are claimed to be a result of individual trauma leading to learning disabilities and behavioral problems, difficulties in transferring schools leading and a high concentration of foster care youth in low preforming schools. Listed reasons for withdrawal from college were problems of cost, interruptions in the path to attaining a degree such as transferal and previous withdrawal, inadequate preparation for college in school and poor student services for aged out foster care youth. This article demonstrates the hurdles that former foster care youth face at a time when a college degree is becoming more important than ever for financial stability. However, this article does only focus on one university and extrapolating the findings of this article to all colleges in the U.S. may pose an issue.  
+
+
+
+
+
+
+## Reference
+
+Dworsky, Amy et al. “Homelessness during the transition from foster care to adulthood.” American journal of public health vol. 103 Suppl 2,Suppl 2 (2013): S318-23. doi:10.2105/AJPH.2013.301455
+
+Dworsky, Amy, and Elissa Gitlow. "Employment outcomes of young parents who age out of foster care." Children and Youth Services Review 72 (2017): 133-140.
+
+Day, Angelique, et al. "An examination of post-secondary retention and graduation among foster care youth enrolled in a four-year university." Children and Youth Services Review 33.11 (2011): 2335-2341.
+
+
+
 
 
 
