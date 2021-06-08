@@ -162,12 +162,17 @@ fc_tays <- foster_care_2020[c(37,38),]
 fc_tays
 
 
-
-
-
-
 ```
 
+
+```{r}
+
+## not sure if this is relevant 
+library(readxl)
+outcomes_2020 <- read_excel("01-Doc/Summaries/data/outcomes-2020.xlsx")
+View(outcomes_2020)
+
+```
 
 
 
