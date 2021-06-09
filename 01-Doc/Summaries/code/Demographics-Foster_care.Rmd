@@ -45,23 +45,23 @@ pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun Count
 
 ```{r}
 
-# age <- read.csv("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/Population_by_Age_Group_County_Loudoun.csv")
-# colnames(age) <- c("Age Group", "Percent")
-# 
-# barplot(age$Percent, main = "Age in Loudoun County", xlab = "Age Groups", ylab = "Percentage",names.arg = age$`Age Group`,las =2,col = "blue")
-# 
-# male <- c(211323,	49.50)
-# female <- c(215631,	50.50)
-# 
-# sex <- data.frame(rbind(male, female)) 
-# colnames(sex) <- c("Population", "Percent")
-# sex$Group <- c("Male", "Female")
-# 
-# bp<- ggplot(sex, aes(x="", y=Percent, fill=Group))+
-# geom_bar(width = 1, stat = "identity")
-# 
-# gender <- bp + coord_polar("y", start=0)
-# gender
+age <- read.csv("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/Population_by_Age_Group_County_Loudoun.csv")
+age$Population.by.Age.Group..Percent.. <- as.numeric(age$Population.by.Age.Group..Percent..)
+
+barplot(age$Population.by.Age.Group..Percent.., main = "Ages in Loudoun County", xlab = "Age Groups", ylab = "Percentage",names.arg = age$Category,las =2,col = "blue", cex.names = .8)
+
+male <- c(211323,	49.50)
+female <- c(215631,	50.50)
+
+sex <- data.frame(rbind(male, female))
+colnames(sex) <- c("Population", "Percent")
+sex$Group <- c("Male", "Female")
+
+bp<- ggplot(sex, aes(x="", y=Percent, fill=Group))+
+geom_bar(width = 1, stat = "identity")
+
+gender <- bp + coord_polar("y", start=0)
+gender
 
 ```
 
@@ -71,18 +71,19 @@ pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun Count
 [source](https://censusreporter.org/data/table/?table=B15002&primary_geo_id=05000US51107&geo_ids=05000US51107,04000US51,01000US)
 
 ```{r}
-# education <- read_excel("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/education /acs2019_1yr_B15002_01000US.xlsx")
-# 
-# education <- education[-c(1,2,3), c(1,6)]
-# colnames(education) <- c("Schooling", "Total")
-# 
-# education_m <- education[c(2:17),]
-# education_m
-# 
-# education_f <- education[-c(1:18),]
-# education_f
-# 
-# education_percent <- 93.9
+education <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/loudoun-county-education.xlsx")
+
+education <- education[-c(1,2,3), c(1,6)]
+colnames(education) <- c("Schooling", "Total")
+
+education_m <- education[c(2:17),]
+education_f <- education[-c(1:18),]
+
+barplot(as.numeric(education_m$Total), main = "Education Attainment (M)", xlab = "School", ylab = "Total",names.arg = education_m$Schooling, las =2,col = "green", cex.names = .6 ) 
+
+barplot(as.numeric(education_f$Total), main = "Education Attainment (F)", xlab = "School", ylab = "Total",names.arg = education_f$Schooling, las =2,col = "pink", cex.names = .6)
+
+education_percent <- 93.9
 ## need visualization 
 
 
@@ -94,44 +95,89 @@ pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun Count
 
 ```{r}
 
-# household <- read_excel("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/income/acs2019_1yr_B19001_01000US.xlsx") 
-# 
-# household_clean <- data.frame(household[1], household[6]) 
-# household_clean <- household_clean[-c(1,2,3,4), ]
-# colnames(household_clean) <- c("Income", "Value")
-# 
-# household_clean
+household <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/loudoun-county-income.xlsx")
+
+household_clean <- data.frame(household[1], household[6])
+household_clean <- household_clean[-c(1,2,3,4), ]
+colnames(household_clean) <- c("Income", "Value")
+household_clean$Value <- as.numeric(household_clean$Value)
+
+hc <- barplot(household_clean$Value, xlab = "Incomes", ylab = "Total Hosueholds", main = "Household Incomes in Loudoun County")
+axis(1, at = hc, labels=household_clean$Income, cex.axis=0.5, las = 2)
 
 ```
 
 
-**Homes/Household data** 
-[CSV](https://data.census.gov/cedsci/profile?g=0500000US51107)
 
+## Transitional Aged Youth (18-24)  
 
-## Transitional Aged Youth (18-24) 
-[Source](https://www.acf.hhs.gov/sites/default/files/documents/cb/nytd_data_brief_7.pdf)
+Based on the *National Youth in Transition Database 2019*, there are 6 different outcomes that difference between 17, 19, 21 transitional aged youth. All 3 age groups experienced some kind of employment whether they were still in foster care at age 17 or on their own at age 19 and 21 increasing as they got older from 56%-67%. Only 30% 19 and 31% 21 year olds were receiving public assistance (food, housing, financial). For educational attainment, over 90% of age 17 had not attained any type of diploma but 93% were enrolled in some type of school which makes sense [4]. 
 
-Based on the *National Youth in Transition Database 2019*, there are 6 different outcomes that difference between 17, 19, 21 transitional aged youth. All 3 age groups experienced some kind of employment whether they were still in foster care at age 17 or on their own at age 19 and 21 increasing as they got older from 56%-67%. Only 30% 19 and 31% 21 year olds were receiving public assistance (food, housing, financial). For educational attainment, over 90% of age 17 had not attained any type of diploma but 93% were enrolled in some type of school which makes sense. 
+The percentage of youths that received a GED or high school diploma or higher increased from 55% to 76% from age 19 to age 21. The third outcome was very similar within all 3 age groups, reporting that 94%, 88% and 87% of 17, 19, 21 year olds had a positive connection with an adult which could be an indicator of success in the future [4]. The majority of the young people who reported being homeless at some point in their lives had also been in the foster care system and left which is also a positive correlation. For high risk behaviors such as substance abuse, incarceration, and child birth, 33% of 17 had been to jail, while 19 and 21 20% had been to jail within the past 2 years [4]. 27% of 17 had abused alcohol or drugs while 14% and 11% of 19 and 21 had experienced this within the past 2 years. The percentage of child birth icnrease to 22% for age 21 from 10% at age 19 [4]. 
 
-The percentage of youths that received a GED or high school diploma or higher increased from 55% to 76% from age 19 to age 21. The third outcome was very similar within all 3 age groups, reporting that 94%, 88% and 87% of 17, 19, 21 year olds had a positive connection with an adult which could be an indicator of success in the future. The majority of the young people who reported being homeless at some point in their lives had also been in the foster care system and left which is also a positive correlation. For high risk behaviors such as substance abuse, incarceration, and child birth, 33% of 17 had been to jail, while 19 and 21 20% had been to jail within the past 2 years. 27% of 17 had abused alcohol or drugs while 14% and 11% of 19 and 21 had experienced this within the past 2 years. The percentage of child birth icnrease to 22% for age 21 from 10% at age 19. 
-
-The majority of youths who reported they had medicaid also reported that they were in care at some point. Over 50% of all 3 age groups reported they had Medicaid and of those with Medicaid for age 19 and 21, over 90% of those were in the foster care system. This report also concluded that females over 18 were more likely to get their high school diploma or go to college but were more likely to have children. It is concluded that males are more likely to go to jail and also abuse alcohol and drugs compared to females at ages 19 and 21 with both genders receiving Medicaid in similar percentages. 
+The majority of youths who reported they had medicaid also reported that they were in care at some point. Over 50% of all 3 age groups reported they had Medicaid and of those with Medicaid for age 19 and 21, over 90% of those were in the foster care system [4]. This report also concluded that females over 18 were more likely to get their high school diploma or go to college but were more likely to have children. It is concluded that males are more likely to go to jail and also abuse alcohol and drugs compared to females at ages 19 and 21 with both genders receiving Medicaid in similar percentages [4]. 
 
 
 ## Foster Care Demographics 
 
-**Child Trends** [Source](https://www.childtrends.org/wp-content/uploads/2017/11/SYPTFC-Virginia-Findings-from-a-National-Survey-and-Policy-Scan-11.29.17.pdf)
+#### **US** 
 
-**The AFCARS Report** [Source](https://www.acf.hhs.gov/cb/report/afcars-report-27)
+In the US 2019, 423,997 children were in the foster system with 251,359 newly entered children and 248,669 exiting. The average age of a child in foster care is 8.4 years old and males are the majority by 4%. For the Transitional Aged Youth (18-24), they only make up about 4% of the total foster care youth in the US. 44% of foster care youth are white and 23% were black. Similar to foster care statistics in Virginia alone, the average time in care is 19.6 months[2]. According to *The AFCARS Report* in 2019, only 3,335 (1%) children who entered the foster care system were 18+ and it was most likely due to neglect. However, there were 20,465 (8%) youths 18+ who exited the system most likely due to aging out and emancipation. 
 
-**Virginia Department of Social Services** [Source](https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi)
 
 ```{r}
-foster_care_2020 <- read_excel("01-Doc/Summaries/data/foster-care-2020-all.xlsx")
-View(foster_care_2020)
+
+foster_care_2020_virginia <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/foster-care-2020.xlsx")
+
+foster_care_2020 <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/foster-care-2020-all.xlsx")
 
 ```
+
+
+#### **Virginia** 
+
+Based on the 2020 Foster Care Reports from *The Adoption and Foster Care Analysis and Reporting System*, there were 5,530 children in foster care in Virginia with the majority of them being ages 1-5 years old (23.5%) and second most children being ages 16-18 (20.7%) as you can see in the bar plot and pie chart below. The average time they were in care was 18.85 months whether that was they were adopted, returned home, started living in Independent living, placed with relatives or aged out[2]. 
+
+
+```{r}
+virginia <- data.frame(foster_care_2020_virginia[-c(1,2)])
+total <- virginia$...4[143]
+
+tays_virginia <- virginia$...18[143]
+tays_virginia_p <- virginia$...19[143]
+
+totals <- data.frame(virginia[c(3,143),])
+totals <- t(totals)
+
+colnames(totals) <- c("Age Group", "Value")
+groups <- c("<1", "1-5", "6-9", "10-12", "13-15", "16-18", "19+")
+percent <-data.frame(totals[-c(1,2,3,4,6,8,10,12,14,16,18,20),])
+value <-data.frame(totals[c(4,6,8,10,12,14,16),])
+
+## must convert characters to numeric values 
+value$Value <- as.numeric(value$Value)
+percent$Value <- as.numeric(percent$Value)
+
+## barplot using the values 
+t <- barplot(value$Value,xlab = "Age Groups", ylab = "Totals", main = "Age Groups in Foster Care (VA)")
+axis(1, at = t, labels=groups, cex.axis=0.7, las = 2)
+
+## pie chart using percentages
+pie(percent$Value, groups, main = "Age Groups in Percentages")
+
+```
+
+
+#### **Foster Care Transitional Aged Youth in Virginia** 
+
+Based on the table from *Supporting Young People Transitioning from Foster Care: Virginia Findings from National Survey and Policy Scan* by Child Trends for the
+Better Housing Coalition and Children’s Home Society of Virginia, 58% foster care kids graduate high school by 19 compared to the general population of 87%. <3% graduate college by 25 compared to 28%. 46% are employed by 26 compared to 80%. 51% are eligible for employer-provided health insurance compared to 71% [1]. Only 9% have their own residence by age 26 compared to 30% of the general population in Virginia. For youth involved in foster care, 42% females and 68% males will be arrested by age 26 whereas only 5% females and 22% males of the general population[1]. Virginia has 14%-22% of its foster care youth between ages 16-20 which according to Child Trends is the transition age [2]. 
+
+
+#### **Foster Care Transitional Aged Youth in Loudoun County** 
+ 
+According to the *The Adoption and Foster Care Analysis and Reporting System*, in 2020 there were 48 children in foster care in only Loudoun County which was .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 of those children were boys and 1/3 were girls and the minority of them of ethnicity of Hispanic. Almost 50% of those children were white, 25% black and less than 5% Asian and multi-racial as you can see from the barplot below. When we are looking at only transitional aged youth from 18-24 where 21 years old is the average time a foster child ages out, there were only 8 children. In Loudoun County, it does not seem like there are many foster care youths who are aging out of the system but only 9 other counties have greater than 9 foster care kids over the age of 18 [2]. 
+
 
 ```{r}
 sex_df <- data.frame(foster_care_2020[c(2,4),])
@@ -140,6 +186,7 @@ colnames(sex_df) <- c("Gender", "Value")
 pie(sex_df$Value, sex_df$Gender, main = "Gender of Foster Care Youth in Loudoun County")
     
 ```
+
 
 ```{r}
 
@@ -150,51 +197,48 @@ race_p <- data.frame(foster_care_2020[c(9,11,13,15,17,19),])
 colnames(race_p) <- c("Race", "Percent")
 
 r <- barplot(race$Value, xlab = "Races", ylab = "Values")
-axis(1, at = r, labels=races, cex.axis=0.6)
+axis(1, at = r, labels=races, cex.axis=0.9, las = 2)
 
 
 eth <- foster_care_2020[22,]
+print(eth)
 
 fc_tays <- foster_care_2020[c(37,38),]
+print(fc_tays)
 
 ```
 
 
-**Foster Care in the US** 
-In the US 2019, 423,997 children were in the foster system with 251,359 newly entered children and 248,669 exiting. The average age of a child in foster care is 8.4 years old and males are the majority by 4%. For the Transitional Aged Youth (18-24), they only make up about 4% of the total foster care youth in the US. 44% of foster care youth are white and 23% were black. Similar to foster care statistics in Virginia alone, the average time in care is 19.6 months. According to *The AFCARS Report* in 2019, only 3,335 (1%) children who entered the foster care system were 18+ and it was most likely due to neglect. However, there were 20,465 (8%) youths 18+ who exited the system most likely due to aging out and emancipation. 
+References: 
 
+[1] Jordan,Elizabeth,. Fryar,Garet,. DeVooght, Kerry,. "Supporting Young People Transitioning from Foster Care: Virginia Findings from a National Survey and Policy Scan". Child Trends for the Better Housing Coalition and Children’s Home Society of Virginia. November 2017. https://www.childtrends.org/wp-content/uploads/2017/11/SYPTFC-Virginia-Findings-from-a-National-Survey-and-Policy-Scan-11.29.17.pdf. 
+ 
+[2] U.S.Department of Health and Human Services,Administration for Children and Families, Administration on Children, Youth and Families,Children's Bureau. "The AFCARS Report". June 23, 2020. https://www.acf.hhs.gov/cb/report/afcars-report-27. 
 
-**Foster Care in Virginia** 
-Based on the 2020 Foster Care Reports from *The Adoption and Foster Care Analysis and Reporting System*, there were 5,530 children in foster care in Virginia with the majority of them being ages 1-5 years old (23.5%) and second most children being ages 16-18 (20.7%). The average time they were in care was 18.85 months whether that was they were adopted, returned home, started living in Independent living, placed with relatives or aged out. 
+[3] Virginia Department of Social Services. "Foster Care Demographic Report for April 2020". May 2020. https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi. :o
 
+[4] National Youth in Transition Database. "Highlights from the NYTD Survey: Outcomes reported by young people at ages 17, 19, and 21 (Cohort 2)". November 2019. https://www.acf.hhs.gov/sites/default/files/documents/cb/nytd_data_brief_7.pdf.
 
-**Foster Care Transitional Aged Youth in Virginia** 
-Based on the table from *Supporting Young People Transitioning from Foster Care: Virginia Findings from National Survey and Policy Scan* by Child Trends for the
-Better Housing Coalition and Children’s Home Society of Virginia, Elizabeth Jordan, JD, Garet Fryar, BA, Kerry DeVooght, MSW, 58% foster care kids graduate high school by 19 compared to the general population of 87%. <3% graduate college by 25 compared to 28%. 46% are employed by 26 compared to 80%. 51% are eligible for employer-provided health insurance compared to 71%. Only 9% have their own residence by age 26 compared to 30% of the general population in Virginia. For youth involved in foster care, 42% females and 68% males will be arrested by age 26 whereas only 5% females and 22% males of the general population. Virginia has 14%-22% of its foster care youth between ages 16-20 which according to Child Trends is the transition age. 
+[5] United States Census Bureau. Loudoun County, Virignia, 2019 https://www.census.gov/quickfacts/loudouncountyvirginia
 
-
-**Foster Care Transitional Aged Youth in Loudoun County** 
-According to the *The Adoption and Foster Care Analysis and Reporting System*, in 2020 there were 48 children in foster care in only Loudoun County which was .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 of those children were boys and 1/3 were girls and the minority of them of ethnicity of Hispanic. Almost 50% of those children were white, 25% black and less than 5% Asian and multi-racial. When we are looking at only transitional aged youth from 18-24 where 21 years old is the average time a foster child ages out, there were only 8 children. In Loudoun County, it does not seem like there are many foster care youths who are aging out of the system but only 9 other counties have greater than 9 foster care kids over the age of 18. 
-
-
-```{r}
-
-## not sure if this is relevant 
-library(readxl)
-outcomes_2020 <- read_excel("01-Doc/Summaries/data/outcomes-2020.xlsx")
-View(outcomes_2020)
-
-```
-
-
-
-
-
-
+[6] VA Data, Loudoun County, Virginia, 2020
+https://datausa.io/profile/geo/loudoun-county-va
 
 
 
 **Income and Household** 
+
+
+Income & Poverty:
+
+The median household income in 2015-2019: $142,299 [5]
+
+Persons in poverty: percent: 3.1% [5]
+
+Median gross rent, 2015-2019: $1,870 [5]
+
+Median property value: $533,500 [6]
+
 
 ```{r}
 ## JaiDa needs to add her information here 
