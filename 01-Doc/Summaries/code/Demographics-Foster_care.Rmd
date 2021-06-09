@@ -145,7 +145,11 @@ w+b+i+as+nh+o+tw
 
 ## Foster Care
 
-[Source](https://www.childtrends.org/wp-content/uploads/2017/11/SYPTFC-Virginia-Findings-from-a-National-Survey-and-Policy-Scan-11.29.17.pdf)
+Child Trends [Source](https://www.childtrends.org/wp-content/uploads/2017/11/SYPTFC-Virginia-Findings-from-a-National-Survey-and-Policy-Scan-11.29.17.pdf)
+
+The AFCARS Report [Source](https://www.acf.hhs.gov/cb/report/afcars-report-27)
+
+Virginia Department of Social Services [Source](https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi)
 
 ```{r}
 foster_care_2020 <- read_excel("01-Doc/Summaries/data/foster-care-2020-all.xlsx")
@@ -154,11 +158,7 @@ View(foster_care_2020)
 ```
 
 ```{r}
-
-library(ggplot2)
-sex <- foster_care_2020[c(2,4),]
-sex
-sex_df <- data.frame(sex)
+sex_df <- data.frame(foster_care_2020[c(2,4),])
 colnames(sex_df) <- c("Gender", "Value")
 
 pie(sex_df$Value, sex_df$Gender, main = "Gender of Foster Care Youth in Loudoun County")
@@ -166,6 +166,7 @@ pie(sex_df$Value, sex_df$Gender, main = "Gender of Foster Care Youth in Loudoun 
 ```
 
 ```{r}
+
 race <- data.frame(foster_care_2020[c(8,10,12,14,16,18),])
 colnames(race) <- c("Race", "Value")
 races <- c("Black", "White", "Indian", "Asian", "Hawaiian", "Multi") 
@@ -177,21 +178,27 @@ axis(1, at = r, labels=races, cex.axis=0.6)
 
 
 eth <- foster_care_2020[22,]
-eth
 
 fc_tays <- foster_care_2020[c(37,38),]
-fc_tays
-
 
 ```
 
-Based on the 2020 Foster Care Reports from The Adoption and Foster Care Analysis and Reporting System, there were 5,530 children in foster care in Virginia with the majority of them being ages 1-5 years old. The average time they were in care was 18.85 months whether that was they were adopted, returned home, started living in Independent living, placed with relatives or aged out. 
 
-Based on the table from "Supporting Young People Transitioning from Foster Care: Virginia Findings from National Survey and Policy Scan" by Child Trends for the
-Better Housing Coalition and Children’s Home Society of Virginia, Elizabeth Jordan, JD, Garet Fryar, BA, Kerry DeVooght, MSW, 58% foster care kids graduate high school by 19 compared to the general population of 87%. <3% graduate college by 25 compared to 28%. 46% are employed by 26 compared to 80%. 51% are elgible for employer-provided health insurance compared to 71%. Only 9% have their own residence by age 26 compared to 30% of the general population in Virginia. For youth involved in foster care, 42% females and 68% males will be arrested by age 26 whereas only 5% females and 22% males of the general population. Virigniia has 14%-22% of its foster care youth between ages 16-20 which according to Child Trends is the transition age. 
+**Foster Care in the US** 
+In the US 2019, 423,997 children were in the foster system with 251,359 newly entered children and 248,669 exiting. The average age of a child in foster care is 8.4 years old and males are the majority by 4%. For the Transitional Aged Youth (18-24), they only make up about 4% of the total foster care youth in the US. 44% of foster care youth are white and 23% were black. Similar to foster care statistics in Virginia alone, the average time in care is 19.6 months. According to *The AFCARS Report* in 2019, only 3,335 (1%) children who entered the foster care system were 18+ and it was most likely due to neglect. However, there were 20,465 (8%) youths 18+ who exited the system most likely due to aging out and emancipation. 
 
-According to the same Report, there were 48 children in foster care in only Loudoun County which was .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 of those children were boys and 1/3 were girls and the minority of them of ethnicity of Hispanic. Almost 50% of those children were white, 25% black and less than 5% Asian and multi-racial. When we are looking at only transitional aged youth from 18-24 where 21 years old is the average time a foster child ages out, there were only 8 children. In Loudoun County, it does not seem like there are many foster care youths who are aging out of the system but only 9 other counties have greater than 9 foster care kids over the age of 18. 
 
+**Foster Care in Virginia** 
+Based on the 2020 Foster Care Reports from *The Adoption and Foster Care Analysis and Reporting System*, there were 5,530 children in foster care in Virginia with the majority of them being ages 1-5 years old (23.5%) and second most children being ages 16-18 (20.7%). The average time they were in care was 18.85 months whether that was they were adopted, returned home, started living in Independent living, placed with relatives or aged out. 
+
+
+**Foster Care Transitional Aged Youth in Virginia** 
+Based on the table from *Supporting Young People Transitioning from Foster Care: Virginia Findings from National Survey and Policy Scan* by Child Trends for the
+Better Housing Coalition and Children’s Home Society of Virginia, Elizabeth Jordan, JD, Garet Fryar, BA, Kerry DeVooght, MSW, 58% foster care kids graduate high school by 19 compared to the general population of 87%. <3% graduate college by 25 compared to 28%. 46% are employed by 26 compared to 80%. 51% are eligible for employer-provided health insurance compared to 71%. Only 9% have their own residence by age 26 compared to 30% of the general population in Virginia. For youth involved in foster care, 42% females and 68% males will be arrested by age 26 whereas only 5% females and 22% males of the general population. Virginia has 14%-22% of its foster care youth between ages 16-20 which according to Child Trends is the transition age. 
+
+
+**Foster Care Transitional Aged Youth in Loudoun County** 
+According to the *The Adoption and Foster Care Analysis and Reporting System*, in 2020 there were 48 children in foster care in only Loudoun County which was .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 of those children were boys and 1/3 were girls and the minority of them of ethnicity of Hispanic. Almost 50% of those children were white, 25% black and less than 5% Asian and multi-racial. When we are looking at only transitional aged youth from 18-24 where 21 years old is the average time a foster child ages out, there were only 8 children. In Loudoun County, it does not seem like there are many foster care youths who are aging out of the system but only 9 other counties have greater than 9 foster care kids over the age of 18. 
 
 
 
@@ -205,4 +212,10 @@ View(outcomes_2020)
 ```
 
 
+
+**Income and Household** 
+
+```{r}
+## JaiDa needs to add her information here 
+```
 
