@@ -45,7 +45,7 @@ pie(loudoun_intake_age_FY2020, labels = ages, main = "Age Demographics of Loudou
 intake_sex <- read.csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
 intake_sex_2020 <- intake_sex$FY20..
 loudoun_intake_sex_FY2020 <- intake_sex_2020[143:144]
-sex <- c("female", "male")
+sex <- c("Female", "Male")
 barplot(height = loudoun_intake_sex_FY2020, names.arg = sex, col = c("darkslategray2", "firebrick2"), xlab = "Sex", 
         main = "Sex Demographics of Loudoun Intakes", 
         ylab = "Relative Frequency", ylim = c(0, 0.9))
