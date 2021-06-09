@@ -1,0 +1,180 @@
+---
+title: "Demographics-Foster_care"
+author: "Julie Rebstock and JaiDa Robinson"
+date: "6/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Whole Population of Loudoun County 
+[source](https://www.loudoun.gov/DocumentCenter/View/122720/LEP-PLAN-CULTURAL-DEMOGRAPHICS---Updated-May-2021?bidId=)
+
+```{r}
+library(ggplot2)
+library(readxl)
+```
+
+
+**Race** 
+
+```{r}
+
+white <- c(256903, 60.9) 
+black <- c(31925, 7.6) 
+indian <- c(1303, .3) 
+asian <- c(85942, 20.4) 
+native_hawaiian <- c(351, .1) 
+other <- c(24568, 5.8)  
+two_more <- c(20644 , 4.9) 
+total <- c(421636 , 100) 
+table <- data.frame(rbind(white, black, indian, asian, native_hawaiian, other, two_more, total)) 
+  
+colnames(table) <- c("Population", "Percent")
+
+pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun County")
+
+
+```
+
+
+
+**Age and Sex ** 
+[source](https://www.livehealthyloudoun.org/demographicdata?id=2924&sectionId=942)
+
+```{r}
+age <- read.csv("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/Population_by_Age_Group_County_Loudoun.csv")
+colnames(age) <- c("Age Group", "Percent")
+
+barplot(age$Percent, main = "Age in Loudoun County", xlab = "Age Groups", ylab = "Percentage",names.arg = age$`Age Group`,las =2,col = "blue")
+
+male <- c(211323,	49.50)
+female <- c(215631,	50.50)
+
+sex <- data.frame(rbind(male, female)) 
+colnames(sex) <- c("Population", "Percent")
+sex$Group <- c("Male", "Female")
+
+bp<- ggplot(sex, aes(x="", y=Percent, fill=Group))+
+geom_bar(width = 1, stat = "identity")
+
+gender <- bp + coord_polar("y", start=0)
+gender
+
+```
+
+
+
+**Education by Gender**
+[source](https://censusreporter.org/data/table/?table=B15002&primary_geo_id=05000US51107&geo_ids=05000US51107,04000US51,01000US)
+
+```{r}
+education <- read_excel("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/education /acs2019_1yr_B15002_01000US.xlsx")
+
+education <- education[-c(1,2,3), c(1,6)]
+colnames(education) <- c("Schooling", "Total")
+
+education_m <- education[c(2:17),]
+education_m
+
+education_f <- education[-c(1:18),]
+education_f
+
+
+## need visualization 
+
+
+```
+
+
+**Religion**
+
+```{r}
+## need data 
+```
+
+
+
+**Household Income (2019)** 
+[CSV](https://datausa.io/api/data?measure=Household%20Income,Household%20Income%20Moe&geo=05000US51107,01000US&drilldowns=Household%20Income%20Bucket)
+
+```{r}
+
+household <- read_excel("/Users/julierebstock/Desktop/Virginia Tech/DSPG 2021/Loudoun County/Demographics/income/acs2019_1yr_B19001_01000US.xlsx") 
+
+household_clean <- data.frame(household[1], household[6]) 
+household_clean <- household_clean[-c(1,2,3,4), ]
+colnames(household_clean) <- c("Income", "Value")
+
+household_clean
+
+```
+
+
+**Home Ownership** 
+[CSV](https://datausa.io/api/data?measure=Household%20Ownership,Household%20Ownership%20Moe&Geography=05000US51107:neighbors:parents,05000US51107&drilldowns=Occupied%20By)
+
+```{r}
+## need data 
+```
+
+
+**Health Demographics** 
+[source](https://www.livehealthyloudoun.org/index.php?module=indicators&controller=index&action=dashboard&alias=alldata)
+
+```{r}
+## need data 
+```
+
+
+
+## Transitional Aged Youth (18-24)
+[source](https://www.livehealthyloudoun.org/demographicdata?id=2924&sectionId=942)
+
+```{r}
+tays_pop <- 17352+ 20448 
+
+tays_m <- 8837+10241
+tays_f <- 8515+10207
+
+## need visualization
+
+```
+
+**Race** 
+[source](https://data.census.gov/cedsci/table?g=0500000US51107&tid=ACSDT1Y2019.B01001B)
+
+```{r}
+
+w <- 3182+6792+2857+6627
+b <- 381+918+361+868
+i <- 53+29
+as <- 1365+507+1485+534
+nh <- 54+25
+o <- 392+521+288+137 
+tw <- 329+989+535+621
+
+w+b+i+as+nh+o+tw
+
+## not accurate because its from 2019 and the total population is from 2021 
+
+```
+
+
+
+## Foster Care Transitional Aged Youth (18-24) 
+
+```{r}
+
+
+## JaiDa
+
+
+```
+
+
+
+
+
