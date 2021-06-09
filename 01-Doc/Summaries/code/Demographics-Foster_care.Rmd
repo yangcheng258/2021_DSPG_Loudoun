@@ -109,47 +109,23 @@ pie(table$Percent[1:7],  labels = rownames(table), main= "Races of Loudoun Count
 [CSV](https://data.census.gov/cedsci/profile?g=0500000US51107)
 
 
-## Transitional Aged Youth (18-24) in Loudoun County 
-[source](https://www.livehealthyloudoun.org/demographicdata?id=2924&sectionId=942)
+## Transitional Aged Youth (18-24) 
+[Source](https://www.acf.hhs.gov/sites/default/files/documents/cb/nytd_data_brief_7.pdf)
 
-```{r}
-tays_pop <- 17352+ 20448 
+Based on the *National Youth in Transition Database 2019*, there are 6 different outcomes that difference between 17, 19, 21 transitional aged youth. All 3 age groups experienced some kind of employment whether they were still in foster care at age 17 or on their own at age 19 and 21 increasing as they got older from 56%-67%. Only 30% 19 and 31% 21 year olds were receiving public assistance (food, housing, financial). For educational attainment, over 90% of age 17 had not attained any type of diploma but 93% were enrolled in some type of school which makes sense. 
 
-tays_m <- 8837+10241
-tays_f <- 8515+10207
+The percentage of youths that received a GED or high school diploma or higher increased from 55% to 76% from age 19 to age 21. The third outcome was very similar within all 3 age groups, reporting that 94%, 88% and 87% of 17, 19, 21 year olds had a positive connection with an adult which could be an indicator of success in the future. The majority of the young people who reported being homeless at some point in their lives had also been in the foster care system and left which is also a positive correlation. For high risk behaviors such as substance abuse, incarceration, and child birth, 33% of 17 had been to jail, while 19 and 21 20% had been to jail within the past 2 years. 27% of 17 had abused alcohol or drugs while 14% and 11% of 19 and 21 had experienced this within the past 2 years. The percentage of child birth icnrease to 22% for age 21 from 10% at age 19. 
 
-## need visualization
-
-```
-
-**Race** 
-[source](https://data.census.gov/cedsci/table?g=0500000US51107&tid=ACSDT1Y2019.B01001B)
-
-```{r}
-
-w <- 3182+6792+2857+6627
-b <- 381+918+361+868
-i <- 53+29
-as <- 1365+507+1485+534
-nh <- 54+25
-o <- 392+521+288+137 
-tw <- 329+989+535+621
-
-w+b+i+as+nh+o+tw
-
-## not accurate because its from 2019 and the total population is from 2021 
-
-```
+The majority of youths who reported they had medicaid also reported that they were in care at some point. Over 50% of all 3 age groups reported they had Medicaid and of those with Medicaid for age 19 and 21, over 90% of those were in the foster care system. This report also concluded that females over 18 were more likely to get their high school diploma or go to college but were more likely to have children. It is concluded that males are more likely to go to jail and also abuse alcohol and drugs compared to females at ages 19 and 21 with both genders receiving Medicaid in similar percentages. 
 
 
+## Foster Care Demographics 
 
-## Foster Care
+**Child Trends** [Source](https://www.childtrends.org/wp-content/uploads/2017/11/SYPTFC-Virginia-Findings-from-a-National-Survey-and-Policy-Scan-11.29.17.pdf)
 
-Child Trends [Source](https://www.childtrends.org/wp-content/uploads/2017/11/SYPTFC-Virginia-Findings-from-a-National-Survey-and-Policy-Scan-11.29.17.pdf)
+**The AFCARS Report** [Source](https://www.acf.hhs.gov/cb/report/afcars-report-27)
 
-The AFCARS Report [Source](https://www.acf.hhs.gov/cb/report/afcars-report-27)
-
-Virginia Department of Social Services [Source](https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi)
+**Virginia Department of Social Services** [Source](https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi)
 
 ```{r}
 foster_care_2020 <- read_excel("01-Doc/Summaries/data/foster-care-2020-all.xlsx")
@@ -201,7 +177,6 @@ Better Housing Coalition and Children’s Home Society of Virginia, Elizabeth Jo
 According to the *The Adoption and Foster Care Analysis and Reporting System*, in 2020 there were 48 children in foster care in only Loudoun County which was .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 of those children were boys and 1/3 were girls and the minority of them of ethnicity of Hispanic. Almost 50% of those children were white, 25% black and less than 5% Asian and multi-racial. When we are looking at only transitional aged youth from 18-24 where 21 years old is the average time a foster child ages out, there were only 8 children. In Loudoun County, it does not seem like there are many foster care youths who are aging out of the system but only 9 other counties have greater than 9 foster care kids over the age of 18. 
 
 
-
 ```{r}
 
 ## not sure if this is relevant 
@@ -210,6 +185,12 @@ outcomes_2020 <- read_excel("01-Doc/Summaries/data/outcomes-2020.xlsx")
 View(outcomes_2020)
 
 ```
+
+
+
+
+
+
 
 
 
