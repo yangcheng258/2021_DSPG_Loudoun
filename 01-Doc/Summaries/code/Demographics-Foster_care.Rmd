@@ -215,15 +215,30 @@ References:
  
 [2] U.S.Department of Health and Human Services,Administration for Children and Families, Administration on Children, Youth and Families,Children's Bureau. "The AFCARS Report". June 23, 2020. https://www.acf.hhs.gov/cb/report/afcars-report-27. 
 
-[3] Virginia Department of Social Services. "Foster Care Demographic Report for April 2020". May 2020. https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi. 
+[3] Virginia Department of Social Services. "Foster Care Demographic Report for April 2020". May 2020. https://www.dss.virginia.gov/geninfo/reports/children/fc.cgi. :o
 
 [4] National Youth in Transition Database. "Highlights from the NYTD Survey: Outcomes reported by young people at ages 17, 19, and 21 (Cohort 2)". November 2019. https://www.acf.hhs.gov/sites/default/files/documents/cb/nytd_data_brief_7.pdf.
 
+[5] United States Census Bureau. Loudoun County, Virignia, 2019 https://www.census.gov/quickfacts/loudouncountyvirginia
 
+[6] VA Data, Loudoun County, Virginia, 2020
+https://datausa.io/profile/geo/loudoun-county-va
 
 
 
 **Income and Household** 
+
+
+Income & Poverty:
+
+The median household income in 2015-2019: $142,299 [5]
+
+Persons in poverty: percent: 3.1% [5]
+
+Median gross rent, 2015-2019: $1,870 [5]
+
+Median property value: $533,500 [6]
+
 
 ```{r}
 ## JaiDa needs to add her information here 
