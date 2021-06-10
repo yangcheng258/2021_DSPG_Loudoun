@@ -17,7 +17,7 @@ Youth incarceration in Virginia is run by the Virginia Department of Juvenile Ju
 
  In Loudoun county, demographics were similar to that of the state of Virginia. In the Fiscal Year 2020, 5.7% of intakes were asian, 15.1% were black, 73.6% were white and 5.6% other, with 31.8% of intakes being Hispanic (OJJDP 2019).
  
- ```{r, Lououn Racial Demographics of Intakes}
+```{r, Lououn Racial Demographics of Intakes}
 intake_race <- read.csv(file = "C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv", header = T)
 intake_race_FY2020 <- intake_race$FY20..
 loudoun_intake_race_FY2020 <- intake_race_FY2020[285:288]
@@ -25,10 +25,6 @@ barplot(height = loudoun_intake_race_FY2020, names.arg = c("Asian", "Black", "Wh
         main = "Racial Demographics of Loudoun Intakes")
 pie(loudoun_intake_race_FY2020, labels = c("Asian", "Black", "White", "Other/Unlisted"), main = "Racial Demographics of Loudoun Intakes")
 ```
- 
- While the Black intake population seems rather low in comparison to the state of Virginia, one must keep in mind African Americans make up 6.88% of the population of Loudoun, whereas they make up approximately 19.9% of the Virginia population (Census Bureau). Males, similar to Virginia, dominate intakes, with male’s representing 70.8% of intakes and females 29.2% (OJJDP 2019). Like the state of Virginia, those ages 16-17 in Loudoun made up the bulk of the intake population, accounting for 49.4% of intakes, with the average age at intake being 16 (OJJDP 2019).
-
-
 
 
 ```{r, Loudoun Ethnicity}
@@ -41,17 +37,10 @@ barplot(height = loudoun_intake_ethnicity_FY2020, names = c("Hispanic", "Non-His
 pie(loudoun_intake_ethnicity_FY2020, labels = c("Hispanic", "Non-Hispanic", "Unkown/Missing"), main = "Ethnic Demographics of Loudoun Intakes")
 ```
 
-```{r, Loudoun Age}
-intake_age <- read.csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
-intake_age_2020 <- intake_age$FY20..
-loudoun_intake_age_FY2020 <- intake_age_2020[640:647]
-ages <- c("8-12", "13", "14", "15", "16", "17", "18-20", "Missing")
-barplot(height = loudoun_intake_age_FY2020, names.arg = ages, col = "brown1", xlab = "Age",
-        main = "Age Demographics of Loudoun Intakes",
-        ylab = "Relative Frequency", ylim = c(0, 0.35))
-pie(loudoun_intake_age_FY2020, labels = ages, main = "Age Demographics of Loudoun Intakes" )
-```
-
+ 
+ While the Black intake population seems rather low in comparison to the state of Virginia, one must keep in mind African Americans make up 6.88% of the population of Loudoun, whereas they make up approximately 19.9% of the Virginia population (Census Bureau). Males, similar to Virginia, dominate intakes, with male’s representing 70.8% of intakes and females 29.2% (OJJDP 2019). 
+ 
+ 
 ```{r, Juvenile Intake Sex}
 intake_sex <- read.csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
 intake_sex_2020 <- intake_sex$FY20..
@@ -64,7 +53,18 @@ pie(loudoun_intake_sex_FY2020, labels = sex, main = "Sex Demographics of Loudoun
 ```
 
 
+ Like the state of Virginia, those ages 16-17 in Loudoun made up the bulk of the intake population, accounting for 49.4% of intakes, with the average age at intake being 16 (OJJDP 2019).
 
+```{r, Loudoun Age}
+intake_age <- read.csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
+intake_age_2020 <- intake_age$FY20..
+loudoun_intake_age_FY2020 <- intake_age_2020[640:647]
+ages <- c("8-12", "13", "14", "15", "16", "17", "18-20", "Missing")
+barplot(height = loudoun_intake_age_FY2020, names.arg = ages, col = "brown1", xlab = "Age",
+        main = "Age Demographics of Loudoun Intakes",
+        ylab = "Relative Frequency", ylim = c(0, 0.35))
+pie(loudoun_intake_age_FY2020, labels = ages, main = "Age Demographics of Loudoun Intakes" )
+```
 
 Virginia has some of the highest referral and incarceration rates of youth, with the highest number of student referrals in the country and a rate of youth incarceration at 75 percent higher than the national average at 79 per 100,000 youths (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 60.7% of parole placements being repeat offenders. In addition to high recidivism rates, youths being released from direct care for the Fiscal Year of 2015 only received high school diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total youth offenders received a high school diploma or GED (DJJ 2019). However, the public pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia, with youth imprisonment down 65% in Virginia between 2003 and 2016. This trend is also seen in Virginia direct care, from 2005 to 2016, where the average daily population of JDC’s decreased 38%  (Data Snapshot of Youth Incarceration in Virginia).
 
