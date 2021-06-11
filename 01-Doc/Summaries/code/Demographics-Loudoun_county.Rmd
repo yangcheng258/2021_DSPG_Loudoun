@@ -1,0 +1,185 @@
+---
+title: "Demographics-Loudoun_county(To be revised)"
+author: "Yang Cheng"
+date: "6/11/2021"
+output: html_document
+---
+
+```{r setup,include=FALSE}
+setwd("G:/My Drive/PhD/Internship/Loudoun/Data/mightbeuseful")
+
+library(fpp2);library(ggplot2);library(readxl);library(githubinstall);library(brew)
+library(tidycensus);library(tidyverse)
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	fig.align = "center",
+	fig.height = 4.5,
+	fig.pos = "H",
+	fig.show = "hold",
+	message = FALSE,
+	include = TRUE,
+	out.width = "	extwidth",
+	tidy = TRUE,
+	tidy.opts = list(width.cutoff = 70)
+)
+ 
+```
+
+
+```{r API key,include=FALSE}
+census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
+Sys.getenv("CENSUS_API_KEY")
+```
+
+# Loudoun County 
+
+```{r DATA:Loudoun County, echo= FALSE, include=FALSE,eval=FALSE}
+#loading data from ACS
+
+#SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES
+social <- get_acs(geography = 'county', 
+        table = 'DP02', cache_table = TRUE,
+        year = 2019,
+        state = 'VA', 
+        count = 'loudoun',
+        key = "CENSUS_API_KEY",
+        survey = "acs5")
+
+#SELECTED ECONOMIC CHARACTERISTICS
+econ <- get_acs(geography = 'county', 
+        table = 'DP03', cache_table = TRUE,
+        year = 2019,
+        state = 'VA', 
+        count = 'loudoun',
+        key = "CENSUS_API_KEY",
+        survey = "acs5")
+
+#SELECTED HOUSING CHARACTERISTICS
+housing <- get_acs(geography = 'county', 
+        table = 'DP04', cache_table = TRUE,
+        year = 2019,
+        state = 'VA', 
+        count = 'loudoun',
+        key = "CENSUS_API_KEY",
+        survey = "acs5")
+
+#ACS DEMOGRAPHIC AND HOUSING ESTIMATES
+demo <- get_acs(geography = 'county', 
+        table = 'DP05', cache_table = TRUE,
+        year = 2019,
+        state = 'VA', 
+        count = 'loudoun',
+        key = "CENSUS_API_KEY",
+        survey = "acs5")
+
+
+```
+
+
+
+Write one page summary about the demographic and socioeconomic background data about Loudoun County.
+
+![Loudoun County](https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.dullesmetro.com%2Fsites%2Fsilverline%2Fassets%2FImage%2Frailmap_dullesmetro.gif&imgrefurl=https%3A%2F%2Fwww.dullesmetro.com%2Fsilver-line-stations%2F&tbnid=rmtTXAcJyd8y4M&vet=12ahUKEwjOp7-D8Y7xAhVBD1kFHWLeBuIQMygBegUIARC3AQ..i&docid=JHwxg1pObeIjUM&w=1536&h=1200&q=loudoun%20county%20metropolitan&hl=en&ved=2ahUKEwjOp7-D8Y7xAhVBD1kFHWLeBuIQMygBegUIARC3AQ)
+
+
+Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County, Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County, Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 395,134, making it Virginia's third-most populous county.  Loudoun County is part of the [Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area](https://www.census.gov/acs/www/data/data-tables-and-tools/data-profiles/2019/). 
+
+
+## Households and Families
+In 2015-2019, there were 128,637 households in Loudoun County, Virginia. The average household size was 3.06 people. In 2015-2019, there were 128,637 households in Loudoun County, Virginia. The average household size was 3.06 people. In Loudoun County, Virginia, 47.7 percent of all households have one or more people under the age of 18; 19.4 percent of all households have one or more people 65 years and over. 
+
+## Language
+Among people at least five years old living in Loudoun County, Virginia in 2015-2019, 31.6 percent spoke a language other than English at home. Spanish was spoken by 10.9 percent of people at least five years old; 9.8 percent reported that they did not speak English "very well."
+
+```{r Social_1, echo= FALSE}
+lang <- c("Spanish", 'Other Indo-European languages', "Asian and Pacific Islander languages","Other languages")
+lang_p <- c(10.9,9.3,9.2,2.2)
+
+knitr:: kable(cbind('Language' = lang, 'Percent' =lang_p), format.args = list(big.mark = ","),
+caption ="Percent of the Population 5 years and over who Speak a Language other than English in Loudoun County, Virginia in 2015-2019")
+```
+
+## Geographic Mobility
+In 2015-2019, 87.4 percent of the people at least one year old living in Loudoun County, Virginia were living in the same residence one year earlier.
+
+```{r Social_2, echo= FALSE}
+geomob <- c("Same residence", 'Different residence, same county', "Different county, same state","Different state","Abroad")
+geomob_p <- c(87.4,5.5,3.6,2.5,1.0)
+
+knitr:: kable(cbind('Geographic Mobility' = geomob, 'Percent' =geomob_p), format.args = list(big.mark = ","),
+caption ="Geographic Mobility of Residents of Loudoun County, Virginia in 2015-2019")
+```
+
+## Education
+In 2015-2019, 93.9 percent of people 25 years and over had at least graduated from high school and 61.3 percent had a bachelor's degree or higher. An estimated 6.1 percent did not complete high school.
+
+The total school enrollment in Loudoun County, Virginia was 117,908 in 2015-2019. Nursery school enrollment was 9,078 and kindergarten through 12th grade enrollment was 84,410. College or graduate school enrollment was 24,420.
+
+
+```{r Social_3, echo= FALSE}
+edu <- c("Less than High school diploma", 'High school diploma or equivalency', "Some college, no degree","Associate's degree","Bachelor's degree","Graduate or Professional degree")
+edu_p <- c(6.1,12.4,14.1,6.0,35.5,25.8)
+
+knitr:: kable(cbind('Educational Attainment ' = edu, 'Percent' =edu_p), format.args = list(big.mark = ","),
+caption ="Educational Attainment of People in Loudoun County, Virginia in 2015-2019")
+```
+
+## Disability
+
+In Loudoun County, Virginia, among the civilian noninstitutionalized population in 2015-2019, 5.8 percent reported a disability. The likelihood of having a disability varied by age - from 2.3 percent of people under 18 years old, to 4.4 percent of people 18 to 64 years old, and to 26.5 percent of those 65 and over.
+
+## Employment
+In Loudoun County, Virginia, 72.9 percent of the population 16 and over were employed; 24.3 percent were not currently in the labor force.
+
+An estimated 78.5 percent of the people employed were private wage and salary workers; 16.8 percent were federal, state, or local government workers; and 4.5 percent were self-employed in their own (not incorporated) business.
+
+## Income & Poverty
+The median income of households in Loudoun County, Virginia was \$142,299, the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had income below \$10,000 a year and 30.0 percent had income over \$200,000 or more. As of 2018, Loudoun County had a median household income of $136,268.[6] Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions with a population of 65,000 or more.
+
+In 2015-2019, 3.4 percent of people were in poverty. An estimated 3.2 percent of children under 18 were below the poverty level, compared with 4.5 percent of people 65 years old and over. An estimated 3.3 percent of people 18 to 64 years were below the poverty level.
+```{r Social_4, echo= FALSE}
+#TBD
+#ggplot()
+```
+
+## Population
+In 2015-2019, Loudoun County, Virginia had a total population of 395,134 – 199,365 (50.5 percent) females and 195,769 (49.5 percent) males. The median age was 36.2 years. An estimated 28.5 percent of the population was under 18 years, 36.5 percent was 18 to 44 years, 26.0 percent was 45 to 64 years, and 9.0 percent was 65 years and older.
+
+## Race and Hispanic origin
+For people reporting one race alone, 65.0 percent were White; 7.6 percent were Black or African American; 0.3 percent were American Indian and Alaska Native; 18.6 percent were Asian; 0.1 percent were Native Hawaiian and Other Pacific Islander, and 3.4 percent were some other race. An estimated 5.2 percent reported two or more races. An estimated 13.6 percent of the people in Loudoun County, Virginia were Hispanic. An estimated 56.1 percent of the people in Loudoun County, Virginia were White non-Hispanic. People of Hispanic origin may be of any race.
+
+
+
+## Housing Inventory Characteristics
+In 2015-2019, Loudoun County, Virginia had a total of 133,063 housing units. Of these housing units, 82.2 percent were single-family houses either not attached to any other structure or attached to one or more structures (commonly referred to as “townhouses” or “row houses”). 17.2 percent of the housing units were located in multi-unit structures, or those buildings that contained two or more apartments. 0.4 percent were mobile homes, while any remaining housing units were classified as “other,” which included boats, recreational vehicles, vans, etc.
+
+
+
+# Loudoun Transition Age Youth (18-24)
+
+18-24 years old, 31476, 7.6%
+
+male  16382		8.0
+female 15094		7.3
+
+
+```{r Social_5, echo= FALSE}
+edu_1 <- c("Population 18 to 24 years","Less than High school diploma", 'High school diploma or equivalency', "Some collegeor Associate's degree","Bachelor's degree or higher")
+c1<- c(31476,	5124	,6527,	12680,	7145)
+c2 <- c(0,16.3,20.7,40.3,	22.7)
+c3 <- c(16382,3138,	3545,6796,2903)   
+c4<- c(0,19.2,21.6,41.5,17.7)
+c5<-c(15094,1986,2982,5884	,4242)
+c6 <- c(0,13.2,19.8,39.0,28.1)
+
+
+knitr:: kable(cbind('Educational Attainment' = edu_1, 'Total Estimate' =c1, 'Percent Estimate'=c2, 'Male Estimate'=c3,'Percent Male Estimate' =c4,'Female Estimate'=c5,'Percent Female Estimate
+'=c6),caption ="Educational Attainment of People age 18-24 in Loudoun County, Virginia in 2015-2019")
+```
+
+
+
+
+[1] https://data.census.gov/cedsci/profile?g=0500000US51107
+
