@@ -107,13 +107,75 @@ This article examines the college drop-out likelihood of former foster care yout
 
 
 # Yang Cheng
-## First Paper
 
-## Second Paper
+## Vulnerable Populations and the Transition to Adulthood
+[PDF](https://www.jstor.org/stable/pdf/27795066.pdf?refreqid=excelsior%3A6dc2449f052246a252265cb2b37752f2)
 
-## Third Paper
+D. Wayne Osgood, E. Michael Foster, and Mark E. Courtney
+
+
+The authors consider the transition to adulthood for seven populations, distinguished by their involvement in specific government systems: the mental health system, the foster care system, the juvenile justice system, the criminal justice system, special education, the health care system (for youth with physical disabilities and chronic illness), and (though these youth really have no comprehensive system of care) runaway and homeless youth. The foster care and juvenile justice systems are held legally accountable for the overall safety and well being (for example, education and health) of youth in their care, though they often rely on other systems for assistance in carrying out these roles. And although the juvenile and adult justice systems are responsible for meeting the needs of the populations they serve, they are also expected to play a role in ensuring public safety.
+
+The difficulties that members of these groups encounter as children and adolescents lead all of them to depend on (or be entangled in) public systems, often for many years. But the transition to adulthood changes their established relationships with these systems, typically in dramatic ways. Reaching the age of eighteen or twenty-one may end eligibility for services, sometimes abruptly. The eligibility cutoffs are increasingly problematic because most other young people their age continue to depend on others and need sup port and training, often for many years. 
+
+As these seven vulnerable groups struggle during the transition to adulthood to get work and to start families of their own, the particular profile of outcomes varies across the groups, but they share much in common.One commonality is that males, the poor, and youth of color are over-represented in every group. Another is that youth in every group vary widely as to the seriousness and type of problem or need. A third commonality is population overlap?that is, that members of one group often belong to another group as well. A fourth is that members of every group have poor outcomes in many domains. And the final commonality is that in every group the factors that contribute to success are the same.
+
+**Four Policy Challenges**
+
+A review of current public policies directed toward vulnerable youth in transition reveals problems in four areas.48 First, eligibility cri teria exclude youth from services that might benefit them; second, funding for transition services is inadequate; third, lack of coordina tion across service systems hampers appropri ate service delivery; and, finally, many service professionals lack training in developmental issues for young adults.
+
+**Policy Options** TBD
+
+**Recent Federal Poicy Development** TBD
+
+
+## The Transition to Adulthood for Adolescents in the Juvenile Justice System: A Developmental Perspective.
+[PDF](https://ebookcentral.proquest.com/lib/vt/detail.action?docID=408395#)
+
+
+This chapter tries to shed light on three important questions about the transition to adulthood for teenagers involved with the juvenile justice system: 
+(1) what types of challenges do these y outh face during the transition?; 
+(2) why do certain individuals achieve positive turning points in early adulthood while others do not?; and 
+(3) how can the juvenile justice system provide opportunities that support youths’ achievement of healthy turning points and positive adult outcomes? 
+
+Most juvenile offenders evince some combination of problems that are likely to compromise positive youth development: poor school performance (e.g., truancy, low grades), mental health problems (e.g., substance abuse, depression), unstable and unsupportive family relationships, poverty- and crime-ridden communities, delinquent peer influences, and the absence of positive role models (Hawkins et al. 1998). It is also well established that these problems can create significant developmental challenges during the transition to adulthood, precisely when young offenders are learning to take on mature roles and responsibilities in society (Moffitt et al. 2002).
+
+The juvenile justice system plays a vital role during the transition to adulthood for two related reasons: ( 1 ) correctional experiences can impact individual development during the adolescent years; and ( 2 ) in many states, adolescent off enders can and do remain under juvenile correctional authority into their adult years. Two particular judicial decisions have a signifi cant impact on the nature of youths’ involvement with the justice system during the adolescent and early adult years: whether a case is handled by the juvenile court or transferred to the adult criminal system, and the type of sentence or disposition adolescents are required to complete. 
+
+Authors describe some tasks in detail to ask ask whether and in what ways experiences within the juvenile justice system can facilitate or hinder successful psychosocial development. Making the successful transition from the dependency of adolescence to the self-sufficiency of adulthood is a process that requires the coordination of many skills. These capacities are epitomized in a concept called psychosocial maturity (e.g., Greenberger  and require development across three important domains: mastery and competence, interpersonal relationships and social functioning, and self-defi nition and self-governance (see Steinberg). In order to achieve suffi ient psychosocial maturity, and along with it the capacities to function as independent and productive adults, individuals in contemporary industrialized society need to complete a series of developmental tasks in each of these three areas. A healthy transition to adulthood is optimally supported when these tasks are completed between the ages of sixteen and twenty-four, a transitional period that spans the years of late adolescence and early adulthood. 
+
+
+## Experiences of Youth Transitioning Out of Juvenile Justice or Foster Care Systems: The Correlates of Successful Moves to Independence
+[PDF](https://link-springer-com.ezproxy.lib.vt.edu/article/10.1007/s10560-020-00708-x)
+
+Daniel Brisson, Jennifer Hope Wilson, Erin Medina, Catherina Hughey, Stephanie Chassman & Katherine Calhoun
+
+This study assesses the Bridging the Gap intervention which integrates housing services and an independent living coach (ILC) to address the instrumental and relational support needs during the youth’s transition. This study uses mixed methods to deeply understand the needs of youth transitioning out of juvenile justice and foster care systems and to assess correlates of a successful transition. Qualitative and quantitative results confirm that youth transitioning our of juvenile justice and foster care systems face a wide range of challenges. Results also show that only a participant’s age is correlated with a successful transition. Findings from the study can be used to inform other programs addressing both the instrumental and relationship support needs of youth transitioning out of foster care and corrections.
+
+
+## An Overview of Quality Programs that Support Transition-Aged Youth
+
+[PDF](https://jyd.pitt.edu/ojs/jyd/article/view/437/421)
+
+This article provides a concise overview of several programs that deliver services to transition-aged youth, ages 14–29. Included are family
+support, the Assisting Unaccompanied Children and Youth program, the Substance Abuse and Mental Health Services Administration services, the
+wraparound approach, intensive home-based treatment, multisystemic therapy, foster care, independent living, mentoring, the Steps to Success
+program, the Jump on Board for Success program, the Options program, the Positive Action program, the Transition to Success model, and the Transition to Independence Program.
+
+
 
 ## Reference
+
+1. Osgood, D. Wayne, E. Michael Foster, and Mark E. Courtney. "Vulnerable populations and the transition to adulthood." The future of children (2010): 209-229.
+
+
+2. Chung, He Len, Michelle Little, and Laurence Steinberg. "The Transition to Adulthood for Adolescents in the Juvenile Justice System: A Developmental Perspective." On your own without a net. University of Chicago Press, 2008. 68-91.
+
+3. Brisson, Daniel, et al. "Experiences of Youth Transitioning Out of Juvenile Justice or Foster Care Systems: The Correlates of Successful Moves to Independence." Child and Adolescent Social Work Journal (2020): 1-13.
+
+4. Kalinyak, Christopher M., et al. "An overview of quality programs that support transition-aged youth." Journal of Youth Development 11.1 (2016): 98-115.
+
+
 
 
 
