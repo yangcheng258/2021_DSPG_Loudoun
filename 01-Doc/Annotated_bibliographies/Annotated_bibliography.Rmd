@@ -33,13 +33,9 @@ Role models can make a huge impact on a child's future and can help motivate tha
 
 
 
-<<<<<<< HEAD
-## “At times I kinda felt I was in an institution”: Supportive housing for transition age youth and young adults
 
-[PDF](https://pdf.sciencedirectassets.com/271857/1-s2.0-S0190740916X00138/1-s2.0-S0190740916304716/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQDpewWQA1INkiCecQdL267WtxEaUbJPmVpX00Ettx7GPAIgHjgtFMpm6iWsE%2FykTv8nx17rZ5tCr%2BbjSXjM9Z9Y2iQq%2BgMIXhAEGgwwNTkwMDM1NDY4NjUiDLEUTZsgwIJxQEMO1SrXA3%2BFwFLcItqxZGPq9PtkdUzxEdkhUQ3TTvchHOnTs9jblvyHMhyrnjU6vo56spw%2B%2BtoqYuZIubRBwTM1lKeXEGV50QVyKiY50moJCCCi78ebgf8bWYzFw%2FSGQm4avFvYOlazjG%2Bfb8Nb7a3EjuDGkxmIowscp9fJoqTglQlxYitvxrt6uMmoGONMb5KTLjo1QUa2Lh07e1c2c3or5Dl1j8w9rUDaOIkOh0K3zWPa%2BIsXaRW4XC0pcD1Jz6XXbDnk8fCpZDb%2BTfMnvnhZIeFMd6UBIpxV6yPvwGsdmCjlkw%2BRIHP6hzX3Ofs%2FBvofXpPNu%2B1JSIvoUfz8EJe%2B4BBWWMNJHOrjORT079pZG%2FCPfALtQ5gzHlf%2F%2F3LDZwElLSMxEVKAHq%2BK8sLHdZg3NWpbzblpEJmYMQjxmdOcHa1I2DpnXuguvjrgZmK8M3Y9wHBuCg6QTrtYXL5wj4BIjLKBDAx9uayxsOqMvgWPqHPiK1yxT9QVIAcJ3dj%2ByFCxEM0M0xHkQ16K9YkE3re%2BUwdirGnNtU3Kr8hWHWwPyN7cttoJe0PIRPIn6%2BmEwpzodobdYwVEqGrc%2BHyvGwF%2BGqpg9OX1TtJNzMHAbShQ3N39Tz8aliAc2Wgu0zCRpviFBjqlAT%2BoGyI5aLPXOEfuor1fZe4%2FR097O66K2q81ADN84tQKuquOKRYEXEkYV%2BvcnM5M5qGzEiZCxewt7HDRvgiAuOyqcyc332XEcF%2Fm5iqOp%2FcKdTTxR4o5dqhyQ5sOkIj1gcSfH9JyyC%2FnRNgw371qUBVJuJxvO5GgTNVr4GMtYmDS%2BEaJyKqwhwO96V6qLzshhPio0IOavDE9YKeEadhR9c4xyd9X%2Fw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210607T133308Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYRT6767X5%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=45b207244067ee7b3d545292d3b8aa2f66b3d7fc4b82610f5363fb5d67e8244f&hash=9e78102408efb5a2eaac9803edd997bbf70161552711765c1473fadc5c4a77a3&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0190740916304716&tid=spdf-bd5d3a47-8bef-4e41-8292-89ace15c57e9&sid=de93790a9813f94a89191ae7c571e5580512gxrqa&type=client)
-=======
+
 ## “At times I kinda felt I was in an institution”: Supportive housing for transition age youth and young adults [PDF](https://pdf.sciencedirectassets.com/271857/1-s2.0-S0190740916X00138/1-s2.0-S0190740916304716/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQDpewWQA1INkiCecQdL267WtxEaUbJPmVpX00Ettx7GPAIgHjgtFMpm6iWsE%2FykTv8nx17rZ5tCr%2BbjSXjM9Z9Y2iQq%2BgMIXhAEGgwwNTkwMDM1NDY4NjUiDLEUTZsgwIJxQEMO1SrXA3%2BFwFLcItqxZGPq9PtkdUzxEdkhUQ3TTvchHOnTs9jblvyHMhyrnjU6vo56spw%2B%2BtoqYuZIubRBwTM1lKeXEGV50QVyKiY50moJCCCi78ebgf8bWYzFw%2FSGQm4avFvYOlazjG%2Bfb8Nb7a3EjuDGkxmIowscp9fJoqTglQlxYitvxrt6uMmoGONMb5KTLjo1QUa2Lh07e1c2c3or5Dl1j8w9rUDaOIkOh0K3zWPa%2BIsXaRW4XC0pcD1Jz6XXbDnk8fCpZDb%2BTfMnvnhZIeFMd6UBIpxV6yPvwGsdmCjlkw%2BRIHP6hzX3Ofs%2FBvofXpPNu%2B1JSIvoUfz8EJe%2B4BBWWMNJHOrjORT079pZG%2FCPfALtQ5gzHlf%2F%2F3LDZwElLSMxEVKAHq%2BK8sLHdZg3NWpbzblpEJmYMQjxmdOcHa1I2DpnXuguvjrgZmK8M3Y9wHBuCg6QTrtYXL5wj4BIjLKBDAx9uayxsOqMvgWPqHPiK1yxT9QVIAcJ3dj%2ByFCxEM0M0xHkQ16K9YkE3re%2BUwdirGnNtU3Kr8hWHWwPyN7cttoJe0PIRPIn6%2BmEwpzodobdYwVEqGrc%2BHyvGwF%2BGqpg9OX1TtJNzMHAbShQ3N39Tz8aliAc2Wgu0zCRpviFBjqlAT%2BoGyI5aLPXOEfuor1fZe4%2FR097O66K2q81ADN84tQKuquOKRYEXEkYV%2BvcnM5M5qGzEiZCxewt7HDRvgiAuOyqcyc332XEcF%2Fm5iqOp%2FcKdTTxR4o5dqhyQ5sOkIj1gcSfH9JyyC%2FnRNgw371qUBVJuJxvO5GgTNVr4GMtYmDS%2BEaJyKqwhwO96V6qLzshhPio0IOavDE9YKeEadhR9c4xyd9X%2Fw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210607T133308Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYRT6767X5%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=45b207244067ee7b3d545292d3b8aa2f66b3d7fc4b82610f5363fb5d67e8244f&hash=9e78102408efb5a2eaac9803edd997bbf70161552711765c1473fadc5c4a77a3&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0190740916304716&tid=spdf-bd5d3a47-8bef-4e41-8292-89ace15c57e9&sid=de93790a9813f94a89191ae7c571e5580512gxrqa&type=client)
->>>>>>> accef1ebaaa4957b1cb16ca13e4086753ff4986a
 
 
 Munson, Michelle R. , Stanhope, Victoria, Small, Latoya, Atterbury, Kendall
@@ -75,8 +71,6 @@ This study goes along with the previous articles in which it describes how hard 
 4. Chun Liu. “A Multi-Level Analysis of the Effects of Independent Living Programs on Educational Attainment, Employment, and Housing Outcomes of Youth Aging Out of Foster Care.” Child Welfare, vol. 98, no. 4, July 2020, pp. 97–120. EBSCOhost, search.ebscohost.com.ezproxy.lib.vt.edu/login.aspx?direct=true&db=fgh&AN=148842481&scope=site.
 5. Rome, Sunny Harris, and Miriam Raskin. “Transitioning Out of Foster Care: The First 12 Months.” Youth & Society, vol. 51, no. 4, May 2019, pp. 529–547, doi:10.1177/0044118X17694968.
  
-<<<<<<< HEAD
-=======
 
 # Austin Burcham 
 
@@ -108,7 +102,7 @@ This article examines the college drop-out likelihood of former foster care yout
 
 3. Day, Angelique, et al. "An examination of post-secondary retention and graduation among foster care youth enrolled in a four-year university." Children and Youth Services Review 33.11 (2011): 2335-2341.
 
->>>>>>> 02985c22455e8d4cfec551b6e7808363b99dbfda
+
 
 
 # Yang Cheng
