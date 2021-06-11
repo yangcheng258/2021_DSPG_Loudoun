@@ -1,8 +1,13 @@
 ---
-title: "Demographics-Loudoun_county(To be revised)"
+title: "Demographics-Loudoun_county (To be revised)"
 author: "Yang Cheng"
 date: "6/11/2021"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
 ---
 
 ```{r setup,include=FALSE}
@@ -178,7 +183,7 @@ knitr:: kable(cbind('Educational Attainment' = edu_1, 'Total Estimate' =c1, 'Per
 '=c6),caption ="Educational Attainment of People age 18-24 in Loudoun County, Virginia in 2015-2019")
 ```
 
-
+**Table!! Troubleshooting**
 
 
 [1] https://data.census.gov/cedsci/profile?g=0500000US51107
