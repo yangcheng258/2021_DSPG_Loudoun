@@ -33,6 +33,22 @@ pie(loudoun_intake_race_FY2020, labels = c("Asian", "Black", "White", "Other/Unl
 ```
 
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ While the Black intake population seems rather low in comparison to the state of Virginia, one must keep in mind African Americans make up 6.88% of the population of Loudoun, whereas they make up approximately 19.9% of the Virginia population (Census Bureau). Males, similar to Virginia, dominate intakes, with male’s representing 70.8% of intakes and females 29.2% (OJJDP 2019). Like the state of Virginia, those ages 16-17 in Loudoun made up the bulk of the intake population, accounting for 49.4% of intakes, with the average age at intake being 16 (OJJDP 2019). 
+
+
+
+>>>>>>> 842212589b621c39837e70ba926943490914e4fd
+
 ```{r, Loudoun Ethnicity}
 intake_ethnicity <- read.csv(file = "C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv", header = TRUE)
 intake_ethnicity_FY2020 <- intake_ethnicity$FY20..
@@ -95,6 +111,35 @@ Norrell, K. (n.d.). Parks & Equity: A Framework for Equitable Access in Richmond
 “Quickfacts Loudoun County Virginia.” US Census Bureau, www.census.gov/quickfacts/loudouncountyvirginia. Accessed 9 June 2021.
 
  RISE for Youth. 2016. What Stakeholders Can Do to Transform Virginia’s Juvenile Justice System. Richmond, VA: Reinvest in Supportive Environments (RISE) for Youth Campaign Coalition
+
+Virginia has some of the highest referral and incarceration rates of youth, with the highest number of student referrals in the country and a rate of youth incarceration at 75 percent higher than the national average at 79 per 100,000 youths (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 60.7% of parole placements being repeat offenders. In addition to high recidivism rates, youths being released from direct care for the Fiscal Year of 2015 only received high school diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total youth offenders received a high school diploma or GED (DJJ 2019). However, the public pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia, with youth imprisonment down 65% in Virginia between 2003 and 2016. This trend is also seen in Virginia direct care, from 2005 to 2016, where the average daily population of JDC’s decreased 38%  (Data Snapshot of Youth Incarceration in Virginia).
+
+
+
+
+
+References 
+
+DJJ (Department of Juvenile Justice). 2014. Data Resource Guide Fiscal Year 2014. Richmond: Virginia Department of Juvenile Justice. 
+
+DJJ (Department of Juvenile Justice). 2015. Data Resource Guide Fiscal Year 2015. Richmond: Virginia Department of Juvenile Justice.
+
+ DJJ (Department of Juvenile Justice). 2016. Data Resource Guide Fiscal Year 2016. Richmond: Virginia Department of Juvenile Justice. 
+
+Durnan, Julia, and Samantha Harvell. "Data snapshot of youth incarceration in Virginia." Washington, DC: Urban Institute (2017).
+“Easy Access to the Census of Juveniles in Residential Placement: 1997–2019” OJJDP. Accessed 9 June 2021.
+
+Goren, Laura, and Michael Cassidy. 2015. “Smarter Choices for Virginia’s Youth and Future.” Richmond, VA: Commonwealth Institute.
+
+Norrell, K. (n.d.). Parks & Equity: A Framework for Equitable Access in Richmond, VA Parks. VCU Scholars Compass. https://scholarscompass.vcu.edu/murp_capstone/27/. 
+“Quickfacts Loudoun County Virginia.” US Census Bureau, www.census.gov/quickfacts/loudouncountyvirginia. Accessed 9 June 2021.
+
+ RISE for Youth. 2016. What Stakeholders Can Do to Transform Virginia’s Juvenile Justice System. Richmond, VA: Reinvest in Supportive Environments (RISE) for Youth Campaign Coalition
+
+
+Virginia Department of Juvenile Justice (DJJ), Data Resource Guide Fiscal Year 2016 (Richmond: Virginia DJJ, 2016)
+
+
 
 
 Virginia Department of Juvenile Justice (DJJ), Data Resource Guide Fiscal Year 2016 (Richmond: Virginia DJJ, 2016)
