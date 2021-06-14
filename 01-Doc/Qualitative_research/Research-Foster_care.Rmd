@@ -9,6 +9,30 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+### **Great Expectations** from Northern Viriginia Community College [4]
+
+* Connecting them to community resources, scholarship opportunities and other support
+* pursue an associate degree, get workforce training and/or transfer to a four-year college
+* Often free because of FAFSA, Grant programs and scholarship opportunities 
+* Referrals for tutorial services
+* Participation in college trips and events
+* Mentorship program with NOVA faculty/staff
+* Eligibility: 
+  + 17-24 year olds affiliated with the Virginia Foster Care System
+  + Youth adopted from the Virginia Foster Care System at the age of 13
+
+
+### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [5]
+
+* Assists eligible foster care and adopted teens or young adults with post-secondary education and training expenses
+* Funds can be applied toward, but not limited to, colleges, universities, community colleges, vocational programs, and one-year training institution 
+* 14 - 25 years of age, hold a high school diploma or General Education Development (GED) certificate, enrolled or planning to enroll in a post-secondary education or vocational training program and must hold one of the below requirements 
+    + Currently in foster care or Fostering Futures
+    + Have aged out of foster care or left Fostering Futures after turning 18
+    + Have left foster care through adoption or the Kinship Guardianship Assistance Program after turning 16
+* Must maintain a 2.0 grade point average or make satisfactory progress
+
+
 
 ## Loudoun County Education [2]
 
@@ -40,8 +64,10 @@ knitr::opts_chunk$set(echo = TRUE)
   * Classes meet twice a week - 13 weeks
   * MUST register and take a placement test prior
   * Must have access to smart phone and internet 
-  * \$150.00 + \$20.00 Non-Refundable enrollment fee; Total = \$170.00
-  * Have Daytime and Nighttime classes ranging from 9AM-2PM or 6:30PM-8:30PM
+  * \$150.00 + \$20.00 Non-Refundable enrollment fee
+    + Total = \$170.00
+  * Have Daytime and Nighttime classes
+    + 9AM-2PM or 6:30PM-8:30PM
   * Website has this entire section in Spanish also 
   
 
@@ -50,7 +76,8 @@ knitr::opts_chunk$set(echo = TRUE)
   * Offers preparatory classes provides basic skills instruction to adults whose math and reading skills have been assessed at or below the GED® readiness level 
   * Must meet with our staff members by phone/video, and attend our Informational Session prior 
   * Must taken placement test online with a proctor; this will assist with obtaining your academic progress to place you in the appropriate classes
-  * Every session is $180, paid in full prior and only by credit card 
+  * Every session is $180
+    + paid in full prior and only by credit card 
 
 
 ## Loudoun County Employment [2]
@@ -67,6 +94,9 @@ knitr::opts_chunk$set(echo = TRUE)
   * Available to download on the website 
 
 
+**3. Loudoun Workforce Resource Center Community Partners** [6]
+
+  * Lists all of the county's partners for helping young adults find employment, attend trainings and get educational support 
 
   
 ## Fauquier County Employment [3] 
@@ -106,35 +136,43 @@ many other pre-professional opportunities
 
 **2. Virginia Career Works Center**
 
-Available to All: 
+* Available to All: 
 
-  * Access to computers, phones, and internet
-  * Resume writing and interview preparation workshops
-  * Career coaching
-  * Basic employment assessments
-  * Job lead assistance
+  + Access to computers, phones, and internet
+  + Resume writing and interview preparation workshops
+  + Career coaching
+  + Basic employment assessments
+  + Job lead assistance
   
-Subject to eligibility and funding: 
+* Subject to eligibility and funding: 
 
-  * Comprehensive Assessments
-  * Individual employment planning and career counseling
-  * Literacy activities
-  * Occupational skills training
-  * Skills upgrading
-  * On-the-Job training
+  + Comprehensive Assessments
+  + Individual employment planning and career counseling
+  + Literacy activities
+  + Occupational skills training
+  + Skills upgrading
+  + On-the-Job training
   
   
   
   
   
   
-References: 
+### References: 
 
 [1] Virginia Career Works Northern Region, 2021, vcwnorthern.com/youth-programs.
 
 [2] “Instructional Programs / Adult Education.” Loudoun County Public Schools, 2021, www.lcps.org/Page/211221.
 
 [3] “Read the Guide.” FRG, 2021, www.fauquierresources.com/read-the-guide.
+
+[4] “Welcome to the Northern Virginia Community College Website.” Great Expectations - Northern Virginia Community College, 2021, www.nvcc.edu/acp/expectations.html. 
+
+[5] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi. 
+
+[6] “Loudoun Workforce Resource Center Community Partners.” Loudoun Workforce Resource Center Community Partners | Loudoun County, VA - Official Website, Civic Plus , 2021, www.loudoun.gov/3006/Community-Partners. 
+
+
 
 
 
