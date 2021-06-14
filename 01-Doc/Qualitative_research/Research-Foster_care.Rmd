@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### **Great Expectations** from Northern Viriginia Community College [4]
+### **Great Expectations** from Northern Viriginia Community College [3]
 
 * Connecting them to community resources, scholarship opportunities and other support
 * pursue an associate degree, get workforce training and/or transfer to a four-year college
@@ -20,9 +20,11 @@ knitr::opts_chunk$set(echo = TRUE)
 * Eligibility: 
   + 17-24 year olds affiliated with the Virginia Foster Care System
   + Youth adopted from the Virginia Foster Care System at the age of 13
+* Has a link to find other local community colleges that have Great Expectation Programs 
+* Cannot find which department 
 
 
-### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [5]
+### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [4] 
 
 * Assists eligible foster care and adopted teens or young adults with post-secondary education and training expenses
 * Funds can be applied toward, but not limited to, colleges, universities, community colleges, vocational programs, and one-year training institution 
@@ -34,9 +36,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-## Loudoun County Education [2]
+### Loudoun County Education [2]
 
-**1. Practical Nursing Program**
+All of these programs and resources are not directed towards Foster Care transitional aged youth because there is no mention of any grant/scholarship that they could apply to for them to be paid for other than credit card.  
+
+**Practical Nursing Program**
 
   * 2-year program; total cost : $6,100
   * First year 40-hour clinical experience at a long-term care facility
@@ -44,21 +48,15 @@ knitr::opts_chunk$set(echo = TRUE)
   * Does not offer transportation to the clinical experiences
   * Must take TEAS exam ($65)
   
-
-**2. Adult Education Catalog **
-
-  * Available to download from the website 
   
-  
-**3. Adult High School **
-
+**Adult High School **
+  * 18 or older 
   * Designed for individuals who need between one (1) and ten (10) credits to complete their Standard High School Diploma requirements
   * Transcript from the last school attended must be presented prior to registration
   * Assigned independent work through the Credit Recovery Program but will be required to meet with instructors on a weekly basis
   * Tuition is $300 per course payable at time of registration by credit card 
   
-  
-**4. English Learners (EL) - Aprenda Ingles**
+**English Learners (EL) - Aprenda Ingles**
 
   * Given in reading, writing, listening, and speaking
   * Classes meet twice a week - 13 weeks
@@ -71,61 +69,47 @@ knitr::opts_chunk$set(echo = TRUE)
   * Website has this entire section in Spanish also 
   
 
-**6. GED Prep School **
+**GED Prep School **
 
   * Offers preparatory classes provides basic skills instruction to adults whose math and reading skills have been assessed at or below the GED® readiness level 
   * Must meet with our staff members by phone/video, and attend our Informational Session prior 
   * Must taken placement test online with a proctor; this will assist with obtaining your academic progress to place you in the appropriate classes
   * Every session is $180
     + paid in full prior and only by credit card 
+    
+    
+**Adult Education Catalog **
+
+  * Available to download from the website 
+  * Lists all of the options from above with a little more detail
+  * Additionally lists General Enrichment Courses 
+    + All cost \$50 to \$200 
 
 
-## Loudoun County Employment [2]
+### **Loudoun Workforce Resource Center Community Partners** [5]
 
-**1. Career and Technical Student Organizations **
-
-  * Enrich student knowledge through co-curricular instruction, personal and civic development, applied project-based learning, and real-world application
-  * Members of the local CTSO related to their courses and area of interest
-  * Provided with opportunities to apply academic, technical, and employability knowledge and skills
-  * Areas include Agriculture, Business and Information Technology, Family Consumer Science, Health and Medical Services, Marketing, SkillsUSA, Teacher Cadet, Technology Student Association 
-  
-**2. Career Cluster and Pathways **
-
-  * Available to download on the website 
-
-
-**3. Loudoun Workforce Resource Center Community Partners** [6]
-
-  * Lists all of the county's partners for helping young adults find employment, attend trainings and get educational support 
+This page lists all of the county's partners that can help young adults find employment, housing, educational opportunities, etc. This is on the same webste as the WIOA from below under Adult Services-Employment Workforce Resource Center and on the left tab, Community Partners. There are links for every description and is easy to find and use. 
 
   
-## Fauquier County Employment [3] 
+### **Workforce Innovation and Opportunity Act** [6] [1]
 
-**1. The Work Place **
-
-  * Career resource center available to all county residents
+  * US Department of Labor 
+  * Services for 18-24 
+  * One on one assistance with a WIOA Case Manager
+  * Access to career assessments
+  * Career Coaching
+  * Resume writing
+  * Interview preparation
+  * Job search assistance
+  * Labor Market review
+  * Access to education and training options
+  * **Need IDs, past school records, Verification of Foster Care or receiving public assistance** 
   
-**2. Virginia Initiative for Employment not Welfare**
-
-  * workforce program administered through local departments of social services
-  * provides employment and training services to TANF recipients who are required to participate in the program as a condition of eligibility and to TANF recipients who volunteer to participate
+I accessed this by searching to Loudoun County Health and Human Services, going to Adult Services-Employment and Education. On this page, there is a link to Workforce Innovation / Opportunity Act Program where I found all of this information and has several links to the National page with videos and how to apply and how to get the applications. 
   
-
-## Fairfax Education Services [1]
-
-**1. Workforce Innovation and Opportunity Act **
-
-  * Services for 17-24 
-  * College or Vocational School Exploration
-  * Tutorial Assistance
-  * GED & High School Completion Options
-  * Short-Term Training Opportunities
-  * Need IDs, past school records, Verification of Foster Care 
   
 
-## Fairfax Employment Services [1]
-
-**1. Northern Virginia Educating Youth through Employment (EYE)  **
+### **Northern Virginia Educating Youth through Employment (EYE) ** [8]
 
   * Summer initiative that recruits, screens and matches youth ages 18-24 with professional opportunities in the private sector and other area businesses
   * Required to attend intensive training workshops before and during their work experience
@@ -134,25 +118,19 @@ knitr::opts_chunk$set(echo = TRUE)
 assistant, social media liaison, event planning assistant, among
 many other pre-professional opportunities
 
-**2. Virginia Career Works Center**
-
-* Available to All: 
-
-  + Access to computers, phones, and internet
-  + Resume writing and interview preparation workshops
-  + Career coaching
-  + Basic employment assessments
-  + Job lead assistance
+This seems like a good program but I cannot seem to find the requirements for this or how to apply as a young adult. There are not materials or links that provide additional information than what is above which is mostly just general information. 
   
-* Subject to eligibility and funding: 
-
-  + Comprehensive Assessments
-  + Individual employment planning and career counseling
-  + Literacy activities
-  + Occupational skills training
-  + Skills upgrading
-  + On-the-Job training
   
+### **Independent Living Program ** [7]
+
+  * Virginia Department of Social Services 
+  * assists foster care youths ages 14-21 in developing the skills necessary to make the transition from foster care to independent living
+  * include personal development skills such as self-esteem, communication skills, decision-making, conflict resolution and anger management
+ * Age 21 is the cut-off for services
+ * Must be a resident of Virginia
+ * Acceptance is based on willingness of the youth to
+participate with services and expectations as documented in the “Resuming Independent Living Services Agreement”
+* One monthly contact with youth 
   
   
   
@@ -164,17 +142,17 @@ many other pre-professional opportunities
 
 [2] “Instructional Programs / Adult Education.” Loudoun County Public Schools, 2021, www.lcps.org/Page/211221.
 
-[3] “Read the Guide.” FRG, 2021, www.fauquierresources.com/read-the-guide.
+[3] “Welcome to the Northern Virginia Community College Website.” Great Expectations - Northern Virginia Community College, 2021, www.nvcc.edu/acp/expectations.html. 
 
-[4] “Welcome to the Northern Virginia Community College Website.” Great Expectations - Northern Virginia Community College, 2021, www.nvcc.edu/acp/expectations.html. 
+[4] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi. 
 
-[5] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi. 
+[5] “Loudoun Workforce Resource Center Community Partners.” Loudoun Workforce Resource Center Community Partners | Loudoun County, VA - Official Website, Civic Plus , 2021, www.loudoun.gov/3006/Community-Partners. 
 
-[6] “Loudoun Workforce Resource Center Community Partners.” Loudoun Workforce Resource Center Community Partners | Loudoun County, VA - Official Website, Civic Plus , 2021, www.loudoun.gov/3006/Community-Partners. 
+[6] “Workforce Innovation / Opportunity Act Program (WIOA).” Workforce Innovation / Opportunity Act Program (WIOA) | Loudoun County, VA - Official Website, 2021, www.loudoun.gov/2377/WIOA---Adult-and-Dislocated-Workers. 
 
+[7] “Services for Older Youth.” Services for Older Youth - Virginia Department of Social Services, 2021, www.dss.virginia.gov/family/fc/independent.cgi. 
 
-
-
+[8] “EYE Program.” Virginia Career Works Northern Region, 17 Feb. 2021, vcwnorthern.com/eye-programs/. 
 
 
 
