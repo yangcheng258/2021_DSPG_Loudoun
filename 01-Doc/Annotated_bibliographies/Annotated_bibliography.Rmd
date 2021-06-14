@@ -16,7 +16,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Julie Rebstock
 
-## Health Outcomes in Young Adults From Foster Care and Economically Diverse Background [PDF](https://pediatrics-aappublications-org.ezproxy.lib.vt.edu/content/pediatrics/134/6/1067.full.pdf)
+## Health Outcomes in Young Adults From Foster Care and Economically Diverse Background
+[PDF](https://pediatrics-aappublications-org.ezproxy.lib.vt.edu/content/pediatrics/134/6/1067.full.pdf)
 
 Ahrens, Kym R. , Garrison, Michelle M., Courtney, Mark E.
 
@@ -24,7 +25,8 @@ Ahrens, Kym R. , Garrison, Michelle M., Courtney, Mark E.
 Foster youth have a high rate of health problems in their childhood and this study sought to see if their health problems continued and/or increased once they transitioned to adulthood. Three groups were looked at including young adults that were in foster care, those who are economically insecure, and those who come from economically secure backgrounds while concluding that there is certainly an increase in health issues for young adults that were in foster care. The main indicator of the differences in helath issues was access to health care. Adults who were in foster care are most likely to receive Medicaid or have no insurance but also were the least likely to report a health issue. I believe this article is helpful because it provides evidence that young adults aging out of the foster care system are more likely to have chronic illness but not have the ability like insurance to receive aid. This report may also be helpful for future policies on extended insurance or foster care programs that could provide aid for those who have just aged out of the system. 
 
 
-## Youth in foster care with adult mentors during adolescence have improved adult outcomes [PDF](https://pediatrics-aappublications-org.ezproxy.lib.vt.edu/content/pediatrics/121/2/e246.full.pdf)
+## Youth in foster care with adult mentors during adolescence have improved adult outcomes
+[PDF](https://pediatrics-aappublications-org.ezproxy.lib.vt.edu/content/pediatrics/121/2/e246.full.pdf)
 
 Ahrens KR , DuBois DL , Richardson LP, Fan MY, Lozano P
 
@@ -33,9 +35,9 @@ Role models can make a huge impact on a child's future and can help motivate tha
 
 
 
+## “At times I kinda felt I was in an institution”: Supportive housing for transition age youth and young adults
 
-
-## “At times I kinda felt I was in an institution”: Supportive housing for transition age youth and young adults [PDF](https://pdf.sciencedirectassets.com/271857/1-s2.0-S0190740916X00138/1-s2.0-S0190740916304716/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQDpewWQA1INkiCecQdL267WtxEaUbJPmVpX00Ettx7GPAIgHjgtFMpm6iWsE%2FykTv8nx17rZ5tCr%2BbjSXjM9Z9Y2iQq%2BgMIXhAEGgwwNTkwMDM1NDY4NjUiDLEUTZsgwIJxQEMO1SrXA3%2BFwFLcItqxZGPq9PtkdUzxEdkhUQ3TTvchHOnTs9jblvyHMhyrnjU6vo56spw%2B%2BtoqYuZIubRBwTM1lKeXEGV50QVyKiY50moJCCCi78ebgf8bWYzFw%2FSGQm4avFvYOlazjG%2Bfb8Nb7a3EjuDGkxmIowscp9fJoqTglQlxYitvxrt6uMmoGONMb5KTLjo1QUa2Lh07e1c2c3or5Dl1j8w9rUDaOIkOh0K3zWPa%2BIsXaRW4XC0pcD1Jz6XXbDnk8fCpZDb%2BTfMnvnhZIeFMd6UBIpxV6yPvwGsdmCjlkw%2BRIHP6hzX3Ofs%2FBvofXpPNu%2B1JSIvoUfz8EJe%2B4BBWWMNJHOrjORT079pZG%2FCPfALtQ5gzHlf%2F%2F3LDZwElLSMxEVKAHq%2BK8sLHdZg3NWpbzblpEJmYMQjxmdOcHa1I2DpnXuguvjrgZmK8M3Y9wHBuCg6QTrtYXL5wj4BIjLKBDAx9uayxsOqMvgWPqHPiK1yxT9QVIAcJ3dj%2ByFCxEM0M0xHkQ16K9YkE3re%2BUwdirGnNtU3Kr8hWHWwPyN7cttoJe0PIRPIn6%2BmEwpzodobdYwVEqGrc%2BHyvGwF%2BGqpg9OX1TtJNzMHAbShQ3N39Tz8aliAc2Wgu0zCRpviFBjqlAT%2BoGyI5aLPXOEfuor1fZe4%2FR097O66K2q81ADN84tQKuquOKRYEXEkYV%2BvcnM5M5qGzEiZCxewt7HDRvgiAuOyqcyc332XEcF%2Fm5iqOp%2FcKdTTxR4o5dqhyQ5sOkIj1gcSfH9JyyC%2FnRNgw371qUBVJuJxvO5GgTNVr4GMtYmDS%2BEaJyKqwhwO96V6qLzshhPio0IOavDE9YKeEadhR9c4xyd9X%2Fw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210607T133308Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYRT6767X5%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=45b207244067ee7b3d545292d3b8aa2f66b3d7fc4b82610f5363fb5d67e8244f&hash=9e78102408efb5a2eaac9803edd997bbf70161552711765c1473fadc5c4a77a3&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0190740916304716&tid=spdf-bd5d3a47-8bef-4e41-8292-89ace15c57e9&sid=de93790a9813f94a89191ae7c571e5580512gxrqa&type=client)
+[PDF](https://pdf.sciencedirectassets.com/271857/1-s2.0-S0190740916X00138/1-s2.0-S0190740916304716/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQDpewWQA1INkiCecQdL267WtxEaUbJPmVpX00Ettx7GPAIgHjgtFMpm6iWsE%2FykTv8nx17rZ5tCr%2BbjSXjM9Z9Y2iQq%2BgMIXhAEGgwwNTkwMDM1NDY4NjUiDLEUTZsgwIJxQEMO1SrXA3%2BFwFLcItqxZGPq9PtkdUzxEdkhUQ3TTvchHOnTs9jblvyHMhyrnjU6vo56spw%2B%2BtoqYuZIubRBwTM1lKeXEGV50QVyKiY50moJCCCi78ebgf8bWYzFw%2FSGQm4avFvYOlazjG%2Bfb8Nb7a3EjuDGkxmIowscp9fJoqTglQlxYitvxrt6uMmoGONMb5KTLjo1QUa2Lh07e1c2c3or5Dl1j8w9rUDaOIkOh0K3zWPa%2BIsXaRW4XC0pcD1Jz6XXbDnk8fCpZDb%2BTfMnvnhZIeFMd6UBIpxV6yPvwGsdmCjlkw%2BRIHP6hzX3Ofs%2FBvofXpPNu%2B1JSIvoUfz8EJe%2B4BBWWMNJHOrjORT079pZG%2FCPfALtQ5gzHlf%2F%2F3LDZwElLSMxEVKAHq%2BK8sLHdZg3NWpbzblpEJmYMQjxmdOcHa1I2DpnXuguvjrgZmK8M3Y9wHBuCg6QTrtYXL5wj4BIjLKBDAx9uayxsOqMvgWPqHPiK1yxT9QVIAcJ3dj%2ByFCxEM0M0xHkQ16K9YkE3re%2BUwdirGnNtU3Kr8hWHWwPyN7cttoJe0PIRPIn6%2BmEwpzodobdYwVEqGrc%2BHyvGwF%2BGqpg9OX1TtJNzMHAbShQ3N39Tz8aliAc2Wgu0zCRpviFBjqlAT%2BoGyI5aLPXOEfuor1fZe4%2FR097O66K2q81ADN84tQKuquOKRYEXEkYV%2BvcnM5M5qGzEiZCxewt7HDRvgiAuOyqcyc332XEcF%2Fm5iqOp%2FcKdTTxR4o5dqhyQ5sOkIj1gcSfH9JyyC%2FnRNgw371qUBVJuJxvO5GgTNVr4GMtYmDS%2BEaJyKqwhwO96V6qLzshhPio0IOavDE9YKeEadhR9c4xyd9X%2Fw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210607T133308Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYRT6767X5%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=45b207244067ee7b3d545292d3b8aa2f66b3d7fc4b82610f5363fb5d67e8244f&hash=9e78102408efb5a2eaac9803edd997bbf70161552711765c1473fadc5c4a77a3&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0190740916304716&tid=spdf-bd5d3a47-8bef-4e41-8292-89ace15c57e9&sid=de93790a9813f94a89191ae7c571e5580512gxrqa&type=client)
 
 
 Munson, Michelle R. , Stanhope, Victoria, Small, Latoya, Atterbury, Kendall
@@ -104,16 +106,131 @@ This article examines the college drop-out likelihood of former foster care yout
 
 
 
-
 # Yang Cheng
-## First Paper
 
-## Second Paper
+## Vulnerable Populations and the Transition to Adulthood
+[PDF](https://www.jstor.org/stable/pdf/27795066.pdf?refreqid=excelsior%3A6dc2449f052246a252265cb2b37752f2)
 
-## Third Paper
+D. Wayne Osgood, E. Michael Foster, and Mark E. Courtney
+
+
+The authors consider the transition to adulthood for seven populations, distinguished by their involvement in specific government systems: the mental health system, the foster care system, the juvenile justice system, the criminal justice system, special education, the health care system (for youth with physical disabilities and chronic illness), and (though these youth really have no comprehensive system of care) runaway and homeless youth. The foster care and juvenile justice systems are held legally accountable for the overall safety and well being (for example, education and health) of youth in their care, though they often rely on other systems for assistance in carrying out these roles. And although the juvenile and adult justice systems are responsible for meeting the needs of the populations they serve, they are also expected to play a role in ensuring public safety.
+
+The difficulties that members of these groups encounter as children and adolescents lead all of them to depend on (or be entangled in) public systems, often for many years. But the transition to adulthood changes their established relationships with these systems, typically in dramatic ways. Reaching the age of eighteen or twenty-one may end eligibility for services, sometimes abruptly. The eligibility cutoffs are increasingly problematic because most other young people their age continue to depend on others and need sup port and training, often for many years. 
+
+As these seven vulnerable groups struggle during the transition to adulthood to get work and to start families of their own, the particular profile of outcomes varies across the groups, but they share much in common.One commonality is that males, the poor, and youth of color are over-represented in every group. Another is that youth in every group vary widely as to the seriousness and type of problem or need. A third commonality is population overlap?that is, that members of one group often belong to another group as well. A fourth is that members of every group have poor outcomes in many domains. And the final commonality is that in every group the factors that contribute to success are the same.
+
+**Four Policy Challenges**
+
+A review of current public policies directed toward vulnerable youth in transition reveals problems in four areas.48 First, eligibility cri teria exclude youth from services that might benefit them; second, funding for transition services is inadequate; third, lack of coordina tion across service systems hampers appropri ate service delivery; and, finally, many service professionals lack training in developmental issues for young adults.
+
+**Policy Options** TBD
+
+**Recent Federal Poicy Development** TBD
+
+
+## The Transition to Adulthood for Adolescents in the Juvenile Justice System: A Developmental Perspective.
+[PDF](https://ebookcentral.proquest.com/lib/vt/detail.action?docID=408395#)
+
+Chung, He Len, Michelle Little, and Laurence Steinberg.
+
+This chapter tries to shed light on three important questions about the transition to adulthood for teenagers involved with the juvenile justice system: 
+(1) what types of challenges do these y outh face during the transition?; 
+(2) why do certain individuals achieve positive turning points in early adulthood while others do not?; and 
+(3) how can the juvenile justice system provide opportunities that support youths’ achievement of healthy turning points and positive adult outcomes? 
+
+Most juvenile offenders evince some combination of problems that are likely to compromise positive youth development: poor school performance (e.g., truancy, low grades), mental health problems (e.g., substance abuse, depression), unstable and unsupportive family relationships, poverty- and crime-ridden communities, delinquent peer influences, and the absence of positive role models (Hawkins et al. 1998). It is also well established that these problems can create significant developmental challenges during the transition to adulthood, precisely when young offenders are learning to take on mature roles and responsibilities in society (Moffitt et al. 2002).
+
+The juvenile justice system plays a vital role during the transition to adulthood for two related reasons: ( 1 ) correctional experiences can impact individual development during the adolescent years; and ( 2 ) in many states, adolescent off enders can and do remain under juvenile correctional authority into their adult years. Two particular judicial decisions have a signifi cant impact on the nature of youths’ involvement with the justice system during the adolescent and early adult years: whether a case is handled by the juvenile court or transferred to the adult criminal system, and the type of sentence or disposition adolescents are required to complete. 
+
+Authors describe some tasks in detail to ask ask whether and in what ways experiences within the juvenile justice system can facilitate or hinder successful psychosocial development. Making the successful transition from the dependency of adolescence to the self-sufficiency of adulthood is a process that requires the coordination of many skills. These capacities are epitomized in a concept called psychosocial maturity (e.g., Greenberger  and require development across three important domains: mastery and competence, interpersonal relationships and social functioning, and self-defi nition and self-governance (see Steinberg). In order to achieve suffi ient psychosocial maturity, and along with it the capacities to function as independent and productive adults, individuals in contemporary industrialized society need to complete a series of developmental tasks in each of these three areas. A healthy transition to adulthood is optimally supported when these tasks are completed between the ages of sixteen and twenty-four, a transitional period that spans the years of late adolescence and early adulthood. 
+
+
+## Experiences of Youth Transitioning Out of Juvenile Justice or Foster Care Systems: The Correlates of Successful Moves to Independence
+[PDF](https://link-springer-com.ezproxy.lib.vt.edu/article/10.1007/s10560-020-00708-x)
+
+Daniel Brisson, Jennifer Hope Wilson, Erin Medina, Catherina Hughey, Stephanie Chassman & Katherine Calhoun
+
+This study assesses the Bridging the Gap intervention which integrates housing services and an independent living coach (ILC) to address the instrumental and relational support needs during the youth’s transition. This study uses mixed methods to deeply understand the needs of youth transitioning out of juvenile justice and foster care systems and to assess correlates of a successful transition. Qualitative and quantitative results confirm that youth transitioning our of juvenile justice and foster care systems face a wide range of challenges. Results also show that only a participant’s age is correlated with a successful transition. Findings from the study can be used to inform other programs addressing both the instrumental and relationship support needs of youth transitioning out of foster care and corrections.
+
+
+## An Overview of Quality Programs that Support Transition-Aged Youth
+[PDF](https://jyd.pitt.edu/ojs/jyd/article/view/437/421)
+
+Kalinyak, C. M., Gary, F. A., Killion, C. M., & Suresky, M. J.
+
+This article provides a concise overview of several programs that deliver services to transition-aged youth, ages 14–29. Included are family
+support, the Assisting Unaccompanied Children and Youth program, the Substance Abuse and Mental Health Services Administration services, the
+wraparound approach, intensive home-based treatment, multisystemic therapy, foster care, independent living, mentoring, the Steps to Success
+program, the Jump on Board for Success program, the Options program, the Positive Action program, the Transition to Success model, and the Transition to Independence Program.
+
+
 
 ## Reference
 
+1. Osgood, D. Wayne, E. Michael Foster, and Mark E. Courtney. "Vulnerable populations and the transition to adulthood." The future of children (2010): 209-229.
+
+
+2. Chung, He Len, Michelle Little, and Laurence Steinberg. "The Transition to Adulthood for Adolescents in the Juvenile Justice System: A Developmental Perspective." On your own without a net. University of Chicago Press, 2008. 68-91.
+
+3. Brisson, D., Wilson, J. H., Medina, E., Hughey, C., Chassman, S., & Calhoun, K.. "Experiences of Youth Transitioning Out of Juvenile Justice or Foster Care Systems: The Correlates of Successful Moves to Independence." Child and Adolescent Social Work Journal (2020): 1-13.
+
+4. Kalinyak, Christopher M., et al. "An overview of quality programs that support transition-aged youth." Journal of Youth Development 11.1 (2016): 98-115.
+
+
+# JiaDa Robinson
+
+## Remaining in Foster Care After Age 18 and Youth Outcomes at the Transition to Adulthood: A Review.  
+[Link](https://journals.sagepub.com/doi/full/10.1177/1044389419847326?casa_token=gmYSrF_MMBMAAAAA%3ATqD8JYv6YfIp0oSGi4qECRblBxMg0hn6xMQj4VN3m7ETYBWa1q4am8mEYh0njX_SlML8OyAvV_I5dA)
+
+Loring Jones 
+
+Youth leaving foster care are making two transitions. The first transition is the one that they share with all youth, which is the movement into emerging adulthood. The second transition is exiting the foster care system to live independently (Avery & Freundlich, 2009).  Legislation has been used to help improve these transitional issues that may arise. Adoption Assistance and Child Welfare Act of 1980. This legislation was aimed at ensuring that children would also have an exit strategy when they entered foster care. President Bush signed the FCSA, which was the last piece of major federal legislation that supported foster youth leaving care. The law is also known as Fostering Connections. FCSA allowed the states to extend foster care up to age 21. Eligibility for services was contingent on the youth meeting at least one of the following conditions: They attend school for the purpose of completing a high school diploma or general equivalence diploma, or they attend a post-secondary institution or vocational program, or they are employed for at least 80 hour a month, or they are in a program meant to help them gain employment, or they have a documented medical diagnosis that precludes their taking part in any of the activities just specified. The ACA was not designed as a child welfare policy, but it had considerable impact of FFY. The ACA mandated that youth who had been in foster care for at least 6 months on January 1, 2014, were eligible to receive Medicaid benefits until age 26. Youth could continue to collect benefits after that age if the state chose to do so. However, the 2014 start date for eligibility meant that there is a cohort of FFY who may not have any insurance coverage. Also, the DHHS issued a regulation that stated that Medicaid eligibility was not mandatory for FFY living in the state if they had not been in foster care in that state. These are important pieces of policy that could help us understand the qualification guidelines. 
+
+
+## Former Foster System Youth: Perspectives on Transitional Supports and Programs 
+[Link](https://scholar.google.com/scholar?q=Former+Foster+System+Youth:+Perspectives+on+Transitional+Supports+and+Programs&hl=en&as_sdt=0&as_vis=1&oi=scholart)
+
+Foster youth transition out of system care between the ages of 18 and 21. Every year, approximately 24,000 adolescents make this transition within the USA. By the age of 26, 40% of these discharged adolescents have experienced homelessness and many have experienced difficulties in maintaining consistent transportation which affected their work, education and relationships. Forty six percent of these youth have received their diploma or GED and 3% have obtained their bachelor’s degree. To improve outcomes, multiple transition programs exist and fall within one of three categories: (1) permanency supports; (2) sustainable social capital supports; (3) postsecondary access and success supports.  Permanency supports include housing, health care, transportation, employment, and financial support. Sustainable social capital supports include programs that focus on mentorship, self- advocacy skills, life skills, and well-being. Postsecondary access and success supports include programs that are centered around vocational training, interviewing skills, college assistance, and tutoring. 
+
+
+## Vulnerable Populations and the Transition to Adulthood
+[Link](https://www.jstor.org/stable/27795066)
+
+One problem is that the services these vulnerable populations receive from these systems as children and adolescents often end abruptly as they transition to adulthood, even though the need for them continues. Youth must leave systems tailored for clients their age and, if they are eligible for further services at all, enter adult systems that are not equipped to address their needs. One exception is the special education system, whose services extend into early adulthood and are designed for individuals' needs. The article finds problems in four areas: eligibility criteria that exclude youth from services that might benefit them, inadequate funding for transition services, a lack of coordination across service systems, and inadequate training about young-adult developmental issues for service professionals.  (Osgood, 2010)
+
+The authors then discuss policy options that can help create a developmentally appropriate and socially inclusive system of support for vulnerable youth. Among the options are strengthening all programs for youth in transition, improving the existing systems of care for children and adolescents, addressing the loss of access to services at the age of majority, and coordinating today's multiple systems into a single coherent system. (Osgood, 2010)
 
 
 
+## Reference
+
+1. Jones, Loring. "Remaining in foster care after age 18 and youth outcomes at the transition to adulthood: A review." Families in Society 100.3 (2019): 260-281.
+2. Armstrong-Heimsoth, Amy, et al. "Former foster system youth: Perspectives on transitional supports and programs." The journal of behavioral health services & research (2020): 1-19.
+3. Osgood, D. Wayne, E. Michael Foster, and Mark E. Courtney. "Vulnerable populations and the transition to adulthood." The future of children (2010): 209-229.
+
+
+# Kyle Jacobs 
+
+## Prevalence of co-occurring disorders among juveniles committed to detention centers
+
+The Practical Adolescent Diagnostic Interview (PADDI), an organized analytic meeting intended to assemble essential data about substance use problems, emotional wellness conditions, and related encounters, was utilized in routine assessment of all teenagers focused on two adolescent detainment habitats. Unknown information from 252 continuously conceded young people were investigated to survey the predominance and seriousness of trouble spots and to give a primer investigation of interrelationships among those issues. Results showed that a greater part of teenagers showed numerous issues. While predominance rates were high across sexual orientation, females showed fundamentally more prominent emotional wellness issues and abuse narratives.
+
+
+## Mapping the social service pathways of youth to and through the juvenile justice system: A comprehensive review
+
+Adolescent Crime is anything but a sound quality for any non-industrial nation and unquestionably not for a broadly refined and crowded nation like India. India has been experiencing overpopulation and low proficiency for a long time now and it influences the development of the country. Training is the way to improve the condition of the country and more adolescent wrongdoing, youngsters get lesser quality schooling and it continues to pull down the country. Not just that, it likewise harms the future and isn't sound for the fate of the country.
+
+
+## Prediction of Juvenile Delinquencies in Correlation with Education"
+
+The reason for this survey was to detail the human or social assistance needs and administration use designs (i.e., medical care, instruction, social administrations, kid government assistance, psychological wellness, and substance misuse) that impact youth '''s entrance and delayed association with the adolescent equity framework. What rose up out of the writing was an example of administration needs and earlier help use that put youth in danger of adolescent equity contribution.
+
+## Refrence
+
+1. Abrantes, A. M., Hoffmann, N. G., & Anton, R. (2005). Prevalence of co-occurring disorders among juveniles committed to detention centers. International journal of offender therapy and comparative criminology, 49(2), 179–193. https://doi.org/10.1177/0306624X04269673
+
+
+2. Maschi, T., Hatcher, S. S., Schwalbe, C. S., &amp; Rosato, N. S. (2008, April 23). Mapping the social service pathways of youth to and through the juvenile justice system: A comprehensive review. Children and Youth Services Review. https://www.sciencedirect.com/science/article/pii/S0190740908001059. 
+
+3. R. Akila, J. BrindhaMerin, R. K. Vishal and V. Krishnan S.H., "Prediction of Juvenile Delinquencies in Correlation with Education," 2020 6th International Conference on Advanced Computing and Communication Systems (ICACCS), 2020, pp. 987-993, doi: 10.1109/ICACCS48705.2020.9074338.
