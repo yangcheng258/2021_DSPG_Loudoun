@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Loudoun County, VA 
 
 ### **Great Expectations** from Northern Viriginia Community College [3]
@@ -230,6 +231,7 @@ I found KidsVoice because of the presentation from above so there was not real l
   + Jobs or job training • Stable housing
   + Financial literacy skills • Access to health care • Parenting skills
   + Support system
+
 
 
 ### References: 
