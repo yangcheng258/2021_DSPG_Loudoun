@@ -9,10 +9,16 @@ output: html_document
 knitr::opts_chunk$set(echo = F)
 ```
 
+Loudoun County offers an outline for a [transition plan](https://www.loudoun.gov/DocumentCenter/View/128520/Transition-Plan-2017?bidId=) out of the criminal justice system, which is also appropriate for TAY transitioning out of juvenile detention. The plan lists many of the relevant aspects one must consider when transitioning out of Juvenile Detention such as obtaining adequate identification, housing, employment and others. 
 
-## Loudoun County, VA 
-### Housing
-#### Shelters
+## Loudoun County Housing Services and Programs 
+### Summary 
+The Loudoun County website offers a variety of shelters, programs, services and informative PDFs for those adults in need of shelter,
+shelter services, housing and assistance 
+finding an apartment to rent/but from a variety of different situations.
+These resources are apt to serve the needs of TAY's exiting juvenile detention. 
+
+### Shelters
 * Good Shepherd Alliance (Single women and families).
 Phone #: 703-724-1555
 * Loudoun Abused Women’s Shelter.  
@@ -25,13 +31,13 @@ Phone #: 703-777-6552
   Open November 15 to March 31 from 8:00 p.m. to 7:00 a.m.
   Phone: 571-258-3033
   
-**The above shelters were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link**     
+**The above shelters were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link and then clicking on the [Housing Shelters](https://www.loudoun.gov/4011) link**     
 
-#### Housing
-* Friends of Guest House is a re-entry, transitional housing and aftercare program for women in Northern Virginia. Phone: 703-549-8072
+### Housing
+* Friends of Guest House: a re-entry, transitional housing and aftercare program for women in Northern Virginia. Phone: 703-549-8072
+
 * [Loudoun County Affordable Dwelling Unit Program](https://www.loudoun.gov/adu)
-
-  + For those of modest income working in Loudoun county. Offers below market new homes for rent or purchase. 
+  + For those of modest income working/living in Loudoun county. Offers below market new homes for rent or purchase. 
   + Questions: contact the Affordable Dwelling Unit at 703-737-8043, Monday through Friday from 8:30 a.m. to 5:00 p.m.
     + Virtual sessions can be scheduled. 
     + Non-Mandatory Information sessions 4th Thursday of        each month from 3-5 pm. 
@@ -67,7 +73,7 @@ P.O. Box 7000.
 * Rapid Re-Housing Program: provides financial and case management resources to the homeless in Loudoun County Phone: 571-258-3033.
 * Virginia Housing Search: provides detailed information about rental properties and helps people find housing to best fit their needs. Phone: 877-428-8844
 
-**The above housing programs were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link** 
+**The above housing programs and services were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link and then clicking on the [Housing Shelters](https://www.loudoun.gov/4011) link** 
 
-  
+
 
