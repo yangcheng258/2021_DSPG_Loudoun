@@ -1,5 +1,5 @@
 ---
-title: "Research-Foster_Care"
+title: "Education-Employment-Foster_Care"
 author: "Julie Rebstock"
 date: "6/14/2021"
 output: html_document
@@ -88,9 +88,9 @@ All of these programs and resources *are not directed towards Foster Care transi
 
   * 2-year program; total cost : $6,100
   * First year 40-hour clinical experience at a long-term care facility
-  * Second year 400-hour clinical component completed at a variety of health care settings including hospitals, physician offices, school and community clinics, and long-term care facilities
+  * Second year 400-hour clinical component completed at a variety of health care settings including hospitals, physician offices, school and community clinics, and long-term care facilities 
   * Does not offer transportation to the clinical experiences
-  * Must take TEAS exam ($65)
+  * Must take TEAS exam ($65) 
   
   
 **Adult High School **

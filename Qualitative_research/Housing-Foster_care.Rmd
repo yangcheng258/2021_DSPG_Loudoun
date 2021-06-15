@@ -1,0 +1,12 @@
+---
+title: "Housing-Foster_care"
+author: "Julie Rebstock and JaiDa Robinson"
+date: "6/15/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Housing 
