@@ -1,6 +1,6 @@
 ---
-title: "Education-Employment-Foster_Care"
-author: "Julie Rebstock"
+title: "Research-Foster_Care"
+author: "Julie Rebstock and Jaida Robinson"
 date: "6/14/2021"
 output: html_document
 ---
@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Loudoun County, VA 
+
+### Education 
 
 ### **Great Expectations** from Northern Viriginia Community College [3]
 
@@ -48,37 +50,6 @@ knitr::opts_chunk$set(echo = TRUE)
  * Must be a resident of Virginia
  * Acceptance is based on willingness of the youth to participate with services and expectations as documented in the “Resuming Independent Living Services Agreement”
 * *One monthly contact with youth* 
-
-
-### **Workforce Innovation and Opportunity Act** [6] [1]
-
-  * *US Department of Labor* 
-  * *Services for 18-24* 
-  * One on one assistance with a WIOA Case Manager
-  * Access to career assessments
-  * Career Coaching
-  * Resume writing
-  * Interview preparation
-  * Job search assistance
-  * Labor Market review
-  * Access to education and training options
-  * *Need IDs, past school records, Verification of Foster Care or receiving public assistance*
-  
-I accessed this by searching to Loudoun County Health and Human Services, going to Adult Services-Employment and Education. On this page, there is a link to Workforce Innovation / Opportunity Act Program where I found all of this information and has several links to the National page with videos and how to apply and how to get the applications. 
-  
-  
-
-### **Northern Virginia Educating Youth through Employment (EYE) ** [8]
-
-  * Summer initiative that recruits, screens and matches youth *ages 18-24* with professional opportunities in the private sector and other area businesses
-  * Required to attend intensive training workshops before and during their work experience
-  * Offers the youth an exciting, professional opportunity with training that will allow them to explore a career path that matches their interest
-  * Jobs can include administrative assistant, electrician’s assistant, computer lab /IT
-assistant, social media liaison, event planning assistant, among
-many other pre-professional opportunities
-
-This seems like a good program but I cannot seem to find the requirements for this or how to apply as a young adult. There are not materials or links that provide additional information than what is above which is mostly just general information. 
-
 
 ### Loudoun County Public School [2]
 
@@ -130,6 +101,37 @@ All of these programs and resources *are not directed towards Foster Care transi
   * Additionally lists General Enrichment Courses 
     + All cost \$50 to \$200 
 
+### Employment 
+
+### **Workforce Innovation and Opportunity Act** [6] [1]
+
+  * *US Department of Labor* 
+  * *Services for 18-24* 
+  * One on one assistance with a WIOA Case Manager
+  * Access to career assessments
+  * Career Coaching
+  * Resume writing
+  * Interview preparation
+  * Job search assistance
+  * Labor Market review
+  * Access to education and training options
+  * *Need IDs, past school records, Verification of Foster Care or receiving public assistance*
+  
+I accessed this by searching to Loudoun County Health and Human Services, going to Adult Services-Employment and Education. On this page, there is a link to Workforce Innovation / Opportunity Act Program where I found all of this information and has several links to the National page with videos and how to apply and how to get the applications. 
+  
+  
+
+### **Northern Virginia Educating Youth through Employment (EYE) ** [8]
+
+  * Summer initiative that recruits, screens and matches youth *ages 18-24* with professional opportunities in the private sector and other area businesses
+  * Required to attend intensive training workshops before and during their work experience
+  * Offers the youth an exciting, professional opportunity with training that will allow them to explore a career path that matches their interest
+  * Jobs can include administrative assistant, electrician’s assistant, computer lab /IT
+assistant, social media liaison, event planning assistant, among
+many other pre-professional opportunities
+
+This seems like a good program but I cannot seem to find the requirements for this or how to apply as a young adult. There are not materials or links that provide additional information than what is above which is mostly just general information. 
+
 
 ### **Loudoun Workforce Resource Center Community Partners** [5]
 
@@ -160,26 +162,7 @@ This page lists all of the county's partners that can help young adults find emp
 
 In 2006, oversight of all transition programs was placed under the Department of Human Services Office which emphasizes on youth involvement and engaging youth in services. [2]
 
-
-### **412 Youth Zone Program** [1]
-
-* *Department of Human Services* 
-* One-stop drop-in center for young people *ages 16-23* that are transitioning out of the foster care system
-* Are eligible for independent living services or are experiencing unstable housing
-* Contains kitchen and common area for meals, playroom, laundry room, offices and classrooms 
-* Services included: 
-
-  + Life skills assessments
-  + Individualized goal plans
-  + Job and career development
-  + Personal safety and health 
-  + Career development and job skills
-  + Financial assistance
-  + Employment assistance
-  + Housing, household and dormitory items
-  
-I found this page that has all of this information plus contact information and hours that this program is open by going to alleghenycounty.us, Department of Human Services and searching transition age youth. This was the 4th option down. 
-
+### Employment 
 
 ### **The Independent Living Initiative** [2]
 
@@ -216,6 +199,27 @@ When I searched Allegheny County, PA Transition Age Youth, this was the first li
 
 
 I found KidsVoice because of the presentation from above so there was not real link from the Allegheny County site. If I hadn't seen KidsVoice on the presentation from above, I would probably not know any of this exists. But the KidsVoice website has a lot of good information and you can search which area you need help with, I selected TAYs and Independent Living and this and the program below showed up and then it links you to some presentations and brochures and other sites with good information with contact information. 
+
+### Education 
+### **412 Youth Zone Program** [1]
+
+* *Department of Human Services* 
+* One-stop drop-in center for young people *ages 16-23* that are transitioning out of the foster care system
+* Are eligible for independent living services or are experiencing unstable housing
+* Contains kitchen and common area for meals, playroom, laundry room, offices and classrooms 
+* Services included: 
+
+  + Life skills assessments
+  + Individualized goal plans
+  + Job and career development
+  + Personal safety and health 
+  + Career development and job skills
+  + Financial assistance
+  + Employment assistance
+  + Housing, household and dormitory items
+  
+I found this page that has all of this information plus contact information and hours that this program is open by going to alleghenycounty.us, Department of Human Services and searching transition age youth. This was the 4th option down. 
+
   
   
 #### **Lifeset** [4]
@@ -228,8 +232,11 @@ I found KidsVoice because of the presentation from above so there was not real l
 * Focus Areas: 
   + Diplomas/GED
   + Higher education
-  + Jobs or job training • Stable housing
-  + Financial literacy skills • Access to health care • Parenting skills
+  + Jobs or job training 
+  + Stable housing
+  + Financial literacy skills 
+  + Access to health care 
+  + Parenting skills
   + Support system
 
 
@@ -245,6 +252,80 @@ I found KidsVoice because of the presentation from above so there was not real l
 [4] “Resources.” KidsVoice, kidsvoice.org/resources/eyJyZXN1bHRfcGFnZSI6InJlc291cmNlcyIsImNoaWxkOnJlc291cmNlX2VudHJ5X2NhdGVnb3J5IjoiMjEifQ#lifeset-programs-for-transition-age-youth-tay. 
   
   
+## Housing Serivces/Programs in Loudoun County, VA 
+  
+Jaida 
+  
+  
+  
+  
+## Housing Services/Programs in Allegheny County, PA 
+
+### **FamilyLink Downtown Outreach Center & Shelter** [1] [2]
+
+This program is contracted with DHS in Allegheny County to reserve 3 beds to provide emergency housing assistance and stabilization services to transition-age youth who may want to request that the courts resume jurisdiction or who are awaiting a court motion to place them in the care of child welfare. 
+
+* Ages 18-24 with no permanent residence
+* Provided with emergency shelter, food and clothing 
+* Up to 60 days 
+* Have the option of entering our Resumption Assistance Program, staying at DOCS for a period of time
+* To enroll, must call the phone that is provided 
+
+I found this document by going to Allegheny County's website and going to Youth and Family Support. Then all the way at the bottom, there is a link that downloads a document of the Allegheny County Youth Homelessness Demonstration Program from April 2020. Reading through this document, I searched key words like foster and then I saw they have a contract with FamilyLink and searched Family Link online. 
+
+
+### **Permanent Supportive Housing for Transition Age Youth (TAY) program** [3] 
+
+* Through Allegheny County's Housing as Home strategic plan
+* Make 24 units available annually for Office of Behavioral Health (OBH) priority transition-age youth, with psychiatric disabilities
+* Individuals are not required to participate in psychiatric services to keep their housing 
+* Eligibility: 
+  + Transitioning youth who lives in Allegheny County ages 18-25
+  + Involved in or transitioning from other Department of Human Service system
+  + Diagnosed with serious mental illness, mental illness and substance abuse
+  + Desires to live independently
+  
+For More information, must call the number on this web page to get a referral through Community Care Behavioral Health Organization. 
+
+I looked up "allegheny county housing programs transition age youth" and I clicked on the first option and all of this information came up. 
+  
+  
+## **Action Housing MyPlace** [4] 
+
+1. MyPlace Rapid Re-Housing: 
+* young adults aged 18-24  
+* Offers a stable living situation in which they can build their education and career skills
+* Learn how to earn income, build personal and professional skills, and maintain their own permanent housing
+
+2. MyPlace Permanent Supportive Housing 
+* Provides stable housing for participants
+* Allows to focus on obtaining/remaining in permanent housing, increasing income through stable employment, maximizing their ability to live independently and their quality of life
+
+3. Foundation for Independence 
+* Must be active with Allegheny County Department of Human Service’s Children Youth and Family (there is a link on the website to apply for by apart of CYF)
+* Apply for an apartment with the recommendation of the CYF Caseworker
+* Must have a high school diploma or GED and must be employed in order to be considered
+* Involved in post-secondary education are required to work 20 hours per week 
+* Not in post-secondary education are required to work 37.5 hours per week
+
+
+There wasn't too much more information then what is above on how to apply and other requirements but there is contact information at the bottom for more information. I saw ActionHousing on KidsVoice website from when I was looking for education and employmeny programs so I don't think ActionHousing is super popular but if someone knew about the website, it was easy to navigate to what I was looking for. 
+
+
+
+References: 
+
+[1] “Downtown Outreach Center &amp; Shelter.” Familylinks, 5 Apr. 2016, familylinks.org/get-help/housing/DOCS. 
+
+[2] “Allegheny County Youth Homelessness Demonstration Program.” Office of Community Services , Apr. 2020. 
+
+[3] “Transition Age Youth (TAY).” Transitional Services, Inc., 21 Aug. 2017, www.transitionalservices.org/programs/psychiatric-disabilities/transition-age-youth-tay. 
+
+[4] “MyPlace Youth Programs.” MyPlace Youth Program – Action Housing, actionhousing.org/our-services/myplace-youth-program/. 
+
+
+
+
   
   
   
