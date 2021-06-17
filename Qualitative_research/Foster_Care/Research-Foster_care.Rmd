@@ -16,8 +16,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### **Great Expectations** from Northern Viriginia Community College [3]
 
+[website](https://www.nvcc.edu/acp/expectations.html)
+
 * Connecting them to community resources, scholarship opportunities and other support
-* pursue an associate degree, get workforce training and/or transfer to a four-year college
+* Pursue an associate degree, get workforce training and/or transfer to a four-year college
 * *Often free because of FAFSA, Grant programs and scholarship opportunities* 
 * Referrals for tutorial services
 * Participation in college trips and events
@@ -29,7 +31,9 @@ knitr::opts_chunk$set(echo = TRUE)
 * Cannot find which department 
 
 
-### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [4] 
+#### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [4] 
+
+[website](https://www.dss.virginia.gov/family/fc/etv.cgi)
 
 * Assists eligible foster care and adopted teens or young adults with post-secondary education and training expenses
 * Funds can be applied toward, but not limited to, colleges, universities, community colleges, vocational programs, and one-year training institution 
@@ -40,7 +44,9 @@ knitr::opts_chunk$set(echo = TRUE)
 * Must maintain a 2.0 grade point average or make satisfactory progress
 
 
-### **Independent Living Program ** [7]
+#### **Independent Living Program ** [7]
+
+[website](https://www.dss.virginia.gov/family/fc/independent.cgi)
 
   * *Virginia Department of Social Services* 
   * Goes along with ETV
@@ -51,7 +57,9 @@ knitr::opts_chunk$set(echo = TRUE)
  * Acceptance is based on willingness of the youth to participate with services and expectations as documented in the “Resuming Independent Living Services Agreement”
 * *One monthly contact with youth* 
 
-### Loudoun County Public School [2]
+#### Loudoun County Public School [2]
+
+[website](https://www.lcps.org/Page/211221)
 
 All of these programs and resources *are not directed towards Foster Care transitional aged youth* because there is no mention of any grant/scholarship that they could apply to for them to be paid for other than credit card.  
 
@@ -103,7 +111,10 @@ All of these programs and resources *are not directed towards Foster Care transi
 
 ### Employment 
 
-### **Workforce Innovation and Opportunity Act** [6] [1]
+#### **Workforce Innovation and Opportunity Act** [6] [1]
+
+1. [Virginia Career Workers](https://vcwnorthern.com/youth-programs/)
+6. [Loudoun County](https://www.loudoun.gov/2377/WIOA---Adult-and-Dislocated-Workers)
 
   * *US Department of Labor* 
   * *Services for 18-24* 
@@ -121,7 +132,9 @@ I accessed this by searching to Loudoun County Health and Human Services, going 
   
   
 
-### **Northern Virginia Educating Youth through Employment (EYE) ** [8]
+#### **Northern Virginia Educating Youth through Employment (EYE) ** [8]
+
+[website](https://vcwnorthern.com/eye-programs/)
 
   * Summer initiative that recruits, screens and matches youth *ages 18-24* with professional opportunities in the private sector and other area businesses
   * Required to attend intensive training workshops before and during their work experience
@@ -133,7 +146,9 @@ many other pre-professional opportunities
 This seems like a good program but I cannot seem to find the requirements for this or how to apply as a young adult. There are not materials or links that provide additional information than what is above which is mostly just general information. 
 
 
-### **Loudoun Workforce Resource Center Community Partners** [5]
+#### **Loudoun Workforce Resource Center Community Partners** [5]
+
+[website](https://www.loudoun.gov/3006/Community-Partners)
 
 This page lists all of the county's partners that can help young adults find employment, housing, educational opportunities, etc. This is on the same webste as the WIOA from below under Adult Services-Employment Workforce Resource Center and on the left tab, Community Partners. There are links for every description and is easy to find and use. 
   
@@ -156,52 +171,176 @@ This page lists all of the county's partners that can help young adults find emp
 
 [8] “EYE Program.” Virginia Career Works Northern Region, 17 Feb. 2021, vcwnorthern.com/eye-programs/. 
 
+
+  
+## Housing Serivces/Programs in Loudoun County, VA 
+  
+Jaida 
+
+
+
+
+## Transportation 
+
+#### **Route 54 (Safe T-ride)** [1]
+
+[website](https://www.loudoun.gov/3302/Local-Bus)
+[pdf](https://www.loudoun.gov/DocumentCenter/View/122385/TDP-2018-2028-?bidId=)
+
+* Free for all in the county; not specific to foster care youths 
+* Weekdays: 7AM-7PM
+* Weekends: 9AM-6PM 
+* Every 20 minutes, max 30 minutes 
+* 10 stops; 3 shopping centers 
+
+#### **Medicaid Transportation (LogistiCare) ** [2]
+
+[website](http://transportation.dmas.virginia.gov/ ) 
+[pdf](https://www.loudoun.gov/DocumentCenter/View/54405/Public--Private-Transportation-Providers?bidId=)
+
+* Must have Medicaid number
+* Non-emergency and urgent medical appointments 
+* Make trip request at least 5 days in advance unless urgent appointment 
+* Provided by Department of Medical Assistance Services (DMAS)
+
+#### **On Demand Transportation** [2]
+
+[website](https://www.loudoun.gov/1699/On-Demand-Transportation)
+[pdf](https://www.loudoun.gov/DocumentCenter/View/54405/Public--Private-Transportation-Providers?bidId=)
+
+* Department of Family Services 
+* Vendors: Yellow Cab 
+* Must schedule ahead of time 
+* Fall below 70% of State's Median Income 
+* Referrals are required from government agencies as well as non-profits 
+* Majority used are eldery and disabled because this is usually the last resort 
+* Locally, to UVA, and Georgetown Hospital 
+
+
+### References: 
+
+[1] County Staff . (2018, January 10). Loudoun County Transit Development Plan. TranSystem . 
+
+[2] Public &amp; Private Transportation Providers Serving Loudoun County. (2021, February). 
+
+
+### Insurances 
+
+#### **Family Access to Medical Insurance Security Plan** [1] 
+
+[website](https://www.coverva.org/en/famis)
+[pdf](https://www.coverva.org/sites/default/files/2021-05/FAMIS-brochure-English-FINAL-020121.pdf)
+
+* covers all the medical care that growing children need to stay healthy and if they get sick or hurt 
+* no enrollment costs or monthly premiums; no copays 
+* May qualify if: 
+  + Live in Virginia
+  + Are uninsured
+  + Are under age 19
+  + Are U.S. citizens or lawfully residing immigrants
+  + Live in families that meet income rules 
+* For 1 family size, (ex. 18 year old) income must be below \$2,201 monthly or \$26,404 yearly 
+
+There are extra links at the bottom for more information and a link on where to apply and who to call if someone needs help. I found this on the Loudoun County website under Needs & Assistance and Apply for. Then click Medicaid but the link under this page takes you to an invalid page but teh website is Cover Virginia where you can click on Learn and our Programs. 
+
+
+#### **Virginia Medicaid** [2]
+
+[website](https://www.coverva.org/en/adults-19-64-years-old)
+
+* Ages 18 to 26 can get Medicaid if they were in foster care and had Medicaid in any state on their 18th birthday
+* No income limit for this program
+* Still must apply through link on site 
+
+I found this the same way I found the above program also. They are on the same website. 
+
+
+References: 
+
+[1] Maximus Digital Solutions. (2021). FAMIS. https://www.coverva.org/en/famis. 
+
+[2] Maximus Digital Solutions. (2021). Adults 19-64 years old. https://www.coverva.org/en/adults-19-64-years-old. 
+
+
+### Policy and Funding 
+
+**Continuum of Care (CoC) ** [1] 
+
+[website](https://www.loudoun.gov/4111/Continuum-of-Care-Programs-Partnerships)
+
+* US Department of Housing and Urban Development 
+* Awarded vouchers to provide stable housing for young adults (18-24) who have aged out of the foster care system 
+* To provide funding for efforts by nonprofit providers, States, and local governments to quickly re-house homeless individuals, families, persons fleeing domestic violence, and youth
+
+#### **SkillSource Group Inc. ** [2]
+
+[website](https://vcwnorthern.com/about/)
+
+* Serves as fiscal agent
+* An entity that pursues additional funding sources for the board of Workforce Innovation and Opportunity Training and Employment programs 
+
+
+#### **Educational and Training Vouchers (ETVs)** [3] 
+
+[website](https://www.dss.virginia.gov/family/fc/etv.cgi)
+
+
+* Funded by Virginia Department of Social Services through the US Federal Government 
+* To provide financial assistance of up to $5,000 per year for up to five years for college, career school, or training 
+
+
+#### **Community College Tuition Grant** [4]
+
+[pdf](https://www.vccs.edu/wp-content/uploads/2020/04/FINANCIAL-AID-PROGRAMS-revised-100719.pdf)
+
+* assists community college students in Virginia with financial need 
+* Lots of grants that are included and can be applied for 
+* All of these assist any student in Virginia, not specific to foster care transition age youths 
+
+
+#### Funding for all Transition Aged Youth in US 
+
+[website](https://www.cwla.org/child-trends-report-on-funding-supports-and-services-for-transition-age-youth/)
+
+**Title IV-E Foster Care** 
+
+* supports youth under the age of 18, room and board, and other costs reimbursed to the state
+
+**Title IV-E reimbursement**
+
+* States can choose to enable this 
+* Extends foster care to age 21
+
+**ACA, Medicaid, Family Unification Program (FUP), Workforce Innovation and Opportunity Act, and TRIO programs that support the needs of older youth**
+
+* ACA extended Medicaid eligibility to young adults to age 26
+* FUP program provides housing choice vouchers for youth transitioning from foster care
+
+
+References: 
+
+[1] CivicPlus . (n.d.). Continuum of Care Programs &amp; Partnerships. Continuum of Care Programs &amp; Partnerships | Loudoun County, VA - Official Website. https://www.loudoun.gov/4111/Continuum-of-Care-Programs-Partnerships. 
+
+[2] SkillsSource. (2021, June 15). About Us. Virginia Career Works Northern Region. https://vcwnorthern.com/about/. 
+
+[3] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi.
+
+[4] Virginia's Community Colleges . (2020, April). FINANCIAL AID PROGRAMS AVAILABLE AT VIRGINIA’S COMMUNITY COLLEGES. 
+
+
+
+---
 ---
 
 ## Allegheny County, PA 
 
 In 2006, oversight of all transition programs was placed under the Department of Human Services Office which emphasizes on youth involvement and engaging youth in services. [2]
 
-### Employment 
-
-### **The Independent Living Initiative** [2]
-
-* Enhanced services for *18-24 year olds* that focus on 
-
-  + Career development and job skills
-  + Assistance in finances 
-  + Assistance in employment, housing and household items 
-  + **Funded by Blending Funding** (Chaffee & State Funds) which eliminates waiting lists 
-  
-From 2008-2009, 32% of the youth using Independent Living Programs 16-21 were pregnant of parenting so in response DHS now sponsors parenting programs for all youths in the program. 
-
-* Partners with *Kidsvoice* in which they co-sponsor a career /college fair for post 18 youths. 
-
-
-When I searched Allegheny County, PA Transition Age Youth, this was the first link and it automatically downloaded a PDF to my computer with a presentation with all of this information. I did not like this because it was hard for me to know where this information was coming from and to find out more about what they were talking about. 
-
-  
-### KidsVoice 
-
-#### **Auberle’s Employment Institute** [3]
-
-* University of Pittsburgh Medical Center (UPMC) POWRR (Partnership on Workforce Readiness and Retention) community partner
-* Offers special classes to help prepare individuals to be hired by UPMC
-* Program Offerings: 
-
-  + Career Pathways: 
-  
-    - Provides *young adults (ages 16-24)* with the skills needed to find employment and build a pathway to a successful career
-    - Cannot be enrolled in GED program or High school 
-    - *Must be facing barriers to employment, such as parenting, low-income, involvement in Justice System, or unemployed* 
-    
-* Services: Job readiness training, counseling, GED completion, work experience, education support and tutoring/mentorship, food pantry access, College/Trade School Application Assistance and Tours, Work Attire and Safety Equipment
-
-
-I found KidsVoice because of the presentation from above so there was not real link from the Allegheny County site. If I hadn't seen KidsVoice on the presentation from above, I would probably not know any of this exists. But the KidsVoice website has a lot of good information and you can search which area you need help with, I selected TAYs and Independent Living and this and the program below showed up and then it links you to some presentations and brochures and other sites with good information with contact information. 
-
 ### Education 
-### **412 Youth Zone Program** [1]
+
+#### **412 Youth Zone Program** [1]
+
+[website](https://www.alleghenycounty.us/Human-Services/Programs-Services/Teens-Young-Adults/412-Youth-Zone.aspx)
 
 * *Department of Human Services* 
 * One-stop drop-in center for young people *ages 16-23* that are transitioning out of the foster care system
@@ -224,6 +363,10 @@ I found this page that has all of this information plus contact information and 
   
 #### **Lifeset** [4]
 
+[website](https://kidsvoice.org/resources/eyJyZXN1bHRfcGFnZSI6InJlc291cmNlcyIsImNoaWxkOnJlc291cmNlX2VudHJ5X2NhdGVnb3J5IjoiMjEifQ#lifeset-programs-for-transition-age-youth-tay)
+
+More info - [website](https://www.youthvillages.org/services/lifeset/)
+
 * Gives *young adults (17-22)* the support and guidance they need to make a successful transition to adulthood
 * Primarily work with *at-risk youth and young adults leaving the foster care, juvenile justice, and mental health systems*
 * Young people typically participate in the program for *6-12 months*
@@ -240,6 +383,46 @@ I found this page that has all of this information plus contact information and 
   + Support system
 
 
+### Employment 
+
+#### **The Independent Living Initiative** [2]
+
+[website](https://www.alleghenycounty.us/WorkArea/linkit.aspx?LinkIdentifier=id&ItemID=2147493264)
+
+* Enhanced services for *18-24 year olds* that focus on 
+
+  + Career development and job skills
+  + Assistance in finances 
+  + Assistance in employment, housing and household items 
+  + **Funded by Blending Funding** (Chaffee & State Funds) which eliminates waiting lists 
+  
+From 2008-2009, 32% of the youth using Independent Living Programs 16-21 were pregnant of parenting so in response DHS now sponsors parenting programs for all youths in the program. 
+
+* Partners with *Kidsvoice* in which they co-sponsor a career /college fair for post 18 youths. 
+
+
+When I searched Allegheny County, PA Transition Age Youth, this was the first link and it automatically downloaded a PDF to my computer with a presentation with all of this information. I did not like this because it was hard for me to know where this information was coming from and to find out more about what they were talking about. 
+
+
+#### **Auberle’s Employment Institute** [3]
+
+[website](https://www.auberle.org/employment-institute)
+
+* University of Pittsburgh Medical Center (UPMC) POWRR (Partnership on Workforce Readiness and Retention) community partner
+* Offers special classes to help prepare individuals to be hired by UPMC
+* Program Offerings: 
+
+  + Career Pathways: 
+  
+    - Provides *young adults (ages 16-24)* with the skills needed to find employment and build a pathway to a successful career
+    - Cannot be enrolled in GED program or High school 
+    - *Must be facing barriers to employment, such as parenting, low-income, involvement in Justice System, or unemployed* 
+    
+* Services: Job readiness training, counseling, GED completion, work experience, education support and tutoring/mentorship, food pantry access, College/Trade School Application Assistance and Tours, Work Attire and Safety Equipment
+
+
+I found KidsVoice because of the presentation from above so there was not real link from the Allegheny County site. If I hadn't seen KidsVoice on the presentation from above, I would probably not know any of this exists. But the KidsVoice website has a lot of good information and you can search which area you need help with, I selected TAYs and Independent Living and this and the program below showed up and then it links you to some presentations and brochures and other sites with good information with contact information. 
+
 
 ### References: 
 
@@ -250,18 +433,15 @@ I found this page that has all of this information plus contact information and 
 [3] “Employment Institute at Auberle.” Auberle, 2021, www.auberle.org/employment-institute. 
 
 [4] “Resources.” KidsVoice, kidsvoice.org/resources/eyJyZXN1bHRfcGFnZSI6InJlc291cmNlcyIsImNoaWxkOnJlc291cmNlX2VudHJ5X2NhdGVnb3J5IjoiMjEifQ#lifeset-programs-for-transition-age-youth-tay. 
-  
-  
-## Housing Serivces/Programs in Loudoun County, VA 
-  
-Jaida 
-  
-  
-  
-  
-## Housing Services/Programs in Allegheny County, PA 
 
-### **FamilyLink Downtown Outreach Center & Shelter** [1] [2]
+
+
+### Housing Services/Programs
+
+#### **FamilyLink Downtown Outreach Center & Shelter** [1] [2]
+
+[website](familylinks.org/get-help/housing/DOCS)
+[pdf](https://www.alleghenycounty.us/Human-Services/News-Events/Accomplishments/Youth-and-Family-Support/Allegheny-County-YHDP-Coordinated-Community-Plan.aspx)
 
 This program is contracted with DHS in Allegheny County to reserve 3 beds to provide emergency housing assistance and stabilization services to transition-age youth who may want to request that the courts resume jurisdiction or who are awaiting a court motion to place them in the care of child welfare. 
 
@@ -274,7 +454,9 @@ This program is contracted with DHS in Allegheny County to reserve 3 beds to pro
 I found this document by going to Allegheny County's website and going to Youth and Family Support. Then all the way at the bottom, there is a link that downloads a document of the Allegheny County Youth Homelessness Demonstration Program from April 2020. Reading through this document, I searched key words like foster and then I saw they have a contract with FamilyLink and searched Family Link online. 
 
 
-### **Permanent Supportive Housing for Transition Age Youth (TAY) program** [3] 
+#### **Permanent Supportive Housing for Transition Age Youth (TAY) program** [3] 
+
+[website](www.transitionalservices.org/programs/psychiatric-disabilities/transition-age-youth-tay)
 
 * Through Allegheny County's Housing as Home strategic plan
 * Make 24 units available annually for Office of Behavioral Health (OBH) priority transition-age youth, with psychiatric disabilities
@@ -290,7 +472,9 @@ For More information, must call the number on this web page to get a referral th
 I looked up "allegheny county housing programs transition age youth" and I clicked on the first option and all of this information came up. 
   
   
-## **Action Housing MyPlace** [4] 
+#### **Action Housing MyPlace** [4] 
+
+[website](actionhousing.org/our-services/myplace-youth-program/)
 
 1. MyPlace Rapid Re-Housing: 
 * young adults aged 18-24  
@@ -313,7 +497,7 @@ There wasn't too much more information then what is above on how to apply and ot
 
 
 
-References: 
+### References: 
 
 [1] “Downtown Outreach Center &amp; Shelter.” Familylinks, 5 Apr. 2016, familylinks.org/get-help/housing/DOCS. 
 
@@ -322,16 +506,20 @@ References:
 [3] “Transition Age Youth (TAY).” Transitional Services, Inc., 21 Aug. 2017, www.transitionalservices.org/programs/psychiatric-disabilities/transition-age-youth-tay. 
 
 [4] “MyPlace Youth Programs.” MyPlace Youth Program – Action Housing, actionhousing.org/our-services/myplace-youth-program/. 
-
-
-
-
-
-## Transportation 
-
-## Insurance Policies 
   
+
+
+### Transportation 
+
+
+### Insurances 
+
+
+### Policy and Funding 
+
+**This will be almost exactly the same as Loudoun County because most of the programs and services are funded from the federal government or the state government. ** 
   
+
   
   
   
