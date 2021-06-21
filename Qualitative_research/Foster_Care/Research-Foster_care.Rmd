@@ -286,7 +286,7 @@ Leesburg, VA 20176
   * Have household income at or below 50 percent of the area median income $142,000.
   * Be a United States citizen, or a non-citizen with eligible immigration status.
   * Candidates must apply and will be placed on waiting list that becomes open. 
-  *The county provides public notification of openings through local newspaper and the website.
+  * The county provides public notification of openings through local newspaper and the website.
   * The candidate can apply to multiple waiting list.
   * Does not offer security deposits, no rent sharing, and the candidate applying is responsible for finding their own housing with assistance.
 
