@@ -101,14 +101,7 @@ body <- dashboardBody(
                   collapsible = TRUE,
                   h1("Industry and Workforce Attraction and Retention in Wythe County"),
                   h2("Project Description"),
-                  p("Wythe County is a rural community in Southwest Virginia with a population of 28,684 (2019 estimate). 
-                    It was founded in 1790 and sits at the confluence of two major highways, Interstates 77 and 81, 
-                    which facilitate easy access to major markets and population centers along the Eastern Seaboard and 
-                    in Midwestern and Southern states. In recent years, Wythe County has had success in attracting 
-                    manufacturing facilities and travel-related businesses, and it has worked to expand the variety of 
-                    tourism and hospitality options available. Like other communities in Appalachia, it has faced a 
-                    declining population over the past decade. As a result, county leaders are seeking new ways to 
-                    attract and retain companies, workers and residents. "),
+                  p("Wythe County is a rural community in Southwest Virginia with a population of 28,684 (2019 estimate). It was founded in 1790 and sits at the confluence of two major highways, Interstates 77 and 81, which facilitate easy access to major markets and population centers along the Eastern Seaboard and in Midwestern and Southern states. In recent years, Wythe County has had success in attracting manufacturing facilities and travel-related businesses, and it has worked to expand the variety of tourism and hospitality options available. Like other communities in Appalachia, it has faced a declining population over the past decade. As a result, county leaders are seeking new ways to attract and retain companies, workers and residents. "),
                   br(),
                   
                   box(
@@ -157,8 +150,7 @@ body <- dashboardBody(
                 
                 img(src="ACS.jpg", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
                 br(),
-                p("We used data from the American Community Survey to visualize labor, 
-                  housing and infrastructure data to identify built and human capital currently in Wythe County."),
+                p("We used data from the American Community Survey to visualize labor, housing and infrastructure data to identify built and human capital currently in Wythe County."),
                 br(),
                 br(),
                 br(),
@@ -179,37 +171,13 @@ body <- dashboardBody(
                 solidHeader = TRUE,
                 collapsible = TRUE,
                 
-                p("One of the central aims of this project is to create comparable measures of accessibility to 
-                  educational facilities in the county.  In rural areas, metrics such as distance do not have the same 
-                  meaning as they do in urban areas. Large distances in rural areas can often be traversed quickly 
-                  due to lower traffic density and a lack of other traffic impediments. To create our accessibility 
-                  measures, we rely on travel time, which accounts for both distance and traffic flow. We construct 
-                  accessibility measures for each county in the region by estimating the travel time between the county
-                  population weighted centroid and foci for educational and workforce training (Waldorf and Chen, 2010). 
-                  We use a floating catchment area around each county centroid and vary the size of the travel time 
-                  window to include 30, 45, and 60 min windows for each catchment area. We then count the services 
-                  by type within each of the travel time windows. This allows us, for each county, to construct:")
+                p("One of the central aims of this project is to create comparable measures of accessibility to educational facilities in the county.  In rural areas, metrics such as distance do not have the same meaning as they do in urban areas. Large distances in rural areas can often be traversed quickly due to lower traffic density and a lack of other traffic impediments. To create our accessibility measures, we rely on travel time, which accounts for both distance and traffic flow. We construct accessibility measures for each county in the region by estimating the travel time between the county population weighted centroid and foci for educational and workforce training (Waldorf and Chen, 2010). We use a floating catchment area around each county centroid and vary the size of the travel time window to include 30, 45, and 60 min windows for each catchment area. We then count the services by type within each of the travel time windows. This allows us, for each county, to construct:")
                 ),
               
               
               
               box(
                 title = "Juvenile",
-                closable = FALSE,
-                width = NULL,
-                status = "warning",
-                solidHeader = TRUE,
-                collapsible = TRUE,
-                
-                p("Luo, Wei and Wang, Fahui (2003). 'Measures of spatial accessibility to health care in a GIS environment: synthesis and a case study in the Chicago region.' Environment and Planning B: Planning and Design 30(6):865—884."),
-                p("Waldorf, B. S., & Chen, S. E. (2010). 'Spatial models of health outcomes and health behaviors: the role of health care accessibility and availability.' In Progress in spatial analysis (339-362). Springer: Berlin, Heidelberg.")
-                
-              ),
-              
-              
-              
-              box(
-                title = "References",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
@@ -301,19 +269,11 @@ body <- dashboardBody(
       ## Tab 3--------------------------------------------
       tabItem(tabName = "builtcapital",
               fluidRow(
-                h2("Service/Program Availability"),
-                p("To understand the full suite of amenities available to HGBs in Wythe, 
-                  we used publicly available demographic and infrastructure data to provide 
-                  an overview of the built capital amenities in Wythe."),
-                p("In many respects, Wythe County is uniquely endowed with built amenities 
-                  attractive to businesses (William and Lamb, 2010).  It is situated at the 
-                  intersection of two major interstates, and it is within a six-to-eight-hour 
-                  drive of most of the population in the United States. As the map shows, 
-                  it also has easy access to rail and other supporting infrastructure (e.g., powerplants) 
-                  for commerce and manufacturing. From an “access to major markets” perspective, 
-                  Wythe is an attractive location for both light and heavy industry."),
+                h2("Foster Care"),
+                p("To understand the full suite of amenities available to HGBs in Wythe, we used publicly available demographic and infrastructure data to provide an overview of the built capital amenities in Wythe."),
+                p("In many respects, Wythe County is uniquely endowed with built amenities attractive to businesses (William and Lamb, 2010).  It is situated at the intersection of two major interstates, and it is within a six-to-eight-hour drive of most of the population in the United States. As the map shows, it also has easy access to rail and other supporting infrastructure (e.g., powerplants) for commerce and manufacturing. From an “access to major markets” perspective, Wythe is an attractive location for both light and heavy industry."),
                 box(
-                  title = "Loudoun County Programs/Services",
+                  title = "Wythe County Infrastructure",
                   closable = FALSE,
                   status = "warning",
                   solidHeader = TRUE,
@@ -618,21 +578,8 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   collapsible = TRUE,
                   
-                  p("Wythe, like many of its counterparts in Southwest Virginia, 
-                    has quality secondary schools and access to outdoor recreational amenities. 
-                    These factors are often cited as important to millennials as they think about 
-                    potential occupations and locations. To capture and retain workers, we recommend that 
-                    Wythe emphasize tech-related jobs in addition to its current industrial strengths.  
-                    These jobs include cybersecurity, data centers, and so on. There are many high-paying jobs 
-                    in these fields that DO NOT require a college degree. Additionally, this could allow 
-                    Wythe to take better advantage of Virginia's Tech Talent Pipeline Initiative. "),
-                  p("Wythe has many unique features that make it an attractive place to live: 
-                    low population density, reasonably low rates of violent crime, and great natural amenities. 
-                    If county leaders can demonstrate through programs at their high schools and community colleges 
-                    that the local workforce is prepared for IT-related jobs and industries, then the county
-                    will be in a strong position to promote itself as a vital component of Southwest Virginia's 
-                    Technology Corridor. Community colleges and local high schools (resources that are already 
-                    available in Wythe) can help to develop workforce talent.")
+                  p("Wythe, like many of its counterparts in Southwest Virginia, has quality secondary schools and access to outdoor recreational amenities. These factors are often cited as important to millennials as they think about potential occupations and locations. To capture and retain workers, we recommend that Wythe emphasize tech-related jobs in addition to its current industrial strengths.  These jobs include cybersecurity, data centers, and so on. There are many high-paying jobs in these fields that DO NOT require a college degree. Additionally, this could allow Wythe to take better advantage of Virginia's Tech Talent Pipeline Initiative. "),
+                  p("Wythe has many unique features that make it an attractive place to live: low population density, reasonably low rates of violent crime, and great natural amenities. If county leaders can demonstrate through programs at their high schools and community colleges that the local workforce is prepared for IT-related jobs and industries, then the county will be in a strong position to promote itself as a vital component of Southwest Virginia's Technology Corridor. Community colleges and local high schools (resources that are already available in Wythe) can help to develop workforce talent.")
                 )
               )),
       ## Tab 8--------------------------------------------
@@ -647,7 +594,7 @@ body <- dashboardBody(
                   collapsible = TRUE,
                   h2("Data Science for the Public Good Program"),
                   p("The Data Science for the Public Good (DSPG) Young Scholars program is a summer immersive program held at the Biocomplexity Institute’s Social and Decision Analytics Division (SDAD). In its seventh year, the program engages students from across the country to work together on projects that address state, federal, and local government challenges around critical social issues relevant in the world today. DSPG young scholars conduct research at the intersection of statistics, computation, and the social sciences to determine how information generated within every community can be leveraged to improve quality of life and inform public policy. For more information on program highlights, how to apply, and our annual symposium, please visit the official Biocomplexity DSPG website."),
-                  h2("2021 Loudoun County Summer Project"),
+                  h2("2020 Wythe County Summer Project"),
                   p("Our project goal was to identify industries and the jobs that are expected to grow rapidly in the future. We visualized these jobs by the skills, education, experience and training needed to do them. We then created measures to visualize and assess the ability of Wythe County and the surrounding region to respond to training the workers of tomorrow. Our team is comprised of talented individuals with a broad range of skills and experience."),
                   h2("DSPG Team Members"),
                   img(src = 'Josh.Beverly.VT.jpg', height = "150", width = "140", align = "center"),
@@ -656,11 +603,10 @@ body <- dashboardBody(
                   img(src = 'Adam.Wells.VT.jpg', height = "150", width = "140", align = "center"),
                   br(),
                   br(),
-                  p("Yang Cheng, Fellow (Ph.D. Student at Virginia Tech, )"),
-                  p("JaiDa Robinson, Fellow (Ph.D. Student at Virginia State University, )"),
-                  p("Julie Rebstock, Intern (Undergraduate Student at Virginia Tech, Computational Modeling and Data Anaylytics and Economics)"),
-                  p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, )"),
-                  p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University,)"),
+                  p("Josh Beverly, Fellow (Ph.D. Student at Virginia Tech, Agricultural and Applied Economics)"),
+                  p("Dylan Glover, Intern (Undergraduate Student at Virginia Tech, Mathematics)"),
+                  p("Afrina Tabassum, Intern (Ph.D. Student at Virginia Tech, Computer Science)"),
+                  p("Adam Wells, Intern (Master Student at Virginia Tech, Data Analysis and Applied Statistics)"),
                   h2("Virginia Tech Faculty Team Members"),
                   img(src = 'Susan.Chen.VT.jpg', height = "150", width = "140", align = "center"),
                   img(src = 'Conaway.Haskins.VT.jpg', height = "150", width = "140", align = "center"),
@@ -669,17 +615,18 @@ body <- dashboardBody(
                   br(),
                   br(),
                   p("Susan Chen (Associate Professor, Food and Health Economics, DSPG Project Co-Lead)"),
-                  p("Chanita Homles ()"),
-                  p("Isabel Bradburn ()"),
+                  p("Conaway Haskins (Extensions Specialist, Rural & Regional Development)"),
+                  p("Matt Holt (Department Head, Professor, Agribusiness, Applied Econometrics, Principal Investigator)"),
+                  p("Ford Ramsey (Assistant Professor, Agribusiness, DSPG Project Co-Lead)"),
                   h2("Project Sponsors"),
                   img(src = 'VCE.Logo.png', height = "150", width = "200", align = "center", style="display: block; margin-left: auto; margin-right: auto;"),
                   p("Matthew Miller (Unit Coordinator and Extension Agent, Agriculture and Natural Resources - Farm Business Management)"),
                   
                   h2("Acknowledgements"),
                   p("We would like to thank:"),
-                  p(" (),"),
-                  p(" ()"),
-                  p(" ()")
+                  p("Stephen Bear (Wythe County Administrator),"),
+                  p("David Manely (Joint Industrial Development Authority of Wythe County)"),
+                  p("John Matthews (Economic Developer & Associate Director at the Joint IDA of Wythe County)")
                 )
               ))
     )
