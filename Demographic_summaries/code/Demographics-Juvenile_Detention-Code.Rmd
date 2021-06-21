@@ -2,7 +2,13 @@
 title: "Demographics-Juvenile_Detention-Code"
 author: "Austin Burcham and Kyle Jacobs"
 date: "6/9/2021"
-output: html_document
+
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
 ---
 
 
