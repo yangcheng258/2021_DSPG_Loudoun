@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-                                Kyle Jacobs 
+                               Kyle Jacobs 
 
                            Virginia State University 
  
@@ -23,21 +23,4 @@ Youth incarceration is a major issue in Virginia. The public pattern of youth im
  
 
 
-
-
-
-
-
-
-```{201_DSPG_Loudoun.Rproj}
-summary(cars)
-```
-
-## Including Plots
-
-
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
