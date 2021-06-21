@@ -5,11 +5,20 @@ date: "6/9/2021"
 output: html_document
 ---
 
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 setwd("C:/Users/austi/Documents/VT DSPG/Loudoun/Excel Files")
 ```
+```{r}
 
+library(tidycensus)
+
+census_api_key("db7e4934cc0fce8825126d144bbcf37ffcb8f777", install = TRUE, overwrite = TRUE)
+readRenviron("~/.Renviron")
+
+```
 ## R Markdown
 # Juvenile Detention Summary  
 

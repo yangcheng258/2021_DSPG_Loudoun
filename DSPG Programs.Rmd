@@ -1,0 +1,82 @@
+---
+title: "Programs"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+##Programs in Allegheny County PA
+
+The department of human services provides  multiple services to youth aging of juvenile and foster care systems. The first is their education program that provides supporting services to ensure that each youth has access to quality education. These
+programs include child care and early learning services, homelessness and school stability services, and special education and truancy services. The DHS also has an independent living program for youth aging out of the system. The first option for the independent living program is to live independently and the second is to live under supervised living. Both programs provided supporting services that will help the youth transition into living independently. The DHS also offers internships and career placement opportunities for youth who are aging out. Each youth has an option to choose from recent graduate opportunities , internships, and post grad opportunities. Some of the programs include DHS Scholars in Local Government Program, internships with the DHS, DHS Scholars in Local Government Program and some volunteer opportunities as well.
+
+##Programs in Loudoun County 
+
+Loudoun Counties Youth and Family Services Program provides supportive services to families with youth ages 13- 17. These services include educational and supportive group services that give the youth access to education. Parenting Wisely provides families with counseling to help families build communication skills and understand the trouble that each youth experiences.  They also have the  Family Support & Coordination Services program that provides services to match the families individual  needs.  Each youth must be  in Youth on Diversion or Probation with the Juvenile Court System Unit (JCSU).  Loudoun county also offers a Reentry program help offenders acclimate to society. This program offers services for housing, nutrition, transportation , mental health and education. 
+
+https://www.loudoun.gov/4929/Re-Entry-Services
+
+
+https://www.alleghenycounty.us/Human-Services/Programs-Services/Teens-and-Young-Adults.aspx
+
+
+##National Programs
+
+
+##Catapult (Capital One) 
+
+Catapult is a diversity and inclusion internship focused on helping 18-24 year olds transition into corporate careers without a degree. The internship lasts 2 months and leads to full time positions for young adults who do well in the internship. Each participant has a change to network with top executives, managers, and other departments in the company. Benefits include professional development and networking opportunities, 401k plan, health care employee stock plan. Participants have to successfully  complete the program to receive full benefits. Virtual internship options available.
+
+
+##Americorps
+
+ AmeriCorps is a national service program, with most volunteers working full-time for about a year. In return, they receive housing, a living allowance, college tuition assistance and the satisfaction of knowing they have improved lives in their community. The Americorps Vista program and Americorps State and National program accept young adults 18 and up to volunteer and gain valuable career development skills. Each participant receives a living allowance and educational benefits. 
+
+Links
+https://americorps.gov/serve/fit-finder/americorps-state-national
+https://americorps.gov/serve/fit-finder/americorps-state-national
+https://americorps.gov/serve/fit-finder/americorps-vista
+
+
+##Yearup
+ 
+The year up program is a year long professional development program focused on providing minorities between the ages of 18- 24 technical and other development skills and education. For the first 6 months of the year up program each participant takes rigorous courses related to the program of their choice. The second half of the year is focused on placing participants in internships with the top companies in their career fields. Each participant Six months of college-level classes, six months interning at a local company, and a $10,000 stipend — all for free if they can successfully complete the program. Each participant is trained in 1 of 5 Technical Tracks + Professional Skills
+Information Technology (IT) Be the go-to source for your company's technology needs and identify, configure, and troubleshoot solutions,Financial Operations, 
+Sales and Customer Support,Business Operations,Software Development & Support and,professional skills.
+
+Links
+https://www.yearup.org/about
+https://www.yearup.org/students
+
+##Job corps
+
+Job Corps is a no-cost education and vocational training program administered by the U.S. Department of Labor that helps young people ages 16-24 improve the quality of their lives by empowering them to get great jobs and become independent. Job Corps is a professional service. Job corps offers 7 programs and career tracks. These include, Advanced Manufacturing, Automotive and Machine Repair, Construction, Finance and Business, Health care,Homeland Security, Hospitality, Information Technology, Renewable Resources and Energy, and Transportation. Youth 16 to 24 can join the job corps. Job corps offers career planning, on-the-job training, job placement, residential housing, food service, driver's education, health and dental care, a biweekly basic living allowance, and a clothing allowance.
+
+ https://www.jobcorps.gov/students
+
+
+##Boys and Girls Club
+
+The Boys and Girls Club computer science pathway program is a program designed to teach young adults coding skills. Young adults can learn how to build apps, code and build websites to sharpen their skills. It's open to all ages and is completely free. 
+
+
+https://www.bgca.org/programs/education/computer-science-pathway
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
