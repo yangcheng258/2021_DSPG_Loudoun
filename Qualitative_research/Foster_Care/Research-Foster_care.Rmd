@@ -175,7 +175,7 @@ This page lists all of the county's partners that can help young adults find emp
   
 ## Housing Services/Programs in Loudoun County, VA 
   
-**Housing Choice Voucher Program "Formerly Section 8"** [2]
+#### **Housing Choice Voucher Program "Formerly Section 8"** [2]
   *Have household income at or below 50 percent of the area median income $142,000.
   *Be a United States citizen, or a non-citizen with eligible immigration status.
   *Candidates must apply and will be placed on waiting list that becomes open. 
@@ -185,14 +185,14 @@ This page lists all of the county's partners that can help young adults find emp
 [website](https://www.loudoun.gov/1816/Housing-Choice-Voucher-Program)
 
 
-**Affordable Dwelling Unit Program** [1]
+#### **Affordable Dwelling Unit Program** [1]
   *This program provides newly constructed, affordable units for rent and sell for income-eligible citizen who live and work in the county.
   *Sessions are provided to help with the process of applying and the application but attendance is not required to apply.
   *Citizens must apply online and in person 10 days after online submission. The processor with take 2-3 weeks through through email.
   
 [website](https://www.loudoun.gov/1813/Affordable-Dwelling-Unit-Program)
 
-###References:
+### References:
 
 [1] “Affordable Dwelling Unit Program.” Affordable Dwelling Unit Program | Loudoun County, VA - Official Website, www.loudoun.gov/1813/Affordable-Dwelling-Unit-Program. 
 [2] “Housing Choice Voucher Program (Formerly Section 8).” Housing Choice Voucher Program (Formerly Section 8) | Loudoun County, VA - Official Website, www.loudoun.gov/1816/Housing-Choice-Voucher-Program. 
