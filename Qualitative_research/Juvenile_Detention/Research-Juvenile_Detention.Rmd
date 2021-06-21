@@ -1,0 +1,229 @@
+---
+title: "Juvenile Detention Services and Programs"
+author: "Austin Burcham and Kyle Jacobs"
+date: "6/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+# Loudoun
+## Housing Services and Programs 
+### Summary 
+The Loudoun County website offers a variety of shelters, programs, services and informative PDFs for those adults in need of shelter,
+shelter services, housing and assistance 
+finding an apartment to rent/own. 
+These resources are apt to serve the needs of TAY's exiting juvenile detention. 
+
+### Shelters
+* **Good Shepherd Alliance** (Single women and families)      
+Phone #: 703-724-1555
+* **Loudoun Abused Women’s Shelter**  
+Phone #: 703-777-6552
+* **Loudoun County Youth Shelter**   
+Phone #: 703-771-5300
+* **Loudoun Emergency Homeless Shelter** (Single adults and families)   
+Phone #:    703-777-0420
+* **Loudoun County Cold Weather Shelter**   
+Open November 15 to March 31 from 8:00 p.m. to 7:00 a.m.   
+Phone #: 571-258-3033
+  
+**The above shelters were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link and then clicking on the [Housing Shelters](https://www.loudoun.gov/4011) link**     
+
+### Housing
+* **Friends of Guest House**:   
+A re-entry, transitional housing and aftercare program for women in Northern Virginia. Phone: 703-549-8072
+
+* **[Loudoun County Affordable Dwelling Unit Program](https://www.loudoun.gov/adu)**:   
+For those of modest income working/living in Loudoun county. Offers below market new homes for rent or purchase. 
+  + Questions: contact the Affordable Dwelling Unit Program at 703-737-8043, Monday through Friday from 8:30 a.m. to 5:00 p.m.
+    + Virtual sessions can be scheduled. 
+    + Non-Mandatory Information sessions 4th Thursday of        each month from 3-5 pm. 
+      Appointments must be made by calling  703-737-8043.         (Not available right now due to COVID, updated    last        on 03-23-20)		
+  + **[ADU Purchase Program](https://www.loudoun.gov/1824)**
+    + For first time home-buyers of modest income to buy ADU homes for price below market average 
+    + Eligibility: fill out Questionnaire, gather papers listed in ADU Purchase Checklist, complete the Online Application, print everything and mail it to Loudoun County Office of Housing P.O. Box 7000. 
+  + **[ADU Rental Program]((https://www.loudoun.gov/2676))** 
+    + For first time renters of modest income to rent ADU rental apartment for below market cost. ($630-1300 a month)	    
+    + Eligibility: fill out Questionnaire, gather papers listed in ADU Purchase Checklist, complete the Online Application, print everything and mail it to Loudoun County Office of Housing P.O. Box 7000. 
+    
+* Loudoun County Apartment Rental Guide:   
+Description of programs such as the Affordable Dwelling Unit Program, Housing Choice Voucher Program (Rental assistance to those making below 50% median income for adjusted household size) and the Low Income Housing Tax Credit (LIHTC) Program (Housing set aside for low income individuals) that may apply to apartments and how to apply/learn. List of Apartment Communities in the area. 
+* **[The Loudoun County Continuum of Care](https://www.loudoun.gov/CoC)**:   
+A coalition of services providing support for the homeless or those at risk of becoming homeless. 
+  + Provides the following services: 
+    + Cold Weather Shelter 
+    - Coordinated Entry Services
+    - Drop-in Center
+    - Emergency Shelters 
+    - Targeted Prevention & Diversion Services
+  + Provide the following programs:   
+    + Permanent Supportive Housing 
+    + Targeted Diversion
+    + Transitional Housing
+  - Access to all programs/services require a referral at the following phone number:
+		703-777-0420 
+* **[Oxford House](https://oxfordhouse.org/userfiles/file/index.php)**:   
+Housing for those recovering from substance abuse
+  + Meant to house 6 to 15 people avoiding relapse. 
+  + Phone: 800-689-6411
+* **Rapid Re-Housing Program**:   
+Provides financial and case management resources to the homeless in Loudoun County   
+Phone #: 571-258-3033.
+
+**The above housing programs and services were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link and then clicking on the [Housing Shelters](https://www.loudoun.gov/4011) link** 
+
+## Employment Services and Programs 
+### [Loudoun Workforce Resource Center](https://www.loudoun.gov/wrc): 
+
+- Provides free-of-charge guidance, equipment and resources to ex-offenders seeking jobs or ex-offenders with businesses. 
+- Affiliate of Virginia Career Works, which provides job search assistance, training, skills assessments and resume preparation services to those in Virginia seeking employment. 
+- Provides information on the **[Workforce Innovation and Opportunity Act Program](https://www.loudoun.gov/2377)**, which assists those with significant barriers to employment in the search for high-quality employment and long lasting career opportunities. 
+- Has a variety of partners that also provide employment resources:
+	- **[Crossroads Jobs](http://www.crossroadsjobs.org/)**: Free employment service that provides job search and placement services to Loudoun area adults. 
+		- Two locations, due to covid in-person services are by appointment only. 
+			703-771-4112 (Leesburg), 571-313-1813 (Sterling)
+		- Required week-long series of interviews and workshop
+	- **[Job Link, Loudoun County Community Services Board](https://www.loudoun.gov/1386/Employment-Services)**: Provides job coaches who assist in finding and keeping regular jobs. 
+	- **[Loudoun County Department of Human Resources](https://www.loudoun.gov/hr)**: Recruits workers from a variety of different backgrounds, frequent recruiting efforts 
+	- **Loudoun Economic Development**
+	  - **[Work In Loudoun Initiative](https://biz.loudoun.gov/work-in-loudoun/)**: Suite of job search services for Loudoun county jobs
+	  - **[Loudoun Jobs Portal](https://biz.loudoun.gov/loudounjobs/)**
+
+
+	 - **[OAR](https://www.oarnova.org/services/loudoun-county)**:   
+Works with those involved in the criminal justice system in Loudoun, Fairfax and Prince William County to provide post-release skill classes, community service substitutes for misdemeanor offers clothing, food, transportation, medication and violence prevention programs. 
+	 - **[Youth WIOA Program](https://vcwnorthern.com/young-adults/)**:   
+	 Provides job, internship and apprenticeship opportunities as well as career development programs and education educational support to those aged 17-24 in the Northern Virginia area. 
+	  
+
+**The above employment services and programs were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link and then clicking on the [Education & Employment](https://www.loudoun.gov/4016/Employment-Education) link, from there all links to relevant programs were hyperlinked within descriptions **
+
+## Education Services and Programs 
+### [Loudoun County Public Schools Adult Education Program](https://www.lcps.org/adulted):   
+Provides education opportunities such as General Education Development and English as a Second Language programs as well as support services to adults 18 and older in Loudoun County.  
+
+* Phone #: 703-777-2205
+
+###  [Loudoun Literacy Council](http://loudounliteracy.org/):   
+Aids adults in improving their literacy skills for higher achievement   
+
+* Phone #: 703-777-2205
+
+**The above eduction services and programs were found by Googling "Loudoun county ex-juvenile offender programs" then clicking on the [Re-Entry Services](https://www.loudoun.gov/4929/Re-Entry-Services) link and then clicking on the [Education & Employment](https://www.loudoun.gov/4016/Employment-Education) link, from there all links to relevant programs were hyperlinked within descriptions **
+
+## References 
+"ADU Purchase Program Information." ADU Purchase Program Information | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"ADU Rental Information." ADU Rental Information | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Affordable Dwelling Unit Program." Affordable Dwelling Unit Program | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Apartment Guide." Loudoun County VA Official Website. Loudoun County, VA. Web.
+
+"Continuum of Care." Continuum of Care | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Department of Human Resources." Department of Human Resources | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Employment Services." Employment Services | Loudoun County, VA - Official Website. Web. 17 June 2021.
+"Home." Virginia Career Works Northern Region. 15 June 2021. Web. 17 June 2021.
+
+"Housing / Shelters." Housing / Shelters | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Instructional Programs / Adult Education." / Adult Education. Web. 17 June 2021.
+
+"Loudoun County Services." OAR NOVA. Web. 17 June 2021.
+
+"Loudoun Jobs Portal." Loudoun County Economic Development, VA. 28 Jan. 2021. Web. 17 June 2021.
+
+"Loudoun Literacy." Loudoun Literacy Council. Web. 17 June 2021.
+
+"Re-Entry Services." Re-Entry Services | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Self-Help for Sobriety Without Relapse." Oxford House. Web. 17 June 2021.
+
+Smith, Carol, and Wes Trochlil. "Crossroads Jobs." Crossroads Jobs. 26 Apr. 2021. Web. 17 June 2021.
+
+"Work in Loudoun." Loudoun County Economic Development, VA. 28 Jan. 2021. Web. 17 June 2021.
+
+"Workforce Innovation / Opportunity Act Program (WIOA)." Workforce Innovation / Opportunity Act Program (WIOA) | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Workforce Resource Center." Workforce Resource Center | Loudoun County, VA - Official Website. Web. 17 June 2021.
+
+"Young Adults." Virginia Career Works Northern Region. 05 Feb. 2019. Web. 17 June 2021.
+
+# Allegheny:  
+
+## Housing Services and Programs 
+
+* **[Bridge2Home Host Homes - Valley Youth House](https://www.valleyyouthhouse.org/programs/transitional-housing/bridge2home-host-homes/)**:
+
+Home hosting programs for those aged 18-24 experiencing housing insecurity. 
+* Hosts are trained and background checked
+* Case management service available to ensure housing stability after the program is concluded 
+* 24 hour crisis support hotline 
+* Contact: Carol Dunlap Host Home Coordinator Valley Youth House 412.742.7474
+
+* **[Alleghany Link](https://www.alleghenycounty.us/Human-Services/About/Contact/Allegheny-Link.aspx)**:  
+Offers a variety of housing services to those at risk for homelessness including :
+  + Emergency Shelter 
+  + Rental Assistance
+  + Long Term Program Screening 
+
+**The above housing services were found by Googling "Allegheny County Human Services" and clicking on the "Allegheny County Department of Human Services" link, then scrolling down and clicking on the "Teens and Young Adults" link, then afterwards clicking on "Basic Needs" followed by clicking "Housing and Homelessness", then "Homeless Services", then "Young Adults Ages 18-24 Experiencing a Housing Crisis"**
+
+## Employment Services: 
+
+* **Partner4Work**   
+Offers a variety of career development programs and services for disadvantaged young adults with and without GEDs. 
+
+  + **[Career Pipeline Program](https://www.partner4work.org/programs/career-pipeline-project/)**:   
+  Provides paid vocational training opportunities,  comprehensive career and education services and transportation funding to those aged 18-24 in Allegheny county who have past or present criminal justice system involvement  
+  
+  + **[STRIVE Program](https://www.partner4work.org/programs/strive/)**:   
+Provides case management and career services, industry-recognized credentialing programs, hands-on job training, transitional jobs, and comprehensive supportive services for 18 to 24 year olds involved in the justice system in Allegheny County. Intended to promote a career self-sustaining income.
+
+  + **[Transitional Jobs](https://www.partner4work.org/programs/transitional-jobs/)** :
+  Program targeted at securing jobs to develop a career for those with significant barriers to workforce entry. **Mentioned highly-useful for ex-offenders.**
+  
+  + **[Learn and Earn Summer Youth Employment Program](https://www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Summer-Youth-Employment-Program.aspx)**  
+  Two programs offered for disadvantaged youth in Allegheny County: 
+    + General Six week summer-employment opportunity with work readiness training for disadvantaged youth aged 14-21 
+    + Eight week Corporate Internship program for adults aged 18-24.  
+  
+  + **[Young Adult Programs for those in High School ](https://www.partner4work.org/programs/in-school-youth-programs)**
+
+  + **[Young Adult Programs for those not in school](https://www.partner4work.org/programs/out-of-school-youth-programs)**
+ 
+ 
+* **[Mon Valley Initiative](https://monvalleyinitiative.com/get-help-with/finding-a-job/)** : 
+Provides assistance to those with criminal backgrounds searching for a job. Services include: 
+
+  + Advice for those with Criminal Backgrounds
+  + Individualized and Group Career Planning 
+  + Training and Education Opportunity Referrals
+  + Resume and Interview Practice 
+  + Job Fairs and Recruitment 
+  + Financial and Educational Coaching 
+
+
+* **[Supports for Success](https://hscc-mvpc.org/community-programs/supports-for-success/)** :
+Individualized case management services in finance, employment, education and housing for adults making 200% of the federal poverty level or less. 
+  
+* **[North Hills Employment Services](https://www.nhco.org/employment-services)**:  
+Virtual career counseling, assessment and assistance through WorkAble for all Alleghany County residents. Services include:    
+  + Resume and Cover Letter Guidance
+  + Job Search Assistance
+  + Career Fais, Employer Events and Networking Opportunites
+  + Interviewing Assistance
+
+**The above employment services were found by Googling "Allegheny County Human Services" and clicking on the "Allegheny County Department of Human Services" link, then scrolling down and clicking on the "Teens and Young Adults" link, then afterwards clicking on "Employment" followed by clicking "Young Adults" and also the "Self-sufficiency Programs" in the "Adults (18 years and older) Laid-off or in Low-income Households" section.**
+
+
+
+
+
+	
+
+
