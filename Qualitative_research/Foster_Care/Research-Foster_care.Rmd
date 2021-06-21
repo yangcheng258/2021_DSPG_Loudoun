@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Education 
 
-### **Great Expectations** from Northern Viriginia Community College [3]
+### **Great Expectations** from Northern Viriginia Community College [8]
 
 [website](https://www.nvcc.edu/acp/expectations.html)
 
@@ -42,7 +42,7 @@ Engineering Building, AE 220
 Alexandria, VA 22311
 
 
-#### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [4] 
+#### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [1] 
 
 [website](https://www.dss.virginia.gov/family/fc/etv.cgi)
 
@@ -64,7 +64,7 @@ Richmond, VA 23219
 
 
 
-#### **Independent Living Program ** [7]
+#### **Independent Living Program ** [4]
 
 [website](https://www.dss.virginia.gov/family/fc/independent.cgi)
 
@@ -79,7 +79,7 @@ Richmond, VA 23219
 
 **Same Address form above in Richmond** This program is one you have to call and ask about and depending on where you live, they will tell you the nearest center because it is open to all Virignia Residents who meet the requirements. 
 
-#### Loudoun County Public School [2]
+#### Loudoun County Public School [3]
 
 **Address of Coordinator:**
 
@@ -163,10 +163,10 @@ Ashburn, VA 20148
 
 ### Employment 
 
-#### **Workforce Innovation and Opportunity Act Youth Program** [6] [1]
+#### **Workforce Innovation and Opportunity Act Youth Program** [7] [9]
 
-1. [Virginia Career Workers](https://vcwnorthern.com/youth-programs/)
-6. [Loudoun County](https://www.loudoun.gov/2377/WIOA---Adult-and-Dislocated-Workers)
+[Virginia Career Workers](https://vcwnorthern.com/youth-programs/)
+[Loudoun County](https://www.loudoun.gov/2377/WIOA---Adult-and-Dislocated-Workers)
 
   * *US Department of Labor* 
   * *Services for 18-24* 
@@ -192,7 +192,7 @@ I accessed this by searching to Loudoun County Health and Human Services, going 
   
   
 
-#### **Northern Virginia Educating Youth through Employment (EYE) ** [8]
+#### **Northern Virginia Educating Youth through Employment (EYE) ** [2]
 
 [website](https://vcwnorthern.com/eye-programs/)
 
@@ -216,13 +216,7 @@ Vienna, VA 22182
 This seems like a good program but I cannot seem to find the requirements for this or how to apply as a young adult. There are not materials or links that provide additional information than what is above which is mostly just general information. 
 
 
-#### **Loudoun Workforce Resource Center Community Partners** [5]
-
-[website](https://www.loudoun.gov/3006/Community-Partners)
-
-This page lists all of the county's partners that can help young adults find employment, housing, educational opportunities, etc. This is on the same webste as the WIOA from below under Adult Services-Employment Workforce Resource Center and on the left tab, Community Partners. There are links for every description and is easy to find and use. 
-
-**Virginia Initiative for Education and Work (VIEW)** [9]
+**Virginia Initiative for Education and Work (VIEW)** [6]
 
 [website](https://www.loudoun.gov/1597/VIEW-Vehicles-for-Change)
 
@@ -235,7 +229,7 @@ This page lists all of the county's partners that can help young adults find emp
 * *Must be a TANF recipient* 
 
  
-The TANF program provides eligible families with a monthly cash payment to meet their basic needs. For a child to be eligible he must be: [10]
+The TANF program provides eligible families with a monthly cash payment to meet their basic needs. For a child to be eligible he must be: [5]
 
 * Under age 18, or if 18, will graduate from high school before age 19
 * Going to school regularly if he is between the ages of five and 18
@@ -255,25 +249,24 @@ Leesburg, VA 20176
   
 ### References: 
 
-[1] Virginia Career Works Northern Region, 2021, vcwnorthern.com/youth-programs.
+[1] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi. 
 
-[2] “Instructional Programs / Adult Education.” Loudoun County Public Schools, 2021, www.lcps.org/Page/211221.
+[2] “EYE Program.” Virginia Career Works Northern Region, 17 Feb. 2021, vcwnorthern.com/eye-programs/. 
 
-[3] “Welcome to the Northern Virginia Community College Website.” Great Expectations - Northern Virginia Community College, 2021, www.nvcc.edu/acp/expectations.html. 
+[3] “Instructional Programs / Adult Education.” Loudoun County Public Schools, 2021, www.lcps.org/Page/211221.
 
-[4] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi. 
+[4] “Services for Older Youth.” Services for Older Youth - Virginia Department of Social Services, 2021, www.dss.virginia.gov/family/fc/independent.cgi. 
 
-[5] “Loudoun Workforce Resource Center Community Partners.” Loudoun Workforce Resource Center Community Partners | Loudoun County, VA - Official Website, Civic Plus , 2021, www.loudoun.gov/3006/Community-Partners. 
+[5] “Temporary Assistance for Needy Families (TANF).” Temporary Assistance for Needy Families (TANF) - Virginia Department of Social Services, Commonwealth of Viriginia, 2017, www.dss.virginia.gov/benefit/tanf/. 
 
-[6] “Workforce Innovation / Opportunity Act Program (WIOA).” Workforce Innovation / Opportunity Act Program (WIOA) | Loudoun County, VA - Official Website, 2021, www.loudoun.gov/2377/WIOA---Adult-and-Dislocated-Workers. 
+[6] “VIEW / Vehicles for Change.” VIEW / Vehicles for Change | Loudoun County, VA - Official Website, CivicPlus, www.loudoun.gov/1597/VIEW-Vehicles-for-Change. 
 
-[7] “Services for Older Youth.” Services for Older Youth - Virginia Department of Social Services, 2021, www.dss.virginia.gov/family/fc/independent.cgi. 
+[7] Virginia Career Works Northern Region, 2021, vcwnorthern.com/youth-programs.
 
-[8] “EYE Program.” Virginia Career Works Northern Region, 17 Feb. 2021, vcwnorthern.com/eye-programs/. 
+[8] “Welcome to the Northern Virginia Community College Website.” Great Expectations - Northern Virginia Community College, 2021, www.nvcc.edu/acp/expectations.html. 
 
-[9] “VIEW / Vehicles for Change.” VIEW / Vehicles for Change | Loudoun County, VA - Official Website, CivicPlus, www.loudoun.gov/1597/VIEW-Vehicles-for-Change. 
+[9] “Workforce Innovation / Opportunity Act Program (WIOA).” Workforce Innovation / Opportunity Act Program (WIOA) | Loudoun County, VA - Official Website, 2021, www.loudoun.gov/2377/WIOA---Adult-and-Dislocated-Workers. 
 
-[10] “Temporary Assistance for Needy Families (TANF).” Temporary Assistance for Needy Families (TANF) - Virginia Department of Social Services, Commonwealth of Viriginia, 2017, www.dss.virginia.gov/benefit/tanf/. 
 
 
   
@@ -461,7 +454,7 @@ References:
 * Awarded vouchers to provide stable housing for young adults (18-24) who have aged out of the foster care system 
 * To provide funding for efforts by nonprofit providers, States, and local governments to quickly re-house homeless individuals, families, persons fleeing domestic violence, and youth
 
-#### **SkillSource Group Inc. ** [2]
+#### **SkillSource Group Inc. ** [3]
 
 [website](https://vcwnorthern.com/about/)
 
@@ -469,7 +462,7 @@ References:
 * An entity that pursues additional funding sources for the board of Workforce Innovation and Opportunity Training and Employment programs 
 
 
-#### **Educational and Training Vouchers (ETVs)** [3] 
+#### **Educational and Training Vouchers (ETVs)** [2] 
 
 [website](https://www.dss.virginia.gov/family/fc/etv.cgi)
 
@@ -508,11 +501,12 @@ References:
 
 References: 
 
-[1] CivicPlus . (n.d.). Continuum of Care Programs &amp; Partnerships. Continuum of Care Programs &amp; Partnerships | Loudoun County, VA - Official Website. https://www.loudoun.gov/4111/Continuum-of-Care-Programs-Partnerships. 
+[1] CivicPlus . (n.d.). Continuum of Care Programs &amp; Partnerships. Continuum of Care Programs &amp; Partnerships | Loudoun County, VA - Official Website.
+https://www.loudoun.gov/4111/Continuum-of-Care-Programs-Partnerships. 
 
-[2] SkillsSource. (2021, June 15). About Us. Virginia Career Works Northern Region. https://vcwnorthern.com/about/. 
+[2] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi.
 
-[3] “Education and Training Voucher (ETV) Program.” Education and Training Voucher (ETV) Program - Virginia Department of Social Services, www.dss.virginia.gov/family/fc/etv.cgi.
+[3] SkillsSource. (2021, June 15). About Us. Virginia Career Works Northern Region. https://vcwnorthern.com/about/. 
 
 [4] Virginia's Community Colleges . (2020, April). FINANCIAL AID PROGRAMS AVAILABLE AT VIRGINIA’S COMMUNITY COLLEGES. 
 
@@ -560,7 +554,7 @@ I found this page that has all of this information plus contact information and 
 
 ### Employment 
 
-#### **The Independent Living Initiative** [2]
+#### **The Independent Living Initiative** [3]
 
 [website](https://www.alleghenycounty.us/WorkArea/linkit.aspx?LinkIdentifier=id&ItemID=2147493264)
 
@@ -588,7 +582,7 @@ Pittsburgh, PA 15222
 When I searched Allegheny County, PA Transition Age Youth, this was the first link and it automatically downloaded a PDF to my computer with a presentation with all of this information. I did not like this because it was hard for me to know where this information was coming from and to find out more about what they were talking about. 
 
 
-#### **Auberle’s Employment Institute** [3]
+#### **Auberle’s Employment Institute** [2]
 
 [website](https://www.auberle.org/employment-institute)
 
@@ -618,10 +612,9 @@ I found KidsVoice because of the presentation from above so there was not real l
 
 [1] “412 Youth Zone.” Teens and Young Adults | 412 Youth Zone | Allegheny County, 2021, www.alleghenycounty.us/Human-Services/Programs-Services/Teens-Young-Adults/412-Youth-Zone.aspx. 
 
-[2] “Transition Age Youth in Allegheny County.” Allegheny County, Department of Human Services , 2016. 
+[2] “Employment Institute at Auberle.” Auberle, 2021, www.auberle.org/employment-institute. 
 
-[3] “Employment Institute at Auberle.” Auberle, 2021, www.auberle.org/employment-institute. 
-
+[3] “Transition Age Youth in Allegheny County.” Allegheny County, Department of Human Services , 2016. 
 
 
 
@@ -629,7 +622,7 @@ I found KidsVoice because of the presentation from above so there was not real l
 
 #### **FamilyLink Downtown Outreach Center & Shelter** [1] [2]
 
-[website](familylinks.org/get-help/housing/DOCS)
+[website](https://familylinks.org/get-help/housing/DOCS)
 [pdf](https://www.alleghenycounty.us/Human-Services/News-Events/Accomplishments/Youth-and-Family-Support/Allegheny-County-YHDP-Coordinated-Community-Plan.aspx)
 
 This program is contracted with DHS in Allegheny County to reserve 3 beds to provide emergency housing assistance and stabilization services to transition-age youth who may want to request that the courts resume jurisdiction or who are awaiting a court motion to place them in the care of child welfare. 
@@ -646,9 +639,9 @@ This program is contracted with DHS in Allegheny County to reserve 3 beds to pro
 I found this document by going to Allegheny County's website and going to Youth and Family Support. Then all the way at the bottom, there is a link that downloads a document of the Allegheny County Youth Homelessness Demonstration Program from April 2020. Reading through this document, I searched key words like foster and then I saw they have a contract with FamilyLink and searched Family Link online. 
 
 
-#### **Permanent Supportive Housing for Transition Age Youth (TAY) program** [3] 
+#### **Permanent Supportive Housing for Transition Age Youth (TAY) program** [4] 
 
-[website](www.transitionalservices.org/programs/psychiatric-disabilities/transition-age-youth-tay)
+[website](https://www.transitionalservices.org/programs/psychiatric-disabilities/transition-age-youth-tay)
 
 * Through Allegheny County's Housing as Home strategic plan
 * Make 24 units available annually for Office of Behavioral Health (OBH) priority transition-age youth, with psychiatric disabilities
@@ -676,9 +669,9 @@ Address: 806 West St, Homestead, PA 15120
 Address: 215 S Braddock Ave, Pittsburgh, PA 15221
 
   
-#### **Action Housing MyPlace** [4] 
+#### **Action Housing MyPlace** [3] 
 
-[website](actionhousing.org/our-services/myplace-youth-program/)
+[website](https://actionhousing.org/our-services/myplace-youth-program/)
 
 **Supportive Housing Management Services (SHMS)**
 
@@ -709,14 +702,14 @@ There wasn't too much more information then what is above on how to apply and ot
 
 
 ### References: 
+[1] “Allegheny County Youth Homelessness Demonstration Program.” Office of Community Services , Apr. 2020. 
 
-[1] “Downtown Outreach Center &amp; Shelter.” Familylinks, 5 Apr. 2016, familylinks.org/get-help/housing/DOCS. 
+[12 “Downtown Outreach Center &amp; Shelter.” Familylinks, 5 Apr. 2016, familylinks.org/get-help/housing/DOCS. 
 
-[2] “Allegheny County Youth Homelessness Demonstration Program.” Office of Community Services , Apr. 2020. 
+[4] “MyPlace Youth Programs.” MyPlace Youth Program – Action Housing, actionhousing.org/our-services/myplace-youth-program/. 
 
 [3] “Transition Age Youth (TAY).” Transitional Services, Inc., 21 Aug. 2017, www.transitionalservices.org/programs/psychiatric-disabilities/transition-age-youth-tay. 
 
-[4] “MyPlace Youth Programs.” MyPlace Youth Program – Action Housing, actionhousing.org/our-services/myplace-youth-program/. 
   
 
 
