@@ -657,7 +657,7 @@ body <- dashboardBody(
                   br(),
                   br(),
                   p("Yang Cheng, Fellow (Ph.D. Student at Virginia Tech, )"),
-                  p("JaiDa Robinson, Fellow (Ph.D. Student at Virginia State University, )"),
+                  p("JaiDa Robinson, Fellow (M.Ed Student at Virginia State University,Counselor Education )"),
                   p("Julie Rebstock, Intern (Undergraduate Student at Virginia Tech, Computational Modeling and Data Anaylytics and Economics)"),
                   p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, )"),
                   p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University,)"),
