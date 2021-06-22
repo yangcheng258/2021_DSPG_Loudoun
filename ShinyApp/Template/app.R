@@ -99,9 +99,9 @@ body <- dashboardBody(
                   status = "warning",
                   solidHeader = TRUE,
                   collapsible = TRUE,
-                  h1("Industry and Workforce Attraction and Retention in Wythe County"),
+                  h1("Service Availability for Transitional Aged Youth in Loudoun County"),
                   h2("Project Description"),
-                  p("Wythe County is a rural community in Southwest Virginia with a population of 28,684 (2019 estimate). 
+                  p("Loudoun County is a rural community in Southwest Virginia with a population of 28,684 (2019 estimate). 
                     It was founded in 1790 and sits at the confluence of two major highways, Interstates 77 and 81, 
                     which facilitate easy access to major markets and population centers along the Eastern Seaboard and 
                     in Midwestern and Southern states. In recent years, Wythe County has had success in attracting 
@@ -157,8 +157,12 @@ body <- dashboardBody(
                 
                 img(src="ACS.jpg", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
                 br(),
-                p("We used data from the American Community Survey to visualize labor, 
-                  housing and infrastructure data to identify built and human capital currently in Wythe County."),
+                p("We used data from the American Community Survey to visualize the race, age, employment and educational attainment 
+                  from the population in Loudoun County. "),
+                p("We used data from The Adoption and Foster Care Analysis and Reporting System to visualize the demographics of Transitional Aged Youth (TAY) 
+                  who are or was in foster care in Virginia and Loudoun County. "),
+                p("We used data from () to visualize the demographics of Transitional Aged Youth (TAY) 
+                  who are or are coming out of Juvenille Detention in Loudoun County and Virginia. "),
                 br(),
                 br(),
                 br(),
@@ -194,16 +198,17 @@ body <- dashboardBody(
               
               
               box(
-                title = "Juvenile",
+                title = "Juvenile Detention",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
                 
-                p("Luo, Wei and Wang, Fahui (2003). 'Measures of spatial accessibility to health care in a GIS environment: synthesis and a case study in the Chicago region.' Environment and Planning B: Planning and Design 30(6):865—884."),
-                p("Waldorf, B. S., & Chen, S. E. (2010). 'Spatial models of health outcomes and health behaviors: the role of health care accessibility and availability.' In Progress in spatial analysis (339-362). Springer: Berlin, Heidelberg.")
-                
+                p("Luo, Wei and Wang, Fahui (2003). 'Measures of spatial accessibility to health 
+                  care in a GIS environment: synthesis and a case study in the Chicago region.' 
+                  Environment and Planning B: Planning and Design 30(6):865—884.")
+
               ),
               
               
@@ -313,7 +318,7 @@ body <- dashboardBody(
                   for commerce and manufacturing. From an “access to major markets” perspective, 
                   Wythe is an attractive location for both light and heavy industry."),
                 box(
-                  title = "Loudoun County Programs/Services",
+                  title = "Programs/Services",
                   closable = FALSE,
                   status = "warning",
                   solidHeader = TRUE,
@@ -324,7 +329,7 @@ body <- dashboardBody(
                   #dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Level of Education","Industry","Home Values","Household Income","Household Size"))),
                   #leafletOutput("wythe_infrastructure"),
                   
-                  
+                  ## going to need different tabs for allegheny vs loudoun 
                   tabBox(
                     title = NULL , width = 16,
                     # The id lets us use input$tabset1 on the server to find the current tab
@@ -350,7 +355,7 @@ body <- dashboardBody(
                     
                             ),
                     
-                    tabPanel("Juvenile",
+                    tabPanel("Juvenile Detention",
                              sidebarPanel(
                                selectInput("pillar_variable", "Pillar Variable:",
                                            c("Education", "Employment", "Housing","Insurance","Transportation","Policy and Funding","All"))
@@ -423,6 +428,9 @@ body <- dashboardBody(
                 br()
               )),
       ## Tab 4--------------------------------------------
+      ## Do we want a demographics tab ??? 
+      ## maybe split up Foster Care and Juvenille Detention into 2 tabs?? 
+      
       tabItem(tabName = "humancapital",
               fluidRow(
                 h2("Human Capital in Wythe County"),
@@ -656,11 +664,11 @@ body <- dashboardBody(
                   img(src = 'Adam.Wells.VT.jpg', height = "150", width = "140", align = "center"),
                   br(),
                   br(),
-                  p("Yang Cheng, Fellow (Ph.D. Student at Virginia Tech, )"),
-                  p("JaiDa Robinson, Fellow (M.Ed Student at Virginia State University,Counselor Education )"),
+                  p("Yang Cheng, Fellow (Ph.D. Student at Virginia Tech, Economics )"),
+                  p("JaiDa Robinson, Fellow (M.Ed Student at Virginia State University, Counselor Education )"),
                   p("Julie Rebstock, Intern (Undergraduate Student at Virginia Tech, Computational Modeling and Data Anaylytics and Economics)"),
-                  p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, )"),
-                  p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University,)"),
+                  p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, COmputer Science)"),
+                  p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University, Economics )"),
                   h2("Virginia Tech Faculty Team Members"),
                   img(src = 'Susan.Chen.VT.jpg', height = "150", width = "140", align = "center"),
                   img(src = 'Conaway.Haskins.VT.jpg', height = "150", width = "140", align = "center"),
