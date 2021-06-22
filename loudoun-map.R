@@ -1,10 +1,16 @@
-## creating maps 
 library(tidyverse)
 library(urbnmapr)
 library(rworldmap)
 library(readxl)
+library(rgdal)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
 
-## getting county data for just floyd 
+
+
+## getting county data for just loudoun 
 l <- left_join(countydata, counties, by = "county_fips") %>% 
   filter(state_name %in% c("Virginia"), county_name %in% c("Loudoun County"))
 
@@ -20,6 +26,22 @@ l %>%
   ggtitle("Loudoun County") 
 
 
+## reading in the shape files using town boundaries zip 
+town <- readOGR( 
+  dsn= "/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/Loudoun_Town_Boundaries" , 
+  layer="Loudoun_Town_Boundaries"
+)
+
+t_df <- as(town, "data.frame")
+t_df2 <- fortify(town)
+
+
+t_df2 %>%
+ggplot(aes(long, lat, group = group)) +
+  geom_polygon(color = "white", size = 0.05, fill = "light blue")
+
+
+## then can read in the excel sheet with all of the programs lat/long and plot onto map 
 
 
 
