@@ -1,6 +1,6 @@
 ---
 title: "Research-Foster_Care"
-author: "Julie Rebstock and Jaida Robinson"
+author: "Julie Rebstock and JaiDa Robinson"
 date: "6/14/2021"
 output: html_document
 ---
@@ -534,9 +534,79 @@ There wasn't too much more information then what is above on how to apply and ot
 
 ### Transportation 
 
+#### **Self Sufficiency Programs** [3] 
+
+[website](https://www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Self-Sufficiency-Case-Management,-Training,-and-Job-Placement.aspx)
+
+* This program has services that are for the TAY if they would have roadblocks keeping them from getting ahead or earn less than what they need to live. The services would help the TAY figure out their strengths and weakness, create a plan to reach their goals, and connect to those resources to help them achieve their goals. 
+* Eligibility: 
+  + Allegheny County resident
+  + Live in a household whose total income is no more than 200% of the federal Income Poverty Guidelines
+  + Are at least 18 years old
+  + Desires to live independently
+  
+
+#### **Behavioral Health Transportation Program:** [1] 
+
+[website](https://www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Transportation/Behavioral-Health-Transportation-Program.aspx)
+
+* Through Allegheny County's Housing as Home strategic plan
+* Make 24 units available annually for Office of Behavioral Health (OBH) priority transition-age youth, with psychiatric disabilities
+* Individuals are not required to participate in psychiatric services to keep their housing 
+* Eligibility: 
+  + Be receiving behavioral health services from a BHTP-participating, Department of Human services (DHS)- contracted provider. 
+  + Live in Allegheny County
+  + Live at least one-half mile from an eligible destination AND 
+  + Start attending at least three eligible trips per week as stated in service plan. An eligible trip is any trip you need to take as part of your personal recovery journey: dinner with a friend or family; a trip to the grocery store; AA or NA. Anything that’s in your plan can count as an eligible trip.
+  
+  + You do NOT need to be on Medical Assistance to enroll. 
+
+
+#### **Medical Assistance Transportation Program** [2] 
+
+[website](https://www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Transportation/Medical-Assistance-Transportation-Program.aspx)
+
+* This program provides: 
+  + Free public transportation (bus, subway and incline) ahead-of-time ticket,
+  + Reimbursement for your use of public transportation or a private car, 
+  + and Free door-to-door service, when medically necessary, via shared-ride or ride-hailing service. 
+
+* Eligibility: 
+  + You are eligible for Medicaid
+  + You are a resident of Alleghany County
+  
+ 
+### References: 
+
+[1] “Behavioral Health Transportation Program.” Transportation | Behavioral Health | Allegheny County, www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Transportation/Behavioral-Health-Transportation-Program.aspx. 
+
+[2] “Medical Assistance Transportation Program.” Transportation | Medical Assistance Transportation Program | Allegheny County, www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Transportation/Medical-Assistance-Transportation-Program.aspx.
+
+[3] “Self-Sufficiency Programs.” Employment, Self Sufficiency Case Management, Training, and Job Placement,  Allegheny County, www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Self-Sufficiency-Case-Management,-Training,-and-Job-Placement.aspx. 
+
 
 ### Insurances 
+#### **Action Housing MyPlace** [4] 
 
+[website](actionhousing.org/our-services/myplace-youth-program/)
+
+1. Health Insurance Marketplace: 
+*  [website](https://www.healthcare.gov/)
+
+
+2. Alleghany Activates 
+* Has information about the Affordable Care Act and how to choose a plan that is right for you. 
+
+3. Medical Assistance (Medicaid) “MA”: 
+* Provides free health care coverage to low-income Pennsylvania residents. Residents should fit into one of the eligibility groups that are covered by the program and have income, and sometimes resources, which fall below the level set by the state for their category of MA eligibility.   
+
+4. Behavioral Health Insurance (mental health, alcohol, drug, or other addiction services)
+* Community Behavioral Health Organization (community Care) is the behavioral health managed care organization for Allegheny County residents who receive Medical Assistance.
+
+5. Mental Health Rx Pharmacy Benefit Program
+* Providing psychiatric prescription medications at no cost to eligible individuals. Eligibility is based on income. 
+
+There wasn't too much more information then what is above on how to apply and other requirements but there is contact information at the bottom for more information. 
 
 ### Policy and Funding 
 
