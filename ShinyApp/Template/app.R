@@ -36,7 +36,14 @@ library(shinyjs)
 
 
 # source("theme.R")
-# #Get Data
+
+##Get data 
+Tree<-read_csv("Tree")
+Tree_Ed<-read_csv("Tree_Ed")
+Tree_Ex<-read_csv("Tree_Ed")
+Tree_Job<-read_csv("Tree_Ed")
+Tree_Site<-read_csv("Tree_Ed")
+Wythe_long<-read_csv("Wythe_long")
 
 
 
@@ -721,6 +728,96 @@ server <- function(input, output, session) {
     output$mytable <- DT::renderDT({
         mtcars
     })
+    
+    ## decision tree 
+    output$mytree <- renderCollapsibleTree({
+      if(input$var1%in%"Employment"){
+        Tree_Employ%>%
+          filter(Job_Openings>5300)%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Element_Name"),
+                          root="Industries",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+      }
+      
+      
+      else if(input$var1%in%"Education"){
+        Tree_Ed%>%
+          filter(Job_Openings>5300)%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
+                          root="Industries",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else if(input$var1%in%"Housing"){
+        Tree_Housing%>%
+          filter(Job_Openings>5300)%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
+                          root="Industries",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else if(input$var1%in%"Transportation"){
+        Tree_Trans%>%
+          filter(Job_Openings>5300)%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
+                          root="Industries",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else if(input$var1%in%"Insurance"){
+        Tree_Insurance%>%
+          filter(Job_Openings>5300)%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
+                          root="Industries",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else {
+        Tree_Policy%>%
+          filter(Job_Openings>5300)%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
+                          root="Industries",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+    })
+    
+    
+    
+    
+    
+    
+    
 }
 
 # Shiny App------------------------
