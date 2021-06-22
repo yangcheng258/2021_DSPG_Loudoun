@@ -737,8 +737,8 @@ server <- function(input, output, session) {
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Element_Name"),
-                          root="Industries",
+          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+                          root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
@@ -751,8 +751,8 @@ server <- function(input, output, session) {
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
-                          root="Industries",
+          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+                          root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
@@ -764,8 +764,8 @@ server <- function(input, output, session) {
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
-                          root="Industries",
+          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+                          root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
@@ -777,8 +777,8 @@ server <- function(input, output, session) {
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
-                          root="Industries",
+          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+                          root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
@@ -790,8 +790,8 @@ server <- function(input, output, session) {
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
-                          root="Industries",
+          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+                          root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
@@ -803,8 +803,8 @@ server <- function(input, output, session) {
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Career_Cluster","Career_Pathway","Occupation","Category_Description"),
-                          root="Industries",
+          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+                          root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
