@@ -440,6 +440,46 @@ body <- dashboardBody(
                       )
                     ), 
                   
+<<<<<<< HEAD
+=======
+                ), 
+                br(),
+                boxPlus(
+                  title = "Loudoun County",
+                  closable = FALSE,
+                  status = "warning",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  width = "100%",
+                  enable_sidebar = FALSE,
+                  enable_dropdown = TRUE,
+                  dropdown_icon = "",
+                  dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                  collapsibleTreeOutput("mytree1",width = "100%")
+                ),
+                br(),
+                h3("Loudoun County"),
+                
+                br(),
+                box(
+                  title = "Allegheny County",
+                  closable = FALSE,
+                  status = "warning",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  #width = "100%",
+                  enable_sidebar = FALSE,
+                  enable_dropdown = TRUE,
+                  dropdown_icon = "",
+                  dropdown_menu = tagList(selectInput("var2","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                  collapsibleTreeOutput("mytree2",width = "100%")
+                ),
+                p("Given the sizeable role investments in human capital have on economic growth, detailed knowledge of the industries, careers paths and occupations that are growing in the U.S. is valuable when determining how to allocate resources. This knowledge provides actionable information for preparing, teaching, and training the workforce of tomorrow. "),
+                p("The collapsible trees (above) map ONet career and occupation data. Each tree maps industry (the first level) to career pathways (second level) to occupations (third level). This data represents industries, careers and occupations with the highest projected growth or brightest outlook. In addition, the dropdown menu allows for a fourth level. As a whole, the trees map Skills, Education, Experience, On-Site-Training and On-Job-Training needed for each occupation, career and industry."),
+                p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
+                br(),
+                h3("Allegheny County")
+>>>>>>> 2eacf52601868b6bcfa8f597c86541c349afffb5
                 
                   ), 
           
@@ -478,9 +518,17 @@ body <- dashboardBody(
                 p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
                 br(), 
                 br()
+<<<<<<< HEAD
               )
               )
               ) ,
+=======
+              )),
+      
+      ## Tab 4--------------------------------------------
+      ## Do we want a demographics tab ??? 
+      ## maybe split up Foster Care and Juvenille Detention into 2 tabs?? 
+>>>>>>> 2eacf52601868b6bcfa8f597c86541c349afffb5
       
       ## Tab 4--------------------------------------------
       tabItem(tabName = "humancapital",
@@ -1039,7 +1087,11 @@ server <- function(input, output, session) {
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
+<<<<<<< HEAD
           group_by(Occupation)%>% 
+=======
+          group_by(Occupation)%>%
+>>>>>>> 2eacf52601868b6bcfa8f597c86541c349afffb5
           collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
