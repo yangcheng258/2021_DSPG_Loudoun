@@ -31,15 +31,12 @@ knitr::opts_chunk$set(echo = TRUE)
 * Has a link to find other local community colleges that have Great Expectation Programs 
 * Cannot find which department 
 
-**Address:**
 
-NOVA-Alexandria Campus
+**NOVA-Alexandria Campus** 
 
 Engineering Building, AE 220 
 
-5000 Dawes Ave.
-
-Alexandria, VA 22311
+5000 Dawes Ave., Alexandria, VA 22311
 
 
 #### **Education and Training Voucher (ETV) Program** from Virginia Department of Social Services [1] 
@@ -58,9 +55,7 @@ This is really just an application that provides funds for TAYs to go to school.
 
 **Address:**
 
-801 E. Main Street
-
-Richmond, VA 23219
+801 E. Main Street, Richmond, VA 23219
 
 
 
@@ -83,9 +78,7 @@ Richmond, VA 23219
 
 **Address of Coordinator:**
 
-21000 Education Ct., Room 531 
-
-Ashburn, VA 20148
+21000 Education Ct., Room 531, Ashburn, VA 20148
 
 
 [website](https://www.lcps.org/Page/211221)
@@ -111,13 +104,10 @@ All of these programs and resources *are not directed towards Foster Care transi
   * Assigned independent work through the Credit Recovery Program but will be required to meet with instructors on a weekly basis
   * Tuition is $300 per course payable at time of registration by credit card 
   
-**Address:** 
 
-Park View High School 
+**Park View High School**  
 
-400 W. Laurel Avenue, 
-
-Sterling VA 20164.
+400 W. Laurel Avenue, Sterling VA 20164.
   
 **English Learners (EL) - Aprenda Ingles**
 
@@ -156,9 +146,7 @@ This is just a resource of all the classes someone can take.
 
 **Address:** 
 
-21000 Education Ct, 
-
-Ashburn, VA 20148
+21000 Education Ct, Ashburn, VA 20148
 
 
 ### Employment 
@@ -182,11 +170,7 @@ Ashburn, VA 20148
   
 **Address:** 
 
-102 Heritage Way, N.E. 
-
-1st Floor, Rear Entrance 
-
-Leesburg, VA 20176 
+102 Heritage Way, N.E., 1st Floor, Rear Entrance, Leesburg, VA 20176 
 
 I accessed this by searching to Loudoun County Health and Human Services, going to Adult Services-Employment and Education. On this page, there is a link to Workforce Innovation / Opportunity Act Program where I found all of this information and has several links to the National page with videos and how to apply and how to get the applications. 
   
@@ -207,11 +191,7 @@ This program can be anywhere because they set you up with different employers. T
 
 **Address:**
 
-8300 Boone Blvd., 
-
-Suite 450 
-
-Vienna, VA 22182
+8300 Boone Blvd., Suite 450, Vienna, VA 22182
 
 This seems like a good program but I cannot seem to find the requirements for this or how to apply as a young adult. There are not materials or links that provide additional information than what is above which is mostly just general information. 
 
@@ -238,13 +218,9 @@ The TANF program provides eligible families with a monthly cash payment to meet 
 
 For more information, this is the main building in Loudoun. 
 
-**Address:** 
+**Shenandoah Building** 
 
-Shenandoah Building
-
-102 Heritage Way, NE, Suite 103
-
-Leesburg, VA 20176
+102 Heritage Way, NE, Suite 103, Leesburg, VA 20176
   
   
 ### References: 
@@ -315,11 +291,9 @@ Leesburg, VA 20176
 
 There is a map of this bus's route at the bottom of the PDF, but also you can go to Department of Transportation and Capital Infrastructure for more information. 
 
-Department of Transportation and Capital Infrastructure
+**Department of Transportation and Capital Infrastructure**
 
-101 Blue Seal Dr, Suite 102
-
-Leesburg, VA 20175
+101 Blue Seal Dr, Suite 102, Leesburg, VA 20175
 
 #### **Medicaid Transportation (LogistiCare) ** [2]
 
@@ -333,12 +307,9 @@ Leesburg, VA 20175
 
 Must call to make an appointment. There is no specific place to go to to make an appointment and can take you anywhere for non-emergency appointments only with a 5 days request. 
 
-Administrative Office
+**Administrative Office**
 
-7443 Lee Davis Road
-2nd Floor, Suite 200
-
-Mechanicsville, VA 23111
+7443 Lee Davis Road, 2nd Floor, Suite 200, Mechanicsville, VA 23111
 
 #### **On Demand Transportation** [2]
 
@@ -359,31 +330,19 @@ Requests are made through Department of Family Services, Department of Mental He
 
 Shenandoah Building
 
-102 Heritage Way, NE
-
-Suite 103
-
-Leesburg, VA 20176
+102 Heritage Way, NE, Suite 103, Leesburg, VA 20176
 
 **MHSADS **
 
-102 Heritage Way, NE 
-
-Suite 302
-
-Leesburg, VA 20176
+102 Heritage Way, NE, Suite 302, Leesburg, VA 20176
 
 **Health Department Administrative Office **
 
-1 Harrison Street, SE, 2nd Floor
-
-Leesburg, VA 20175
+1 Harrison Street, SE, 2nd Floor, Leesburg, VA 20175
 
 **Health Clinic **
 
-102 Heritage Way NE, Suites 100 & 101
-
-Leesburg, VA 20176
+102 Heritage Way NE, Suites 100 & 101, Leesburg, VA 20176
 
 
 
@@ -430,14 +389,10 @@ The address below is for more information and details on FAMIS and Medicaid in w
 
 **Inova Partnership for Healthier Kids**
 
-211 Gibson St. NW, 
-
-Suite 206, 
-
-Leesburg VA 20176
+211 Gibson St. NW, Suite 206, Leesburg VA 20176
 
 
-References: 
+### References: 
 
 [1] Maximus Digital Solutions. (2021). FAMIS. https://www.coverva.org/en/famis. 
 
@@ -542,11 +497,7 @@ In 2006, oversight of all transition programs was placed under the Department of
   
 **Address:** 
 
-Wood Street Commons 
-
-304 Wood Street, Sixth Floor 
-
-Pittsburgh, PA 15222
+Wood Street Commons, 304 Wood Street, Sixth Floor, Pittsburgh, PA 15222
 
 I found this page that has all of this information plus contact information and hours that this program is open by going to alleghenycounty.us, Department of Human Services and searching transition age youth. This was the 4th option down. 
   
@@ -572,11 +523,7 @@ From 2008-2009, 32% of the youth using Independent Living Programs 16-21 were pr
 
 **Address:**
 
-1 Smithfield Street
-
-Suite 200
-
-Pittsburgh, PA 15222
+1 Smithfield Street, Suite 200, Pittsburgh, PA 15222
 
 
 When I searched Allegheny County, PA Transition Age Youth, this was the first link and it automatically downloaded a PDF to my computer with a presentation with all of this information. I did not like this because it was hard for me to know where this information was coming from and to find out more about what they were talking about. 
@@ -600,9 +547,7 @@ When I searched Allegheny County, PA Transition Age Youth, this was the first li
 
 **Address:** 
 
-1101 Hartman Street
-
-McKeesport, PA 15132
+1101 Hartman Street, McKeesport, PA 15132
 
 
 I found KidsVoice because of the presentation from above so there was not real link from the Allegheny County site. If I hadn't seen KidsVoice on the presentation from above, I would probably not know any of this exists. But the KidsVoice website has a lot of good information and you can search which area you need help with, I selected TAYs and Independent Living and this and the program below showed up and then it links you to some presentations and brochures and other sites with good information with contact information. 
@@ -634,6 +579,7 @@ This program is contracted with DHS in Allegheny County to reserve 3 beds to pro
 * To enroll, must call the phone that is provided 
 
 **Address:** 
+
 601 Fifth Ave, Pittsburgh, PA 15219
 
 I found this document by going to Allegheny County's website and going to Youth and Family Support. Then all the way at the bottom, there is a link that downloads a document of the Allegheny County Youth Homelessness Demonstration Program from April 2020. Reading through this document, I searched key words like foster and then I saw they have a contract with FamilyLink and searched Family Link online. 
@@ -702,6 +648,7 @@ There wasn't too much more information then what is above on how to apply and ot
 
 
 ### References: 
+
 [1] “Allegheny County Youth Homelessness Demonstration Program.” Office of Community Services , Apr. 2020. 
 
 [12 “Downtown Outreach Center &amp; Shelter.” Familylinks, 5 Apr. 2016, familylinks.org/get-help/housing/DOCS. 
@@ -767,6 +714,7 @@ There wasn't too much more information then what is above on how to apply and ot
 
 
 ### Insurances 
+
 #### **Health Insurance Options** [1] 
 
 [website](https://www.alleghenycounty.us/Human-Services/Programs-Services/Basic-Needs/Health-Insurance.aspx)
