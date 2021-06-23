@@ -47,6 +47,7 @@ Wythe_long<-read_csv("Wythe_long")
 
 
 
+
 # Siderbar(LEFT) ----------------------------------------------------------
 sidebar <- dashboardSidebar(
   sidebarMenu(
@@ -75,10 +76,6 @@ sidebar <- dashboardSidebar(
       tabName = "jobs",
       text = "Usage--TBD",
       icon = icon("map-marked-alt"), badgeLabel = "data", badgeColor = "green"),
-    # menuItem(
-    #   tabName = "access",
-    #   text = "Access",
-    #   icon = icon("map-marked-alt")),
     menuItem(
       tabName = "conclusions",
       text = "Conclusions",
@@ -125,9 +122,8 @@ body <- dashboardBody(
                     solidHeader = TRUE,
                     collapsible = TRUE,
                     width = NULL,
-                    #enable_dropdown = TRUE,
-                    #dropdown_icon = "",
-                    #dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Level of Education","Industry","Home Values","Household Income","Household Size"))),
+                    
+                     # map of Loudoun!!!! 
                     leafletOutput("wythe")
                   ),
                   
@@ -151,25 +147,32 @@ body <- dashboardBody(
       
       ## Tab Introduction to Loudoun --------------------------------------------
       tabItem(tabName = "loudoun",
-              #fluidRow(
-              box(
-                title = "Loudoun",
+              fluidRow(
+                box(
+                  title("Introduction to Loudoun"),
+                  h1("Demographics of Transitional Aged Youth"), 
+                  h2("Loudoun County"),
+                  p("We used data from the American Community Survey to visualize the race, age, employment and educational attainment 
+                  from the population in Loudoun County. "),
+                  p("We used data from The Adoption and Foster Care Analysis and Reporting System to visualize the demographics of Transitional Aged Youth (TAY) 
+                  who are or was in foster care in Virginia and Loudoun County. "),
+                  p("We used data from () to visualize the demographics of Transitional Aged Youth (TAY) 
+                  who are or are coming out of Juvenille Detention in Loudoun County and Virginia. ")
+                ), 
+                
+              boxPlus(
+                title = "Loudoun County",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
-                
-                
-                
+                enable_dropdown = TRUE,
+                dropdown_icon = "",
+                dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Age","Race","Level of Education","Household Income","Household"))),
+                plotOutput("myplot1"), 
                 img(src="ACS.jpg", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
                 br(),
-                p("We used data from the American Community Survey to visualize the race, age, employment and educational attainment 
-                  from the population in Loudoun County. "),
-                p("We used data from The Adoption and Foster Care Analysis and Reporting System to visualize the demographics of Transitional Aged Youth (TAY) 
-                  who are or was in foster care in Virginia and Loudoun County. "),
-                p("We used data from () to visualize the demographics of Transitional Aged Youth (TAY) 
-                  who are or are coming out of Juvenille Detention in Loudoun County and Virginia. "),
                 br(),
                 br(),
                 br(),
@@ -181,14 +184,18 @@ body <- dashboardBody(
                 
               ),
               
-              
-              box(
+              h2("Foster Care"),
+              boxPlus(
                 title = "Foster Care",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
+                enable_dropdown = TRUE,
+                dropdown_icon = "",
+                dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Age","Race","Gender","Education","Household"))),
+                plotOutput("myplot2"), 
                 
                 p("One of the central aims of this project is to create comparable measures of accessibility to 
                   educational facilities in the county.  In rural areas, metrics such as distance do not have the same 
@@ -201,25 +208,35 @@ body <- dashboardBody(
                   window to include 30, 45, and 60 min windows for each catchment area. We then count the services 
                   by type within each of the travel time windows. This allows us, for each county, to construct:")
                 ),
+              br(), 
+              br(),
               
-              
-              
-              box(
+              h2("Foster Care"),
+              boxPlus(
                 title = "Juvenile Detention",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
-                
-                p("Luo, Wei and Wang, Fahui (2003). 'Measures of spatial accessibility to health 
-                  care in a GIS environment: synthesis and a case study in the Chicago region.' 
-                  Environment and Planning B: Planning and Design 30(6):865—884.")
-
+                enable_dropdown = TRUE,
+                dropdown_icon = "",
+                dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Age","Race","Gender","Education","Household"))),
+                plotOutput("myplot2"), 
+                p("One of the central aims of this project is to create comparable measures of accessibility to 
+                  educational facilities in the county.  In rural areas, metrics such as distance do not have the same 
+                  meaning as they do in urban areas. Large distances in rural areas can often be traversed quickly 
+                  due to lower traffic density and a lack of other traffic impediments. To create our accessibility 
+                  measures, we rely on travel time, which accounts for both distance and traffic flow. We construct 
+                  accessibility measures for each county in the region by estimating the travel time between the county
+                  population weighted centroid and foci for educational and workforce training (Waldorf and Chen, 2010). 
+                  We use a floating catchment area around each county centroid and vary the size of the travel time 
+                  window to include 30, 45, and 60 min windows for each catchment area. We then count the services 
+                  by type within each of the travel time windows. This allows us, for each county, to construct:")
               ),
-              
-              
-              
+
+              ), 
+    
               box(
                 title = "References",
                 closable = FALSE,
@@ -233,6 +250,7 @@ body <- dashboardBody(
                 
               )
               
+      )
       ),
       
       ## Tab Data --------------------------------------------
@@ -247,8 +265,9 @@ body <- dashboardBody(
                   collapsible = TRUE,
                 
                   
-                  #### Could try the Flipbox???
+                  #### Could try the Flipbox??? 
                   img(src="ACS.jpg", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
+                  br(),
                   br(),
                   p("We used data from the American Community Survey to visualize labor, housing and infrastructure data to identify built and human capital currently in Wythe County."),
                   br(),
@@ -257,17 +276,23 @@ body <- dashboardBody(
                   br(),
                   img(src="careerWorks.png", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
                   br(),
+                  br(),
+                  br(),
                   p("We used Virginia Careerworks Data to identify industries, colleges and universities, and workforce training facilities in Wythe county."),
                   br(),
                   br(),
                   br(),
                   img(src="VEC.png", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
                   br(),
+                  br(),
+                  br(),
                   p("VirginiaWorks is a collaboration of agencies run by the Virginia Employment Commission."),
                   br(),
                   br(),
                   br(),
                   img(src="onet.png", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
+                  br(),
+                  br(),
                   p("We used O*Net to gathered industry/occupation data for occupations that have a “bright outlook” which is defined as having an expectation of growth over the next several years. We also gather the skill set, education level, work experience, and training needed for these occupations."),
                   br(),
                   br(),
@@ -313,7 +338,8 @@ body <- dashboardBody(
       ## Tab 3--------------------------------------------
       tabItem(tabName = "services",
               fluidRow(
-                h2("Service/Program Availability"),
+                h1("Service/Program Availability"),
+                h2("Availability"),
                 p("To understand the full suite of amenities available to HGBs in Wythe, 
                   we used publicly available demographic and infrastructure data to provide 
                   an overview of the built capital amenities in Wythe."),
@@ -331,88 +357,94 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   collapsible = TRUE,
                   width = NULL,
-                  #enable_dropdown = TRUE,
-                  #dropdown_icon = "",
-                  #dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Level of Education","Industry","Home Values","Household Income","Household Size"))),
-                  #leafletOutput("wythe_infrastructure"),
                   
+                  h2("Loudoun County"),
                   ## going to need different tabs for allegheny vs loudoun 
-                  tabBox(
-                    title = NULL , width = 16,
-                    # The id lets us use input$tabset1 on the server to find the current tab
-                    id = "tabset1", height = "350px",
-                    tabPanel("All", 
-                             sidebarLayout(
-                                sidebarPanel(
-                                  selectInput("pillar_variable", "Pillar Variable:",
-                                              c("Education", "Employment", "Housing","Insurance","Transportation","Policy and Funding","All")),
-                                  ### Can add more inputs????
-                                  # selectInput("time_variable", "Time Variable:",
-                                  #             c("60 minutes" = "60",
-                                  #               "45 minutes" = "45",
-                                  #               "30 minutes" = "30"))
-                                               ),
-                              # Show a plot of the generated distribution
-                              mainPanel(
-                                tableOutput("label_1"),
-                                leafletOutput("mapplot_1"),
-                                #mapview:::plainViewOutput("test")
-                                     )
-                                            )
-                    
-                            ),
-                    
-                    tabPanel("Juvenile Detention",
-                             sidebarPanel(
-                               selectInput("pillar_variable", "Pillar Variable:",
-                                           c("Education", "Employment", "Housing","Insurance","Transportation","Policy and Funding","All"))
-                               
-                             ),
-                             
-                             # Show a plot of the generated distribution
-                             mainPanel(
-                               tableOutput("label_2"),
-                               leafletOutput("mapplot_2")
-                               #mapview:::plainViewOutput("test")
-                             )
-                             
+                  tabsetPanel(
+                    tabPanel("Foster Care",
+                              h3(strong(""), align = "center"),
+                             title = "Loudoun County",
+                             closable = FALSE,
+                             status = "warning",
+                             solidHeader = TRUE,
+                             collapsible = TRUE,
+                             width = "100%",
+                             enable_sidebar = FALSE,
+                             enable_dropdown = TRUE,
+                             dropdown_icon = "",
+                             dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                             collapsibleTreeOutput("mytree1",width = "100%")
                     ),
                     
-                    tabPanel("Foster Care",
-                             sidebarPanel(
-                               selectInput("pillar_variable", "Pillar Variable:",
-                                           c("Education", "Employment", "Housing","Insurance","Transportation","Policy and Funding","All"))
+                    tabPanel("Juvenille Detention",
+                             h3(strong(""), align = "center"),
+                             title = "Loudoun County",
+                             closable = FALSE,
+                             status = "warning",
+                             solidHeader = TRUE,
+                             collapsible = TRUE,
+                             width = "100%",
+                             enable_sidebar = FALSE,
+                             enable_dropdown = TRUE,
+                             dropdown_icon = "",
+                             dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                             collapsibleTreeOutput("mytree1",width = "100%")
+                    )
+                  ), 
+                  br(),
+                  br(), 
+                  br(), 
+                  br(), 
+                  br(), 
+                  br(), 
+                  
+                  
+                  box(
+                    title = "Programs/Services",
+                    closable = FALSE,
+                    status = "warning",
+                    solidHeader = TRUE,
+                    collapsible = TRUE,
+                    width = NULL,
+                    h2("Allegheny County"),
+                    tabsetPanel(
+                      tabPanel("Foster Care",
                                
-                             ),
-                             
-                             # Show a plot of the generated distribution
-                             mainPanel(
-                               tableOutput("label_3"),
-                               leafletOutput("mapplot_3")
-                               #mapview:::plainViewOutput("test")
-                             )
-                             
-                    )                   
- 
-                    
-                  ),
+                               h3(strong(""), align = "center"),
+                               title = "Loudoun County",
+                               closable = FALSE,
+                               status = "warning",
+                               solidHeader = TRUE,
+                               collapsible = TRUE,
+                               width = "100%",
+                               enable_sidebar = FALSE,
+                               enable_dropdown = TRUE,
+                               dropdown_icon = "",
+                               dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                               collapsibleTreeOutput("mytree1",width = "100%")
+                      ),
+                      
+                      tabPanel("Juvenille Detention",
+                               h3(strong(""), align = "center"),
+                               title = "Loudoun County",
+                               closable = FALSE,
+                               status = "warning",
+                               solidHeader = TRUE,
+                               collapsible = TRUE,
+                               width = "100%",
+                               enable_sidebar = FALSE,
+                               enable_dropdown = TRUE,
+                               dropdown_icon = "",
+                               dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                               collapsibleTreeOutput("mytree1",width = "100%")
+                      )
+                    ), 
                   
-                  
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br(),
-                  br()
+                
+                  ), 
           
                 ), 
-                br(),
+                h3("Loudoun County"),
                 boxPlus(
                   title = "Loudoun County",
                   closable = FALSE,
@@ -427,9 +459,7 @@ body <- dashboardBody(
                   collapsibleTreeOutput("mytree1",width = "100%")
                 ),
                 br(),
-                h3("Loudoun County"),
-                
-                br(),
+                h3("Allegheny County"), 
                 box(
                   title = "Allegheny County",
                   closable = FALSE,
@@ -446,31 +476,13 @@ body <- dashboardBody(
                 p("Given the sizeable role investments in human capital have on economic growth, detailed knowledge of the industries, careers paths and occupations that are growing in the U.S. is valuable when determining how to allocate resources. This knowledge provides actionable information for preparing, teaching, and training the workforce of tomorrow. "),
                 p("The collapsible trees (above) map ONet career and occupation data. Each tree maps industry (the first level) to career pathways (second level) to occupations (third level). This data represents industries, careers and occupations with the highest projected growth or brightest outlook. In addition, the dropdown menu allows for a fourth level. As a whole, the trees map Skills, Education, Experience, On-Site-Training and On-Job-Training needed for each occupation, career and industry."),
                 p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
-                br(),
-                h3("Allegheny County")
-                
-                ,
-                # h2("Juvenile Facilities"),
-                # p("One of the attractive features of rural America is the cost of land and housing.  Technology companies, for example, which often require land intensive sites for data centers, may find rural locations increasingly appealing. The cost of housing, the low time travel cost, and attractive recreational and natural amenities may also be important attributes to attract and retain employers and employees alike. The cost of housing in Wythe is very reasonable; a large proportion of homes are valued below $150,000. The housing stock in Wythe is, however, aging and limited (see graphs in dashboard below)."),
-                # box(
-                #   title = "Built Capital in Wythe County",
-                #   closable = FALSE,
-                #   status = "warning",
-                #   solidHeader = TRUE,
-                #   collapsible = TRUE,
-                #   width = NULL,
-                #   enable_dropdown = TRUE,
-                #   dropdown_icon = "",
-                #   dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Home Age", "Home Values", "Building Permit Trend"))),
-                #   plotOutput("builtCapital")
-                # ),
+                br(), 
                 br()
-              )),
+              )
+              )
+              ) ,
       
       ## Tab 4--------------------------------------------
-      ## Do we want a demographics tab ??? 
-      ## maybe split up Foster Care and Juvenille Detention into 2 tabs?? 
-      
       tabItem(tabName = "humancapital",
               fluidRow(
                 h2("Human Capital in Wythe County"),
@@ -749,6 +761,179 @@ ui <- dashboardPage(
 
 # Server------------------------------------------
 server <- function(input, output, session) {
+  
+  
+  ## for measures table from Sample repo potentially??? 
+  output$datatable <- renderDataTable({
+    if(var_topic() == "All Measures"){
+      table <- as.data.frame(measures_table)
+      datatable(table, rownames = FALSE, options = list(pageLength = 15)) %>% formatStyle(0, target = 'row', lineHeight = '80%')
+    }
+    else{
+      data <- switch(input$topic,
+                     "Connectivity Measures" = "connectivity",
+                     "Sociodemographic Measures" = "demographics",
+                     "Food Access Measures" = "food access",
+                     "Health Care Access Measures" = "health",
+                     "Older Adult Population Measures" = "older adults")
+      table <- subset(measures_table, Topic == data)
+      table <- as.data.frame(table)
+      datatable(table, rownames = FALSE, options = list(pageLength = 15)) %>% formatStyle(0, target = 'row', lineHeight = '80%')
+    }
+  })
+  
+  ## Render Plot for demographics of Loudoun 
+  output$myplot1 <- renderPlot({
+    if(input$var1%in%"Household Size"){
+      Wythe_long%>%filter(Variable%in%input$var1)%>%
+        ggplot(mapping=aes(x=name,y=value,fill=name))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Household Size",y="Households",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$var%in%"Level of Education"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Highest Level of Education (Age > 25)",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$var%in%"Household Income"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Household Income",y="Households",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    else if (input$var%in%"Home Values"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Home Values",y="Number of Homes",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    else{
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=name,y=value,fill=name))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Employment by Industry",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+  })
+  
+  ## Render Plot for demographics of Loudoun Foster Care 
+  ## have to change these 
+  output$myplot2 <- renderPlot({
+    if(input$var2%in%"Household Size"){
+      Wythe_long%>%filter(Variable%in%input$var2)%>%
+        ggplot(mapping=aes(x=name,y=value,fill=name))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Household Size",y="Households",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$var2%in%"Level of Education"){
+      Wythe_long%>%filter(Variable%in%input$var2)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Highest Level of Education (Age > 25)",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$var2%in%"Household Income"){
+      Wythe_long%>%filter(Variable%in%input$var2)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Household Income",y="Households",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    else if (input$var2%in%"Home Values"){
+      Wythe_long%>%filter(Variable%in%input$var2)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Home Values",y="Number of Homes",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    else{
+      Wythe_long%>%filter(Variable%in%input$var2)%>%
+        ggplot(mapping=aes(x=name,y=value,fill=name))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Employment by Industry",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+  })
+  
+  
+  
+  ## Render Plot for demographics of Loudoun for Juvenille Detention 
+  output$myplot3 <- renderPlot({
+    if(input$var3%in%"Household Size"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=name,y=value,fill=name))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Household Size",y="Households",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$var3%in%"Level of Education"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Highest Level of Education (Age > 25)",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$va3%in%"Household Income"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Household Income",y="Households",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    else if (input$va3%in%"Home Values"){
+      Wythe_long%>%filter(Variable%in%input$var)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Home Values",y="Number of Homes",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    else{
+      Wythe_long%>%filter(Variable%in%input$var3)%>%
+        ggplot(mapping=aes(x=name,y=value,fill=name))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Employment by Industry",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+  })
+  
+  
+  
     output$myplot <- renderPlot({
         gg <- ggplot(data = mtcars, aes(x = mpg, y = disp)) +
             geom_point() 
@@ -854,7 +1039,7 @@ server <- function(input, output, session) {
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
-          group_by(Occupation)%>%
+          group_by(Occupation)%>% 
           collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
