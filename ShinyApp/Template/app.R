@@ -311,7 +311,7 @@ body <- dashboardBody(
               
               ),
       ## Tab 3--------------------------------------------
-      tabItem(tabName = "builtcapital",
+      tabItem(tabName = "services",
               fluidRow(
                 h2("Service/Program Availability"),
                 p("To understand the full suite of amenities available to HGBs in Wythe, 
@@ -393,9 +393,7 @@ body <- dashboardBody(
                              )
                              
                     )                   
-                    
-                    
-                    
+ 
                     
                   ),
                   
@@ -412,10 +410,44 @@ body <- dashboardBody(
                   br(),
                   br(),
                   br()
-                  
-                  
-                  
-                )
+          
+                ), 
+                br(),
+                boxPlus(
+                  title = "Loudoun County",
+                  closable = FALSE,
+                  status = "warning",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  width = "100%",
+                  enable_sidebar = FALSE,
+                  enable_dropdown = TRUE,
+                  dropdown_icon = "",
+                  dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                  collapsibleTreeOutput("mytree1",width = "100%")
+                ),
+                br(),
+                h3("Loudoun County"),
+                
+                br(),
+                box(
+                  title = "Allegheny County",
+                  closable = FALSE,
+                  status = "warning",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  #width = "100%",
+                  enable_sidebar = FALSE,
+                  enable_dropdown = TRUE,
+                  dropdown_icon = "",
+                  dropdown_menu = tagList(selectInput("var2","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                  collapsibleTreeOutput("mytree2",width = "100%")
+                ),
+                p("Given the sizeable role investments in human capital have on economic growth, detailed knowledge of the industries, careers paths and occupations that are growing in the U.S. is valuable when determining how to allocate resources. This knowledge provides actionable information for preparing, teaching, and training the workforce of tomorrow. "),
+                p("The collapsible trees (above) map ONet career and occupation data. Each tree maps industry (the first level) to career pathways (second level) to occupations (third level). This data represents industries, careers and occupations with the highest projected growth or brightest outlook. In addition, the dropdown menu allows for a fourth level. As a whole, the trees map Skills, Education, Experience, On-Site-Training and On-Job-Training needed for each occupation, career and industry."),
+                p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
+                br(),
+                h3("Allegheny County")
                 
                 ,
                 # h2("Juvenile Facilities"),
@@ -434,6 +466,7 @@ body <- dashboardBody(
                 # ),
                 br()
               )),
+      
       ## Tab 4--------------------------------------------
       ## Do we want a demographics tab ??? 
       ## maybe split up Foster Care and Juvenille Detention into 2 tabs?? 
@@ -516,26 +549,26 @@ body <- dashboardBody(
                 #   dropdown_menu = tagList(selectInput("varAg","Select a Variable",choices = c("Skills","Education", "Experience Needed", "On-Site Training", "On-the-Job Training"))),
                 #   collapsibleTreeOutput("myAgtree",width = "100%")
                 # ),
-                # br(),
-                # boxPlus(
-                #   title = "Manufacturing",
-                #   closable = FALSE,
-                #   status = "warning",
-                #   solidHeader = TRUE,
-                #   collapsible = TRUE,
-                #   width = "100%",
-                #   enable_sidebar = FALSE,
-                #   enable_dropdown = TRUE,
-                #   dropdown_icon = "",
-                #   dropdown_menu = tagList(selectInput("varMan","Select a Variable",choices = c("Skills","Education", "Experience Needed", "On-Site Training", "On-the-Job Training"))),
-                #   collapsibleTreeOutput("myMantree",width = "100%")
-                # ),
                 br(),
-                h3("Jobs of Tomorrow"),
+                boxPlus(
+                  title = "Loudoun County",
+                  closable = FALSE,
+                  status = "warning",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  width = "100%",
+                  enable_sidebar = FALSE,
+                  enable_dropdown = TRUE,
+                  dropdown_icon = "",
+                  dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                  collapsibleTreeOutput("mytree1",width = "100%")
+                ),
+                br(),
+                h3("Loudoun County"),
                 
                 br(),
                 box(
-                  title = "Jobs of Tomorrow.",
+                  title = "Allegheny County",
                   closable = FALSE,
                   status = "warning",
                   solidHeader = TRUE,
@@ -544,13 +577,14 @@ body <- dashboardBody(
                   enable_sidebar = FALSE,
                   enable_dropdown = TRUE,
                   dropdown_icon = "",
-                  dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Skills","Education", "Experience Needed", "On-Site Training", "On-the-Job Training"))),
-                  collapsibleTreeOutput("mytree",width = "100%")
+                  dropdown_menu = tagList(selectInput("var2","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
+                  collapsibleTreeOutput("mytree2",width = "100%")
                 ),
                 p("Given the sizeable role investments in human capital have on economic growth, detailed knowledge of the industries, careers paths and occupations that are growing in the U.S. is valuable when determining how to allocate resources. This knowledge provides actionable information for preparing, teaching, and training the workforce of tomorrow. "),
                 p("The collapsible trees (above) map ONet career and occupation data. Each tree maps industry (the first level) to career pathways (second level) to occupations (third level). This data represents industries, careers and occupations with the highest projected growth or brightest outlook. In addition, the dropdown menu allows for a fourth level. As a whole, the trees map Skills, Education, Experience, On-Site-Training and On-Job-Training needed for each occupation, career and industry."),
                 p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
-                br()
+                br(),
+                h3("Allegheny County")
               )),
       ## Tab 6--------------------------------------------
       tabItem(tabName = "access",
@@ -729,15 +763,15 @@ server <- function(input, output, session) {
         mtcars
     })
     
-    ## decision tree 
-    output$mytree <- renderCollapsibleTree({
+    ## decision tree for Loudoun
+    output$mytree1 <- renderCollapsibleTree({
       if(input$var1%in%"Employment"){
         Tree_Employ%>%
-          filter(Job_Openings>5300)%>%
+          filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
                           width=1800,
@@ -747,11 +781,11 @@ server <- function(input, output, session) {
       
       else if(input$var1%in%"Education"){
         Tree_Ed%>%
-          filter(Job_Openings>5300)%>%
+          filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
                           width=1800,
@@ -760,11 +794,11 @@ server <- function(input, output, session) {
       }
       else if(input$var1%in%"Housing"){
         Tree_Housing%>%
-          filter(Job_Openings>5300)%>%
+          filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
                           width=1800,
@@ -773,11 +807,11 @@ server <- function(input, output, session) {
       }
       else if(input$var1%in%"Transportation"){
         Tree_Trans%>%
-          filter(Job_Openings>5300)%>%
+          filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
                           width=1800,
@@ -786,24 +820,109 @@ server <- function(input, output, session) {
       }
       else if(input$var1%in%"Insurance"){
         Tree_Insurance%>%
-          filter(Job_Openings>5300)%>%
+          filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
                           width=1800,
                           zoomable=F)
         
       }
+      ## Policy
       else {
         Tree_Policy%>%
-          filter(Job_Openings>5300)%>%
+          filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
           group_by(Occupation)%>%
-          collapsibleTree(hierarchy = c("Pillars","Program","Subpopulation","TAYs", "Description"),
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
+                          root="County",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+    })
+    
+    ## decision tree for Allegheny
+    output$mytree2 <- renderCollapsibleTree({
+      if(input$var2%in%"Employment"){
+        Tree_Employ%>%
+          filter(County == "Allegheny")%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
+                          root="County",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+      }
+      
+      
+      else if(input$var2%in%"Education"){
+        Tree_Ed%>%
+          filter(County == "Allegheny")%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
+                          root="County",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else if(input$var2%in%"Housing"){
+        Tree_Housing%>%
+          filter(County == "Allegheny")%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
+                          root="County",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else if(input$var2%in%"Transportation"){
+        Tree_Trans%>%
+          filter(County == "Allegheny")%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
+                          root="County",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      else if(input$var2%in%"Insurance"){
+        Tree_Insurance%>%
+          filter(County == "Allegheny")%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
+                          root="County",
+                          attribute = "Job_Openings",
+                          width=1800,
+                          zoomable=F)
+        
+      }
+      ## Policy
+      else {
+        Tree_Policy%>%
+          filter(County == "Allegheny")%>%
+          mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
+          filter(Importance>=2.88)%>%
+          group_by(Occupation)%>%
+          collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
                           width=1800,
