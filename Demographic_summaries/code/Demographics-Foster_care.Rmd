@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(readxl)
 library(tidyverse)
-library(githubinstall)
 library(brew)
 library(tidycensus)
 
@@ -134,9 +133,9 @@ In the US 2019, it was reported that **21.5% of Foster Care Alumni had PTSD whil
 
 ```{r,  echo = FALSE, include=FALSE}
 
-foster_care_2020_virginia <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/foster-care-2020.xlsx")
+foster_care_2020_virginia <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/Demographic_summaries/data/foster-care-2020.xlsx")
 
-foster_care_2020 <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/01-Doc/Summaries/data/foster-care-2020-all.xlsx")
+foster_care_2020 <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/Demographic_summaries/data/foster-care-2020-all.xlsx")
 
 ```
 
@@ -170,10 +169,16 @@ percent$Value <- as.numeric(percent$Value)
 ```{r}
 ## barplot using the values 
 barplot(value$Value, xlab = "Age Groups", ylab = "Totals", main = "Figure1- Age Groups in Foster Care (VA)", col = rainbow(length(value$Value)), names.arg = groups, cex.names = .6)
+value$Age.Group<-factor(value$Age.Group, levels = value$Age.Group)
 
+ggplot(data = value, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
+    geom_bar(stat = "identity") + coord_flip()
 
 ## pie chart using percentages 
 pie(percent$Value, groups, main = "Figure2- Age Groups in Percentages", col = rainbow(length(percent$Value)))
+
+
+
 ```
 
 
@@ -222,6 +227,10 @@ data2
 
 ## barplot for races 
 barplot(race$Value, xlab = "Races", ylab = "Values", main = "Figure4- Races of Foster Care in Loudoun County", col = rgb(0.8,0.1,0.1,0.6), names.arg = races, cex.names = .6)
+
+
+ggplot(data = race, aes(x= Race, y = Value, fill = Race) ) + 
+    geom_bar(stat = "identity") + coord_flip()
 
 
 
