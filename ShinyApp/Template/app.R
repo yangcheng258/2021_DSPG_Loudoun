@@ -150,7 +150,7 @@ body <- dashboardBody(
               fluidRow(
                 box(
                   title("Introduction to Loudoun"),
-                  h1("Demographics of Transitional Aged Youth"), 
+                  h1("Demographics of Youth in Loudoun County"), 
                   h2("Loudoun County"),
                   p("We used data from the American Community Survey to visualize the race, age, employment and educational attainment 
                   from the population in Loudoun County. "),
@@ -171,7 +171,13 @@ body <- dashboardBody(
                 dropdown_icon = "",
                 dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Age","Race","Level of Education","Household Income","Household"))),
                 plotOutput("myplot1"), 
-                img(src="ACS.jpg", height="100", width="200", alt="Image", style="float: left; margin: 3px 12px 3px 0px; border: 1px solid #000000;"),
+                p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. 
+                  It covers 515.6 square miles ranking 20th-largest county in Virginia by area. Loudoun County, 
+                  Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, 
+                  Virginia, Prince William County, Virginia, Clarke County, Virginia, Washington County, Maryland, 
+                  Montgomery County, Maryland, and Frederick County, Maryland.[1] In 2019, the population was 
+                  estimated at 395,134, making it Virginia’s third-most populous county. Loudoun County is part of the 
+                  Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area."),
                 br(),
                 br(),
                 br(),
@@ -194,24 +200,34 @@ body <- dashboardBody(
                 collapsible = TRUE,
                 enable_dropdown = TRUE,
                 dropdown_icon = "",
-                dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Age","Race","Gender","Education","Household"))),
+                dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Age","Race","Gender","Ethnicity"))),
                 plotOutput("myplot2"), 
                 
-                p("One of the central aims of this project is to create comparable measures of accessibility to 
-                  educational facilities in the county.  In rural areas, metrics such as distance do not have the same 
-                  meaning as they do in urban areas. Large distances in rural areas can often be traversed quickly 
-                  due to lower traffic density and a lack of other traffic impediments. To create our accessibility 
-                  measures, we rely on travel time, which accounts for both distance and traffic flow. We construct 
-                  accessibility measures for each county in the region by estimating the travel time between the county
-                  population weighted centroid and foci for educational and workforce training (Waldorf and Chen, 2010). 
-                  We use a floating catchment area around each county centroid and vary the size of the travel time 
-                  window to include 30, 45, and 60 min windows for each catchment area. We then count the services 
-                  by type within each of the travel time windows. This allows us, for each county, to construct:")
+                p("Based on the table from *Supporting Young People Transitioning from Foster Care: 
+                  Virginia Findings from National Survey and Policy Scan* by Child Trends for the
+                  Better Housing Coalition and Children’s Home Society of Virginia, **58% foster care kids 
+                  graduate high school by 19 compared to the general population of 87%. <3% graduate college 
+                  by 25 compared to 28%. 46% are employed by 26 compared to 80%**. 51% are eligible for employer-provided 
+                  health insurance compared to 71% [1]. Only 9% have their own residence by age 26 compared to 30% 
+                  of the general population in Virginia. For youth involved in foster care, **42% females and 
+                  68% males will be arrested by age 26 whereas only 5% females and 22% males of the general 
+                  population** [1]. Virginia has 14%-22% of its foster care youth between ages 16-20 which 
+                  according to Child Trends is the transition age [2]. "), 
+                p("According to the *The Adoption and Foster Care Analysis and Reporting System*, in 2020 there
+                  were 48 children in foster care in only Loudoun County which was .8% in the state of Virginia. 
+                  As you can see in the pie chart above, over 2/3 of those children were boys and 1/3 were girls and 
+                  the minority of them of ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
+                  and less than 5% Asian and multi-racial as you can see from the barplot below. When we are looking 
+                  at only transitional aged youth from 18-24 where 21 years old is the average time a foster child ages 
+                  out, **there were only 8 children**. In Loudoun County, it does not seem like there are many foster 
+                  care youths who are aging out of the system but only 9 other counties have greater than 9 foster 
+                  care kids over the age of 18 [2].")
+                
                 ),
               br(), 
               br(),
               
-              h2("Foster Care"),
+              h2("Juvenille Detention"),
               boxPlus(
                 title = "Juvenile Detention",
                 closable = FALSE,
@@ -221,18 +237,31 @@ body <- dashboardBody(
                 collapsible = TRUE,
                 enable_dropdown = TRUE,
                 dropdown_icon = "",
-                dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Age","Race","Gender","Education","Household"))),
+                dropdown_menu = tagList(selectInput("var","Select a Variable",choices = c("Age","Race","Gender","Ethnicity"))),
                 plotOutput("myplot2"), 
-                p("One of the central aims of this project is to create comparable measures of accessibility to 
-                  educational facilities in the county.  In rural areas, metrics such as distance do not have the same 
-                  meaning as they do in urban areas. Large distances in rural areas can often be traversed quickly 
-                  due to lower traffic density and a lack of other traffic impediments. To create our accessibility 
-                  measures, we rely on travel time, which accounts for both distance and traffic flow. We construct 
-                  accessibility measures for each county in the region by estimating the travel time between the county
-                  population weighted centroid and foci for educational and workforce training (Waldorf and Chen, 2010). 
-                  We use a floating catchment area around each county centroid and vary the size of the travel time 
-                  window to include 30, 45, and 60 min windows for each catchment area. We then count the services 
-                  by type within each of the travel time windows. This allows us, for each county, to construct:")
+                p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) and is 
+                  split between juvenile detention centers (JDCs), group homes, and youth prisons. Black youth are 
+                  overrepresented among offenders in residential placement, making up 40.9% of residents, as compared 
+                  to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, asians and native americans, respectively 
+                  (OJJDP 2019). In regards to sex, males make up the vast majority of offenders in residential placement,
+                  at 85.2% of residents. Broken down by age, those aged 16-17 years made up the bulk of residents, 
+                  accounting for 52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth 
+                  entering youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of 
+                  youth who entered Virginia youth detainment facilities showed some symptoms of Attention Deficit
+                  Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder (ODD), Substance
+                  Abuse, or Substance Dependence (DJJ 2020)."),
+                p("Virginia has some of the highest referral and incarceration rates of youth, with the highest 
+                  number of student referrals in the country and a rate of youth incarceration at 75 percent 
+                  higher than the national average at 79 per 100,000 youths (Data Snapshot of Youth Incarceration in 
+                  Virginia, smarter_choices_FINAL). While Virginia spends around $171,588 per incarcerated youth 
+                  annually (DJJ 2016), it still deals with high recidivism rates, with 34.4% of probation placements,
+                  54.4% of direct care Placements and 60.7% of parole placements being repeat offenders. In addition 
+                  to high recidivism rates, youths being released from direct care for the Fiscal Year of 2015 only
+                  received high school diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year 
+                  only 35 total youth offenders received a high school diploma or GED (DJJ 2019). However, the public
+                  pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia, with youth
+                  imprisonment down 65% in Virginia between 2003 and 2016. This trend is also seen in Virginia direct 
+                  care, from 2005 to 2016, where the average daily population of JDC’s decreased 38%.")
               ),
 
               ), 
@@ -351,7 +380,7 @@ body <- dashboardBody(
                   for commerce and manufacturing. From an “access to major markets” perspective, 
                   Wythe is an attractive location for both light and heavy industry."),
                 box(
-                  title = "Programs/Services",
+                  title = "Loudoun",
                   closable = FALSE,
                   status = "warning",
                   solidHeader = TRUE,
@@ -362,8 +391,7 @@ body <- dashboardBody(
                   ## going to need different tabs for allegheny vs loudoun 
                   tabsetPanel(
                     tabPanel("Foster Care",
-                              h3(strong(""), align = "center"),
-                             title = "Loudoun County",
+                             h3(strong(""), align = "center"),
                              closable = FALSE,
                              status = "warning",
                              solidHeader = TRUE,
@@ -378,7 +406,6 @@ body <- dashboardBody(
                     
                     tabPanel("Juvenille Detention",
                              h3(strong(""), align = "center"),
-                             title = "Loudoun County",
                              closable = FALSE,
                              status = "warning",
                              solidHeader = TRUE,
@@ -397,10 +424,10 @@ body <- dashboardBody(
                   br(), 
                   br(), 
                   br(), 
-                  
+                ),
                   
                   box(
-                    title = "Programs/Services",
+                    title = "Allegheny",
                     closable = FALSE,
                     status = "warning",
                     solidHeader = TRUE,
@@ -409,9 +436,7 @@ body <- dashboardBody(
                     h2("Allegheny County"),
                     tabsetPanel(
                       tabPanel("Foster Care",
-                               
                                h3(strong(""), align = "center"),
-                               title = "Loudoun County",
                                closable = FALSE,
                                status = "warning",
                                solidHeader = TRUE,
@@ -426,7 +451,6 @@ body <- dashboardBody(
                       
                       tabPanel("Juvenille Detention",
                                h3(strong(""), align = "center"),
-                               title = "Loudoun County",
                                closable = FALSE,
                                status = "warning",
                                solidHeader = TRUE,
@@ -438,97 +462,11 @@ body <- dashboardBody(
                                dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
                                collapsibleTreeOutput("mytree1",width = "100%")
                       )
-                    ), 
-                  
-<<<<<<< HEAD
-=======
-                ), 
-                br(),
-                boxPlus(
-                  title = "Loudoun County",
-                  closable = FALSE,
-                  status = "warning",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  width = "100%",
-                  enable_sidebar = FALSE,
-                  enable_dropdown = TRUE,
-                  dropdown_icon = "",
-                  dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
-                  collapsibleTreeOutput("mytree1",width = "100%")
-                ),
-                br(),
-                h3("Loudoun County"),
-                
-                br(),
-                box(
-                  title = "Allegheny County",
-                  closable = FALSE,
-                  status = "warning",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  #width = "100%",
-                  enable_sidebar = FALSE,
-                  enable_dropdown = TRUE,
-                  dropdown_icon = "",
-                  dropdown_menu = tagList(selectInput("var2","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
-                  collapsibleTreeOutput("mytree2",width = "100%")
-                ),
-                p("Given the sizeable role investments in human capital have on economic growth, detailed knowledge of the industries, careers paths and occupations that are growing in the U.S. is valuable when determining how to allocate resources. This knowledge provides actionable information for preparing, teaching, and training the workforce of tomorrow. "),
-                p("The collapsible trees (above) map ONet career and occupation data. Each tree maps industry (the first level) to career pathways (second level) to occupations (third level). This data represents industries, careers and occupations with the highest projected growth or brightest outlook. In addition, the dropdown menu allows for a fourth level. As a whole, the trees map Skills, Education, Experience, On-Site-Training and On-Job-Training needed for each occupation, career and industry."),
-                p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
-                br(),
-                h3("Allegheny County")
->>>>>>> 2eacf52601868b6bcfa8f597c86541c349afffb5
-                
-                  ), 
-          
-                ), 
-                h3("Loudoun County"),
-                boxPlus(
-                  title = "Loudoun County",
-                  closable = FALSE,
-                  status = "warning",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  width = "100%",
-                  enable_sidebar = FALSE,
-                  enable_dropdown = TRUE,
-                  dropdown_icon = "",
-                  dropdown_menu = tagList(selectInput("var1","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
-                  collapsibleTreeOutput("mytree1",width = "100%")
-                ),
-                br(),
-                h3("Allegheny County"), 
-                box(
-                  title = "Allegheny County",
-                  closable = FALSE,
-                  status = "warning",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  #width = "100%",
-                  enable_sidebar = FALSE,
-                  enable_dropdown = TRUE,
-                  dropdown_icon = "",
-                  dropdown_menu = tagList(selectInput("var2","Select a Variable",choices = c("Employment","Education", "Housing", "Transportation","Insurance", "Policy and Funding"))),
-                  collapsibleTreeOutput("mytree2",width = "100%")
-                ),
-                p("Given the sizeable role investments in human capital have on economic growth, detailed knowledge of the industries, careers paths and occupations that are growing in the U.S. is valuable when determining how to allocate resources. This knowledge provides actionable information for preparing, teaching, and training the workforce of tomorrow. "),
-                p("The collapsible trees (above) map ONet career and occupation data. Each tree maps industry (the first level) to career pathways (second level) to occupations (third level). This data represents industries, careers and occupations with the highest projected growth or brightest outlook. In addition, the dropdown menu allows for a fourth level. As a whole, the trees map Skills, Education, Experience, On-Site-Training and On-Job-Training needed for each occupation, career and industry."),
-                p("Desired industries, as indicated by Wythe County officials, include manufacturing, agriculture, information systems and technology and food and beverage production. These industries are available in the visualizations above."),
-                br(), 
-                br()
-<<<<<<< HEAD
+                    )
+
               )
               )
-              ) ,
-=======
-              )),
-      
-      ## Tab 4--------------------------------------------
-      ## Do we want a demographics tab ??? 
-      ## maybe split up Foster Care and Juvenille Detention into 2 tabs?? 
->>>>>>> 2eacf52601868b6bcfa8f597c86541c349afffb5
+              ),
       
       ## Tab 4--------------------------------------------
       tabItem(tabName = "humancapital",
@@ -573,6 +511,8 @@ body <- dashboardBody(
                 p("[1] https://datausa.io/profile/geo/wythe-county-va#:~:text=In%202017%2C%20the%20median%20age,County%2C%20VA%20residents%20was%2044."),
                 br()
               )),
+    
+    
       ## Tab 5--------------------------------------------
       tabItem(tabName = "jobs",
               fluidRow(
@@ -793,7 +733,9 @@ body <- dashboardBody(
               ))
     )
   )
-)
+
+
+
 
 
 
@@ -832,98 +774,98 @@ server <- function(input, output, session) {
   
   ## Render Plot for demographics of Loudoun 
   output$myplot1 <- renderPlot({
-    if(input$var1%in%"Household Size"){
-      Wythe_long%>%filter(Variable%in%input$var1)%>%
-        ggplot(mapping=aes(x=name,y=value,fill=name))+
+    if(input$var1%in%"Age"){
+      loudoun%>%filter(Variable%in%input$var1)%>%
+        ggplot(mapping=aes(x=age,y=value,fill=age))+
         geom_col()+
         scale_fill_viridis(discrete = T)+
-        labs (title="Household Size",y="Households",x="")+
+        labs (title="Age",y="Population",x="")+
+        theme_minimal()+
+        theme(legend.position = "none")
+    }
+    else if (input$var%in%"Race"){
+      loudoun%>%filter(Variable%in%input$var1)%>%
+        ggplot(mapping=aes(x=factor(race),y=value,fill=race))+
+        geom_col()+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Race",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none")
     }
     else if (input$var%in%"Level of Education"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
-        geom_col()+
-        scale_fill_viridis(discrete = T)+
-        labs (title="Highest Level of Education (Age > 25)",y="Population",x="")+
-        theme_minimal()+
-        theme(legend.position = "none")
-    }
-    else if (input$var%in%"Household Income"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
+      loudoun%>%filter(Variable%in%input$var1)%>%
         ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Household Income",y="Households",x="")+
+        labs (title="Educational Atainment (>25)",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
-    else if (input$var%in%"Home Values"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
+    else if (input$var%in%"Employment"){
+      loudoun%>%filter(Variable%in%input$var1)%>%
         ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Home Values",y="Number of Homes",x="")+
+        labs (title="Employment",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
+    else if (input$var%in%"Geographic Mobility"){
+      loudoun%>%filter(Variable%in%input$var1)%>%
+        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+        geom_bar(stat = "identity")+
+        scale_fill_viridis(discrete = T)+
+        labs (title="Geographic Mobility",y="Number of Homes",x="")+
+        theme_minimal()+
+        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
+    }
+    #Languages 
     else{
-      Wythe_long%>%filter(Variable%in%input$var)%>%
+      loudoun%>%filter(Variable%in%input$var1)%>%
         ggplot(mapping=aes(x=name,y=value,fill=name))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Employment by Industry",y="Population",x="")+
+        labs (title="Languages Spoken",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
   })
   
   ## Render Plot for demographics of Loudoun Foster Care 
-  ## have to change these 
   output$myplot2 <- renderPlot({
-    if(input$var2%in%"Household Size"){
-      Wythe_long%>%filter(Variable%in%input$var2)%>%
-        ggplot(mapping=aes(x=name,y=value,fill=name))+
+    if(input$var2%in%"Age"){
+      foster_age%>%
+        ggplot(mapping=aes(x=age_groups,y=value,fill=age_groups))+
         geom_col()+
         scale_fill_viridis(discrete = T)+
-        labs (title="Household Size",y="Households",x="")+
+        labs (title="Age Groups",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none")
     }
-    else if (input$var2%in%"Level of Education"){
-      Wythe_long%>%filter(Variable%in%input$var2)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+    else if (input$var2%in%"Race"){
+      foster_race%>%
+        ggplot(mapping=aes(x=fct_inorder(race),y=value,fill=fct_inorder(race)))+
         geom_col()+
         scale_fill_viridis(discrete = T)+
-        labs (title="Highest Level of Education (Age > 25)",y="Population",x="")+
+        labs (title="Race",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none")
     }
-    else if (input$var2%in%"Household Income"){
-      Wythe_long%>%filter(Variable%in%input$var2)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+    else if (input$var2%in%"Gender"){
+      foster_gender%>%
+        ggplot(mapping=aes(x=fct_inorder(gender),y=value,fill=fct_inorder(age_group)))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Household Income",y="Households",x="")+
+        labs (title="Gender",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
-    else if (input$var2%in%"Home Values"){
-      Wythe_long%>%filter(Variable%in%input$var2)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+    else {
+      foster_eth%>%
+        ggplot(mapping=aes(x=fct_inorder(eth),y=value,fill=fct_inorder(eth)))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Home Values",y="Number of Homes",x="")+
-        theme_minimal()+
-        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
-    }
-    else{
-      Wythe_long%>%filter(Variable%in%input$var2)%>%
-        ggplot(mapping=aes(x=name,y=value,fill=name))+
-        geom_bar(stat = "identity")+
-        scale_fill_viridis(discrete = T)+
-        labs (title="Employment by Industry",y="Population",x="")+
+        labs (title="Ethnicity",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
@@ -933,53 +875,43 @@ server <- function(input, output, session) {
   
   ## Render Plot for demographics of Loudoun for Juvenille Detention 
   output$myplot3 <- renderPlot({
-    if(input$var3%in%"Household Size"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
-        ggplot(mapping=aes(x=name,y=value,fill=name))+
+    if(input$var3%in%"Age"){
+      juv_age%>%
+        ggplot(mapping=aes(x=age,y=value,fill=age))+
         geom_col()+
         scale_fill_viridis(discrete = T)+
-        labs (title="Household Size",y="Households",x="")+
+        labs (title="Age",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none")
     }
-    else if (input$var3%in%"Level of Education"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+    else if (input$var3%in%"Race"){
+      juv_race%>%
+        ggplot(mapping=aes(x=fct_inorder(race),y=value,fill=fct_inorder(race)))+
         geom_col()+
         scale_fill_viridis(discrete = T)+
-        labs (title="Highest Level of Education (Age > 25)",y="Population",x="")+
+        labs (title="Race",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none")
     }
-    else if (input$va3%in%"Household Income"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
+    else if (input$va3%in%"Ethnicity"){
+      juv_eth%>%
+        ggplot(mapping=aes(x=fct_inorder(eth),y=value,fill=fct_inorder(eth)))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Household Income",y="Households",x="")+
-        theme_minimal()+
-        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
-    }
-    else if (input$va3%in%"Home Values"){
-      Wythe_long%>%filter(Variable%in%input$var)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
-        geom_bar(stat = "identity")+
-        scale_fill_viridis(discrete = T)+
-        labs (title="Home Values",y="Number of Homes",x="")+
+        labs (title="Ethnicity",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
     else{
-      Wythe_long%>%filter(Variable%in%input$var3)%>%
-        ggplot(mapping=aes(x=name,y=value,fill=name))+
+      juv_gender%>%
+        ggplot(mapping=aes(x=fct_inorder(gender),y=value,fill=fct_inorder(gender)))+
         geom_bar(stat = "identity")+
         scale_fill_viridis(discrete = T)+
-        labs (title="Employment by Industry",y="Population",x="")+
+        labs (title="Gender",y="Population",x="")+
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
   })
-  
   
   
     output$myplot <- renderPlot({
@@ -999,7 +931,7 @@ server <- function(input, output, session) {
     ## decision tree for Loudoun
     output$mytree1 <- renderCollapsibleTree({
       if(input$var1%in%"Employment"){
-        Tree_Employ%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1013,7 +945,7 @@ server <- function(input, output, session) {
       
       
       else if(input$var1%in%"Education"){
-        Tree_Ed%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1026,7 +958,7 @@ server <- function(input, output, session) {
         
       }
       else if(input$var1%in%"Housing"){
-        Tree_Housing%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1039,7 +971,7 @@ server <- function(input, output, session) {
         
       }
       else if(input$var1%in%"Transportation"){
-        Tree_Trans%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1052,7 +984,7 @@ server <- function(input, output, session) {
         
       }
       else if(input$var1%in%"Insurance"){
-        Tree_Insurance%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1066,7 +998,7 @@ server <- function(input, output, session) {
       }
       ## Policy
       else {
-        Tree_Policy%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Loudoun")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1083,15 +1015,10 @@ server <- function(input, output, session) {
     ## decision tree for Allegheny
     output$mytree2 <- renderCollapsibleTree({
       if(input$var2%in%"Employment"){
-        Tree_Employ%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
-<<<<<<< HEAD
-          group_by(Occupation)%>% 
-=======
-          group_by(Occupation)%>%
->>>>>>> 2eacf52601868b6bcfa8f597c86541c349afffb5
           collapsibleTree(hierarchy = c("Program","Subpopulation","TAYs", "Description"),
                           root="County",
                           attribute = "Job_Openings",
@@ -1101,7 +1028,7 @@ server <- function(input, output, session) {
       
       
       else if(input$var2%in%"Education"){
-        Tree_Ed%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1114,7 +1041,7 @@ server <- function(input, output, session) {
         
       }
       else if(input$var2%in%"Housing"){
-        Tree_Housing%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1127,7 +1054,7 @@ server <- function(input, output, session) {
         
       }
       else if(input$var2%in%"Transportation"){
-        Tree_Trans%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1140,7 +1067,7 @@ server <- function(input, output, session) {
         
       }
       else if(input$var2%in%"Insurance"){
-        Tree_Insurance%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1154,7 +1081,7 @@ server <- function(input, output, session) {
       }
       ## Policy
       else {
-        Tree_Policy%>%
+        Tree%>%filter(Variable%in%input$var1)%>%
           filter(County == "Allegheny")%>%
           mutate_if(is.numeric, ~replace(., is.na(.), 0))%>%
           filter(Importance>=2.88)%>%
@@ -1167,9 +1094,7 @@ server <- function(input, output, session) {
         
       }
     })
-    
-    
-    
+  
     
     
     
