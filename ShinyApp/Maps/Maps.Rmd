@@ -34,19 +34,27 @@ juvie_det_location$Longitude <- as.numeric(juvie_det_location$Longitude)
 juvie_det_location$Latitude <- as.numeric(juvie_det_location$Latitude)
 
 # Create color palettes to organize by whatever is desired
-Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green'), 
-                             levels = unique(juvie_det_location$Pillars))
+Pillar_levels <- unique(foster_care_locations$Pillars)
+Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
+                             levels = Pillar_levels)
+subpop_levels <- unique(juvie_det_location$Subpopulation)
 subpop_pal <- colorFactor(pal = c('red', 'green'), 
-                             levels = unique(juvie_det_location$Subpopulation))
+                             levels = subpop_levels)
 
 
 # Use leaflet to map each location with circle markers and program name popups. 
-foster_care_locations_map <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = ~Program, radius = 2, color = ~Pillar_pal(Pillar))
+foster_care_locations_map <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+addProviderTiles("CartoDB") %>% 
+addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% 
+addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
+
 # Same process for juvie_det
-juvie_det_map <- juvie_det_location %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_location$Program, " (", juvie_det_location$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = unique(juvie_det_location$Pillars))
+juvie_det_map <- juvie_det_location %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_location$Program, " (", juvie_det_location$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
 
 
-juvie_and_foster_map <- foster_care_locations_map %>% addCircleMarkers(lng = juvie_det_location$Longitude, lat = juvie_det_location$Latitude, popup = juvie_det_location$Program, radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(position = 'bottomleft', title = "Program Type", colors = c('red', 'green'), labels = c('Foster Care', 'Juvenile Detention') )
+juvie_and_foster_map <- foster_care_locations_map %>% 
+addCircleMarkers(lng = juvie_det_location$Longitude, lat = juvie_det_location$Latitude, popup = paste0(juvie_det_location$Program, " (", juvie_det_location$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars))
 
 ```
 
