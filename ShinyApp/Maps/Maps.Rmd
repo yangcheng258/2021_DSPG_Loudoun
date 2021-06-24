@@ -1,0 +1,34 @@
+---
+title: "Interactive Map"
+author: "Austin Burcham"
+date: "6/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(readxl)
+library(leaflet)
+```
+
+```{r}
+# read in foster care information
+foster_care_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Qualitative_research\\Research-Foster_care-New_col_added.xlsx")
+# filter information to include only program name, longitude and latitude
+# and remove entries that are NA
+foster_care_locations <- foster_care_info %>% select(Program, Longitude, Latitude) %>% 
+rename(Longitude = Latitude, Latitude = Longitude) %>% 
+filter(Longitude != "Online") %>% drop_na()
+#Make longitude and latitude numeric
+foster_care_locations$Longitude <- as.numeric(foster_care_locations$Longitude)
+foster_care_locations$Latitude <- as.numeric(foster_care_locations$Latitude)
+
+# Use leaflet to map each location with circle markers and program name popups. 
+foster_care_locations_map <- foster_care_locations %>% leaflet() %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = ~Program, radius = 2, color = 'red')
+foster_care_locations_map
+
+
+```
+
