@@ -14,21 +14,30 @@ library(leaflet)
 ```
 
 ```{r}
-# read in foster care information
-foster_care_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Qualitative_research\\Research-Foster_care-New_col_added.xlsx")
+# read in foster care and juvenile detention information
+foster_care_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\Research-Foster_care-New_col_added.xlsx")
+juvie_det_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Qualitative_research\\Research-Juvenile_Detention-New_col_added.xlsx")
 # filter information to include only program name, longitude and latitude
 # and remove entries that are NA
-foster_care_locations <- foster_care_info %>% select(Program, Longitude, Latitude) %>% 
+foster_care_locations <- foster_care_info %>% select(Program, Longitude, Latitude, Subpopulation) %>% 
 rename(Longitude = Latitude, Latitude = Longitude) %>% 
 filter(Longitude != "Online") %>% drop_na()
 #Make longitude and latitude numeric
 foster_care_locations$Longitude <- as.numeric(foster_care_locations$Longitude)
 foster_care_locations$Latitude <- as.numeric(foster_care_locations$Latitude)
+# Same process for juvie det
+juvie_det_location <- juvie_det_info %>% select(Program, Longitude, Latitude, Subpopulation) %>% 
+filter(Longitude != "Online") %>% drop_na()
+juvie_det_location$Longitude <- as.numeric(juvie_det_location$Longitude)
+juvie_det_location$Latitude <- as.numeric(juvie_det_location$Latitude)
 
 # Use leaflet to map each location with circle markers and program name popups. 
-foster_care_locations_map <- foster_care_locations %>% leaflet() %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = ~Program, radius = 2, color = 'red')
-foster_care_locations_map
+foster_care_locations_map <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = ~Program, radius = 2, color = 'red')
+# Same process for juvie_det
+juvie_det_map <- juvie_det_location %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = ~Program, radius = 2, color = 'green')
 
+
+juvie_and_foster_map <- foster_care_locations_map %>% addCircleMarkers(lng = juvie_det_location$Longitude, lat = juvie_det_location$Latitude, popup = juvie_det_location$Program, radius = 2, color = 'green') %>% addLegend(position = 'bottomleft', title = "Program Type", colors = c('red', 'green'), labels = c('Foster Care', 'Juvenile Detention') )
 
 ```
 
