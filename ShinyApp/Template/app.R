@@ -810,15 +810,6 @@ server <- function(input, output, session) {
         theme_minimal()+
         theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
     }
-    else if (input$var%in%"Geographic Mobility"){
-      loudoun%>%filter(Variable%in%input$var1)%>%
-        ggplot(mapping=aes(x=fct_inorder(name),y=value,fill=fct_inorder(name)))+
-        geom_bar(stat = "identity")+
-        scale_fill_viridis(discrete = T)+
-        labs (title="Geographic Mobility",y="Number of Homes",x="")+
-        theme_minimal()+
-        theme(legend.position = "none",axis.text.x =element_text(angle=45,hjust=1,vjust=1))
-    }
     #Languages 
     else{
       loudoun%>%filter(Variable%in%input$var1)%>%

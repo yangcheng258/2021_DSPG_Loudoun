@@ -61,21 +61,20 @@ lang_df <- data_frame(lang, lang_p)
 
 
 # Foster Care -----------------------------------------------------------
-fc_virginia <- read_excel("data/foster-care-2020-all.xlsx")
-fc_2020 <- read_excel("data/foster-care-2020.xlsx")
+fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
+fc_2020 <- read_excel(paste0(getwd(),"/data/foster-care-2020.xlsx")) 
 #Age
-totals <- t(data.frame(fc_virginia[c(3,143),])) 
+totals <- data.frame(fc_virginia[c(2:38),])
 
 colnames(totals) <- c("Age Group", "Value")
 groups <- c("<1", "1-5", "6-9", "10-12", "13-15", "16-18", "19+")
-fc_ages <-data.frame(totals[c(4,6,8,10,12,14,16),])
-
-## must convert characters to numeric values 
+fc_ages <-data.frame(totals[c(24, 26, 28,30,32,34,36),])
 fc_ages$Value <- as.numeric(fc_ages$Value)
 #Race and ethnicity 
-fc_races <- data.frame(fc_2020[c(8,10,12,14,16,18),])
+fc_races <- data.frame(totals[c(7,9,11,13,15,17),])
 colnames(fc_races) <- c("Race", "Value")
 fc_races$Race <- c("Black", "White", "Indian", "Asian", "Hawaiian", "Multi") 
+
 eth <- rep(c("Hispanic" , "Non-Hispanic") , 1) 
 value <- c(14, 34)
 fc_eth <- data.frame(eth,value)
@@ -85,33 +84,33 @@ age_19 <- rep(c("<19" , "19+") , 1)
 value <- c(40, 8)
 fc_tays <- data.frame(age_19, value)
 # Sex
-fc_sex <- data.frame(fc_2020[c(2,4),])
+fc_sex <- data.frame(totals[c(1,3),])
 colnames(fc_sex) <- c("Gender", "Value")
 # Juvenille Detention -----------------------------------------------------------
 # Race 
-intake_race <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")
+intake_race <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
 intake_race_FY2020 <- intake_race$FY20..
 loudoun_intake_race_FY2020 <- intake_race_FY2020[285:288]
 
 #Eth 
-intake_ethnicity <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")
+intake_ethnicity <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")) 
 intake_ethnicity_FY2020 <- intake_ethnicity$FY20..
 loudoun_intake_ethnicity_FY2020 <- intake_ethnicity_FY2020[214:216]
 
 # Sex
-intake_sex <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
+intake_sex <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")) 
 intake_sex_2020 <- intake_sex$FY20..
 loudoun_intake_sex_FY2020 <- intake_sex_2020[143:144]
 sex <- c("Female", "Male")
 # Age
-intake_age <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
+intake_age <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")) 
 intake_age_2020 <- intake_age$FY20..
 loudoun_intake_age_FY2020 <- intake_age_2020[640:647]
 ages <- c("8-12", "13", "14", "15", "16", "17", "18-20", "Missing")
 
 
 # Trees -----------------------------------------------------------
-Tree <- read_excel("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/combined-programs.xlsx")
+Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 
 # sidebar -----------------------------------------------------------
 sidebar <- dashboardSidebar(
@@ -329,7 +328,7 @@ server <- function(input, output, session) {
           scale_fill_manual(values = c("darkred", "navy")) +
           labs(x = "", 
                y = "Population Estimates",
-               title = "Age, Race, Sex for Loudoun County", 
+               title = "Age and Sex Pyramid Structure for Loudoun County", 
                fill ="")
       } else if(var1() == "race") {
         ggplot(data = lr, aes(x = estimate, y = variable, fill = variable)) + 
@@ -341,7 +340,7 @@ server <- function(input, output, session) {
           theme_minimal(base_family = "Verdana")+ theme(legend.title = element_blank()) 
        
       }else if(var1() == "income"){
-        ggplot(loudoun_race_income, aes(x = variable, y = summary_est, color = summary_est)) + 
+        ggplot(income, aes(x = variable, y = summary_est, color = summary_est)) + 
           geom_quasirandom(alpha = .5) + 
           coord_flip() +
           theme_minimal() + 
@@ -462,7 +461,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -475,7 +474,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Employment")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -487,7 +486,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Housing")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -499,7 +498,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Transportation")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -511,7 +510,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -523,7 +522,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Funding and Policy")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -539,7 +538,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Education")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -552,7 +551,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Employment")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -564,7 +563,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Housing")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -576,7 +575,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Transportation")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -588,7 +587,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
@@ -600,7 +599,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Funding & Policy")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("County","Pillars","Subpopulation", "Program", "Age_range"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
