@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 setwd("C:/Users/austi/Documents/VT DSPG/Loudoun/Excel Files")
 ```
 ```{r}
-
+library(tidyverse)
 library(tidycensus)
 
 census_api_key("db7e4934cc0fce8825126d144bbcf37ffcb8f777", install = TRUE, overwrite = TRUE)
@@ -33,22 +33,42 @@ Youth incarceration in Virginia is run by the Virginia Department of Juvenile Ju
  In Loudoun county, demographics were similar to that of the state of Virginia. In the Fiscal Year 2020, 5.7% of intakes were asian, 15.1% were black, 73.6% were white and 5.6% other, with 31.8% of intakes being Hispanic (OJJDP 2019).
  
 ```{r, Lououn Racial Demographics of Intakes}
-intake_race <- read.csv(file = "C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv", header = T)
-intake_race_FY2020 <- intake_race$FY20..
-loudoun_intake_race_FY2020 <- intake_race_FY2020[285:288]
-barplot(height = loudoun_intake_race_FY2020, names.arg = c("Asian", "Black", "White", "Other/Unlisted"), col = "coral", ylim = c(0,0.8), xlab = "Race", ylab = "Relative Frequency",
-        main = "Racial Demographics of Loudoun Intakes")
+intake_race <- read_csv(file = "C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")
+intake_race_FY2020 <- intake_race %>% select(RACE, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`) %>% 
+  select(RACE, Proportion) %>% 
+  rename(Race = RACE)
+
+
+race_demographics_bar <- intake_race_FY2020 %>% 
+  ggplot(aes(x = Race, fill = 'coral')) +
+  geom_bar(aes(weight = Proportion)) +
+  labs(x = "Race", y = "Relative Frequency",
+        title = "Racial Demographics of Loudoun Intakes") + 
+  theme_minimal() + 
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
 pie(loudoun_intake_race_FY2020, labels = c("Asian", "Black", "White", "Other/Unlisted"), main = "Racial Demographics of Loudoun Intakes")
 ```
 
 
 ```{r, Loudoun Ethnicity}
-intake_ethnicity <- read.csv(file = "C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv", header = TRUE)
-intake_ethnicity_FY2020 <- intake_ethnicity$FY20..
-loudoun_intake_ethnicity_FY2020 <- intake_ethnicity_FY2020[214:216]
-barplot(height = loudoun_intake_ethnicity_FY2020, names = c("Hispanic", "Non-Hispanic", "Unkown/Missing"), col = "darkseagreen2", xlab = "Ethnicity",
-        main = "Ethnic Demographics of Loudoun Intakes",
-        ylab = "Relative Frequency", ylim = c(0, 0.8))
+intake_ethnicity <- read_csv(file = "C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")
+
+intake_ethnicity_FY2020 <- intake_ethnicity %>% select(ETHNICITY, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`, Ethnicity = ETHNICITY) %>%
+  select(Ethnicity, Proportion)
+
+ethnicity_demographics_bar <- intake_ethnicity_FY2020 %>% 
+  ggplot(aes(x = Ethnicity)) +
+  geom_bar(fill = "darkseagreen2", aes(weight = Proportion)) +
+  labs(x = "Ethnicity", y = "Relative Frequency",
+        title = "Ethnic Demographics of Loudoun Intakes") + 
+  theme_minimal() + 
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
 pie(loudoun_intake_ethnicity_FY2020, labels = c("Hispanic", "Non-Hispanic", "Unkown/Missing"), main = "Ethnic Demographics of Loudoun Intakes")
 ```
 
@@ -57,13 +77,21 @@ pie(loudoun_intake_ethnicity_FY2020, labels = c("Hispanic", "Non-Hispanic", "Unk
  
  
 ```{r, Juvenile Intake Sex}
-intake_sex <- read.csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
-intake_sex_2020 <- intake_sex$FY20..
-loudoun_intake_sex_FY2020 <- intake_sex_2020[143:144]
-sex <- c("Female", "Male")
-barplot(height = loudoun_intake_sex_FY2020, names.arg = sex, col = c("darkslategray2", "firebrick2"), xlab = "Sex",
-        main = "Sex Demographics of Loudoun Intakes",
-        ylab = "Relative Frequency", ylim = c(0, 0.9))
+intake_sex <- read_csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
+loudoun_intake_sex_FY2020 <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`, Sex = SEX) %>%
+  select(Sex, Proportion)
+
+sex_demographics_bar <- loudoun_intake_sex_FY2020 %>% 
+  ggplot(aes(x = Sex)) +
+  geom_bar(fill = "darkslategray2", aes(weight = Proportion)) +
+  labs(x = "Sex", y = "Relative Frequency",
+        title = "Sex Demographics of Loudoun Intakes") + 
+  theme_minimal() + 
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
 pie(loudoun_intake_sex_FY2020, labels = sex, main = "Sex Demographics of Loudoun Intakes")
 ```
 
@@ -71,13 +99,23 @@ pie(loudoun_intake_sex_FY2020, labels = sex, main = "Sex Demographics of Loudoun
  Like the state of Virginia, those ages 16-17 in Loudoun made up the bulk of the intake population, accounting for 49.4% of intakes, with the average age at intake being 16 (OJJDP 2019).
 
 ```{r, Loudoun Age}
-intake_age <- read.csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
-intake_age_2020 <- intake_age$FY20..
-loudoun_intake_age_FY2020 <- intake_age_2020[640:647]
-ages <- c("8-12", "13", "14", "15", "16", "17", "18-20", "Missing")
-barplot(height = loudoun_intake_age_FY2020, names.arg = ages, col = "brown1", xlab = "Age",
-        main = "Age Demographics of Loudoun Intakes",
-        ylab = "Relative Frequency", ylim = c(0, 0.35))
+intake_age <- read_csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
+
+loudoun_intake_age_FY2020 <- intake_age %>% select(AGE, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`, Age = AGE) %>%
+  select(Age, Proportion)
+
+
+age_demographics_bar <- loudoun_intake_age_FY2020 %>% 
+  ggplot(aes(x = Age)) +
+  geom_bar(fill = "brown1", aes(weight = Proportion)) +
+  labs(x = "Sex", y = "Relative Frequency",
+        title = "Age Demographics of Loudoun Intakes") + 
+  theme_minimal() + 
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
 pie(loudoun_intake_age_FY2020, labels = ages, main = "Age Demographics of Loudoun Intakes" )
 ```
 
