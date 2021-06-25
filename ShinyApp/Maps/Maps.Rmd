@@ -1,0 +1,73 @@
+---
+title: "Interactive Map"
+author: "Austin Burcham"
+date: "6/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(readxl)
+library(leaflet)
+```
+
+```{r}
+# read in foster care and juvenile detention information
+foster_care_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Files\\Research-Foster_care-New_col_added.xlsx")
+juvie_det_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Qualitative_research\\Research-Juvenile_Detention-New_col_added.xlsx")
+# filter information to include only program name, longitude and latitude
+# and remove entries that are NA
+foster_care_locations <- foster_care_info %>% select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+rename(Longitude = Latitude, Latitude = Longitude) %>% 
+filter(Longitude != "Online") %>% drop_na()
+
+#Make longitude and latitude numeric
+foster_care_locations$Longitude <- as.numeric(foster_care_locations$Longitude)
+foster_care_locations$Latitude <- as.numeric(foster_care_locations$Latitude)
+
+# Same process for juvie det
+juvie_det_locations <- juvie_det_info %>% select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+filter(Longitude != "Online") %>% drop_na()
+juvie_det_locations$Longitude <- as.numeric(juvie_det_locations$Longitude)
+juvie_det_locations$Latitude <- as.numeric(juvie_det_locations$Latitude)
+
+# Create color palettes to organize by whatever is desired
+Pillar_levels <- unique(foster_care_locations$Pillars)
+Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
+                             levels = Pillar_levels)
+subpop_levels <- c("Foster Care", "Juvenile Detention")
+subpop_pal <- colorFactor(pal = c('red', 'green'), 
+                             levels = subpop_levels)
+
+
+# Use leaflet to map each location with circle markers and program name popups. 
+foster_care_map_by_pillar <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+addProviderTiles("CartoDB") %>% 
+addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% 
+addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
+
+# Same process for juvie_det
+juvie_det_map_by_pillar <- juvie_det_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
+
+
+map_by_pillar <- foster_care_map_by_pillar %>% 
+  addCircleMarkers(lng = juvie_det_locations$Longitude, lat = juvie_det_locations$Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars))
+
+
+## Maps by subpopulation 
+foster_care_map_by_subpop <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+addProviderTiles("CartoDB") %>% 
+addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Foster Care", radius = 2, color = ~subpop_pal(Subpopulation)) 
+
+juvie_det_map_by_subpop <- juvie_det_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+addProviderTiles("CartoDB") %>% 
+addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation))
+
+map_by_subpop <- foster_care_map_by_subpop %>% addCircleMarkers(lng = juvie_det_locations$Longitude, lat = juvie_det_locations$Latitude, popup = paste0(juvie_det_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation))
+```
+
