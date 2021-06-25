@@ -11,6 +11,7 @@ library(tidyverse)
 library(readr)
 library(readxl)
 library(leaflet)
+library(leaflet.extras)
 ```
 
 ```{r}
@@ -40,17 +41,18 @@ Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'p
 subpop_levels <- c("Foster Care", "Juvenile Detention")
 subpop_pal <- colorFactor(pal = c('red', 'green'), 
                              levels = subpop_levels)
+# Organize by pillar 
 
 
 # Use leaflet to map each location with circle markers and program name popups. 
-foster_care_map_by_pillar <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
-setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+foster_care_map_by_pillar <- foster_care_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% 
 addProviderTiles("CartoDB") %>% 
 addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% 
 addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
 
 # Same process for juvie_det
-juvie_det_map_by_pillar <- juvie_det_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
+juvie_det_map_by_pillar <- juvie_det_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
 
 
 map_by_pillar <- foster_care_map_by_pillar %>% 
@@ -58,16 +60,18 @@ map_by_pillar <- foster_care_map_by_pillar %>%
 
 
 ## Maps by subpopulation 
-foster_care_map_by_subpop <- foster_care_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
-setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+foster_care_map_by_subpop <- foster_care_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% 
 addProviderTiles("CartoDB") %>% 
 addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Foster Care", radius = 2, color = ~subpop_pal(Subpopulation)) 
 
-juvie_det_map_by_subpop <- juvie_det_locations %>% leaflet(options = leafletOptions(minZoom = 5)) %>% 
-setView(lng = -78.457030, lat = 38.163355, zoom = 6) %>% 
+juvie_det_map_by_subpop <- juvie_det_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% 
+setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% 
 addProviderTiles("CartoDB") %>% 
 addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation))
 
-map_by_subpop <- foster_care_map_by_subpop %>% addCircleMarkers(lng = juvie_det_locations$Longitude, lat = juvie_det_locations$Latitude, popup = paste0(juvie_det_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation))
+map_by_subpop <- foster_care_map_by_subpop %>% addCircleMarkers(lng = juvie_det_locations$Longitude, lat = juvie_det_locations$Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(juvie_det_locations$Subpopulation))
+
+map_by_subpop <- map_by_subpop %>% addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"))
 ```
 
