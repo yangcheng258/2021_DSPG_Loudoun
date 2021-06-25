@@ -107,7 +107,6 @@ jv_eth <- intake_eth %>% select(ETHNICITY, `FY20 %`, CSU) %>%
 
 # Sex
 intake_sex <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")) 
-colnames(intake_sex) <-intake_sex[1,]
 jv_sex <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Sex = SEX) %>%
@@ -185,7 +184,7 @@ body <- dashboardBody(
                         br(), 
                         br(),  
                       box(
-                        title = "Visualizations of Loudoun Residents ",
+                        title = "Visualizations of Loudoun Residents",
                         closable = FALSE,
                         width = NULL,
                         status = "warning",
@@ -231,11 +230,11 @@ body <- dashboardBody(
                                  "Race" = "race",
                                  "Ethnicity" = "eth")
                                ) ,
-                               plotOutput(plot3),
+                               plotlyOutput("plot3"),
                                p(tags$small("Data source: DJJ (Department of Juvenile Justice)"))
                     )
                   )
-              )
+                  )
               ),
       ## Services--------------------------------------------
       tabItem(tabName = "services",
@@ -250,38 +249,47 @@ body <- dashboardBody(
                   h1("Service Availability for Transitional Aged Youth in Loudoun County"),
                   h2("Project Description"),
                   p("we need to add description of what we are doing and why we are doing this"), 
-                  p("Talk about .... "), 
+                  p("Talk about .... ")) , 
                   br(),
-                  tabsetPanel(
-                    tabPanel("Loudoun County",
-                             h3(strong(""), align = "center"),
-                             selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
-                               "Education",
-                               "Employment",
-                               "Housing",
-                               "Transportation",
-                               "Insurance",
-                               "Policy and Funding")
-                             ), 
-                             collapsibleTreeOutput("tree1")
-
+                  box(
+                    title = "Loudoun County",
+                    closable = FALSE,
+                    width = NULL,
+                    status = "warning",
+                    solidHeader = TRUE,
+                    collapsible = TRUE,
+                    h2("Project Description"),
+                    selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
+                      "Education",
+                      "Employment",
+                      "Housing",
+                      "Transportation",
+                      "Insurance",
+                      "Policy and Funding")
+                    ), 
+                    collapsibleTreeOutput("tree1")), 
+                  box(
+                    title = "Allegheny County",
+                    closable = FALSE,
+                    width = NULL,
+                    status = "warning",
+                    solidHeader = TRUE,
+                    collapsible = TRUE,
+                    h2("Project Description"),
+                    h3(strong(""), align = "center"),
+                    selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
+                      "Education",
+                      "Employment",
+                      "Housing",
+                      "Transportation",
+                      "Insurance",
+                      "Policy and Funding")
                     ),
-                    tabPanel("Allegheny County",
-                             h3(strong(""), align = "center"),
-                             selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
-                               "Education",
-                               "Employment",
-                               "Housing",
-                               "Transportation",
-                               "Insurance",
-                               "Policy and Funding")
-                             ),
-                             collapsibleTreeOutput("tree2")
-                             
-                    )
+                    collapsibleTreeOutput("tree2")) 
+                  
                 ) 
-              ) 
-      )) , 
+             
+      ) , 
       ## Locations --------------------------------------------
       tabItem(tabName = "locations",
               fluidRow(
@@ -295,34 +303,15 @@ body <- dashboardBody(
                   h1("Where are the services located?"),
                   h2("Project Description"), 
                   
-                  ## second example of how we can do the trees 
-                  selectInput("county", "Select Variable:", width = "100%", choices = c(
-                    "Loudoun County",
-                    "Allegheny County")
-                  ),
-                  collapsibleTreeOutput("exTree"),
-                  p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))
+                  
                   ) 
                 ) 
-              ), 
+              )
       
       
       
       ## Data and Methodology--------------------------------------------
-      tabItem(tabName = "data",
-              fluidRow(
-                box(
-                  title = "Data and Methodology",
-                  closable = FALSE,
-                  width = NULL,
-                  status = "warning",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  h1(""),
-                  h2("n"), 
-                ) 
-              ) 
-          )
+    
                
         )
       ) 
@@ -438,7 +427,7 @@ server <- function(input, output, session) {
         labs(x = "" , y = "Population Estimate", 
              title = "Sex of Youths in Foster Care") + theme(legend.position = "none")
     }else{
-        ggplotly(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
+        ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
           geom_bar(stat="identity") + 
           labs(x = "Age Group" , y = "Population Estimate", 
                title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")}
@@ -453,7 +442,7 @@ server <- function(input, output, session) {
     output$plot3 <- renderPlotly({
       if(var3() == "age") {
         jv_age %>% 
-          ggplot(aes(x = Age)) +
+          ggplot(aes(Age)) +
           geom_bar(fill = "brown1", aes(weight = Proportion)) +
           labs(x = "Sex", y = "Relative Frequency",
                title = "Age Demographics of Loudoun Intakes") + 
@@ -571,7 +560,7 @@ server <- function(input, output, session) {
       }
     })
 
-
+    ## tree for Allegheny County 
     output$tree2 <- renderCollapsibleTree({
       if(input$pillar2%in%"Education"){
         Tree%>%filter(County == "Allegheny")%>%
@@ -641,31 +630,10 @@ server <- function(input, output, session) {
       }
     })
     
-    ## example of another option 
-    output$exTree <- renderCollapsibleTree({
-      if(input$county%in%"Loudoun County"){
-        Tree%>%
-          filter(County == "Loudoun")%>% 
-          group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Subpopulation","Pillars","Program", "Age_range"),
-                          root="County",
-                          attribute = "Pillars",
-                          width=1800,
-                          zoomable=F, fillByLevel = T, 
-                          collapsed = T, nodeSize = 'leafCount')
-      }else {
-        Tree%>%
-          filter(County == "Allegheny")%>% 
-          group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Subpopulation","Pillars","Program", "Age_range"),
-                          root="County",
-                          attribute = "Pillars",
-                          width=1800,
-                          zoomable=F, fillByLevel = T, 
-                          collapsed = T, nodeSize = 'leafCount')
-
-      }
-    })
+    ## Add maps for locations of programs in Loudoun 
+    
+    ## map for locations of program in Allegheny
+  
     
 }
 
