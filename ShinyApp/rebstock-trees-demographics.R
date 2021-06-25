@@ -86,27 +86,40 @@ fc_tays <- data.frame(age_19, value)
 # Sex
 fc_sex <- data.frame(totals[c(1,3),])
 colnames(fc_sex) <- c("Gender", "Value")
+
 # Juvenille Detention -----------------------------------------------------------
 # Race 
-intake_race <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
-intake_race_FY2020 <- intake_race$FY20..
-loudoun_intake_race_FY2020 <- intake_race_FY2020[285:288]
+intake_race <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
+colnames(intake_race) <-intake_race[1,]
+jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`) %>% 
+  select(RACE, Proportion) %>% 
+  rename(Race = RACE)
 
 #Eth 
-intake_ethnicity <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")) 
-intake_ethnicity_FY2020 <- intake_ethnicity$FY20..
-loudoun_intake_ethnicity_FY2020 <- intake_ethnicity_FY2020[214:216]
+intake_eth <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")) 
+colnames(intake_eth) <-intake_eth[1,]
+jv_eth <- intake_eth %>% select(ETHNICITY, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`, Ethnicity = ETHNICITY) %>%
+  select(Ethnicity, Proportion)
 
 # Sex
 intake_sex <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")) 
-intake_sex_2020 <- intake_sex$FY20..
-loudoun_intake_sex_FY2020 <- intake_sex_2020[143:144]
-sex <- c("Female", "Male")
+colnames(intake_sex) <-intake_sex[1,]
+jv_sex <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`, Sex = SEX) %>%
+  select(Sex, Proportion)
 # Age
 intake_age <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")) 
-intake_age_2020 <- intake_age$FY20..
-loudoun_intake_age_FY2020 <- intake_age_2020[640:647]
-ages <- c("8-12", "13", "14", "15", "16", "17", "18-20", "Missing")
+colnames(intake_age) <-intake_age[1,]
+jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`, Age = AGE) %>%
+  select(Age, Proportion) %>% 
+  filter(Age != "Total Cases")
 
 
 # Trees -----------------------------------------------------------
@@ -171,57 +184,57 @@ body <- dashboardBody(
                         p("Our interactive plots visualize census block-group level sociodemographic characteristics of Patrick County residents.")),
                         br(), 
                         br(),  
-                    box(
-                      title = "Visualizations of Loudoun Residents ",
-                      closable = FALSE,
-                      width = NULL,
-                      status = "warning",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      selectInput("var1", "Select Variable:", width = "100%", choices = c(
-                        "Age, Sex" = "ageSex",
-                        "Race" = "race", 
-                        "Household Income by Ethnicity" = "income",
-                        "Languages Spoken" = "language",
-                        "Level of Education" = "education")
+                      box(
+                        title = "Visualizations of Loudoun Residents ",
+                        closable = FALSE,
+                        width = NULL,
+                        status = "warning",
+                        solidHeader = TRUE,
+                        collapsible = TRUE,
+                        selectInput("var1", "Select Variable:", width = "100%", choices = c(
+                          "Age, Sex" = "ageSex",
+                          "Race" = "race", 
+                          "Household Income by Ethnicity" = "income",
+                          "Languages Spoken" = "language",
+                          "Level of Education" = "education")
+                        ),
+                        plotlyOutput("plot1"),
+                        p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
+                  br(),
+                  br(),
+                  box(
+                    title = "Visualizations of the Subpopulations Demographics",
+                    closable = FALSE,
+                    width = NULL,
+                    status = "warning",
+                    solidHeader = TRUE,
+                    collapsible = TRUE,
+                    tabsetPanel(
+                      tabPanel("Foster Care",
+                               h3(strong(""), align = "center"),
+                               selectInput("var2", "Select Topic:", width = "100%", choices = c(
+                                 "Age" = "age",
+                                 "Sex" = "sex", 
+                                 "Race" = "race",
+                                 "Ethnicity" = "eth",
+                                 "TAYs" = "tays")
+                               ),
+                               plotlyOutput("plot2"),
+                               p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) 
+                      
                       ),
-                      plotlyOutput("plot1"),
-                      p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
-              br(),
-              br(),
-              box(
-                title = "Visualizations of the Subpopulations Demographics",
-                closable = FALSE,
-                width = NULL,
-                status = "warning",
-                solidHeader = TRUE,
-                collapsible = TRUE,
-                tabsetPanel(
-                  tabPanel("Foster Care",
-                           h3(strong(""), align = "center"),
-                           selectInput("var2", "Select Topic:", width = "100%", choices = c(
-                             "Age" = "age",
-                             "Sex" = "sex", 
-                             "Race" = "race",
-                             "Ethnicity" = "eth",
-                             "TAYs" = "tays")
-                           ),
-                           plotlyOutput("plot2"),
-                           p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) 
-                  
-                  ),
-                  tabPanel("Juvenille Detention",
-                           h3(strong(""), align = "center"),
-                           selectInput("var3", "Select Topic:", width = "100%", choices = c(
-                             "Age" = "age",
-                             "Sex" = "sex",
-                             "Race" = "race",
-                             "Ethnicity" = "eth")) 
-                           # ) ,
-                           # plotOutput(plot3),
-                           # p(tags$small("Data source: DJJ (Department of Juvenile Justice)")) 
-                )
-              )
+                      tabPanel("Juvenille Detention",
+                               h3(strong(""), align = "center"),
+                               selectInput("var3", "Select Topic:", width = "100%", choices = c(
+                                 "Age" = "age",
+                                 "Sex" = "sex",
+                                 "Race" = "race",
+                                 "Ethnicity" = "eth")
+                               ) ,
+                               plotOutput(plot3),
+                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)"))
+                    )
+                  )
               )
               ),
       ## Services--------------------------------------------
@@ -291,24 +304,33 @@ body <- dashboardBody(
                   p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))
                   ) 
                 ) 
-              ) 
+              ), 
       
       
       
       ## Data and Methodology--------------------------------------------
-      
+      tabItem(tabName = "data",
+              fluidRow(
+                box(
+                  title = "Data and Methodology",
+                  closable = FALSE,
+                  width = NULL,
+                  status = "warning",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  h1(""),
+                  h2("n"), 
+                ) 
+              ) 
+          )
                
         )
       ) 
   ) 
     
   
-      
-
-
-# Define UI for application that draws a histogram
 ui <- dashboardPage(
-    dashboardHeader(title = "Julie Rebstock"), 
+    dashboardHeader(title = "DSPG 2021"), 
     sidebar = sidebar, 
     body = body
 )
@@ -416,7 +438,7 @@ server <- function(input, output, session) {
         labs(x = "" , y = "Population Estimate", 
              title = "Sex of Youths in Foster Care") + theme(legend.position = "none")
     }else{
-        ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
+        ggplotly(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
           geom_bar(stat="identity") + 
           labs(x = "Age Group" , y = "Population Estimate", 
                title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")}
@@ -430,25 +452,49 @@ server <- function(input, output, session) {
     ##Render Plot for Juvenille Detention 
     output$plot3 <- renderPlotly({
       if(var3() == "age") {
-        # barplot(height = loudoun_intake_age_FY2020, names.arg = ages, col = "brown1", xlab = "Age",
-        #         main = "Age Demographics of Loudoun Intakes",
-        #         ylab = "Relative Frequency", ylim = c(0, 0.35)) 
+        jv_age %>% 
+          ggplot(aes(x = Age)) +
+          geom_bar(fill = "brown1", aes(weight = Proportion)) +
+          labs(x = "Sex", y = "Relative Frequency",
+               title = "Age Demographics of Loudoun Intakes") + 
+          theme_minimal() + 
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+          coord_flip()
         
+
       }else if(var3() == "race"){
-        # barplot(height = loudoun_intake_race_FY2020, names.arg = c("Asian", "Black", "White", "Other/Unlisted"), col = "coral", ylim = c(0,0.8), xlab = "Race", ylab = "Relative Frequency",
-        #         main = "Racial Demographics of Loudoun Intakes")
         
-      } else if (var3() == "eth") {
-        # barplot(height = loudoun_intake_ethnicity_FY2020, names = c("Hispanic", "Non-Hispanic", "Unkown/Missing"), col = "darkseagreen2", xlab = "Ethnicity",
-        #         main = "Ethnic Demographics of Loudoun Intakes",
-        #         ylab = "Relative Frequency", ylim = c(0, 0.8))
+         jv_race %>% 
+          ggplot(aes(x = Race)) +
+          geom_bar(aes(fill = "coral", weight = Proportion)) +
+          labs(x = "Race", y = "Relative Frequency",
+               title = "Racial Demographics of Loudoun Intakes") + 
+          theme_minimal() + 
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+          coord_flip()
         
+
+      }else if (var3() == "eth") {
+        jv_eth %>% 
+          ggplot(aes(x = Ethnicity)) +
+          geom_bar(fill = "darkseagreen2", aes(weight = Proportion)) +
+          labs(x = "Ethnicity", y = "Relative Frequency",
+               title = "Ethnic Demographics of Loudoun Intakes") + 
+          theme_minimal() + 
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+        
+
       }
       else{
-        # barplot(height = loudoun_intake_sex_FY2020, names.arg = sex, col = c("darkslategray2", "firebrick2"), xlab = "Sex",
-        #         main = "Sex Demographics of Loudoun Intakes",
-        #         ylab = "Relative Frequency", ylim = c(0, 0.9))
+        jv_sex %>% 
+          ggplot(aes(x = Sex)) +
+          geom_bar(fill = "darkslategray2", aes(weight = Proportion)) +
+          labs(x = "Sex", y = "Relative Frequency",
+               title = "Sex Demographics of Loudoun Intakes") + 
+          theme_minimal() + 
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
+
         
       }
       
@@ -467,10 +513,7 @@ server <- function(input, output, session) {
                           width=1800,
                           zoomable=F, fillByLevel = T, 
                           collapsed = T, nodeSize = 'leafCount')
-      }
-
-
-      else if(input$pillar1%in%"Employment"){
+      }else if(input$pillar1%in%"Employment"){
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Employment")%>%
           group_by(Pillars)%>%
@@ -481,8 +524,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else if(input$pillar1%in%"Housing"){
+      }else if(input$pillar1%in%"Housing"){
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Housing")%>%
           group_by(Pillars)%>%
@@ -493,8 +535,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else if(input$pillar1%in%"Transportation"){
+      }else if(input$pillar1%in%"Transportation"){
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Transportation")%>%
           group_by(Pillars)%>%
@@ -505,8 +546,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else if(input$pillar1%in%"Insurance"){
+      }else if(input$pillar1%in%"Insurance"){
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
@@ -517,8 +557,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else {
+      }else {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Funding and Policy")%>%
           group_by(Pillars)%>%
@@ -544,10 +583,7 @@ server <- function(input, output, session) {
                           width=1800,
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
-      }
-
-
-      else if(input$pillar2%in%"Employment"){
+      }else if(input$pillar2%in%"Employment"){
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Employment")%>%
           group_by(Pillars)%>%
@@ -558,8 +594,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else if(input$pillar2%in%"Housing"){
+      }else if(input$pillar2%in%"Housing"){
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Housing")%>%
           group_by(Pillars)%>%
@@ -570,8 +605,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else if(input$pillar2%in%"Transportation"){
+      }else if(input$pillar2%in%"Transportation"){
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Transportation")%>%
           group_by(Pillars)%>%
@@ -582,8 +616,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else if(input$pillar2%in%"Insurance"){
+      }else if(input$pillar2%in%"Insurance"){
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
@@ -594,8 +627,7 @@ server <- function(input, output, session) {
                           zoomable=F, fillByLevel = T,
                           collapsed = T, nodeSize = 'leafCount')
 
-      }
-      else {
+      }else {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Funding & Policy")%>%
           group_by(Pillars)%>%
@@ -621,8 +653,7 @@ server <- function(input, output, session) {
                           width=1800,
                           zoomable=F, fillByLevel = T, 
                           collapsed = T, nodeSize = 'leafCount')
-      }
-      else {
+      }else {
         Tree%>%
           filter(County == "Allegheny")%>% 
           group_by(Pillars)%>%
