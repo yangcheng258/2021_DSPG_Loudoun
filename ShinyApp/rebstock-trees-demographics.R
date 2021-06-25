@@ -61,8 +61,8 @@ lang_df <- data_frame(lang, lang_p)
 
 
 # Foster Care -----------------------------------------------------------
-fc_virginia<- read_excel("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/data/foster-care-2020.xlsx")
-fc_2020 <- read_excel("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/data/foster-care-2020-all.xlsx")
+fc_virginia <- read_excel("data/foster-care-2020-all.xlsx")
+fc_2020 <- read_excel("data/foster-care-2020.xlsx")
 #Age
 totals <- t(data.frame(fc_virginia[c(3,143),])) 
 
@@ -89,22 +89,22 @@ fc_sex <- data.frame(fc_2020[c(2,4),])
 colnames(fc_sex) <- c("Gender", "Value")
 # Juvenille Detention -----------------------------------------------------------
 # Race 
-intake_race <- read.csv(file = "/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv", header = T)
+intake_race <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")
 intake_race_FY2020 <- intake_race$FY20..
 loudoun_intake_race_FY2020 <- intake_race_FY2020[285:288]
 
 #Eth 
-intake_ethnicity <- read.csv(file = "/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv", header = TRUE)
+intake_ethnicity <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")
 intake_ethnicity_FY2020 <- intake_ethnicity$FY20..
 loudoun_intake_ethnicity_FY2020 <- intake_ethnicity_FY2020[214:216]
 
 # Sex
-intake_sex <- read.csv("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
+intake_sex <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")
 intake_sex_2020 <- intake_sex$FY20..
 loudoun_intake_sex_FY2020 <- intake_sex_2020[143:144]
 sex <- c("Female", "Male")
 # Age
-intake_age <- read.csv("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
+intake_age <- read_csv("data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")
 intake_age_2020 <- intake_age$FY20..
 loudoun_intake_age_FY2020 <- intake_age_2020[640:647]
 ages <- c("8-12", "13", "14", "15", "16", "17", "18-20", "Missing")
