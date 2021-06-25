@@ -42,12 +42,14 @@ intake_race_FY2020 <- intake_race %>% select(RACE, `FY20 %`, CSU) %>%
 
 
 race_demographics_bar <- intake_race_FY2020 %>% 
-  ggplot(aes(x = Race, fill = 'coral')) +
-  geom_bar(aes(weight = Proportion)) +
+  ggplot(aes(x = Race)) +
+  geom_bar(aes(fill = "coral", weight = Proportion)) +
   labs(x = "Race", y = "Relative Frequency",
         title = "Racial Demographics of Loudoun Intakes") + 
   theme_minimal() + 
-  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+  coord_flip()
+race_demographics_bar <- ggplotly(race_demographics_bar)
 
 pie(loudoun_intake_race_FY2020, labels = c("Asian", "Black", "White", "Other/Unlisted"), main = "Racial Demographics of Loudoun Intakes")
 ```
@@ -67,7 +69,9 @@ ethnicity_demographics_bar <- intake_ethnicity_FY2020 %>%
   labs(x = "Ethnicity", y = "Relative Frequency",
         title = "Ethnic Demographics of Loudoun Intakes") + 
   theme_minimal() + 
-  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+
+ethnicity_demographics_bar <- ggplotly(ethnicity_demographics_bar)
 
 pie(loudoun_intake_ethnicity_FY2020, labels = c("Hispanic", "Non-Hispanic", "Unkown/Missing"), main = "Ethnic Demographics of Loudoun Intakes")
 ```
@@ -91,6 +95,7 @@ sex_demographics_bar <- loudoun_intake_sex_FY2020 %>%
   theme_minimal() + 
   theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
+sex_demographics_bar <- ggplotly(sex_demographics_bar)
 
 pie(loudoun_intake_sex_FY2020, labels = sex, main = "Sex Demographics of Loudoun Intakes")
 ```
@@ -104,7 +109,8 @@ intake_age <- read_csv("C:\\Users\\austi\\Documents\\VT DSPG\\Loudoun\\Excel Fil
 loudoun_intake_age_FY2020 <- intake_age %>% select(AGE, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Age = AGE) %>%
-  select(Age, Proportion)
+  select(Age, Proportion) %>% 
+  filter(Age != "Total Cases")
 
 
 age_demographics_bar <- loudoun_intake_age_FY2020 %>% 
@@ -113,14 +119,22 @@ age_demographics_bar <- loudoun_intake_age_FY2020 %>%
   labs(x = "Sex", y = "Relative Frequency",
         title = "Age Demographics of Loudoun Intakes") + 
   theme_minimal() + 
-  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  coord_flip()
 
+age_demographics_bar <- ggplotly(age_demographics_bar)
 
 pie(loudoun_intake_age_FY2020, labels = ages, main = "Age Demographics of Loudoun Intakes" )
 ```
 
 Virginia has some of the highest referral and incarceration rates of youth, with the highest number of student referrals in the country and a rate of youth incarceration at 75 percent higher than the national average at 79 per 100,000 youths (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 60.7% of parole placements being repeat offenders. In addition to high recidivism rates, youths being released from direct care for the Fiscal Year of 2015 only received high school diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total youth offenders received a high school diploma or GED (DJJ 2019). However, the public pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia, with youth imprisonment down 65% in Virginia between 2003 and 2016. This trend is also seen in Virginia direct care, from 2005 to 2016, where the average daily population of JDC’s decreased 38%  (Data Snapshot of Youth Incarceration in Virginia).
 
+```{r, All Graphs}
+race_demographics_bar
+ethnicity_demographics_bar
+sex_demographics_bar
+age_demographics_bar
+```
 
 
 
