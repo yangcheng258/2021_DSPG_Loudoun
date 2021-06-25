@@ -91,6 +91,7 @@ colnames(fc_sex) <- c("Gender", "Value")
 # Race 
 intake_race <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
 colnames(intake_race) <-intake_race[1,]
+intake_race <-intake_race[-1,]
 jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`) %>% 
@@ -100,11 +101,11 @@ jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>%
 #Eth 
 intake_eth <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")) 
 colnames(intake_eth) <-intake_eth[1,]
+intake_eth <- intake_eth[-1,]
 jv_eth <- intake_eth %>% select(ETHNICITY, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Ethnicity = ETHNICITY) %>%
   select(Ethnicity, Proportion)
-
 # Sex
 intake_sex <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")) 
 jv_sex <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>% 
@@ -114,6 +115,7 @@ jv_sex <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>%
 # Age
 intake_age <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")) 
 colnames(intake_age) <-intake_age[1,]
+intake_age <- intake_age[-1,]
 jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Age = AGE) %>%
@@ -229,12 +231,13 @@ body <- dashboardBody(
                                  "Sex" = "sex",
                                  "Race" = "race",
                                  "Ethnicity" = "eth")
-                               ) ,
+                               ),
                                plotlyOutput("plot3"),
-                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)"))
+                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)")))
+                  
                     )
                   )
-                  )
+                
               ),
       ## Services--------------------------------------------
       tabItem(tabName = "services",
@@ -265,8 +268,7 @@ body <- dashboardBody(
                       "Housing",
                       "Transportation",
                       "Insurance",
-                      "Policy and Funding")
-                    ), 
+                      "Policy and Funding")), 
                     collapsibleTreeOutput("tree1")), 
                   box(
                     title = "Allegheny County",
@@ -289,7 +291,7 @@ body <- dashboardBody(
                   
                 ) 
              
-      ) , 
+      ), 
       ## Locations --------------------------------------------
       tabItem(tabName = "locations",
               fluidRow(
@@ -301,7 +303,7 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   collapsible = TRUE,
                   h1("Where are the services located?"),
-                  h2("Project Description"), 
+                  h2("Project Description") 
                   
                   
                   ) 
@@ -329,7 +331,6 @@ server <- function(input, output, session) {
     var1 <- reactive({
       input$var1
     })
-    
     output$plot1 <- renderPlotly({
       if(var1() == "ageSex") {
         ggplot(filtered, aes(x = value, y = AGEGROUP, fill = SEX)) + geom_col(width = .95, alpha = .75) + 
@@ -430,7 +431,8 @@ server <- function(input, output, session) {
         ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
           geom_bar(stat="identity") + 
           labs(x = "Age Group" , y = "Population Estimate", 
-               title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")}
+               title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")
+      }
       
     }) 
     
@@ -442,8 +444,8 @@ server <- function(input, output, session) {
     output$plot3 <- renderPlotly({
       if(var3() == "age") {
         jv_age %>% 
-          ggplot(aes(Age)) +
-          geom_bar(fill = "brown1", aes(weight = Proportion)) +
+          ggplot(aes(x = Age, y = Proportion)) +
+          geom_bar(stat = "identity", fill = "brown1") +
           labs(x = "Sex", y = "Relative Frequency",
                title = "Age Demographics of Loudoun Intakes") + 
           theme_minimal() + 
@@ -452,10 +454,9 @@ server <- function(input, output, session) {
         
 
       }else if(var3() == "race"){
-        
-         jv_race %>% 
-          ggplot(aes(x = Race)) +
-          geom_bar(aes(fill = "coral", weight = Proportion)) +
+        jv_race %>% 
+          ggplot(aes(x = Race, y = Proportion)) +
+          geom_bar(stat = "identity" , fill = "coral") +
           labs(x = "Race", y = "Relative Frequency",
                title = "Racial Demographics of Loudoun Intakes") + 
           theme_minimal() + 
@@ -465,25 +466,23 @@ server <- function(input, output, session) {
 
       }else if (var3() == "eth") {
         jv_eth %>% 
-          ggplot(aes(x = Ethnicity)) +
-          geom_bar(fill = "darkseagreen2", aes(weight = Proportion)) +
+          ggplot(aes(x = Ethnicity, y = Proportion))  +
+          geom_bar(stat = "identity", fill = "darkseagreen2") +
           labs(x = "Ethnicity", y = "Relative Frequency",
                title = "Ethnic Demographics of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
         
-
       }
       else{
         jv_sex %>% 
-          ggplot(aes(x = Sex)) +
-          geom_bar(fill = "darkslategray2", aes(weight = Proportion)) +
+          ggplot(aes(x = Sex, y = Proportion)) +
+          geom_bar(stat = "identity", fill = "darkslategray2" ) +
           labs(x = "Sex", y = "Relative Frequency",
                title = "Sex Demographics of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
-
         
       }
       
