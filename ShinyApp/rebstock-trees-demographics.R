@@ -329,13 +329,13 @@ body <- dashboardBody(
                     tabsetPanel(
                       tabPanel("Subpopulation",
                                p(""),
-                               p(strong("Map of Programs")),
-                               withSpinner(leafletOutput("map1"))
+                               p(strong("Map of Programs"))
+                               # withSpinner(leafletOutput("map1"))
                       ),
                       tabPanel("Pillars",
                                p(""),
-                               p(strong("Map of Programs")),
-                               withSpinner(leafletOutput("map2"))
+                               p(strong("Map of Programs"))
+                               # withSpinner(leafletOutput("map2"))
                       )
                     )
                   ), 
@@ -345,13 +345,13 @@ body <- dashboardBody(
                     tabsetPanel(
                       tabPanel("Subpopulation",
                                p(""),
-                               p(strong("Map of Programs")),
-                               withSpinner(leafletOutput("map1"))
+                               p(strong("Map of Programs"))
+                               # withSpinner(leafletOutput("map1"))
                       ),
                       tabPanel("Pillars",
                                p(""),
-                               p(strong("Map of Programs")),
-                               withSpinner(leafletOutput("map2"))
+                               p(strong("Map of Programs"))
+                               # withSpinner(leafletOutput("map2"))
                       )
                     )
                   )
@@ -679,39 +679,31 @@ server <- function(input, output, session) {
     })
     
     ## Add maps for locations of programs in Loudoun 
-    output$map1 <- renderLeaflet({
-      loudoun_locations <- map%>%
-        filter(County == "Loudoun") %>% 
-        rename(Longitude = Latitude, Latitude = Longitude) %>% 
-        select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
-        filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
-      
-      subpop_levels <- c("Foster Care", "Juvenile Detention")
-      subpop_pal <- colorFactor(pal = c('red', 'green'), 
-                                levels = subpop_levels)
-      
-      map <- loudoun_locations %>% 
-        leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
-        addProviderTiles("CartoDB") %>% 
-        addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = paste0(loudoun_locations$Program, " (", loudoun_locations$Pillars, ")"), 
-                         group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"), 
-                         options = layersControlOptions(collapsed = FALSE))
-    
-      
-      map
-      
-    })
+    # output$map1 <- renderLeaflet({
+    #   loudoun_locations <- map%>%
+    #     filter(County == "Loudoun") %>% 
+    #     rename(Longitude = Latitude, Latitude = Longitude) %>% 
+    #     select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+    #     filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
+    #   
+    #   subpop_levels <- c("Foster Care", "Juvenile Detention")
+    #   subpop_pal <- colorFactor(pal = c('red', 'green'), 
+    #                             levels = subpop_levels)
+    #   
+    #   map <- loudoun_locations %>% 
+    #     leaflet(options = leafletOptions(minzoom = 12)) %>% 
+    #     setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
+    #     addProviderTiles("CartoDB") %>% 
+    #     addCircleMarkers(lng = ~Longitude, 
+    #                      lat = ~Latitude, 
+    #                      popup = paste0(loudoun_locations$Program, " (", loudoun_locations$Pillars, ")"), 
+    #                      group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+    #     addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"), 
+    #                      options = layersControlOptions(collapsed = FALSE)) 
+    #   
+    # })
     ## map for locations of program in Allegheny
-    out$map2 <- renderLeaflet({
-      
-      
-      
-      
-    })
+ 
     
 }
 
