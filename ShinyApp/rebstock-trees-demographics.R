@@ -494,43 +494,46 @@ server <- function(input, output, session) {
       if(var3() == "age") {
         jv_age %>% 
           ggplot(aes(x = Age, y = Proportion)) +
-          geom_bar(stat = "identity", fill = "brown1") +
-          labs(x = "Sex", y = "Relative Frequency",
+          geom_col(fill = "brown1") +
+          labs(x = "Age", y = "Relative Frequency",
                title = "Age Demographics of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
           coord_flip()
-        
-
-      }else if(var3() == "race"){
+        }
+      else if(var3() == "race"){
         jv_race %>% 
           ggplot(aes(x = Race, y = Proportion)) +
-          geom_bar(stat = "identity" , fill = "coral") +
+          geom_col(fill = "coral") +
           labs(x = "Race", y = "Relative Frequency",
                title = "Racial Demographics of Loudoun Intakes") + 
           theme_minimal() + 
-          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
           coord_flip()
         
+        
 
-      }else if (var3() == "eth") {
+      }
+      else if (var3() == "eth") {
         jv_eth %>% 
           ggplot(aes(x = Ethnicity, y = Proportion))  +
-          geom_bar(stat = "identity", fill = "darkseagreen2") +
+          geom_col(fill = "darkseagreen2") +
           labs(x = "Ethnicity", y = "Relative Frequency",
                title = "Ethnic Demographics of Loudoun Intakes") + 
           theme_minimal() + 
-          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+          coord_flip()
         
       }
       else{
         jv_sex %>% 
           ggplot(aes(x = Sex, y = Proportion)) +
-          geom_bar(stat = "identity", fill = "darkslategray2" ) +
+          geom_col(fill = "darkslategray2" ) +
           labs(x = "Sex", y = "Relative Frequency",
                title = "Sex Demographics of Loudoun Intakes") + 
           theme_minimal() + 
-          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+          theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+          coord_flip()
         
         
       }

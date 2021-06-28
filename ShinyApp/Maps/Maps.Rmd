@@ -12,27 +12,43 @@ library(readr)
 library(readxl)
 library(leaflet)
 library(leaflet.extras)
+library(htmlwidgets)
 ```
 
 ```{r}
 # read in foster care and juvenile detention information
 foster_care_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Qualitative_research\\Research-Foster_care-New_col_added.xlsx")
 juvie_det_info <- read_excel("C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Qualitative_research\\Research-Juvenile_Detention-New_col_added.xlsx")
-# filter information to include only program name, longitude and latitude
-# and remove entries that are NA
-foster_care_locations <- foster_care_info %>% select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
-rename(Longitude = Latitude, Latitude = Longitude) %>% 
-filter(Longitude != "Online") %>% drop_na()
 
-#Make longitude and latitude numeric
-foster_care_locations$Longitude <- as.numeric(foster_care_locations$Longitude)
-foster_care_locations$Latitude <- as.numeric(foster_care_locations$Latitude)
+
+# filter information to remove entries that are NA and remove unneeded columns
+foster_care_locations <- foster_care_info %>% 
+  select(Pillars, Program, Subpopulation, 7:11, 14) %>% 
+  rename(Longitude = Latitude, Latitude = Longitude) %>% 
+  filter(Longitude != "Online") %>% drop_na() %>% 
+  mutate(Longitude = as.numeric(Longitude), Latitude = as.numeric(Latitude)) %>% 
+  rename(`Age range` = Age_range, Website = `Links of programs`)
 
 # Same process for juvie det
-juvie_det_locations <- juvie_det_info %>% select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
-filter(Longitude != "Online") %>% drop_na()
-juvie_det_locations$Longitude <- as.numeric(juvie_det_locations$Longitude)
-juvie_det_locations$Latitude <- as.numeric(juvie_det_locations$Latitude)
+juvie_det_locations <- juvie_det_info %>% 
+  select(Pillars, Program, Subpopulation, 7:11, 14) %>% 
+  filter(Longitude != "Online") %>% 
+  drop_na() %>% 
+  mutate(Longitude = as.numeric(Longitude), Latitude = as.numeric(Latitude)) %>% 
+  rename(Website = `Links of programs`) %>% 
+  mutate(Pillars = recode(Pillars, `Housing Services` = "Housing"))
+
+# Join to make one locations for all locations 
+locations <- rbind(foster_care_locations, juvie_det_locations) %>% 
+  drop_na() %>% filter(Longitude != 0 & Latitude != 0)
+
+# Separate each pillar to be added as a layer
+locations_Education <- locations %>% filter(Pillars == "Education")
+locations_Employment <- locations %>% filter(Pillars == "Employment")
+locations_Transportation <-locations %>% filter(Pillars == "Transportation")
+locations_Health <- locations %>% filter(Pillars == "Health")
+locations_FundingPolicy <- locations %>% filter(Pillars == "Funding & Policy")
+locations_Housing <- locations %>% filter(Pillars == "Housing") 
 
 # Create color palettes to organize by whatever is desired
 Pillar_levels <- unique(foster_care_locations$Pillars)
@@ -41,37 +57,32 @@ Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'p
 subpop_levels <- c("Foster Care", "Juvenile Detention")
 subpop_pal <- colorFactor(pal = c('red', 'green'), 
                              levels = subpop_levels)
-# Organize by pillar 
-
-
-# Use leaflet to map each location with circle markers and program name popups. 
-foster_care_map_by_pillar <- foster_care_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% 
-setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% 
+# Map by pillar 
+map_by_pillar <- leaflet(options = leafletOptions(minzoom = 12)) %>% 
+setView(lng = -77.431622, lat = 38.839439, zoom = 9) %>% 
 addProviderTiles("CartoDB") %>% 
-addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% 
-addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
+addCircleMarkers(data = locations_Education, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_Education$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_Education$Qualification, "<br/>","<b>","Description: ", "</b>", locations_Education$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_Education$Website, "</a>"), radius = 2, color = ~Pillar_pal(Pillars), group = "Education") %>% 
+addCircleMarkers(data = locations_Employment, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_Employment$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_Employment$Qualification, "<br/>","<b>","Description: ", "</b>", locations_Employment$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_Employment$Website, "</a>"), radius = 2, color = ~Pillar_pal(Pillars), group = "Employment") %>% 
+addCircleMarkers(data = locations_Transportation, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_Transportation$Program,"</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_Transportation$Qualification, "<br/>","<b>","Description: ", "</b>", locations_Transportation$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_Transportation$Website, "</a>"), radius = 2, color = ~Pillar_pal(Pillars), group = "Transportation") %>%
+addCircleMarkers(data = locations_Health, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_Health$Program,"</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_Health$Qualification, "<br/>","<b>","Description: ", "</b>", locations_Health$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_Health$Website, "</a>"), radius = 2, color = ~Pillar_pal(Pillars), group = "Health") %>%
+addCircleMarkers(data = locations_FundingPolicy, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_FundingPolicy$Program,"</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_FundingPolicy$Qualification, "<br/>","<b>","Description: ", "</b>", locations_FundingPolicy$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_FundingPolicy$Website, "</a>"), radius = 2, color = ~Pillar_pal(Pillars), group = "Funding & Policy") %>%
+addCircleMarkers(data = locations_Housing, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_FundingPolicy$Program,"</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_Housing$Qualification, "<br/>","<b>","Description: ", "</b>", locations_Housing$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_Housing$Website, "</a>"), radius = 2, color = ~Pillar_pal(Pillars), group = "Housing") %>%
+addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels) %>%
+  addLayersControl(overlayGroups = unique(locations$Pillars))
 
-# Same process for juvie_det
-juvie_det_map_by_pillar <- juvie_det_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% addProviderTiles("CartoDB") %>% addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars)) %>% addLegend(title = "Service Type", position = "bottomleft", pal = Pillar_pal, values = Pillar_levels)
 
 
-map_by_pillar <- foster_care_map_by_pillar %>% 
-  addCircleMarkers(lng = juvie_det_locations$Longitude, lat = juvie_det_locations$Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), radius = 2, color = ~Pillar_pal(Pillars))
 
+## Map by subpopulation 
+locations_foster <- locations %>% filter(Subpopulation == "Foster Care")
+locations_juvie <- locations %>% filter(Subpopulation == "Juvenile Detention")
 
-## Maps by subpopulation 
-foster_care_map_by_subpop <- foster_care_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% 
-setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% 
-addProviderTiles("CartoDB") %>% 
-addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(foster_care_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Foster Care", radius = 2, color = ~subpop_pal(Subpopulation)) 
+map_by_subpop <- leaflet(options = leafletOptions(minzoom = 12)) %>% 
+  setView(lng = -77.431622, lat = 38.839439, zoom = 10) %>% 
+  addProviderTiles("CartoDB") %>% 
+  addCircleMarkers(data = locations_juvie, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_juvie$Program,"</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_juvie$Qualification, "<br/>","<b>","Description: ", "</b>", locations_juvie$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_juvie$Website, "</a>"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation)) %>% 
+  addCircleMarkers(data = locations_foster, lng = ~Longitude, lat = ~Latitude, popup = ~paste0("<b>", locations_foster$Program,"</b>", "<br/>", "<b>", "Qualifications: ", "</b>", locations_foster$Qualification, "<br/>","<b>","Description: ", "</b>", locations_foster$Description, "<br/>","<b>","Website: ", "</b>", "<a>",locations_foster$Website, "</a>"), group = "Foster Care", radius = 2, color = ~subpop_pal(Subpopulation)) %>% 
+  addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"))
 
-juvie_det_map_by_subpop <- juvie_det_locations %>% leaflet(options = leafletOptions(minzoom = 12)) %>% 
-setView(lng = -78.457030, lat = 38.163355, zoom = 7) %>% 
-addProviderTiles("CartoDB") %>% 
-addCircleMarkers(lng = ~Longitude, lat = ~Latitude, popup = paste0(juvie_det_locations$Program, " (", foster_care_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation))
-
-map_by_subpop <- foster_care_map_by_subpop %>% addCircleMarkers(lng = juvie_det_locations$Longitude, lat = juvie_det_locations$Latitude, popup = paste0(juvie_det_locations$Program, " (", juvie_det_locations$Pillars, ")"), group = "Juvenile Detention", radius = 2, color = ~subpop_pal(juvie_det_locations$Subpopulation))
-
-map_by_subpop <- map_by_subpop %>% addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"))
 ```
 
