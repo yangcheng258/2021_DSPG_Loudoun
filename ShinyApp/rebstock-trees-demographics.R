@@ -125,6 +125,34 @@ jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>%
 
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
+# Maps -----------------------------------------------------------
+map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
+#Foster Care 
+foster_care_locations <- map%>%
+  filter(Subpopulation == "Foster Care") %>% 
+  rename(Longitude = Latitude, Latitude = Longitude) %>% 
+  select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+  filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
+
+foster_care_locations$Longitude <- as.numeric(foster_care_locations$Longitude)
+foster_care_locations$Latitude <- as.numeric(foster_care_locations$Latitude)
+# Juvenille 
+juvie_det_locations <- map %>% 
+  filter(Subpopulation == "Juvenile Detention")%>%
+  rename(Longitude = Latitude, Latitude = Longitude) %>% 
+  select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+  filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
+
+juvie_det_locations$Longitude <- as.numeric(juvie_det_locations$Longitude)
+juvie_det_locations$Latitude <- as.numeric(juvie_det_locations$Latitude)
+
+Pillar_levels <- unique(foster_care_locations$Pillars)
+Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
+                          levels = Pillar_levels)
+subpop_levels <- c("Foster Care", "Juvenile Detention")
+subpop_pal <- colorFactor(pal = c('red', 'green'), 
+                          levels = subpop_levels)
+
 
 # sidebar -----------------------------------------------------------
 sidebar <- dashboardSidebar(
@@ -295,18 +323,39 @@ body <- dashboardBody(
       ## Locations --------------------------------------------
       tabItem(tabName = "locations",
               fluidRow(
-                box(
-                  title = "Locations of Services",
-                  closable = FALSE,
-                  width = NULL,
-                  status = "warning",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  h1("Where are the services located?"),
-                  h2("Project Description") 
-                  
-                  
-                  ) 
+                  h4(strong("Loudoun County")), 
+                  p(),
+                  box(
+                    tabsetPanel(
+                      tabPanel("Subpopulation",
+                               p(""),
+                               p(strong("Map of Programs")),
+                               withSpinner(leafletOutput("map1"))
+                      ),
+                      tabPanel("Pillars",
+                               p(""),
+                               p(strong("Map of Programs")),
+                               withSpinner(leafletOutput("map2"))
+                      )
+                    )
+                  ), 
+                  h4(strong("Allegheny County")), 
+                  p(),
+                  box(
+                    tabsetPanel(
+                      tabPanel("Subpopulation",
+                               p(""),
+                               p(strong("Map of Programs")),
+                               withSpinner(leafletOutput("map1"))
+                      ),
+                      tabPanel("Pillars",
+                               p(""),
+                               p(strong("Map of Programs")),
+                               withSpinner(leafletOutput("map2"))
+                      )
+                    )
+                  )
+                   
                 ) 
               )
       
@@ -630,14 +679,42 @@ server <- function(input, output, session) {
     })
     
     ## Add maps for locations of programs in Loudoun 
+    output$map1 <- renderLeaflet({
+      loudoun_locations <- map%>%
+        filter(County == "Loudoun") %>% 
+        rename(Longitude = Latitude, Latitude = Longitude) %>% 
+        select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+        filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
+      
+      subpop_levels <- c("Foster Care", "Juvenile Detention")
+      subpop_pal <- colorFactor(pal = c('red', 'green'), 
+                                levels = subpop_levels)
+      
+      map <- loudoun_locations %>% 
+        leaflet(options = leafletOptions(minzoom = 12)) %>% 
+        setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
+        addProviderTiles("CartoDB") %>% 
+        addCircleMarkers(lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = paste0(loudoun_locations$Program, " (", loudoun_locations$Pillars, ")"), 
+                         group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"), 
+                         options = layersControlOptions(collapsed = FALSE))
     
+      
+      map
+      
+    })
     ## map for locations of program in Allegheny
-  
+    out$map2 <- renderLeaflet({
+      
+      
+      
+      
+    })
     
 }
 
-##DT table is fancier 
-## tableOutput is less fancier 
 
 # Run the application 
 shinyApp(ui = ui, server = server)
