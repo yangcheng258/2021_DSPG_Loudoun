@@ -19,6 +19,7 @@ library(tidycensus)
 library(ggbeeswarm)
 library(readxl)
 library(collapsibleTree)
+library(shinycssloaders)
 
 
 # Loudoun -----------------------------------------------------------
@@ -96,7 +97,9 @@ jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>%
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`) %>% 
   select(RACE, Proportion) %>% 
-  rename(Race = RACE)
+  rename(Race = RACE)%>%
+  mutate(Proportion = readr::parse_number(as.character(Proportion)))
+
 
 #Eth 
 intake_eth <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")) 
@@ -105,13 +108,17 @@ intake_eth <- intake_eth[-1,]
 jv_eth <- intake_eth %>% select(ETHNICITY, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Ethnicity = ETHNICITY) %>%
-  select(Ethnicity, Proportion)
+  select(Ethnicity, Proportion)%>%
+  mutate(Proportion = readr::parse_number(as.character(Proportion)))
+
 # Sex
 intake_sex <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")) 
 jv_sex <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Sex = SEX) %>%
-  select(Sex, Proportion)
+  select(Sex, Proportion)%>%
+  mutate(Proportion = readr::parse_number(as.character(Proportion)))
+
 # Age
 intake_age <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")) 
 colnames(intake_age) <-intake_age[1,]
@@ -120,38 +127,42 @@ jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>%
   filter(CSU == "20L") %>% 
   rename(Proportion = `FY20 %`, Age = AGE) %>%
   select(Age, Proportion) %>% 
-  filter(Age != "Total Cases")
+  filter(Age != "Total Cases")%>%
+  mutate(Proportion = readr::parse_number(as.character(Proportion)))
+
 
 
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 # Maps -----------------------------------------------------------
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
-#Foster Care 
-foster_care_locations <- map%>%
-  filter(Subpopulation == "Foster Care") %>% 
-  rename(Longitude = Latitude, Latitude = Longitude) %>% 
-  select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+
+loudoun_locations <- map %>%
+  filter(County == "Loudoun") %>% 
+  rename(Longitude = Latitude, Latitude = Longitude) %>%
+  select(Program, Longitude, Latitude, Pillars, Subpopulation, Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
-foster_care_locations$Longitude <- as.numeric(foster_care_locations$Longitude)
-foster_care_locations$Latitude <- as.numeric(foster_care_locations$Latitude)
-# Juvenille 
-juvie_det_locations <- map %>% 
-  filter(Subpopulation == "Juvenile Detention")%>%
-  rename(Longitude = Latitude, Latitude = Longitude) %>% 
-  select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
+loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
+loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
+
+allegheny_locations <- map%>%
+  filter(County == "Allegheny") %>% 
+  rename(Longitude = Latitude, Latitude = Longitude) %>%
+  select(Program, Longitude, Latitude, Pillars, Subpopulation,  Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
-juvie_det_locations$Longitude <- as.numeric(juvie_det_locations$Longitude)
-juvie_det_locations$Latitude <- as.numeric(juvie_det_locations$Latitude)
+allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
+allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
-Pillar_levels <- unique(foster_care_locations$Pillars)
+
+subpop_levels <- c("Foster Care", "Juvenile Detention")
+subpop_pal <- colorFactor(pal = c('red', 'green'),
+                          levels = subpop_levels)
+
+Pillar_levels <- unique(allegheny_locations$Pillars)
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
                           levels = Pillar_levels)
-subpop_levels <- c("Foster Care", "Juvenile Detention")
-subpop_pal <- colorFactor(pal = c('red', 'green'), 
-                          levels = subpop_levels)
 
 
 # sidebar -----------------------------------------------------------
@@ -165,6 +176,10 @@ sidebar <- dashboardSidebar(
       menuItem(
         tabName = "intro",
         text = "Introduction to Loudoun",
+        icon = icon("database")) ,
+      menuItem(
+        tabName = "data",
+        text = "Data and Methodology",
         icon = icon("database")) ,
       menuItem(
         tabName = "services",
@@ -197,7 +212,7 @@ body <- dashboardBody(
       ),
       
       ## Introduction to Loudoun County--------------------------------------------
-      tabItem("intro",
+      tabItem(tabName = "intro",
                fluidRow(style = "margin: 6px;",
                         h1(strong("Loudoun County Residents' Demographic Characteristics"), align = "center"),
                         h2("Project Description"),
@@ -267,6 +282,40 @@ body <- dashboardBody(
                   )
                 
               ),
+      
+      
+      ## Data and Methodology--------------------------------------------
+      tabItem(tabName = "data",
+              fluidRow(style = "margin: 6px;",
+                       h1(strong("Loudoun County Residents' Demographic Characteristics"), align = "center"),
+                       h2("Project Description"),
+                       br(),
+                       p("", style = "padding-top:10px;"),
+                       h4(strong("Who does Loudoun County Serve?")),
+                       p("We examined Patrick County population sociodemographic and socioeconomic characteristics to better understand the
+                                            residents that the county serves."),
+                       p("We retrieved American Community Survey (ACS) data to calculate this information at census block group and census
+                                            tract levels. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. We used
+                                            the most recently available 5-year estimates from 2014/18 to compute percent Patrick County residents in a given block group or tract by age, race, ethnicity,
+                                            employment, health insurance coverage, and other relevant characteristics."),
+                       p("Our interactive plots visualize census block-group level sociodemographic characteristics of Patrick County residents.")),
+              br(), 
+              br(),  
+              box(
+                title = "Visualizations of Loudoun Residents",
+                closable = FALSE,
+                width = NULL,
+                status = "warning",
+                solidHeader = TRUE,
+                collapsible = TRUE, 
+                leafletOutput("map1"),
+                p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
+              br(),
+              br()
+              
+      ),
+      
+      
       ## Services--------------------------------------------
       tabItem(tabName = "services",
               fluidRow(
@@ -321,50 +370,67 @@ body <- dashboardBody(
              
       ), 
       ## Locations --------------------------------------------
-      tabItem(tabName = "locations",
-              fluidRow(
-                  h4(strong("Loudoun County")), 
-                  p(),
-                  box(
-                    tabsetPanel(
-                      tabPanel("Subpopulation",
-                               p(""),
-                               p(strong("Map of Programs"))
-                               # withSpinner(leafletOutput("map1"))
-                      ),
-                      tabPanel("Pillars",
-                               p(""),
-                               p(strong("Map of Programs"))
-                               # withSpinner(leafletOutput("map2"))
-                      )
-                    )
-                  ), 
-                  h4(strong("Allegheny County")), 
-                  p(),
-                  box(
-                    tabsetPanel(
-                      tabPanel("Subpopulation",
-                               p(""),
-                               p(strong("Map of Programs"))
-                               # withSpinner(leafletOutput("map1"))
-                      ),
-                      tabPanel("Pillars",
-                               p(""),
-                               p(strong("Map of Programs"))
-                               # withSpinner(leafletOutput("map2"))
-                      )
-                    )
-                  )
-                   
-                ) 
-              )
-      
-      
-      
-      ## Data and Methodology--------------------------------------------
-    
+      tabItem(tabName = "locations", 
+               fluidRow(style = "margin: 6px;",
+                        h1(strong("Location and accessibility of Programs and Services"), align = "center"),
+                        column(6,
+                               h4(strong("Loudoun County")),
+                               ## description of what we are doin and why we are mapping them out 
+                               p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
+                                             telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
+                                             than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
+                                             provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
+                               p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
+                                            obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
+                                            to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
+                                            recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
+                                            and internet by census block group."),
+                               br(), 
+                               tabsetPanel(
+                                 tabPanel("Pillars",
+                                          p(""),
+                                          p(strong("Map of Programs")),
+                                          leafletOutput("map1")
+                                 ),
+                                 tabPanel("Subpopulation",
+                                          p(""),
+                                          p(strong("Map of Programs")),
+                                          leafletOutput("map2")
+                                 )
+                               )
+                               ) , 
+                               br(),
+                        column(6,
+                               h4(strong("Allegheny County")),
+                               ## description of what we are doin and why we are mapping them out 
+                               p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
+                                             telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
+                                             than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
+                                             provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
+                               p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
+                                            obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
+                                            to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
+                                            recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
+                                            and internet by census block group."),
+                               br(), 
+                               tabsetPanel(
+                                 tabPanel("Pillars",
+                                          p(""),
+                                          p(strong("Map of Programs")),
+                                          leafletOutput("map3")
+                                 ),
+                                 tabPanel("Subpopulation",
+                                          p(""),
+                                          p(strong("Map of Programs")),
+                                          leafletOutput("map4")
+                                 )
+                               )
+                        )
                
-        )
+                  )
+              ) 
+               
+          )
       ) 
   ) 
     
@@ -410,7 +476,7 @@ server <- function(input, output, session) {
           labs(x = "" , y = "Median Hosuehold Income", 
                title = "Household income distribution by largest ethnic/race group", 
                subtitle = "Census tracts, Loudoun County") + 
-          theme(plot.title = element_text(color = "black", size = 7, face = "bold", hjust = 0.5), 
+          theme(plot.title = element_text(color = "black", size = 9, face = "bold", hjust = 0.5), 
                 axis.title.x = element_text(size = 5))
       } 
       else if (var1() == "education")  { 
@@ -461,13 +527,13 @@ server <- function(input, output, session) {
           theme_minimal(base_family = 'Verdana') + 
           labs(x = "", 
                y = "Population Estimate",
-               title = "Races for Foster Care", 
+               title = "Racial Demographics for Foster Care", 
                fill ="") + theme(legend.position = "none")
         
     } else if (var2() == "eth") {
       g <- ggplot(fc_eth, aes(eth, value, fill = eth))
       g + geom_bar(stat = "identity") + 
-        labs(title = "Ethinicity of Foster children",
+        labs(title = "Ethinic Demographics of Foster children",
              x = "Ethnicity", 
              y = "Population Estimate") + theme(legend.position = "none")
         
@@ -492,29 +558,33 @@ server <- function(input, output, session) {
     ##Render Plot for Juvenille Detention 
     output$plot3 <- renderPlotly({
       if(var3() == "age") {
+        jv_age$Age <- factor(jv_age$Age, levels=unique(jv_age$Age))
+
         jv_age %>% 
           ggplot(aes(x = Age, y = Proportion)) +
           geom_col(fill = "brown1") +
-          labs(x = "Age", y = "Relative Frequency",
-               title = "Age Demographics of Loudoun Intakes") + 
+          labs(x = "Age", y = "Quantity",
+               title = "Age Groups of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
           coord_flip()
         }
       else if(var3() == "race"){
+        jv_race$Race <- factor(jv_race$Race, levels=unique(jv_race$Race))
+
         jv_race %>% 
           ggplot(aes(x = Race, y = Proportion)) +
           geom_col(fill = "coral") +
-          labs(x = "Race", y = "Relative Frequency",
+          labs(x = "Race", y = "Quantity",
                title = "Racial Demographics of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-          coord_flip()
-        
-        
+          coord_flip() 
 
       }
       else if (var3() == "eth") {
+        jv_eth$Ethnicity <- factor(jv_eth$Ethnicity, levels=unique(jv_eth$Ethnicity))
+
         jv_eth %>% 
           ggplot(aes(x = Ethnicity, y = Proportion))  +
           geom_col(fill = "darkseagreen2") +
@@ -526,6 +596,8 @@ server <- function(input, output, session) {
         
       }
       else{
+        jv_sex$Sex <- factor(jv_sex$Sex, levels=unique(jv_sex$Sex))
+
         jv_sex %>% 
           ggplot(aes(x = Sex, y = Proportion)) +
           geom_col(fill = "darkslategray2" ) +
@@ -681,32 +753,89 @@ server <- function(input, output, session) {
       }
     })
     
-    ## Add maps for locations of programs in Loudoun 
-    # output$map1 <- renderLeaflet({
-    #   loudoun_locations <- map%>%
-    #     filter(County == "Loudoun") %>% 
-    #     rename(Longitude = Latitude, Latitude = Longitude) %>% 
-    #     select(Program, Longitude, Latitude, Pillars, Subpopulation) %>% 
-    #     filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
-    #   
-    #   subpop_levels <- c("Foster Care", "Juvenile Detention")
-    #   subpop_pal <- colorFactor(pal = c('red', 'green'), 
-    #                             levels = subpop_levels)
-    #   
-    #   map <- loudoun_locations %>% 
-    #     leaflet(options = leafletOptions(minzoom = 12)) %>% 
-    #     setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
-    #     addProviderTiles("CartoDB") %>% 
-    #     addCircleMarkers(lng = ~Longitude, 
-    #                      lat = ~Latitude, 
-    #                      popup = paste0(loudoun_locations$Program, " (", loudoun_locations$Pillars, ")"), 
-    #                      group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
-    #     addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"), 
-    #                      options = layersControlOptions(collapsed = FALSE)) 
-    #   
-    # })
+    # Add maps for locations of programs in Loudoun subpopulation 
+    output$map1 <- renderLeaflet({
+      
+      leaflet(options = leafletOptions(minzoom = 12)) %>%
+        setView(lng = -77.457030, lat = 38.3, zoom = 8) %>%
+        addProviderTiles("CartoDB") %>%
+        addCircleMarkers(lng = ~loudoun_locations$Longitude,
+                         lat = ~loudoun_locations$Latitude,
+                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         loudoun_locations$Website, "</a>"),
+                         group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
+                         options = layersControlOptions(collapsed = FALSE))
+      
+
+    })
+    
+    
+    ## Pillars Loudoun 
+    output$map2 <- renderLeaflet({ 
+      leaflet(data = loudoun_locations, options = leafletOptions(minzoom = 12)) %>% 
+        setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
+        addProviderTiles("CartoDB") %>% 
+        addCircleMarkers(lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         loudoun_locations$Website, "</a>"),
+                         radius = 2, 
+                         group = ~loudoun_locations$Pillars, 
+                         color = ~Pillar_pal(Pillars)) %>%  
+        addLayersControl(position = "bottomleft",
+                         overlayGroups = Pillar_levels, 
+                         options = layersControlOptions(collapsed = FALSE)) %>%
+        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+      
+
+    })
+    
+    
     ## map for locations of program in Allegheny
- 
+    output$map3 <- renderLeaflet({
+      leaflet(data = allegheny_locations, options = leafletOptions(minzoom = 12)) %>%
+        setView(lng = -79.857030, lat = 40.4, zoom = 10) %>% 
+        addProviderTiles("CartoDB") %>%
+        addCircleMarkers(lng = ~Longitude,
+                         lat = ~Latitude,
+                         popup = ~paste0("<b>", allegheny_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         allegheny_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         allegheny_locations$Website, "</a>"),
+                         group = ~allegheny_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
+                         options = layersControlOptions(collapsed = FALSE))
+      
+      
+    })
+    
+    
+    ## Pillars Allegheny 
+    output$map4 <- renderLeaflet({
+      leaflet(data = allegheny_locations, options = leafletOptions(minzoom = 12)) %>% 
+        setView(lng = -79.857030, lat = 40.4, zoom = 10) %>% 
+        addProviderTiles("CartoDB") %>% 
+        addCircleMarkers(lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = ~paste0("<b>", allegheny_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         allegheny_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         allegheny_locations$Website, "</a>"),
+                         radius = 2, 
+                         group = ~allegheny_locations$Pillars, 
+                         color = ~Pillar_pal(Pillars)) %>%  
+        addLayersControl(position = "bottomleft",
+                         overlayGroups = Pillar_levels, 
+                         options = layersControlOptions(collapsed = FALSE)) %>%
+        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+      
+
+    })
     
 }
 

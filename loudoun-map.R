@@ -45,7 +45,14 @@ ggplot(aes(long, lat, group = group)) +
 
 
 
-
+intake_race <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
+colnames(intake_race) <-intake_race[1,]
+intake_race <-intake_race[-1,]
+jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>% 
+  filter(CSU == "20L") %>% 
+  rename(Proportion = `FY20 %`) %>% 
+  select(RACE, Proportion) %>% 
+  rename(Race = RACE)
 
 
 
