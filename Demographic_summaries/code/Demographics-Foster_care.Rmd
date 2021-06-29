@@ -168,14 +168,14 @@ percent$Value <- as.numeric(percent$Value)
 
 ```{r}
 ## barplot using the values 
-barplot(value$Value, xlab = "Age Groups", ylab = "Totals", main = "Figure1- Age Groups in Foster Care (VA)", col = rainbow(length(value$Value)), names.arg = groups, cex.names = .6)
+barplot(value$Value, xlab = "Age Groups", ylab = "Totals", main = "Age Groups in Foster Care (VA)", col = rainbow(length(value$Value)), names.arg = groups, cex.names = .6)
 value$Age.Group<-factor(value$Age.Group, levels = value$Age.Group)
 
 ggplot(data = value, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
     geom_bar(stat = "identity") + coord_flip()
 
 ## pie chart using percentages 
-pie(percent$Value, groups, main = "Figure2- Age Groups in Percentages", col = rainbow(length(percent$Value)))
+pie(percent$Value, groups, main = "Age Groups in Percentages", col = rainbow(length(percent$Value)))
 
 
 
@@ -198,7 +198,7 @@ sex_df <- data.frame(foster_care_2020[c(2,4),])
 colnames(sex_df) <- c("Gender", "Value")
 
 ## pie chart for gender of Foster Care in Loudoun County 
-pie(sex_df$Value, sex_df$Gender, main = "Figure3- Gender of Foster Care Youth in Loudoun County", col = rainbow(length(sex_df$Value)) ) 
+pie(sex_df$Value, sex_df$Gender, main = "Gender of Foster Care Youth in Loudoun County", col = rainbow(length(sex_df$Value)) ) 
     
 ```
 
@@ -246,7 +246,7 @@ pct <- round(100*data2$value/48)
 pie(data2$value,
     labels = paste(data2$age_19, sep = " ", pct, "%"), 
     col = c(rgb(.3,.1, .9), rgb(.2,.7, .2) ),
-    main = "Figure6- 19+ Foster Care Youth in Loudoun County")
+    main = "19+ Foster Care Youth in Loudoun County")
 
 
 ```
