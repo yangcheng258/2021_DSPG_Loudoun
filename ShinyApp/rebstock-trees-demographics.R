@@ -160,7 +160,7 @@ subpop_levels <- c("Foster Care", "Juvenile Detention")
 subpop_pal <- colorFactor(pal = c('red', 'green'),
                           levels = subpop_levels)
 
-Pillar_levels <- unique(allegheny_locations$Pillars)
+Pillar_levels <- unique(loudoun_locations$Pillars)
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
                           levels = Pillar_levels)
 
@@ -228,14 +228,7 @@ body <- dashboardBody(
                         p("Our interactive plots visualize census block-group level sociodemographic characteristics of Patrick County residents.")),
                         br(), 
                         br(),  
-                      box(
-                        title = "Visualizations of Loudoun Residents",
-                        closable = FALSE,
-                        width = NULL,
-                        status = "warning",
-                        solidHeader = TRUE,
-                        collapsible = TRUE,
-                        p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
+              p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
                         in the United States. It covers 515.6 square miles ranking 20th-largest county 
                         in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
                         Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
@@ -243,13 +236,13 @@ body <- dashboardBody(
                         Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 
                         395,134, making it Virginia’s third-most populous county. Loudoun County is part of 
                         the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area."),
-                        p("n 2015-2019, there were 128,637 households in Loudoun County, Virginia. 
+              p("n 2015-2019, there were 128,637 households in Loudoun County, Virginia. 
                         The average household size was 3.06 people. In 2015-2019, there were 128,637 
                         households in Loudoun County, Virginia. The average household size was 3.06 people. 
                         In Loudoun County, Virginia, 47.7 percent of all households have one or more
                         people under the age of 18; 19.4 percent of all households have one or more people 
                         65 years and over."), 
-                        p("The median income of households in Loudoun County, Virginia was $142,299, 
+              p("The median income of households in Loudoun County, Virginia was $142,299, 
                         the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had 
                         income below $10,000 a year and 30.0 percent had income over $200,000 or more. 
                         As of 2018, Loudoun County had a median household income of $136,268.[6] Since 2008, 
@@ -258,7 +251,14 @@ body <- dashboardBody(
                         in poverty. An estimated 3.2% of children under 18 were below the poverty 
                         level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
                         of people 18 to 64 years were below the poverty level."),
-                        br(),
+              br(),
+                      box(
+                        title = "Visualizations of Loudoun Residents",
+                        closable = FALSE,
+                        width = NULL,
+                        status = "warning",
+                        solidHeader = TRUE,
+                        collapsible = TRUE,
                         selectInput("var1", "Select Variable:", width = "100%", choices = c(
                           "Age, Sex" = "ageSex",
                           "Race" = "race", 
@@ -290,6 +290,7 @@ body <- dashboardBody(
                                ),
                                plotlyOutput("plot2"),
                                p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) ,
+                               br(),
                                p("In the US 2019, 423,997 children were in the foster system with 251,359 
                                  newly entered children and 248,669 exiting. The average age of a child in 
                                  foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
@@ -324,8 +325,9 @@ body <- dashboardBody(
                                  "Ethnicity" = "eth")
                                ),
                                plotlyOutput("plot3"),
-                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)"))),
-                      p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
+                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)")),
+                               br(),
+                               p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
                                  and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
                                  Black youth are overrepresented among offenders in residential placement, making up 
                                  40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
@@ -337,8 +339,8 @@ body <- dashboardBody(
                                  youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
                                  Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
                                  (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                      p(""),
-                      p("Virginia has some of the highest referral and incarceration rates of youth, 
+                               p(""),
+                               p("Virginia has some of the highest referral and incarceration rates of youth, 
                                  with the highest number of student referrals in the country and a rate of youth 
                                  incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
                                  (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
@@ -350,6 +352,10 @@ body <- dashboardBody(
                                  youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
                                  pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
                                  with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
+                               
+                               
+                               )
+                     
                   
                     )
                   )
@@ -451,13 +457,13 @@ body <- dashboardBody(
                                tabsetPanel(
                                  tabPanel("Subpopulation",
                                           p(""),
-                                          p(strong("Map of Programs"))
-                                          # leafletOutput("map1")
+                                          p(strong("Map of Programs")), 
+                                          leafletOutput("map1")
                                  ),
                                  tabPanel("Pillars",
                                           p(""),
-                                          p(strong("Map of Programs"))
-                                          # leafletOutput("map2")
+                                          p(strong("Map of Programs")), 
+                                          leafletOutput("map2")
                                  )
                                )
                                ) , 
@@ -498,8 +504,7 @@ body <- dashboardBody(
     
   
 ui <- dashboardPage(
-    dashboardHeader(skin = "black", 
-                    title = "Service Availability for Transitional Aged Youth in Loudoun County"), 
+    dashboardHeader(title = "Service Availability for Transitional Aged Youth in Loudoun County"), 
     sidebar = sidebar, 
     body = body
 )
@@ -816,105 +821,59 @@ server <- function(input, output, session) {
       }
     })
     
+    # Add maps for locations of programs in Loudoun subpopulation 
     output$map1 <- renderLeaflet({
       
-      locations_foster <- loudoun_locations %>% filter(Subpopulation == "Foster Care")
-      locations_juvie <- loudoun_locations %>% filter(Subpopulation == "Juvenile Detention")
-      
-      
-      l_sub <- leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -77.431622, lat = 38.839439, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>% 
-        addCircleMarkers(data = locations_juvie, lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = ~paste0("<b>", locations_juvie$Program,"</b>", "<br/>", "<b>", 
-                                         "Qualifications: ", "</b>", locations_juvie$Qualification, 
-                                         "<br/>","<b>","Description: ", "</b>", locations_juvie$Description, 
-                                         "<br/>","<b>","Website: ", "</b>", "<a>",locations_juvie$Website, "</a>"), 
-                         group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation)) %>% 
-        addCircleMarkers(data = locations_foster, lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = ~paste0("<b>", locations_foster$Program,"</b>", "<br/>", "<b>", 
-                                         "Qualifications: ", "</b>", locations_foster$Qualification,
-                                         "<br/>","<b>","Description: ", "</b>", locations_foster$Description,
-                                         "<br/>","<b>","Website: ", "</b>", "<a>",locations_foster$Website, "</a>"), 
-                         group = "Foster Care", radius = 2, color = ~subpop_pal(Subpopulation)) %>% 
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"))
-      
-      l_sub
-      
-      
+      a_sub <- loudoun_locations %>% 
+        leaflet( options = leafletOptions(minzoom = 12)) %>%
+        setView(lng = -77.531622, lat = 38, zoom = 7) %>% 
+        addProviderTiles("CartoDB") %>%
+        addCircleMarkers(lng = ~Longitude,
+                         lat = ~Latitude,
+                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         loudoun_locations$Website, "</a>"),
+                         group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
+                         options = layersControlOptions(collapsed = FALSE))
+      a_sub
+
+
     })
     
+    
+    # Pillars Loudoun
     output$map2 <- renderLeaflet({
-      locations_Education <- locations %>% filter(Pillars == "Education")
-      locations_Employment <- locations %>% filter(Pillars == "Employment")
-      locations_Transportation <-locations %>% filter(Pillars == "Transportation")
-      locations_Health <- locations %>% filter(Pillars == "Health")
-      locations_FundingPolicy <- locations %>% filter(Pillars == "Funding & Policy")
-      locations_Housing <- locations %>% filter(Pillars == "Housing") 
       
+      l_pill <- loudoun_locations %>%  
+        leaflet(options = leafletOptions(minzoom = 12)) %>% 
+        setView(lng = -77.531622, lat = 38, zoom = 7) %>% 
+        addProviderTiles("CartoDB") %>% 
+        addCircleMarkers(lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         loudoun_locations$Website, "</a>"),
+                         radius = 2, 
+                         group = ~loudoun_locations$Pillars, 
+                         color = ~Pillar_pal(Pillars)) %>%  
+        addLayersControl(position = "bottomleft",
+                         overlayGroups = Pillar_levels, 
+                         options = layersControlOptions(collapsed = FALSE)) %>%
+        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
       
-      
+      l_pill
     })
-    
-    
-    
-    
-    
-    # Add maps for locations of programs in Loudoun subpopulation 
-    # output$map1 <- renderLeaflet({
-    #   l_sub <- loudoun_locations %>% 
-    #   leaflet(options = leafletOptions(minzoom = 12)) %>%
-    #     setView(lng = -77.457030, lat = 38.3, zoom = 8) %>%
-    #     addProviderTiles("CartoDB") %>%
-    #     addCircleMarkers(lng = ~loudoun_locations$Longitude,
-    #                      lat = ~loudoun_locations$Latitude,
-    #                      popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-    #                                      loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-    #                                      loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-    #                                      loudoun_locations$Website, "</a>"),
-    #                      group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
-    #     addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
-    #                      options = layersControlOptions(collapsed = FALSE))
-    #   
-    #   l_sub 
-    #   
-    # 
-    # })
-    
-    
-    ## Pillars Loudoun 
-    # output$map2 <- renderLeaflet({ 
-    #   l_pill <- loudoun_locations %>%
-    #     leaflet(options = leafletOptions(minzoom = 12)) %>% 
-    #     setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
-    #     addProviderTiles("CartoDB") %>% 
-    #     addCircleMarkers(lng = ~Longitude, 
-    #                      lat = ~Latitude, 
-    #                      popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-    #                                      loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-    #                                      loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-    #                                      loudoun_locations$Website, "</a>"),
-    #                      radius = 2, 
-    #                      group = ~loudoun_locations$Pillars, 
-    #                      color = ~Pillar_pal(Pillars)) %>%  
-    #     addLayersControl(position = "bottomleft",
-    #                      overlayGroups = Pillar_levels, 
-    #                      options = layersControlOptions(collapsed = FALSE)) %>%
-    #     addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
-    #   
-    #   l_pill
-    #   
-    # 
-    # })
     
     
     ## map for locations of program in Allegheny
     output$map3 <- renderLeaflet({
+      
       a_sub <- allegheny_locations %>% 
-      leaflet( options = leafletOptions(minzoom = 12)) %>%
-        setView(lng = -79.857030, lat = 40.4, zoom = 10) %>% 
+        leaflet( options = leafletOptions(minzoom = 12)) %>%
+        setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
@@ -927,14 +886,16 @@ server <- function(input, output, session) {
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
       
+      
     })
     
     
     ## Pillars Allegheny 
     output$map4 <- renderLeaflet({
+      
       a_pill <- allegheny_locations %>%  
       leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -79.857030, lat = 40.4, zoom = 10) %>% 
+        setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
                          lat = ~Latitude, 
