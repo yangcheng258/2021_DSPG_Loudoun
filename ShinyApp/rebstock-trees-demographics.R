@@ -269,6 +269,32 @@ body <- dashboardBody(
                       ),
                       tabPanel("Juvenille Detention",
                                h3(strong(""), align = "center"),
+                               p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
+                                 and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
+                                 Black youth are overrepresented among offenders in residential placement, making up 
+                                 40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
+                                 asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
+                                 the vast majority of offenders in residential placement, at 85.2% of residents. 
+                                 Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
+                                 52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
+                                 youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
+                                 youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
+                                 Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
+                                 (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
+                               p(""),
+                               p("Virginia has some of the highest referral and incarceration rates of youth, 
+                                 with the highest number of student referrals in the country and a rate of youth 
+                                 incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
+                                 (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
+                                 spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
+                                 recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
+                                 60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
+                                 youths being released from direct care for the Fiscal Year of 2015 only received high school 
+                                 diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
+                                 youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
+                                 pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
+                                 with youth imprisonment down 65% in Virginia between 2003 and 2016. "),
+                               br(),
                                selectInput("var3", "Select Topic:", width = "100%", choices = c(
                                  "Age" = "age",
                                  "Sex" = "sex",
@@ -386,16 +412,17 @@ body <- dashboardBody(
                                             recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
                                             and internet by census block group."),
                                br(), 
+                               leafletOutput("map1"),
                                tabsetPanel(
-                                 tabPanel("Pillars",
-                                          p(""),
-                                          p(strong("Map of Programs")),
-                                          leafletOutput("map1")
-                                 ),
                                  tabPanel("Subpopulation",
                                           p(""),
-                                          p(strong("Map of Programs")),
-                                          leafletOutput("map2")
+                                          p(strong("Map of Programs"))
+                                          # leafletOutput("map1")
+                                 ),
+                                 tabPanel("Pillars",
+                                          p(""),
+                                          p(strong("Map of Programs"))
+                                          # leafletOutput("map2")
                                  )
                                )
                                ) , 
@@ -412,19 +439,19 @@ body <- dashboardBody(
                                             to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
                                             recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
                                             and internet by census block group."),
-                               br(), 
-                               tabsetPanel(
-                                 tabPanel("Pillars",
-                                          p(""),
-                                          p(strong("Map of Programs")),
-                                          leafletOutput("map3")
-                                 ),
-                                 tabPanel("Subpopulation",
-                                          p(""),
-                                          p(strong("Map of Programs")),
-                                          leafletOutput("map4")
-                                 )
-                               )
+                               br()
+                               # tabsetPanel(
+                               #   tabPanel("Subpopulation",
+                               #            p(""),
+                               #            p(strong("Map of Programs")),
+                               #            leafletOutput("map3")
+                               #   ),
+                               #   tabPanel("Pillars",
+                               #            p(""),
+                               #            p(strong("Map of Programs")),
+                               #            leafletOutput("map4")
+                               #   )
+                               # )
                         )
                
                   )
@@ -753,52 +780,98 @@ server <- function(input, output, session) {
       }
     })
     
-    # Add maps for locations of programs in Loudoun subpopulation 
     output$map1 <- renderLeaflet({
-      l_sub <- loudoun_locations %>% 
-      leaflet(options = leafletOptions(minzoom = 12)) %>%
-        setView(lng = -77.457030, lat = 38.3, zoom = 8) %>%
-        addProviderTiles("CartoDB") %>%
-        addCircleMarkers(lng = ~loudoun_locations$Longitude,
-                         lat = ~loudoun_locations$Latitude,
-                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         loudoun_locations$Website, "</a>"),
-                         group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
-                         options = layersControlOptions(collapsed = FALSE))
       
-      l_sub 
+      locations_foster <- loudoun_locations %>% filter(Subpopulation == "Foster Care")
+      locations_juvie <- loudoun_locations %>% filter(Subpopulation == "Juvenile Detention")
       
-
+      
+      l_sub <- leaflet(options = leafletOptions(minzoom = 12)) %>% 
+        setView(lng = -77.431622, lat = 38.839439, zoom = 10) %>% 
+        addProviderTiles("CartoDB") %>% 
+        addCircleMarkers(data = locations_juvie, lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = ~paste0("<b>", locations_juvie$Program,"</b>", "<br/>", "<b>", 
+                                         "Qualifications: ", "</b>", locations_juvie$Qualification, 
+                                         "<br/>","<b>","Description: ", "</b>", locations_juvie$Description, 
+                                         "<br/>","<b>","Website: ", "</b>", "<a>",locations_juvie$Website, "</a>"), 
+                         group = "Juvenile Detention", radius = 2, color = ~subpop_pal(Subpopulation)) %>% 
+        addCircleMarkers(data = locations_foster, lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = ~paste0("<b>", locations_foster$Program,"</b>", "<br/>", "<b>", 
+                                         "Qualifications: ", "</b>", locations_foster$Qualification,
+                                         "<br/>","<b>","Description: ", "</b>", locations_foster$Description,
+                                         "<br/>","<b>","Website: ", "</b>", "<a>",locations_foster$Website, "</a>"), 
+                         group = "Foster Care", radius = 2, color = ~subpop_pal(Subpopulation)) %>% 
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"))
+      
+      l_sub
+      
+      
     })
+    
+    output$map2 <- renderLeaflet({
+      locations_Education <- locations %>% filter(Pillars == "Education")
+      locations_Employment <- locations %>% filter(Pillars == "Employment")
+      locations_Transportation <-locations %>% filter(Pillars == "Transportation")
+      locations_Health <- locations %>% filter(Pillars == "Health")
+      locations_FundingPolicy <- locations %>% filter(Pillars == "Funding & Policy")
+      locations_Housing <- locations %>% filter(Pillars == "Housing") 
+      
+      
+      
+    })
+    
+    
+    
+    
+    
+    # Add maps for locations of programs in Loudoun subpopulation 
+    # output$map1 <- renderLeaflet({
+    #   l_sub <- loudoun_locations %>% 
+    #   leaflet(options = leafletOptions(minzoom = 12)) %>%
+    #     setView(lng = -77.457030, lat = 38.3, zoom = 8) %>%
+    #     addProviderTiles("CartoDB") %>%
+    #     addCircleMarkers(lng = ~loudoun_locations$Longitude,
+    #                      lat = ~loudoun_locations$Latitude,
+    #                      popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+    #                                      loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+    #                                      loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+    #                                      loudoun_locations$Website, "</a>"),
+    #                      group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+    #     addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
+    #                      options = layersControlOptions(collapsed = FALSE))
+    #   
+    #   l_sub 
+    #   
+    # 
+    # })
     
     
     ## Pillars Loudoun 
-    output$map2 <- renderLeaflet({ 
-      l_pill <- loudoun_locations %>%
-        leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
-        addProviderTiles("CartoDB") %>% 
-        addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         loudoun_locations$Website, "</a>"),
-                         radius = 2, 
-                         group = ~loudoun_locations$Pillars, 
-                         color = ~Pillar_pal(Pillars)) %>%  
-        addLayersControl(position = "bottomleft",
-                         overlayGroups = Pillar_levels, 
-                         options = layersControlOptions(collapsed = FALSE)) %>%
-        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
-      
-      l_pill
-      
-
-    })
+    # output$map2 <- renderLeaflet({ 
+    #   l_pill <- loudoun_locations %>%
+    #     leaflet(options = leafletOptions(minzoom = 12)) %>% 
+    #     setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
+    #     addProviderTiles("CartoDB") %>% 
+    #     addCircleMarkers(lng = ~Longitude, 
+    #                      lat = ~Latitude, 
+    #                      popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+    #                                      loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
+    #                                      loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+    #                                      loudoun_locations$Website, "</a>"),
+    #                      radius = 2, 
+    #                      group = ~loudoun_locations$Pillars, 
+    #                      color = ~Pillar_pal(Pillars)) %>%  
+    #     addLayersControl(position = "bottomleft",
+    #                      overlayGroups = Pillar_levels, 
+    #                      options = layersControlOptions(collapsed = FALSE)) %>%
+    #     addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+    #   
+    #   l_pill
+    #   
+    # 
+    # })
     
     
     ## map for locations of program in Allegheny
