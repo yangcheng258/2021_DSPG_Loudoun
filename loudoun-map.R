@@ -8,8 +8,6 @@ library(ggplot2)
 library(dplyr)
 library(lubridate)
 
-
-
 ## getting county data for just loudoun 
 l <- left_join(countydata, counties, by = "county_fips") %>% 
   filter(state_name %in% c("Virginia"), county_name %in% c("Loudoun County"))
@@ -25,34 +23,19 @@ l %>%
         legend.key.height = unit(.25, "in")) +
   ggtitle("Loudoun County") 
 
-
-## reading in the shape files using town boundaries zip 
-town <- readOGR( 
-  dsn= "/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/Loudoun_Town_Boundaries" , 
-  layer="Loudoun_Town_Boundaries"
-)
-
-t_df <- as(town, "data.frame")
-t_df2 <- fortify(town)
-
-
-t_df2 %>%
-ggplot(aes(long, lat, group = group)) +
-  geom_polygon(color = "white", size = 0.05, fill = "light blue")
-
-
-## then can read in the excel sheet with all of the programs lat/long and plot onto map 
+tract20 <- st_read(
+  "/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/tl_2020_51107_tract20/tl_2020_51107_tract20.shp")
 
 
 
-intake_race <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
-colnames(intake_race) <-intake_race[1,]
-intake_race <-intake_race[-1,]
-jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>% 
-  filter(CSU == "20L") %>% 
-  rename(Proportion = `FY20 %`) %>% 
-  select(RACE, Proportion) %>% 
-  rename(Race = RACE)
+plot(ls)
+options(sf_max.plot=1)
+plot(tract20, axes =T)
+
+ggplot() + geom_sf(mapping = aes(geometry = geometry), data = tract20)+
+  labs(title = "Census Tract of Loudoun County",
+       caption = "Data Source: US Census Bureau") + 
+  theme(plot.subtitle = element_text(size = 7))
 
 
 
