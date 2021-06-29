@@ -235,6 +235,30 @@ body <- dashboardBody(
                         status = "warning",
                         solidHeader = TRUE,
                         collapsible = TRUE,
+                        p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
+                        in the United States. It covers 515.6 square miles ranking 20th-largest county 
+                        in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
+                        Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
+                        Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County, 
+                        Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 
+                        395,134, making it Virginia’s third-most populous county. Loudoun County is part of 
+                        the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area."),
+                        p("n 2015-2019, there were 128,637 households in Loudoun County, Virginia. 
+                        The average household size was 3.06 people. In 2015-2019, there were 128,637 
+                        households in Loudoun County, Virginia. The average household size was 3.06 people. 
+                        In Loudoun County, Virginia, 47.7 percent of all households have one or more
+                        people under the age of 18; 19.4 percent of all households have one or more people 
+                        65 years and over."), 
+                        p("The median income of households in Loudoun County, Virginia was $142,299, 
+                        the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had 
+                        income below $10,000 a year and 30.0 percent had income over $200,000 or more. 
+                        As of 2018, Loudoun County had a median household income of $136,268.[6] Since 2008, 
+                        the county has been ranked first in the U.S. in median household income among jurisdictions
+                        with a population of 65,000 or more. In 2015-2019, 3.4% of people were 
+                        in poverty. An estimated 3.2% of children under 18 were below the poverty 
+                        level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
+                        of people 18 to 64 years were below the poverty level."),
+                        br(),
                         selectInput("var1", "Select Variable:", width = "100%", choices = c(
                           "Age, Sex" = "ageSex",
                           "Race" = "race", 
@@ -256,6 +280,7 @@ body <- dashboardBody(
                     tabsetPanel(
                       tabPanel("Foster Care",
                                h3(strong(""), align = "center"),
+                               br(),
                                selectInput("var2", "Select Topic:", width = "100%", choices = c(
                                  "Age" = "age",
                                  "Sex" = "sex", 
@@ -264,12 +289,43 @@ body <- dashboardBody(
                                  "TAYs" = "tays")
                                ),
                                plotlyOutput("plot2"),
-                               p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) 
+                               p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) ,
+                               p("In the US 2019, 423,997 children were in the foster system with 251,359 
+                                 newly entered children and 248,669 exiting. The average age of a child in 
+                                 foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
+                                 Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
+                                 the US. 44% of foster care youth are white and 23% were black. Similar to foster 
+                                 care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
+                                 According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
+                                 the foster care system were 18+ and it was most likely due to neglect. However, 
+                                 there were 20,465 (8%) youths 18+ who exited the system most likely due to
+                                 aging out and emancipation."), 
+                               p(""),
+                               p("According to the The Adoption and Foster Care Analysis and Reporting System, 
+                                 in 2020 there were 48 children in foster care in only Loudoun County which was 
+                                 .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
+                                 of those children were boys and 1/3 were girls and the minority of them of 
+                                 ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
+                                 and less than 5% Asian and multi-racial as you can see from the barplot below. 
+                                 When we are looking at only transitional aged youth from 18-24 where 21 years 
+                                 old is the average time a foster child ages out, there were only 8 children. 
+                                 In Loudoun County, it does not seem like there are many foster care youths 
+                                 who are aging out of the system but only 9 other counties have greater than 9 
+                                 foster care kids over the age of 18 ")
                       
                       ),
                       tabPanel("Juvenille Detention",
                                h3(strong(""), align = "center"),
-                               p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
+                               br(),
+                               selectInput("var3", "Select Topic:", width = "100%", choices = c(
+                                 "Age" = "age",
+                                 "Sex" = "sex",
+                                 "Race" = "race",
+                                 "Ethnicity" = "eth")
+                               ),
+                               plotlyOutput("plot3"),
+                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)"))),
+                      p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
                                  and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
                                  Black youth are overrepresented among offenders in residential placement, making up 
                                  40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
@@ -281,8 +337,8 @@ body <- dashboardBody(
                                  youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
                                  Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
                                  (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                               p(""),
-                               p("Virginia has some of the highest referral and incarceration rates of youth, 
+                      p(""),
+                      p("Virginia has some of the highest referral and incarceration rates of youth, 
                                  with the highest number of student referrals in the country and a rate of youth 
                                  incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
                                  (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
@@ -293,16 +349,7 @@ body <- dashboardBody(
                                  diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
                                  youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
                                  pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
-                                 with youth imprisonment down 65% in Virginia between 2003 and 2016. "),
-                               br(),
-                               selectInput("var3", "Select Topic:", width = "100%", choices = c(
-                                 "Age" = "age",
-                                 "Sex" = "sex",
-                                 "Race" = "race",
-                                 "Ethnicity" = "eth")
-                               ),
-                               plotlyOutput("plot3"),
-                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)")))
+                                 with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
                   
                     )
                   )
@@ -313,11 +360,11 @@ body <- dashboardBody(
       ## Data and Methodology--------------------------------------------
       tabItem(tabName = "data",
               fluidRow(style = "margin: 6px;",
-                       h1(strong("Loudoun County Residents' Demographic Characteristics"), align = "center"),
-                       h2("Project Description"),
+                       h1(strong("Data and Methodology"), align = "center"),
+                       h2("Sources"),
                        br(),
                        p("", style = "padding-top:10px;"),
-                       h4(strong("Who does Loudoun County Serve?")),
+                       h4(strong("")),
                        p("We examined Patrick County population sociodemographic and socioeconomic characteristics to better understand the
                                             residents that the county serves."),
                        p("We retrieved American Community Survey (ACS) data to calculate this information at census block group and census
@@ -326,24 +373,13 @@ body <- dashboardBody(
                                             employment, health insurance coverage, and other relevant characteristics."),
                        p("Our interactive plots visualize census block-group level sociodemographic characteristics of Patrick County residents.")),
               br(), 
-              br(),  
-              box(
-                title = "Visualizations of Loudoun Residents",
-                closable = FALSE,
-                width = NULL,
-                status = "warning",
-                solidHeader = TRUE,
-                collapsible = TRUE, 
-                leafletOutput("map1"),
-                p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
-              br(),
               br()
               
       ),
       
       
       ## Services--------------------------------------------
-      tabItem(tabName = "services",
+      tabItem(tabName = "services", 
               fluidRow(
                 box(
                   title = "Service Availability",
@@ -412,7 +448,6 @@ body <- dashboardBody(
                                             recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
                                             and internet by census block group."),
                                br(), 
-                               leafletOutput("map1"),
                                tabsetPanel(
                                  tabPanel("Subpopulation",
                                           p(""),
@@ -439,19 +474,19 @@ body <- dashboardBody(
                                             to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
                                             recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
                                             and internet by census block group."),
-                               br()
-                               # tabsetPanel(
-                               #   tabPanel("Subpopulation",
-                               #            p(""),
-                               #            p(strong("Map of Programs")),
-                               #            leafletOutput("map3")
-                               #   ),
-                               #   tabPanel("Pillars",
-                               #            p(""),
-                               #            p(strong("Map of Programs")),
-                               #            leafletOutput("map4")
-                               #   )
-                               # )
+                               br(), 
+                               tabsetPanel(
+                                 tabPanel("Subpopulation",
+                                          p(""),
+                                          p(strong("Map of Programs")),
+                                          leafletOutput("map3")
+                                 ),
+                                 tabPanel("Pillars",
+                                          p(""),
+                                          p(strong("Map of Programs")),
+                                          leafletOutput("map4")
+                                 )
+                               )
                         )
                
                   )
@@ -463,7 +498,8 @@ body <- dashboardBody(
     
   
 ui <- dashboardPage(
-    dashboardHeader(title = "DSPG 2021"), 
+    dashboardHeader(skin = "black", 
+                    title = "Service Availability for Transitional Aged Youth in Loudoun County"), 
     sidebar = sidebar, 
     body = body
 )
