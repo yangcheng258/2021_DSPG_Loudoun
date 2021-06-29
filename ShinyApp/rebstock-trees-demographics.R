@@ -20,46 +20,87 @@ library(ggbeeswarm)
 library(readxl)
 library(collapsibleTree)
 library(shinycssloaders)
+library(leaflet)
+library(leaflet.extras)
 
 
 # Loudoun -----------------------------------------------------------
-## sex and age
-loudoun <- get_estimates(geography = 'county', state = 'VA', county = 'Loudoun', product = 'characteristics', breakdown = c('SEX', 'AGEGROUP'),
-                         breakdown_labels = TRUE,year = 2019)
+## gender and age tays 
+males_tays <- c('B01001_007','B01001_008','B01001_009','B01001_010')
+females_tays <- c('B01001_031','B01001_032','B01001_033','B01001_034') 
 
-filtered <- filter(loudoun, str_detect(AGEGROUP, '^Age' ), 
-                   SEX != 'Both sexes') %>% 
-  mutate(value = ifelse(SEX == 'Male', -value, value))
-# race
-races <- c(White = "B03002_003", Black = "B03002_004",Native = "B03002_005", Asian = "B03002_006", HIPI = "B03002_007", Hispanic = "B03002_012")
-lr <- get_acs(
+l_ages_gender <- get_acs(
   geography = 'county', 
-  variables = races, 
+  variables = c(males_tays, females_tays) , 
   state= 'VA',
   county='Loudoun', 
-  summary_var = 'B03002_001'
-)
-
-## income 
-income <- get_acs(geography = "tract", state = "VA", county = "Loudoun", variables = c(White = "B03002_003", Black = "B03002_004",
-                 Asian = "B03002_006",Hispanic = "B03002_012"),summary_var = "B19013_001") %>%
-  group_by(GEOID) %>%filter(estimate== max(estimate, na.rm = TRUE)) %>% ungroup() %>%filter(estimate != 0)
-# education 
-schools <- c("Total","No school",  "Nursery School","Kindergarten",  "1st Grade" ,  "2nd Grade",
-             "3rd Grade" ,"4th Grade",  "5th Grade",  "6th Grade" , "7th Grade", "8th Grade" ,
-             "9th Grade", "10th Grade",  "11th Grade" ,"12th Grade",  "High School Diploma", 
-             "GED or alternative credential",  "Some college, less than 1 year", 
-             "Some college, 1 or more years, no degree",  "Associate's degree", "Bachelor's degree", 
-             "Master's degree" ,  "Professional school degree", "Doctorate degree" 
+  summary_var = 'B01001_001'
 ) 
 
-education <- get_acs(geography = 'county', table = "B15003",year = 2019,  state = 'VA',county = 'loudoun', summary_var = 'B15003_001')
+# race tays 
+white <- 20066
+black <- 2403
+indian <- 82 
+asian <- 3891
+native_hawaiian <- 79
+other <- 425
 
-#Languages 
-lang <- c("Spanish", 'Other Indo-European languages', "Asian and Pacific Islander languages","Other languages")
-lang_p <- c(10.9,9.3,9.2,2.2)
-lang_df <- data_frame(lang, lang_p)
+race <- data.frame(rbind(white, black, indian, asian, native_hawaiian, other))
+colnames(race) <- "Estimate"
+race$Race <- rownames(race)
 
+# education 
+male_edu <- c("B15001_003","B15001_004","B15001_005","B15001_006","B15001_007","B15001_008","B15001_009","B15001_010") 
+female_edu <- c("B15001_044","B15001_045", "B15001_046", "B15001_047", "B15001_048", "B15001_049","B15001_050","B15001_051") 
+education <- get_acs(geography = 'county', variables = c(male_edu, female_edu) , state= 'VA',county='Loudoun')
+
+school <- c("Less than 9th", "9th to 12th (no diploma)", "High school diploma", "Some college (no degree)", "Associate's degree", "Bachelor's degree", "Graduate or professional degree")
+
+medu <- education[2:8,]%>%
+  select(variable, estimate)
+medu$variable <- school
+fedu <- education[10:16,]%>%
+  select(estimate)
+
+## Poverty 
+w <- c("B17001A_010","B17001A_024") 
+b <- c("B17001B_010", "B17001B_024") 
+i <- c( "B17001C_010", "B17001C_024")
+as <- c("B17001D_010", "B17001D_024")
+n <- c("B17001E_010", "B17001E_024")
+o <- c("B17001F_010", "B17001F_024")
+
+poverty <- get_acs(
+  geography = 'county', 
+  variables = c(w,b,i,as,n,o) , 
+  state= 'VA',
+  county='Loudoun'
+)
+
+w_p <- data.frame(poverty[1,], poverty[2,])%>%
+  mutate(sum = estimate + estimate.1)%>%
+  select(variable, sum)%>%
+  mutate(variable = "White")
+b_p <- data.frame(poverty[3,], poverty[4,])%>%
+  mutate(sum = estimate + estimate.1)%>%
+  select(variable, sum)%>%
+  mutate(variable = "Black")
+i_p <- data.frame(poverty[5,], poverty[6,])%>%
+  mutate(sum = estimate + estimate.1)%>%
+  select(variable, sum)%>%
+  mutate(variable = "Indian")
+as_p <- data.frame(poverty[7,], poverty[8,])%>%
+  mutate(sum = estimate + estimate.1)%>%
+  select(variable, sum)%>%
+  mutate(variable = "Asian")
+n_p <- data.frame(poverty[9,], poverty[10,])%>%
+  mutate(sum = estimate + estimate.1)%>%
+  select(variable, sum)%>%
+  mutate(variable = "Native")
+o_p <- data.frame(poverty[11,], poverty[12,])%>%
+  mutate(sum = estimate + estimate.1)%>%
+  select(variable, sum)%>%
+  mutate(variable = "Other")
 
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
@@ -219,15 +260,6 @@ body <- dashboardBody(
                         br(),
                         p("", style = "padding-top:10px;"),
                         h4(strong("Who does Loudoun County Serve?")),
-                        p("We examined Patrick County population sociodemographic and socioeconomic characteristics to better understand the
-                                            residents that the county serves."),
-                        p("We retrieved American Community Survey (ACS) data to calculate this information at census block group and census
-                                            tract levels. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. We used
-                                            the most recently available 5-year estimates from 2014/18 to compute percent Patrick County residents in a given block group or tract by age, race, ethnicity,
-                                            employment, health insurance coverage, and other relevant characteristics."),
-                        p("Our interactive plots visualize census block-group level sociodemographic characteristics of Patrick County residents.")),
-                        br(), 
-                        br(),  
               p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
                         in the United States. It covers 515.6 square miles ranking 20th-largest county 
                         in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
@@ -250,21 +282,21 @@ body <- dashboardBody(
                         with a population of 65,000 or more. In 2015-2019, 3.4% of people were 
                         in poverty. An estimated 3.2% of children under 18 were below the poverty 
                         level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
-                        of people 18 to 64 years were below the poverty level."),
+                        of people 18 to 64 years were below the poverty level.")) ,
               br(),
                       box(
-                        title = "Visualizations of Loudoun Residents",
+                        title = "Visualizations of Transitional Aged Youth (TAYs)",
                         closable = FALSE,
                         width = NULL,
                         status = "warning",
                         solidHeader = TRUE,
                         collapsible = TRUE,
                         selectInput("var1", "Select Variable:", width = "100%", choices = c(
-                          "Age, Sex" = "ageSex",
-                          "Race" = "race", 
-                          "Household Income by Ethnicity" = "income",
-                          "Languages Spoken" = "language",
-                          "Level of Education" = "education")
+                          "Gender and Age" = "age",
+                          "Percentage of TAYs" = "percent", 
+                          "Educational Attainment" = "education",
+                          "Races" = "race",
+                          "Poverty Level" = "poverty")
                         ),
                         plotlyOutput("plot1"),
                         p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
@@ -441,59 +473,70 @@ body <- dashboardBody(
       tabItem(tabName = "locations", 
                fluidRow(style = "margin: 6px;",
                         h1(strong("Location and accessibility of Programs and Services"), align = "center"),
-                        column(6,
-                               h4(strong("Loudoun County")),
-                               ## description of what we are doin and why we are mapping them out 
-                               p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
-                                             telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
-                                             than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
-                                             provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
-                               p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
-                                            obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
-                                            to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
-                                            recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
-                                            and internet by census block group."),
-                               br(), 
-                               tabsetPanel(
-                                 tabPanel("Subpopulation",
-                                          p(""),
-                                          p(strong("Map of Programs")), 
-                                          leafletOutput("map1")
-                                 ),
-                                 tabPanel("Pillars",
-                                          p(""),
-                                          p(strong("Map of Programs")), 
-                                          leafletOutput("map2")
-                                 )
-                               )
-                               ) , 
-                               br(),
-                        column(6,
-                               h4(strong("Allegheny County")),
-                               ## description of what we are doin and why we are mapping them out 
-                               p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
-                                             telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
-                                             than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
-                                             provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
-                               p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
-                                            obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
-                                            to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
-                                            recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
-                                            and internet by census block group."),
-                               br(), 
-                               tabsetPanel(
-                                 tabPanel("Subpopulation",
-                                          p(""),
-                                          p(strong("Map of Programs")),
-                                          leafletOutput("map3")
-                                 ),
-                                 tabPanel("Pillars",
-                                          p(""),
-                                          p(strong("Map of Programs")),
-                                          leafletOutput("map4")
-                                 )
-                               )
-                        )
+                        box(
+                          title = "Loudoun County",
+                          closable = FALSE,
+                          width = NULL,
+                          status = "warning",
+                          solidHeader = TRUE,
+                          collapsible = TRUE,
+                           p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
+                                         telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
+                                         than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
+                                         provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
+                           p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
+                                        obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
+                                        to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
+                                        recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
+                                        and internet by census block group."),
+                           br(), 
+                           tabsetPanel(
+                             tabPanel("Subpopulation",
+                                      p(""),
+                                      p(strong("Map of Programs")), 
+                                      leafletOutput("map1")
+                             ),
+                             tabPanel("Pillars",
+                                      p(""),
+                                      p(strong("Map of Programs")), 
+                                      leafletOutput("map2")
+                             )
+                           )
+                           ) , 
+                           br(),
+                        br(), 
+                        box(
+                          title = "Allegheny County",
+                          closable = FALSE,
+                          width = NULL,
+                          status = "warning",
+                          solidHeader = TRUE,
+                          collapsible = TRUE,
+                           h4(strong("Allegheny County")),
+                           ## description of what we are doin and why we are mapping them out 
+                           p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
+                                         telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
+                                         than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
+                                         provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
+                           p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
+                                        obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
+                                        to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
+                                        recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
+                                        and internet by census block group."),
+                           br(), 
+                           tabsetPanel(
+                             tabPanel("Subpopulation",
+                                      p(""),
+                                      p(strong("Map of Programs")),
+                                      leafletOutput("map3")
+                             ),
+                             tabPanel("Pillars",
+                                      p(""),
+                                      p(strong("Map of Programs")),
+                                      leafletOutput("map4")
+                             )
+                           )
+                      )
                
                   )
               ) 
@@ -515,60 +558,69 @@ server <- function(input, output, session) {
       input$var1
     })
     output$plot1 <- renderPlotly({
-      if(var1() == "ageSex") {
-        ggplot(filtered, aes(x = value, y = AGEGROUP, fill = SEX)) + geom_col(width = .95, alpha = .75) + 
-          theme_minimal(base_family = 'Verdana' ) + 
-          scale_x_continuous(labels = function(y) paste0(abs(y)/1000, "k")) + 
-          scale_y_discrete(labels = function(x) gsub("Age | years", " ", x)) +
-          scale_fill_manual(values = c("darkred", "navy")) +
-          labs(x = "", 
-               y = "Population Estimates",
-               title = "Age and Sex Pyramid Structure for Loudoun County", 
-               fill ="")
-      } else if(var1() == "race") {
-        ggplot(data = lr, aes(x = estimate, y = variable, fill = variable)) + 
-          geom_bar(stat = "identity") + 
-          labs(title = "Races in Loudoun County", 
-               x = "Population estimate", 
-               y = "Race", 
-               caption = "Data source: American Community Survey")+ 
-          theme_minimal(base_family = "Verdana")+ theme(legend.title = element_blank()) 
+      if(var1() == "age") {
+        
+        l_ages_gender <- l_ages_gender%>%
+          select(variable, estimate, summary_est)
+        
+        names <- c("18-19", "20", "21", "22-24", "18-19", "20", "21",  "22-24")
+        l_ages_gender$variable <- names
+        l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
+        
+        
+        ggplot(l_ages_gender, aes(fill = gender, x = estimate, y = variable)) + 
+          geom_bar(position="dodge", stat="identity") + 
+          labs(title = "Gender and Age Groups ", 
+               y = "", 
+               x = "Population Estimate") +coord_flip()
+        
+        
+      } else if(var1() == "percent") {
+        
+        m_p <- sum(l_ages_gender$estimate[1:4])/195769 * 100 
+        f_p <-sum(l_ages_gender$estimate[5:8])/199365 * 100 
+        
+        percent <- data.frame(rbind(m_p, f_p))
+        colnames(percent) <- "Percent"
+        percent$Gender <- c("Male", "Female")
+        
+        
+        percent %>%
+          ggplot() + geom_col(mapping = aes(x = Percent, y = Gender ), fill = "darkgreen")+
+          labs(title = "Percent of TAYs by Gender", 
+               y = "", 
+               x = "Percent %") +coord_flip() 
        
-      }else if(var1() == "income"){
-        ggplot(income, aes(x = variable, y = summary_est, color = summary_est)) + 
-          geom_quasirandom(alpha = .5) + 
-          coord_flip() +
-          theme_minimal() + 
-          scale_color_viridis_c(guide =  FALSE) + 
-          scale_y_continuous(labels = scales::dollar) + 
-          labs(x = "" , y = "Median Hosuehold Income", 
-               title = "Household income distribution by largest ethnic/race group", 
-               subtitle = "Census tracts, Loudoun County") + 
-          theme(plot.title = element_text(color = "black", size = 9, face = "bold", hjust = 0.5), 
-                axis.title.x = element_text(size = 5))
+      }else if(var1() == "race"){
+        race %>%
+          ggplot() + geom_col(mapping = aes(x = Estimate, y = Race ), fill = "lightblue")+ 
+          labs(title = "Racial Demographics of TAYs", 
+               y = "Races", 
+               x = "Population Estimate") 
       } 
       else if (var1() == "education")  { 
-        rownames(education) <- schools
-        education$variable <- rownames(education)
-        education$variable <- factor(education$variable, levels=unique(education$variable))
         
-        education <- education[-1,]
+        both <- data.frame(medu, fedu)%>%
+          mutate(sum = estimate+estimate.1)%>%
+          select(variable, sum)
         
-        ggplot(data = education, aes(x=estimate, y=variable, fill = "red")) + geom_bar(stat = "identity") +
-          labs(title =  "Education in Loudoun County",
-               y = "Level of Education",
-               x = "Population") + 
-          theme(legend.position = "none", plot.title = element_text(color = "black", size = 7, face = "bold", hjust = 0.5))
+        both$variable <- factor(both$variable, levels=unique(both$variable))
+        
+        both %>%
+          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "indianred1")+ 
+          labs(title = "Educational Attainment of TAYs", 
+               y = "", 
+               x = "Population Estimate") 
         
         
       }
       else {
-        ggplot(data = lang_df, aes(x = lang, y = lang_p, fill = lang)) + 
-          geom_bar(stat = "identity") + coord_flip() + 
-          labs(title  ="Percent of the Population 5+ who Speak a Language other than English",
-               x = "Language",
-               y = "Percentage") + 
-          theme(legend.position = "none", plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5))
+        pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
+        pov %>%
+          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "plum2")+ 
+          labs(title = "Poverty by Race of TAYs", 
+               y = "", 
+               x = "Population Estimate")+coord_flip()
 
       }
     
@@ -690,8 +742,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T, 
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
       }else if(input$pillar1%in%"Employment"){
         Tree%>%filter(County == "Loudoun")%>%
@@ -700,8 +753,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else if(input$pillar1%in%"Housing"){
@@ -711,8 +765,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else if(input$pillar1%in%"Transportation"){
@@ -722,8 +777,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else if(input$pillar1%in%"Insurance"){
@@ -733,8 +789,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else {
@@ -744,8 +801,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }
@@ -760,8 +818,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
       }else if(input$pillar2%in%"Employment"){
         Tree%>%filter(County == "Allegheny")%>%
@@ -770,8 +829,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else if(input$pillar2%in%"Housing"){
@@ -781,8 +841,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else if(input$pillar2%in%"Transportation"){
@@ -793,7 +854,8 @@ server <- function(input, output, session) {
                           root="County",
                           attribute = "County",
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          fill = "Category", 
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else if(input$pillar2%in%"Insurance"){
@@ -803,8 +865,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
+                          fill = "Category", 
                           width=1800,
-                          zoomable=F, fillByLevel = T,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }else {
@@ -814,8 +877,9 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          width=1800,
-                          zoomable=F, fillByLevel = T,
+                          fill = "Category", 
+                          width = 1800,
+                          zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount')
 
       }
@@ -834,7 +898,7 @@ server <- function(input, output, session) {
                                          loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
                                          loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
                                          loudoun_locations$Website, "</a>"),
-                         group = ~loudoun_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+                         group = ~loudoun_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
@@ -856,10 +920,10 @@ server <- function(input, output, session) {
                                          loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
                                          loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
                                          loudoun_locations$Website, "</a>"),
-                         radius = 2, 
+                         radius = 6, 
                          group = ~loudoun_locations$Pillars, 
                          color = ~Pillar_pal(Pillars)) %>%  
-        addLayersControl(position = "bottomleft",
+        addLayersControl(position = "topright",
                          overlayGroups = Pillar_levels, 
                          options = layersControlOptions(collapsed = FALSE)) %>%
         addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
@@ -881,7 +945,7 @@ server <- function(input, output, session) {
                                          allegheny_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
                                          allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
                                          allegheny_locations$Website, "</a>"),
-                         group = ~allegheny_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
+                         group = ~allegheny_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
@@ -903,10 +967,10 @@ server <- function(input, output, session) {
                                          allegheny_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
                                          allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
                                          allegheny_locations$Website, "</a>"),
-                         radius = 2, 
+                         radius = 6, 
                          group = ~allegheny_locations$Pillars, 
                          color = ~Pillar_pal(Pillars)) %>%  
-        addLayersControl(position = "bottomleft",
+        addLayersControl(position = "topright",
                          overlayGroups = Pillar_levels, 
                          options = layersControlOptions(collapsed = FALSE)) %>%
         addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)

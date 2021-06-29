@@ -41,3 +41,13 @@ ggplot() + geom_sf(mapping = aes(geometry = geometry), data = tract20)+
 
 
 
+
+
+
+
+
+
+
+
+
+
