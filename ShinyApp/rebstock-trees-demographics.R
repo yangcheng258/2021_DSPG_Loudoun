@@ -755,7 +755,7 @@ server <- function(input, output, session) {
     
     # Add maps for locations of programs in Loudoun subpopulation 
     output$map1 <- renderLeaflet({
-      
+      l_sub <- loudoun_locations %>% 
       leaflet(options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -77.457030, lat = 38.3, zoom = 8) %>%
         addProviderTiles("CartoDB") %>%
@@ -769,13 +769,16 @@ server <- function(input, output, session) {
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       
+      l_sub 
+      
 
     })
     
     
     ## Pillars Loudoun 
     output$map2 <- renderLeaflet({ 
-      leaflet(data = loudoun_locations, options = leafletOptions(minzoom = 12)) %>% 
+      l_pill <- loudoun_locations %>%
+        leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -77.457030, lat = 38.3, zoom = 8) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
@@ -792,13 +795,16 @@ server <- function(input, output, session) {
                          options = layersControlOptions(collapsed = FALSE)) %>%
         addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
       
+      l_pill
+      
 
     })
     
     
     ## map for locations of program in Allegheny
     output$map3 <- renderLeaflet({
-      leaflet(data = allegheny_locations, options = leafletOptions(minzoom = 12)) %>%
+      a_sub <- allegheny_locations %>% 
+      leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -79.857030, lat = 40.4, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
@@ -810,14 +816,15 @@ server <- function(input, output, session) {
                          group = ~allegheny_locations$Subpopulation, radius = 2, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
-      
+      a_sub
       
     })
     
     
     ## Pillars Allegheny 
     output$map4 <- renderLeaflet({
-      leaflet(data = allegheny_locations, options = leafletOptions(minzoom = 12)) %>% 
+      a_pill <- allegheny_locations %>%  
+      leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -79.857030, lat = 40.4, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
@@ -833,6 +840,8 @@ server <- function(input, output, session) {
                          overlayGroups = Pillar_levels, 
                          options = layersControlOptions(collapsed = FALSE)) %>%
         addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+      
+      a_pill
       
 
     })
