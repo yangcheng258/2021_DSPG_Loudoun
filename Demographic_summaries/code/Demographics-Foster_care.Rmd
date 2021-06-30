@@ -172,7 +172,11 @@ barplot(value$Value, xlab = "Age Groups", ylab = "Totals", main = "Age Groups in
 value$Age.Group<-factor(value$Age.Group, levels = value$Age.Group)
 
 ggplot(data = value, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
-    geom_bar(stat = "identity") + coord_flip()
+    geom_col() + coord_flip() + theme(legend.position = "none")+
+    labs(title = "Age Demographics of Foster Care",
+         x = "",
+         y = "Population Estimate", 
+         caption = "Data Source: The Adoption and Foster Care Analysis and Reporting System FY 2019")
 
 ## pie chart using percentages 
 pie(percent$Value, groups, main = "Age Groups in Percentages", col = rainbow(length(percent$Value)))
@@ -197,6 +201,12 @@ According to the *The Adoption and Foster Care Analysis and Reporting System*, i
 sex_df <- data.frame(foster_care_2020[c(2,4),])
 colnames(sex_df) <- c("Gender", "Value")
 
+ggplot() + geom_col(mapping = aes(x = Value, y = Gender, fill = c("plum", "lightblue")), data = sex_df)+coord_flip()+ 
+    theme(legend.position = "none") + 
+    labs(title = "Sex Demographics of Foster Care", 
+         x = "Population Estimate", y = "",
+         caption = "Data Source: The Adoption and Foster Care Analysis and Reporting System FY 2019")
+
 ## pie chart for gender of Foster Care in Loudoun County 
 pie(sex_df$Value, sex_df$Gender, main = "Gender of Foster Care Youth in Loudoun County", col = rainbow(length(sex_df$Value)) ) 
     
@@ -205,9 +215,9 @@ pie(sex_df$Value, sex_df$Gender, main = "Gender of Foster Care Youth in Loudoun 
 
 ```{r, include=FALSE}
 
-race <- data.frame(foster_care_2020[c(8,10,12,14,16,18),])
+race <- data.frame(foster_care_2020[c(8,10,14,18),])
 colnames(race) <- c("Race", "Value")
-races <- c("Black", "White", "Indian", "Asian", "Hawaiian", "Multi") 
+races <- c("Black", "White", "Asian", "Multi") 
 race_p <- data.frame(foster_care_2020[c(9,11,13,15,17,19),])
 colnames(race_p) <- c("Race", "Percent")
 
@@ -229,8 +239,19 @@ data2
 barplot(race$Value, xlab = "Races", ylab = "Values", main = "Figure4- Races of Foster Care in Loudoun County", col = rgb(0.8,0.1,0.1,0.6), names.arg = races, cex.names = .6)
 
 
-ggplot(data = race, aes(x= Race, y = Value, fill = Race) ) + 
-    geom_bar(stat = "identity") + coord_flip()
+ggplot(data = race, aes(x= races, y = Value, fill = Race) ) + 
+    geom_col() + theme(legend.position = "none")+labs(title = "Racial Demographics of Foster Care", 
+                                                      y = "Population Estimate", 
+                                                      x = "", 
+                                                      caption = "Data Source: The Adoption and Foster Care Analysis and Reporting System FY 2019")+scale_fill_brewer(palette="Dark2")
+
+
+ggplot(data = data2, aes(x= age_19, y = value, fill = age_19) ) + 
+    geom_col() + theme(legend.position = "none",
+                       plot.background = element_rect(inherit.blank = T))+labs(title = "TAYs vs Children in Foster Care", 
+                                                      y = "Population Estimate", 
+                                                      x = "", 
+                                                      caption = "Data Source: The Adoption and Foster Care Analysis and Reporting System FY 2019")+scale_fill_brewer(palette="Greens")+coord_flip()
 
 
 
