@@ -102,6 +102,16 @@ o_p <- data.frame(poverty[11,], poverty[12,])%>%
   select(variable, sum)%>%
   mutate(variable = "Other")
 
+# Health Care
+covered <- 1473 
+private_cov <- 25418
+medicare <- 58 
+va <- 69
+
+healthcare <- data.frame(rbind(covered, private_cov, medicare, va))
+healthcare$Type <- c("Public", "Private", "Medicare", "VA Health")
+colnames(healthcare) <- c("Estimate", "Type")
+
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
 fc_2020 <- read_excel(paste0(getwd(),"/data/foster-care-2020.xlsx")) 
@@ -296,7 +306,8 @@ body <- dashboardBody(
                           "Percentage of TAYs" = "percent", 
                           "Educational Attainment" = "education",
                           "Races" = "race",
-                          "Poverty Level" = "poverty")
+                          "Poverty Level" = "poverty",
+                          "Healthcare Coverage" = "health")
                         ),
                         plotlyOutput("plot1"),
                         p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
@@ -589,7 +600,7 @@ server <- function(input, output, session) {
           ggplot() + geom_col(mapping = aes(x = Percent, y = Gender ), fill = "darkgreen")+
           labs(title = "Percent of TAYs by Gender", 
                y = "", 
-               x = "Percent %") +coord_flip() 
+               x = "Percent %") + coord_flip() 
        
       }else if(var1() == "race"){
         race %>%
@@ -614,6 +625,15 @@ server <- function(input, output, session) {
         
         
       }
+      else if (var1() == "health"){
+        healthcare %>%
+          ggplot(mapping = aes(x = Estimate, y = Type ))  + geom_col(fill = "gold2")+ 
+          labs(title = "Types of Health Care Coverage of TAYs in Loudoun", 
+               y = "", 
+               x = "Population Estimate") + 
+          coord_flip() + 
+          theme(legend.position = "none")
+      }
       else {
         pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
         pov %>%
@@ -633,6 +653,8 @@ server <- function(input, output, session) {
     ##Render Plot for Foster Care 
     output$plot2 <- renderPlotly({
       if(var2() == "age") {
+        fc_ages$Age.Group <- factor(fc_ages$Age.Group, levels=unique(fc_ages$Age.Group))
+        
         ggplot(data = fc_ages, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
           geom_col(width = .95, alpha = .75) + coord_flip()+
           theme_minimal(base_family = 'Verdana' ) + 
@@ -679,7 +701,6 @@ server <- function(input, output, session) {
     output$plot3 <- renderPlotly({
       if(var3() == "age") {
         jv_age$Age <- factor(jv_age$Age, levels=unique(jv_age$Age))
-
         jv_age %>% 
           ggplot(aes(x = Age, y = Proportion)) +
           geom_col(fill = "brown1") +
