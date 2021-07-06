@@ -256,7 +256,7 @@ body <- dashboardBody(
                   status = "warning",
                   solidHeader = TRUE,
                   collapsible = TRUE,
-                  h1("Service Availability for Transitional Aged Youth in Loudoun County"),
+                  h1("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
                   h2("Project Description")
                 ) 
               ) 
@@ -277,13 +277,7 @@ body <- dashboardBody(
                         Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County, 
                         Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 
                         395,134, making it Virginia’s third-most populous county. Loudoun County is part of 
-                        the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area."),
-              p("n 2015-2019, there were 128,637 households in Loudoun County, Virginia. 
-                        The average household size was 3.06 people. In 2015-2019, there were 128,637 
-                        households in Loudoun County, Virginia. The average household size was 3.06 people. 
-                        In Loudoun County, Virginia, 47.7 percent of all households have one or more
-                        people under the age of 18; 19.4 percent of all households have one or more people 
-                        65 years and over."), 
+                        the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
               p("The median income of households in Loudoun County, Virginia was $142,299, 
                         the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had 
                         income below $10,000 a year and 30.0 percent had income over $200,000 or more. 
@@ -292,7 +286,8 @@ body <- dashboardBody(
                         with a population of 65,000 or more. In 2015-2019, 3.4% of people were 
                         in poverty. An estimated 3.2% of children under 18 were below the poverty 
                         level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
-                        of people 18 to 64 years were below the poverty level.")) ,
+                        of people 18 to 64 years were below the poverty level."), 
+              p("Add in description about Transitional Aged Youth... ")) ,
               br(),
                       box(
                         title = "Visualizations of Transitional Aged Youth (TAYs)",
@@ -344,7 +339,6 @@ body <- dashboardBody(
                                  the foster care system were 18+ and it was most likely due to neglect. However, 
                                  there were 20,465 (8%) youths 18+ who exited the system most likely due to
                                  aging out and emancipation."), 
-                               p(""),
                                p("According to the The Adoption and Foster Care Analysis and Reporting System, 
                                  in 2020 there were 48 children in foster care in only Loudoun County which was 
                                  .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
@@ -368,7 +362,7 @@ body <- dashboardBody(
                                  "Ethnicity" = "eth")
                                ),
                                plotlyOutput("plot3"),
-                               p(tags$small("Data source: DJJ (Department of Juvenile Justice)")),
+                               p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
                                br(),
                                p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
                                  and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
@@ -382,7 +376,6 @@ body <- dashboardBody(
                                  youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
                                  Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
                                  (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                               p(""),
                                p("Virginia has some of the highest referral and incarceration rates of youth, 
                                  with the highest number of student referrals in the country and a rate of youth 
                                  incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
@@ -414,13 +407,15 @@ body <- dashboardBody(
                        br(),
                        p("", style = "padding-top:10px;"),
                        h4(strong("")),
-                       p("We examined Patrick County population sociodemographic and socioeconomic characteristics to better understand the
+                       p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
                                             residents that the county serves."),
-                       p("We retrieved American Community Survey (ACS) data to calculate this information at census block group and census
-                                            tract levels. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. We used
-                                            the most recently available 5-year estimates from 2014/18 to compute percent Patrick County residents in a given block group or tract by age, race, ethnicity,
-                                            employment, health insurance coverage, and other relevant characteristics."),
-                       p("Our interactive plots visualize census block-group level sociodemographic characteristics of Patrick County residents.")),
+                       p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
+                                            the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,
+                                            educational attainment, health insurance coverage, and poverty level."),
+                       p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
+                         We needed a better idea of how many youths need services to transition out of the system. "),
+                       p("We used  Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                         We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
               br(), 
               br()
               
@@ -439,8 +434,14 @@ body <- dashboardBody(
                   collapsible = TRUE,
                   h1("Service Availability for Transitional Aged Youth in Loudoun County"),
                   h2("Project Description"),
-                  p("we need to add description of what we are doing and why we are doing this"), 
-                  p("Talk about .... ")) , 
+                  p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
+                    because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
+                    the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
+                    With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
+                    them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
+                  p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
+                    Prince William County, VA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
+                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "))  ,  
                   br(),
                   box(
                     title = "Loudoun County",
@@ -459,7 +460,7 @@ body <- dashboardBody(
                       "Policy and Funding")), 
                     collapsibleTreeOutput("tree1")), 
                   box(
-                    title = "Allegheny County",
+                    title = "Prince William County",
                     closable = FALSE,
                     width = NULL,
                     status = "warning",
@@ -483,7 +484,7 @@ body <- dashboardBody(
       ## Locations --------------------------------------------
       tabItem(tabName = "locations", 
                fluidRow(style = "margin: 6px;",
-                        h1(strong("Location and accessibility of Programs and Services"), align = "center"),
+                        h1(strong("Location of Programs and Services"), align = "center"),
                         box(
                           title = "Loudoun County",
                           closable = FALSE,
@@ -517,13 +518,13 @@ body <- dashboardBody(
                            br(),
                         br(), 
                         box(
-                          title = "Allegheny County",
+                          title = "Prince William County",
                           closable = FALSE,
                           width = NULL,
                           status = "warning",
                           solidHeader = TRUE,
                           collapsible = TRUE,
-                           h4(strong("Allegheny County")),
+                           h4(strong("Prince William County")),
                            ## description of what we are doin and why we are mapping them out 
                            p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
                                          telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
@@ -558,7 +559,7 @@ body <- dashboardBody(
     
   
 ui <- dashboardPage(
-    dashboardHeader(title = "Service Availability for Transitional Aged Youth in Loudoun County"), 
+    dashboardHeader(title = "DSPG 2021"), 
     sidebar = sidebar, 
     body = body
 )
@@ -573,11 +574,10 @@ server <- function(input, output, session) {
         
         l_ages_gender <- l_ages_gender%>%
           select(variable, estimate, summary_est)
-        
+  
         names <- c("18-19", "20", "21", "22-24", "18-19", "20", "21",  "22-24")
         l_ages_gender$variable <- names
         l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
-        
         
         ggplot(l_ages_gender, aes(fill = gender, x = estimate, y = variable)) + 
           geom_bar(position="dodge", stat="identity") + 
@@ -588,8 +588,8 @@ server <- function(input, output, session) {
         
       } else if(var1() == "percent") {
         
-        m_p <- sum(l_ages_gender$estimate[1:4])/195769 * 100 
-        f_p <-sum(l_ages_gender$estimate[5:8])/199365 * 100 
+        m_p <- sum(l_ages_gender$estimate[1:4])/205374 * 100 
+        f_p <-sum(l_ages_gender$estimate[5:8])/208164 * 100 
         
         percent <- data.frame(rbind(m_p, f_p))
         colnames(percent) <- "Percent"
@@ -619,7 +619,7 @@ server <- function(input, output, session) {
         
         both %>%
           ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "indianred1")+ 
-          labs(title = "Educational Attainment of TAYs", 
+          labs(title = "Educational Attainment", 
                y = "", 
                x = "Population Estimate") 
         
@@ -628,7 +628,7 @@ server <- function(input, output, session) {
       else if (var1() == "health"){
         healthcare %>%
           ggplot(mapping = aes(x = Estimate, y = Type ))  + geom_col(fill = "gold2")+ 
-          labs(title = "Types of Health Care Coverage of TAYs in Loudoun", 
+          labs(title = "Types of Health Care Coverage", 
                y = "", 
                x = "Population Estimate") + 
           coord_flip() + 
@@ -638,7 +638,7 @@ server <- function(input, output, session) {
         pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
         pov %>%
           ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "plum2")+ 
-          labs(title = "Poverty by Race of TAYs", 
+          labs(title = "Poverty by Race", 
                y = "", 
                x = "Population Estimate")+coord_flip()
 
