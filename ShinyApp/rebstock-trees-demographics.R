@@ -47,7 +47,7 @@ other <- 425
 
 race <- data.frame(rbind(white, black, indian, asian, native_hawaiian, other))
 colnames(race) <- "Estimate"
-race$Race <- rownames(race)
+race$Race <- c("White", "Black", "Indian", "Asian", "Native Hawaiian", "Other")
 
 # education 
 male_edu <- c("B15001_003","B15001_004","B15001_005","B15001_006","B15001_007","B15001_008","B15001_009","B15001_010") 
@@ -111,6 +111,24 @@ va <- 69
 healthcare <- data.frame(rbind(covered, private_cov, medicare, va))
 healthcare$Type <- c("Public", "Private", "Medicare", "VA Health")
 colnames(healthcare) <- c("Estimate", "Type")
+
+
+# Mental Illness
+data <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
+smi <- data.frame(t(smiwaitlist[1:3,]))[2:7,]
+smi$Year <- rownames(smi)
+colnames(smi) <- c("Not SMI", "SMI", "Unknown", "Year")
+smi$SMI <- as.numeric(smi$SMI)
+smi$`Not SMI` <- as.numeric(smi$`Not SMI`)
+
+
+waitlist <- data.frame(t(smiwaitlist[9:12,]) )[2:7,]
+waitlist$Year <- rownames(waitlist)
+colnames(waitlist) <- c( "Case Management*", "Employment & Day Support", "Outpatient**", "Residental", "Year")
+waitlist$Residental <- as.numeric(waitlist$Residental)
+waitlist$`Case Management*` <- as.numeric(waitlist$`Case Management*`)
+waitlist$`Employment & Day Support` <- as.numeric(waitlist$`Employment & Day Support`)
+waitlist$`Outpatient**` <- as.numeric(waitlist$`Outpatient**`)
 
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
@@ -235,11 +253,19 @@ sidebar <- dashboardSidebar(
       menuItem(
         tabName = "services",
         text = "Service Availability",
-        icon = icon("database")),
+        icon = icon("server")),
       menuItem(
         tabName = "locations",
         text = "Locations",
-        icon = icon("database"))
+        icon = icon("map-marked-alt")), 
+      menuItem(
+        tabName = "findings", 
+        text = "Findings", 
+        icon = icon("chart-pie")), 
+      menuItem(
+        tabName = "members",
+        text = "Team Members",
+        icon = icon("user-friends")) 
   ) 
 ) 
 # body -----------------------------------------------------------
@@ -253,7 +279,7 @@ body <- dashboardBody(
                   title = "Project Overview",
                   closable = FALSE,
                   width = NULL,
-                  status = "warning",
+                  status = "primary",
                   solidHeader = TRUE,
                   collapsible = TRUE,
                   h1("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
@@ -293,7 +319,7 @@ body <- dashboardBody(
                         title = "Visualizations of Transitional Aged Youth (TAYs)",
                         closable = FALSE,
                         width = NULL,
-                        status = "warning",
+                        status = "primary",
                         solidHeader = TRUE,
                         collapsible = TRUE,
                         selectInput("var1", "Select Variable:", width = "100%", choices = c(
@@ -302,17 +328,19 @@ body <- dashboardBody(
                           "Educational Attainment" = "education",
                           "Races" = "race",
                           "Poverty Level" = "poverty",
-                          "Healthcare Coverage" = "health")
+                          "Healthcare Coverage" = "health", 
+                          "Severe Mental Illness" = "mental")
                         ),
                         plotlyOutput("plot1"),
-                        p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))), 
+                        p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
+                        p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)"))), 
                   br(),
                   br(),
                   box(
                     title = "Visualizations of the Subpopulations Demographics",
                     closable = FALSE,
                     width = NULL,
-                    status = "warning",
+                    status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
                     tabsetPanel(
@@ -429,28 +457,32 @@ body <- dashboardBody(
                   title = "Service Availability",
                   closable = FALSE,
                   width = NULL,
-                  status = "warning",
+                  status = "primary",
                   solidHeader = TRUE,
                   collapsible = TRUE,
-                  h1("Service Availability for Transitional Aged Youth in Loudoun County"),
-                  h2("Project Description"),
+                  h1("Service Availability for Transitional Aged Youth"),
+                  h2("Why are these programs and services so important? "),
                   p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
                     because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
                     the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
                     With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
                     them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
-                    Prince William County, VA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
-                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "))  ,  
-                  br(),
+                    Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
+                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
+                  plotlyOutput("waitlist"),
+                  p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
+                  p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")), 
+                  p(tags$small("2021 data as of 6/20/21.")))   ,  
+              
+                 br(),
                   box(
                     title = "Loudoun County",
                     closable = FALSE,
                     width = NULL,
-                    status = "warning",
+                    status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
-                    h2("Project Description"),
                     selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
                       "Education",
                       "Employment",
@@ -458,15 +490,29 @@ body <- dashboardBody(
                       "Transportation",
                       "Insurance",
                       "Policy and Funding")), 
-                    collapsibleTreeOutput("tree1")), 
+                    collapsibleTreeOutput("tree1")),
+                box(
+                  title = "Fairfax County",
+                  closable = FALSE,
+                  width = NULL,
+                  status = "primary",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  selectInput("pillar3", "Select Pillar:", width = "100%", choices = c(
+                    "Education",
+                    "Employment",
+                    "Housing",
+                    "Transportation",
+                    "Insurance",
+                    "Policy and Funding")), 
+                  collapsibleTreeOutput("tree3")), 
                   box(
-                    title = "Prince William County",
+                    title = "Allegheny County",
                     closable = FALSE,
                     width = NULL,
-                    status = "warning",
+                    status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
-                    h2("Project Description"),
                     h3(strong(""), align = "center"),
                     selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
                       "Education",
@@ -489,7 +535,7 @@ body <- dashboardBody(
                           title = "Loudoun County",
                           closable = FALSE,
                           width = NULL,
-                          status = "warning",
+                          status = "primary",
                           solidHeader = TRUE,
                           collapsible = TRUE,
                            p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
@@ -518,10 +564,10 @@ body <- dashboardBody(
                            br(),
                         br(), 
                         box(
-                          title = "Prince William County",
+                          title = "Allegheny County",
                           closable = FALSE,
                           width = NULL,
-                          status = "warning",
+                          status = "primary",
                           solidHeader = TRUE,
                           collapsible = TRUE,
                            h4(strong("Prince William County")),
@@ -561,7 +607,8 @@ body <- dashboardBody(
 ui <- dashboardPage(
     dashboardHeader(title = "DSPG 2021"), 
     sidebar = sidebar, 
-    body = body
+    body = body,
+    skin = "black"
 )
    
 server <- function(input, output, session) {
@@ -603,11 +650,13 @@ server <- function(input, output, session) {
                x = "Percent %") + coord_flip() 
        
       }else if(var1() == "race"){
+        
         race %>%
           ggplot() + geom_col(mapping = aes(x = Estimate, y = Race ), fill = "lightblue")+ 
-          labs(title = "Racial Demographics of TAYs", 
+          labs(title = "Racial Demographics", 
                y = "Races", 
                x = "Population Estimate") 
+        
       } 
       else if (var1() == "education")  { 
         
@@ -628,11 +677,19 @@ server <- function(input, output, session) {
       else if (var1() == "health"){
         healthcare %>%
           ggplot(mapping = aes(x = Estimate, y = Type ))  + geom_col(fill = "gold2")+ 
-          labs(title = "Types of Health Care Coverage", 
+          labs(title = "Types of Healthcare Coverage", 
                y = "", 
                x = "Population Estimate") + 
           coord_flip() + 
           theme(legend.position = "none")
+      }else if (var1() == "mental") {
+        
+        ggplot(smi, aes(x=Year)) + 
+          geom_line(aes(y = SMI, group = 1), color = "steelblue") + 
+          geom_line(aes(y = `Not SMI`, group = 1 ), color="darkred", linetype="twodash")+ 
+          labs(title = "Severe Mental Illness from FY 2016 - 6/20/21")
+        
+        
       }
       else {
         pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
@@ -755,6 +812,17 @@ server <- function(input, output, session) {
       }
       
     }) 
+    
+    output$waitlist <- renderPlotly({
+    
+      ggplot(waitlist, aes(x=Year)) + 
+        geom_line(aes(y = Residental, group = 1), color = "steelblue") + 
+        geom_line(aes(y = `Case Management*`, group = 1 ), color="darkred", linetype="twodash") + 
+        geom_line(aes(y = `Employment & Day Support`, group = 1 ), color="darkolivegreen3") + 
+        geom_line(aes(y = `Outpatient**`, group = 1 ), color="plum2") +
+        labs(title = "Waitlist for Services by Program from FY 2016 - FY 2021") 
+      
+    })
     
     
     ## Tree for loudoun
