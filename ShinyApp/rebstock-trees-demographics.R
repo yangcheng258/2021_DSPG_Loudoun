@@ -701,10 +701,13 @@ server <- function(input, output, session) {
     output$plot3 <- renderPlotly({
       if(var3() == "age") {
         jv_age$Age <- factor(jv_age$Age, levels=unique(jv_age$Age))
+        jv_age <- jv_age  %>% 
+          rename(`Relative Frequency` = Proportion) %>% 
+          mutate(Age = recode(Age, `12-Aug` = "8-12" ))
         jv_age %>% 
-          ggplot(aes(x = Age, y = Proportion)) +
+          ggplot(aes(x = Age, y = `Relative Frequency`)) +
           geom_col(fill = "brown1") +
-          labs(x = "Age", y = "Quantity",
+          labs(x = "Age", y = "Relative Frequency",
                title = "Age Groups of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -712,11 +715,11 @@ server <- function(input, output, session) {
         }
       else if(var3() == "race"){
         jv_race$Race <- factor(jv_race$Race, levels=unique(jv_race$Race))
-
+        jv_race <- jv_race %>% mutate(`Relative Frequency` = Proportion)
         jv_race %>% 
-          ggplot(aes(x = Race, y = Proportion)) +
+          ggplot(aes(x = Race, y = `Relative Frequency`)) +
           geom_col(fill = "coral") +
-          labs(x = "Race", y = "Quantity",
+          labs(x = "Race", y = "Relative Frequency",
                title = "Racial Demographics of Loudoun Intakes") + 
           theme_minimal() + 
           theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -725,9 +728,9 @@ server <- function(input, output, session) {
       }
       else if (var3() == "eth") {
         jv_eth$Ethnicity <- factor(jv_eth$Ethnicity, levels=unique(jv_eth$Ethnicity))
-
+        jv_eth <- jv_eth %>% mutate(`Relative Frequency` = Proportion)
         jv_eth %>% 
-          ggplot(aes(x = Ethnicity, y = Proportion))  +
+          ggplot(aes(x = Ethnicity, y = `Relative Frequency`))  +
           geom_col(fill = "darkseagreen2") +
           labs(x = "Ethnicity", y = "Relative Frequency",
                title = "Ethnic Demographics of Loudoun Intakes") + 
@@ -738,9 +741,9 @@ server <- function(input, output, session) {
       }
       else{
         jv_sex$Sex <- factor(jv_sex$Sex, levels=unique(jv_sex$Sex))
-
+        jv_sex <- jv_sex %>% mutate(`Relative Frequency` = Proportion)
         jv_sex %>% 
-          ggplot(aes(x = Sex, y = Proportion)) +
+          ggplot(aes(x = Sex, y = `Relative Frequency`)) +
           geom_col(fill = "darkslategray2" ) +
           labs(x = "Sex", y = "Relative Frequency",
                title = "Sex Demographics of Loudoun Intakes") + 
