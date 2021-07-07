@@ -208,7 +208,6 @@ map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx"))
 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  rename(Longitude = Latitude, Latitude = Longitude) %>%
   select(Program, Longitude, Latitude, Pillars, Subpopulation, Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
@@ -217,16 +216,22 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  rename(Longitude = Latitude, Latitude = Longitude) %>%
   select(Program, Longitude, Latitude, Pillars, Subpopulation,  Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
 allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
+fairfax <- map%>%
+  filter(County == "Fairfax") %>% 
+  select(Program, Longitude, Latitude, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
-subpop_levels <- c("Foster Care", "Juvenile Detention")
-subpop_pal <- colorFactor(pal = c('red', 'green'),
+fairfax$Longitude <- as.numeric(fairfax$Longitude)
+fairfax$Latitude <- as.numeric(fairfax$Latitude)
+
+subpop_levels <- c("Foster Care", "Juvenile Detention", "Both")
+subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
                           levels = subpop_levels)
 
 Pillar_levels <- unique(loudoun_locations$Pillars)
@@ -263,7 +268,7 @@ sidebar <- dashboardSidebar(
         text = "Findings", 
         icon = icon("chart-pie")), 
       menuItem(
-        tabName = "members",
+        tabName = "team",
         text = "Team Members",
         icon = icon("user-friends")) 
   ) 
@@ -315,110 +320,108 @@ body <- dashboardBody(
                         of people 18 to 64 years were below the poverty level."), 
               p("Add in description about Transitional Aged Youth... ")) ,
               br(),
-                      box(
-                        title = "Visualizations of Transitional Aged Youth (TAYs)",
-                        closable = FALSE,
-                        width = NULL,
-                        status = "primary",
-                        solidHeader = TRUE,
-                        collapsible = TRUE,
-                        selectInput("var1", "Select Variable:", width = "100%", choices = c(
-                          "Gender and Age" = "age",
-                          "Percentage of TAYs" = "percent", 
-                          "Educational Attainment" = "education",
-                          "Races" = "race",
-                          "Poverty Level" = "poverty",
-                          "Healthcare Coverage" = "health", 
-                          "Severe Mental Illness" = "mental")
-                        ),
-                        plotlyOutput("plot1"),
-                        p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
-                        p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)"))), 
-                  br(),
-                  br(),
-                  box(
-                    title = "Visualizations of the Subpopulations Demographics",
-                    closable = FALSE,
-                    width = NULL,
-                    status = "primary",
-                    solidHeader = TRUE,
-                    collapsible = TRUE,
-                    tabsetPanel(
-                      tabPanel("Foster Care",
-                               h3(strong(""), align = "center"),
-                               br(),
-                               selectInput("var2", "Select Topic:", width = "100%", choices = c(
-                                 "Age" = "age",
-                                 "Sex" = "sex", 
-                                 "Race" = "race",
-                                 "Ethnicity" = "eth",
-                                 "TAYs" = "tays")
-                               ),
-                               plotlyOutput("plot2"),
-                               p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) ,
-                               br(),
-                               p("In the US 2019, 423,997 children were in the foster system with 251,359 
-                                 newly entered children and 248,669 exiting. The average age of a child in 
-                                 foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
-                                 Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
-                                 the US. 44% of foster care youth are white and 23% were black. Similar to foster 
-                                 care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
-                                 According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
-                                 the foster care system were 18+ and it was most likely due to neglect. However, 
-                                 there were 20,465 (8%) youths 18+ who exited the system most likely due to
-                                 aging out and emancipation."), 
-                               p("According to the The Adoption and Foster Care Analysis and Reporting System, 
-                                 in 2020 there were 48 children in foster care in only Loudoun County which was 
-                                 .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
-                                 of those children were boys and 1/3 were girls and the minority of them of 
-                                 ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
-                                 and less than 5% Asian and multi-racial as you can see from the barplot below. 
-                                 When we are looking at only transitional aged youth from 18-24 where 21 years 
-                                 old is the average time a foster child ages out, there were only 8 children. 
-                                 In Loudoun County, it does not seem like there are many foster care youths 
-                                 who are aging out of the system but only 9 other counties have greater than 9 
-                                 foster care kids over the age of 18 ")
-                      
-                      ),
-                      tabPanel("Juvenille Detention",
-                               h3(strong(""), align = "center"),
-                               br(),
-                               selectInput("var3", "Select Topic:", width = "100%", choices = c(
-                                 "Age" = "age",
-                                 "Sex" = "sex",
-                                 "Race" = "race",
-                                 "Ethnicity" = "eth")
-                               ),
-                               plotlyOutput("plot3"),
-                               p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
-                               br(),
-                               p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
-                                 and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
-                                 Black youth are overrepresented among offenders in residential placement, making up 
-                                 40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
-                                 asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
-                                 the vast majority of offenders in residential placement, at 85.2% of residents. 
-                                 Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
-                                 52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
-                                 youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
-                                 youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
-                                 Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
-                                 (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                               p("Virginia has some of the highest referral and incarceration rates of youth, 
-                                 with the highest number of student referrals in the country and a rate of youth 
-                                 incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
-                                 (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
-                                 spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
-                                 recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
-                                 60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
-                                 youths being released from direct care for the Fiscal Year of 2015 only received high school 
-                                 diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
-                                 youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
-                                 pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
-                                 with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
-                               
-                               
-                               )
+              box(
+                title = "Visualizations of Transitional Aged Youth (TAYs)",
+                closable = FALSE,
+                width = NULL,
+                status = "primary",
+                solidHeader = TRUE,
+                collapsible = TRUE,
+                selectInput("var1", "Select Variable:", width = "100%", choices = c(
+                  "Gender and Age" = "age",
+                  "Percentage of TAYs" = "percent", 
+                  "Educational Attainment" = "education",
+                  "Races" = "race",
+                  "Poverty Level" = "poverty",
+                  "Healthcare Coverage" = "health", 
+                  "Severe Mental Illness" = "mental")
+                ),
+                plotlyOutput("plot1"),
+                p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
+                p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)"))), 
+              
+              br(),
+              br(),
+              box(
+                title = "Visualizations of the Subpopulations Demographics",
+                closable = FALSE,
+                width = NULL,
+                status = "primary",
+                solidHeader = TRUE,
+                collapsible = TRUE,
+                tabsetPanel(
+                  tabPanel("Foster Care",
+                           h3(strong(""), align = "center"),
+                           br(),
+                           selectInput("var2", "Select Topic:", width = "100%", choices = c(
+                             "Age" = "age",
+                             "Sex" = "sex", 
+                             "Race" = "race",
+                             "Ethnicity" = "eth",
+                             "TAYs" = "tays")
+                           ),
+                           plotlyOutput("plot2"),
+                           p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) ,
+                           br(),
+                           p("In the US 2019, 423,997 children were in the foster system with 251,359 
+                             newly entered children and 248,669 exiting. The average age of a child in 
+                             foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
+                             Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
+                             the US. 44% of foster care youth are white and 23% were black. Similar to foster 
+                             care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
+                             According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
+                             the foster care system were 18+ and it was most likely due to neglect. However, 
+                             there were 20,465 (8%) youths 18+ who exited the system most likely due to
+                             aging out and emancipation."), 
+                           p("According to the The Adoption and Foster Care Analysis and Reporting System, 
+                             in 2020 there were 48 children in foster care in only Loudoun County which was 
+                             .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
+                             of those children were boys and 1/3 were girls and the minority of them of 
+                             ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
+                             and less than 5% Asian and multi-racial as you can see from the barplot below. 
+                             When we are looking at only transitional aged youth from 18-24 where 21 years 
+                             old is the average time a foster child ages out, there were only 8 children. 
+                             In Loudoun County, it does not seem like there are many foster care youths 
+                             who are aging out of the system but only 9 other counties have greater than 9 
+                             foster care kids over the age of 18 ")
+                  
+                  ),
+                  tabPanel("Juvenille Detention",
+                           h3(strong(""), align = "center"),
+                           br(),
+                           selectInput("var3", "Select Topic:", width = "100%", choices = c(
+                             "Age" = "age",
+                             "Sex" = "sex",
+                             "Race" = "race",
+                             "Ethnicity" = "eth")
+                           ),
+                           plotlyOutput("plot3"),
+                           p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
+                           br(),
+                           p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
+                             and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
+                             Black youth are overrepresented among offenders in residential placement, making up 
+                             40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
+                             asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
+                             the vast majority of offenders in residential placement, at 85.2% of residents. 
+                             Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
+                             52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
+                             youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
+                             youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
+                             Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
+                             (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
+                           p("Virginia has some of the highest referral and incarceration rates of youth, 
+                             with the highest number of student referrals in the country and a rate of youth 
+                             incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
+                             (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
+                             spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
+                             recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
+                             60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
+                             youths being released from direct care for the Fiscal Year of 2015 only received high school 
+                             diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
+                             youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
+                             pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
+                             with youth imprisonment down 65% in Virginia between 2003 and 2016. "))
                      
                   
                     )
@@ -430,20 +433,20 @@ body <- dashboardBody(
       ## Data and Methodology--------------------------------------------
       tabItem(tabName = "data",
               fluidRow(style = "margin: 6px;",
-                       h1(strong("Data and Methodology"), align = "center"),
-                       h2("Sources"),
-                       br(),
-                       p("", style = "padding-top:10px;"),
-                       h4(strong("")),
-                       p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
-                                            residents that the county serves."),
-                       p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
-                                            the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,
-                                            educational attainment, health insurance coverage, and poverty level."),
-                       p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
-                         We needed a better idea of how many youths need services to transition out of the system. "),
-                       p("We used  Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                         We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
+                   h1(strong("Data and Methodology"), align = "center"),
+                   h2("Sources"),
+                   br(),
+                   p("", style = "padding-top:10px;"),
+                   h4(strong("")),
+                   p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
+                                        residents that the county serves."),
+                   p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
+                                        the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,
+                                        educational attainment, health insurance coverage, and poverty level."),
+                   p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
+                     We needed a better idea of how many youths need services to transition out of the system. "),
+                   p("We used  Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                     We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
               br(), 
               br()
               
@@ -453,13 +456,6 @@ body <- dashboardBody(
       ## Services--------------------------------------------
       tabItem(tabName = "services", 
               fluidRow(
-                box(
-                  title = "Service Availability",
-                  closable = FALSE,
-                  width = NULL,
-                  status = "primary",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
                   h1("Service Availability for Transitional Aged Youth"),
                   h2("Why are these programs and services so important? "),
                   p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
@@ -470,11 +466,12 @@ body <- dashboardBody(
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                     their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
+                  p("As you can see from the graph below, the number of waitlist cases have ... "), 
                   plotlyOutput("waitlist"),
                   p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                   p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")), 
-                  p(tags$small("2021 data as of 6/20/21.")))   ,  
-              
+                  p(tags$small("2021 data as of 6/20/21.")),  
+                 br(), 
                  br(),
                   box(
                     title = "Loudoun County",
@@ -506,6 +503,7 @@ body <- dashboardBody(
                     "Insurance",
                     "Policy and Funding")), 
                   collapsibleTreeOutput("tree3")), 
+                
                   box(
                     title = "Allegheny County",
                     closable = FALSE,
@@ -532,7 +530,6 @@ body <- dashboardBody(
                fluidRow(style = "margin: 6px;",
                         h1(strong("Location of Programs and Services"), align = "center"),
                         box(
-                          title = "Loudoun County",
                           closable = FALSE,
                           width = NULL,
                           status = "primary",
@@ -559,18 +556,47 @@ body <- dashboardBody(
                                       p(strong("Map of Programs")), 
                                       leafletOutput("map2")
                              )
-                           )
-                           ) , 
+                           )) , 
                            br(),
                         br(), 
                         box(
-                          title = "Allegheny County",
                           closable = FALSE,
                           width = NULL,
                           status = "primary",
                           solidHeader = TRUE,
                           collapsible = TRUE,
-                           h4(strong("Prince William County")),
+                          h4(strong("Fairfax County")),
+                          ## description of what we are doin and why we are mapping them out 
+                          p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
+                                         telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
+                                         than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
+                                         provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
+                          p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
+                                        obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
+                                        to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
+                                        recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
+                                        and internet by census block group."),
+                          br(), 
+                          tabsetPanel(
+                            tabPanel("Subpopulation",
+                                     p(""),
+                                     p(strong("Map of Programs")),
+                                     leafletOutput("map5")
+                            ),
+                            tabPanel("Pillars",
+                                     p(""),
+                                     p(strong("Map of Programs")),
+                                     leafletOutput("map6")
+                            )
+                          )), 
+                        br(), 
+                        box(
+                         closable = FALSE,
+                          width = NULL,
+                          status = "primary",
+                          solidHeader = TRUE,
+                          collapsible = TRUE,
+                           h4(strong("Allegheny County")),
                            ## description of what we are doin and why we are mapping them out 
                            p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
                                          telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
@@ -593,12 +619,61 @@ body <- dashboardBody(
                                       p(strong("Map of Programs")),
                                       leafletOutput("map4")
                              )
-                           )
-                      )
+                           ) )
                
                   )
-              ) 
-               
+              ) ,
+      tabItem(tabName = "findings", 
+              fluidRow(style = "margin: 6px;",
+                       h1(strong("Conclusion"), align = "center") ) 
+              
+            ), 
+      tabItem(tabName = "team",
+              fluidRow(
+                box(
+                  title = "Team",
+                  closable = FALSE,
+                  width = NULL,
+                  status = "primary",
+                  solidHeader = TRUE,
+                  collapsible = TRUE,
+                  h2("Data Science for the Public Good Program"),
+                  p("The Data Science for the Public Good (DSPG) Young Scholars program is a summer immersive program held at the Biocomplexity Institute’s Social and Decision Analytics Division (SDAD). In its eighth year, the program engages students from across the country to work together on projects that address state, federal, and local government challenges around critical social issues relevant in the world today. DSPG young scholars conduct research at the intersection of statistics, computation, and the social sciences to determine how information generated within every community can be leveraged to improve quality of life and inform public policy. For more information on program highlights, how to apply, and our annual symposium, please visit the official Biocomplexity DSPG website."),
+                  h2("2021 Loudoun County Summer Project"),
+                  p("Our project goal was to identify the gaps in the services available for transitional aged youth in Loudoun County, VA. We visualized the programs by education, employment, housing, transportation, insurance and funding & policy and mapped their locations. Our team is comprised of talented individuals with a broad range of skills and experience."),
+                  h2("DSPG Team Members"),
+                  # change the images 
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  br(),
+                  br(),
+                  p("Yang Cheng, Fellow (Ph.D. Student at Virginia Tech, Economics )"),
+                  p("JaiDa Robinson, Fellow (M.Ed Student at Virginia State University, Counselor Education )"),
+                  p("Julie Rebstock, Intern (Undergraduate Student at Virginia Tech, Computational Modeling and Data Anaylytics and Economics)"),
+                  p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, COmputer Science)"),
+                  p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University, Economics )"),
+                  h2("Virginia Tech Faculty Team Members"),
+                  img(src = 'Susan.Chen.VT.jpg', height = "150", width = "140", align = "center"),
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  img(src = '', height = "150", width = "140", align = "center"),
+                  br(),
+                  br(),
+                  p("Susan Chen (Associate Professor, Food and Health Economics, DSPG Project Co-Lead)"),
+                  p("Chanita Homles ()"),
+                  p("Isabel Bradburn ()"),
+                  h2("Project Sponsors"),
+                  img(src = '', height = "150", width = "200", align = "center", style="display: block; margin-left: auto; margin-right: auto;"),
+                  h2("Acknowledgements"),
+                  # Stakeholders 
+                  p("We would like to thank:"),
+                  p(" (),"),
+                  p(" ()"),
+                  p(" ()")
+                )
+              ))
           )
       ) 
   ) 
@@ -712,8 +787,8 @@ server <- function(input, output, session) {
       if(var2() == "age") {
         fc_ages$Age.Group <- factor(fc_ages$Age.Group, levels=unique(fc_ages$Age.Group))
         
-        ggplot(data = fc_ages, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
-          geom_col(width = .95, alpha = .75) + coord_flip()+
+        ggplot(data = fc_ages, aes(x= Age.Group, y = Value) ) + 
+          geom_col(width = .95, alpha = .75, fill = "coral") + coord_flip()+
           theme_minimal(base_family = 'Verdana' ) + 
           labs(x = "", 
                y = "Population Estimate",
@@ -721,29 +796,28 @@ server <- function(input, output, session) {
                fill ="") + theme(legend.position = "none") 
         
       }else if(var2() == "race"){
-        ggplot(data = fc_races, aes(x= Race, y = Value, fill = Race) ) + 
-          geom_col(width = .95, alpha = .75) + coord_flip()+
-          theme_minimal(base_family = 'Verdana') + 
+        ggplot(data = fc_races, aes(x= Race, y = Value) ) + 
+          geom_col(width = .95, alpha = .75, fill = "darkseagreen2") + coord_flip()+
           labs(x = "", 
                y = "Population Estimate",
                title = "Racial Demographics for Foster Care", 
                fill ="") + theme(legend.position = "none")
         
     } else if (var2() == "eth") {
-      g <- ggplot(fc_eth, aes(eth, value, fill = eth))
-      g + geom_bar(stat = "identity") + 
+      g <- ggplot(fc_eth, aes(eth, value))
+      g + geom_bar(stat = "identity",fill = rgb(0.9,0.1,0.1,0.9)) + 
         labs(title = "Ethinic Demographics of Foster children",
              x = "Ethnicity", 
              y = "Population Estimate") + theme(legend.position = "none")
         
     }else if(var2() =="sex") {
-      ggplot(fc_sex, aes(x = Gender, y = Value, fill = Gender)) + 
-        geom_bar(stat="identity") + 
+      ggplot(fc_sex, aes(x = Gender, y = Value)) + 
+        geom_bar(stat="identity",fill = rgb(0.4,0.4,0.6,0.7)) + 
         labs(x = "" , y = "Population Estimate", 
              title = "Sex of Youths in Foster Care") + theme(legend.position = "none")
     }else{
-        ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
-          geom_bar(stat="identity") + 
+        ggplot(fc_tays, aes(x = age_19, y = value)) + 
+          geom_bar(stat="identity", fill = rgb(0.1,0.4,0.5,0.7)) + 
           labs(x = "Age Group" , y = "Population Estimate", 
                title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")
       }
@@ -813,8 +887,9 @@ server <- function(input, output, session) {
       
     }) 
     
+    #Waitlist for programs in Loudoun 
     output$waitlist <- renderPlotly({
-    
+      
       ggplot(waitlist, aes(x=Year)) + 
         geom_line(aes(y = Residental, group = 1), color = "steelblue") + 
         geom_line(aes(y = `Case Management*`, group = 1 ), color="darkred", linetype="twodash") + 
@@ -825,7 +900,7 @@ server <- function(input, output, session) {
     })
     
     
-    ## Tree for loudoun
+    ## Tree for Loudoun
     output$tree1 <- renderCollapsibleTree({
       if(input$pillar1%in%"Education"){
         Tree%>%filter(County == "Loudoun")%>%
@@ -834,10 +909,10 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
       }else if(input$pillar1%in%"Employment"){
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Employment")%>%
@@ -845,10 +920,10 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else if(input$pillar1%in%"Housing"){
         Tree%>%filter(County == "Loudoun")%>%
@@ -857,10 +932,10 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else if(input$pillar1%in%"Transportation"){
         Tree%>%filter(County == "Loudoun")%>%
@@ -869,10 +944,10 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else if(input$pillar1%in%"Insurance"){
         Tree%>%filter(County == "Loudoun")%>%
@@ -881,10 +956,10 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else {
         Tree%>%filter(County == "Loudoun")%>%
@@ -893,15 +968,15 @@ server <- function(input, output, session) {
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }
     })
 
-    ## tree for Allegheny County 
+    ## tree for Allegheny  
     output$tree2 <- renderCollapsibleTree({
       if(input$pillar2%in%"Education"){
         Tree%>%filter(County == "Allegheny")%>%
@@ -913,7 +988,8 @@ server <- function(input, output, session) {
                           fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
       }else if(input$pillar2%in%"Employment"){
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Employment")%>%
@@ -924,7 +1000,8 @@ server <- function(input, output, session) {
                           fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else if(input$pillar2%in%"Housing"){
         Tree%>%filter(County == "Allegheny")%>%
@@ -936,7 +1013,8 @@ server <- function(input, output, session) {
                           fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else if(input$pillar2%in%"Transportation"){
         Tree%>%filter(County == "Allegheny")%>%
@@ -948,7 +1026,8 @@ server <- function(input, output, session) {
                           width=1800,
                           fill = "Category", 
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else if(input$pillar2%in%"Insurance"){
         Tree%>%filter(County == "Allegheny")%>%
@@ -960,7 +1039,8 @@ server <- function(input, output, session) {
                           fill = "Category", 
                           width=1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
       }else {
         Tree%>%filter(County == "Allegheny")%>%
@@ -972,8 +1052,92 @@ server <- function(input, output, session) {
                           fill = "Category", 
                           width = 1800,
                           zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount')
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
 
+      }
+    })
+    
+    
+    ## tree for Fairfax County 
+    output$tree3 <- renderCollapsibleTree({
+      if(input$pillar3%in%"Education"){
+        Tree%>%filter(County == "Fairfax")%>%
+          filter(Pillars == "Education")%>%
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
+                          root="County",
+                          attribute = "County",
+                          fill = "Category", 
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+      }else if(input$pillar3%in%"Employment"){
+        Tree%>%filter(County == "Fairfax")%>%
+          filter(Pillars == "Employment")%>%
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
+                          root="County",
+                          attribute = "County",
+                          fill = "Category", 
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else if(input$pillar3%in%"Housing"){
+        Tree%>%filter(County == "Fairfax")%>%
+          filter(Pillars == "Housing")%>%
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
+                          root="County",
+                          attribute = "County",
+                          fill = "Category", 
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else if(input$pillar3%in%"Transportation"){
+        Tree%>%filter(County == "Fairfax")%>%
+          filter(Pillars == "Transportation")%>%
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
+                          root="County",
+                          attribute = "County",
+                          width=1800,
+                          fill = "Category", 
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else if(input$pillar3%in%"Insurance"){
+        Tree%>%filter(County == "Fairfax")%>%
+          filter(Pillars == "Insurance")%>%
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
+                          root="County",
+                          attribute = "County",
+                          fill = "Category", 
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else {
+        Tree%>%filter(County == "Fairfax")%>%
+          filter(Pillars == "Funding & Policy")%>%
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
+                          root="County",
+                          attribute = "County",
+                          fill = "Category", 
+                          width = 1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
       }
     })
     
@@ -982,7 +1146,7 @@ server <- function(input, output, session) {
       
       a_sub <- loudoun_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
-        setView(lng = -77.531622, lat = 38, zoom = 7) %>% 
+        setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
@@ -991,7 +1155,7 @@ server <- function(input, output, session) {
                                          loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
                                          loudoun_locations$Website, "</a>"),
                          group = ~loudoun_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
 
@@ -1004,7 +1168,7 @@ server <- function(input, output, session) {
       
       l_pill <- loudoun_locations %>%  
         leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -77.531622, lat = 38, zoom = 7) %>% 
+        setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
                          lat = ~Latitude, 
@@ -1038,7 +1202,7 @@ server <- function(input, output, session) {
                                          allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
                                          allegheny_locations$Website, "</a>"),
                          group = ~allegheny_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention"),
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
       
@@ -1070,6 +1234,54 @@ server <- function(input, output, session) {
       a_pill
       
 
+    })
+    
+    ## map for locations of program in Fairfax
+    output$map5 <- renderLeaflet({
+      
+      f_sub <- fairfax %>% 
+        leaflet( options = leafletOptions(minzoom = 12)) %>%
+        setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
+        addProviderTiles("CartoDB") %>%
+        addCircleMarkers(lng = ~Longitude,
+                         lat = ~Latitude,
+                         popup = ~paste0("<b>", fairfax$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         fairfax$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         fairfax$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         fairfax$Website, "</a>"),
+                         group = ~fairfax$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
+        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
+                         options = layersControlOptions(collapsed = FALSE))
+      f_sub
+      
+      
+    })
+    
+    
+    ## Pillars Fairfax 
+    output$map6 <- renderLeaflet({
+      
+      f_pill <- fairfax %>%  
+        leaflet(options = leafletOptions(minzoom = 12)) %>% 
+        setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
+        addProviderTiles("CartoDB") %>% 
+        addCircleMarkers(lng = ~Longitude, 
+                         lat = ~Latitude, 
+                         popup = ~paste0("<b>", fairfax$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
+                                         fairfax$Qualification, "<br/>","<b>","Description: ", "</b>", 
+                                         fairfax$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
+                                         fairfax$Website, "</a>"),
+                         radius = 6, 
+                         group = ~fairfax$Pillars, 
+                         color = ~Pillar_pal(Pillars)) %>%  
+        addLayersControl(position = "topright",
+                         overlayGroups = Pillar_levels, 
+                         options = layersControlOptions(collapsed = FALSE)) %>%
+        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+      
+      f_pill
+      
+      
     })
     
 }
