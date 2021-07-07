@@ -1,19 +1,13 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
 
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(ggplot2)
 library(DT)
+library(maps)
 library(plotly)
 library(dplyr)
+library(tigris)
 library(tidyverse)
 library(tidycensus)
 library(ggbeeswarm)
@@ -22,6 +16,9 @@ library(collapsibleTree)
 library(shinycssloaders)
 library(leaflet)
 library(leaflet.extras)
+
+
+options(tigris_use_cache = TRUE)
 
 
 # Loudoun -----------------------------------------------------------
@@ -237,6 +234,23 @@ subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
 Pillar_levels <- unique(loudoun_locations$Pillars)
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
                           levels = Pillar_levels)
+# Zipcodes and map of Loudoun
+states <- map_data("state")
+va_state <- subset(states, region == "virginia")
+counties <- map_data("county")
+va_county <- subset(counties, region == "virginia")
+l <- subset(counties, region == "virginia")%>%
+  filter(subregion == "loudoun")
+
+zips_sf <- zctas(cb = T, starts_with = "20", class = "sf") %>%
+  select(zip = ZCTA5CE10, geometry)
+
+zip_codes <- c('20166', '20175', '20176', '20132', '20147', '20164', '20165')
+l_zips <- bind_rows(
+  tibble(area = "Loudoun", zip = zip_codes)
+)
+loudoun_sf <- zips_sf %>%
+  inner_join(l_zips, by = "zip")
 
 
 # sidebar -----------------------------------------------------------
@@ -258,6 +272,10 @@ sidebar <- dashboardSidebar(
       menuItem(
         tabName = "services",
         text = "Service Availability",
+        icon = icon("server")),
+      menuItem(
+        tabName = "overtime",
+        text = "Overtime",
         icon = icon("server")),
       menuItem(
         tabName = "locations",
@@ -288,7 +306,9 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   collapsible = TRUE,
                   h1("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
-                  h2("Project Description")
+                  h2("Project Description"), 
+                  img(src = 'loudoun-map.png', height = "150", width = "140", align = "center")
+                  
                 ) 
               ) 
       ),
@@ -525,6 +545,30 @@ body <- dashboardBody(
                 ) 
              
       ), 
+      tabItem(tabName = "overtime",
+              fluidPage(
+                box(title = "Services provided overtime from 2016-2021",
+                    closable = FALSE,
+                    width = NULL,
+                    status = "primary",
+                    solidHeader = TRUE,
+                    collapsible = TRUE,
+                    h3(strong(""), align = "center")),
+                # sidebarLayout(
+                #   sidebarPanel(
+                #     sliderInput(inputId = "time",
+                #                 label = "Years:",
+                #                 min = as.Date("2016","%Y"),
+                #                 max = as.Date("2021","%Y"),
+                #                 value = as.Date("2020"), timeFormat="%Y",
+                #                 step = 1,
+                #                 animate = animationOptions(interval = 1800))),
+                #   mainPanel(plotOutput(outputId = "time", height = "70vh")))
+                plotlyOutput("overtime")
+                )
+      ),
+      
+      
       ## Locations --------------------------------------------
       tabItem(tabName = "locations", 
                fluidRow(style = "margin: 6px;",
@@ -1282,6 +1326,40 @@ server <- function(input, output, session) {
       f_pill
       
       
+    })
+    
+    
+    
+    output$overtime <- renderPlotly({
+
+      # 
+      # loudoun %>%
+      #   filter(date == input$time) %>%
+      #   ggplot() +
+      #   borders("world", colour = "gray90", fill = "gray85") +
+      #   theme_map() +
+      #   geom_point(aes(x = longitude, y = latitude, size = n),
+      #              colour = "#351C4D", alpha = 0.55) +
+      #   labs(size = "Users") +
+      #   ggtitle("Distribution of Users Online")
+      
+      ditch_the_axis <- theme(axis.text = element_blank(),
+                              axis.line = element_blank(),
+                              axis.ticks = element_blank(),
+                              panel.border = element_blank(),
+                              panel.grid = element_blank(), 
+                              axis.title = element_blank())
+      
+      va_base <- ggplot(data = l, mapping = aes(x = long, y = lat, group = group)) + 
+        geom_polygon(color = "black", fill = "gray")
+      
+      zip <- va_base + ditch_the_axis + 
+        geom_sf(aes(fill = zip), data = loudoun_sf, inherit.aes = F, size = 0, alpha = 0.6) +
+        coord_sf(ndiscr = F) +
+        theme(legend.position = "none")
+      zip 
+
+
     })
     
 }
