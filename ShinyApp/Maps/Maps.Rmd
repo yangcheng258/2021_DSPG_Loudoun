@@ -86,3 +86,17 @@ map_by_subpop <- leaflet(options = leafletOptions(minzoom = 12)) %>%
 
 ```
 
+```{r}
+options(tigris_use_cache = TRUE)
+va_zips <- zctas(state = "VA", year = 2010)
+loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
+loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
+  html_table() %>% select(c(1,2)) %>% rename(`Zip Code` = X1, City = X2) %>%
+  slice(-c(1, 2)) 
+loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
+loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
+loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
+map_by_subpop <- map_by_subpop %>% addPolygons(data = loudoun_zips)
+
+```
+
