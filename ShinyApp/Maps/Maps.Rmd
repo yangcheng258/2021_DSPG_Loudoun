@@ -96,7 +96,7 @@ loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%
 loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
 loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
 loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
-map_by_subpop <- map_by_subpop %>% addPolygons(data = loudoun_zips)
+map_by_subpop <- map_by_subpop %>% addPolygons(data = loudoun_zips, label = ~loudoun_zip_code_city_names)
 
 ```
 
