@@ -13,6 +13,7 @@ library(leaflet)
 library(leaflet.extras)
 library(htmlwidgets)
 library(tigris)
+library(rvest)
 ```
 
 ```{r}
@@ -86,7 +87,7 @@ map_by_subpop <- leaflet(options = leafletOptions(minzoom = 12)) %>%
 
 ```
 
-```{r}
+```{r zip code outlines}
 options(tigris_use_cache = TRUE)
 va_zips <- zctas(state = "VA", year = 2010)
 loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
