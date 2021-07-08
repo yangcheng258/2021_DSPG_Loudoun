@@ -10,13 +10,12 @@ library(dplyr)
 library(tigris)
 library(tidyverse)
 library(tidycensus)
-library(ggbeeswarm)
 library(readxl)
 library(collapsibleTree)
 library(shinycssloaders)
 library(leaflet)
 library(leaflet.extras)
-
+library(rvest)
 
 options(tigris_use_cache = TRUE)
 
@@ -111,7 +110,7 @@ colnames(healthcare) <- c("Estimate", "Type")
 
 
 # Mental Illness
-data <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
+smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
 smi <- data.frame(t(smiwaitlist[1:3,]))[2:7,]
 smi$Year <- rownames(smi)
 colnames(smi) <- c("Not SMI", "SMI", "Unknown", "Year")
@@ -235,22 +234,15 @@ Pillar_levels <- unique(loudoun_locations$Pillars)
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
                           levels = Pillar_levels)
 # Zipcodes and map of Loudoun
-states <- map_data("state")
-va_state <- subset(states, region == "virginia")
-counties <- map_data("county")
-va_county <- subset(counties, region == "virginia")
-l <- subset(counties, region == "virginia")%>%
-  filter(subregion == "loudoun")
+va_zips <- zctas(state = "VA", year = 2010)
+loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
+loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
+  html_table() %>% select(c(1,2)) %>% rename(`Zip Code` = X1, City = X2) %>%
+  slice(-c(1, 2)) 
+loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
+loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
+loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
 
-zips_sf <- zctas(cb = T, starts_with = "20", class = "sf") %>%
-  select(zip = ZCTA5CE10, geometry)
-
-zip_codes <- c('20166', '20175', '20176', '20132', '20147', '20164', '20165')
-l_zips <- bind_rows(
-  tibble(area = "Loudoun", zip = zip_codes)
-)
-loudoun_sf <- zips_sf %>%
-  inner_join(l_zips, by = "zip")
 
 overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
 
@@ -578,7 +570,7 @@ body <- dashboardBody(
                                 value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
                                 step = 365,
                                 animate = animationOptions(interval = 1800))),
-                  mainPanel(plotOutput(outputId = "overtime", height = "70vh"))),
+                  mainPanel(leafletOutput(outputId = "overtime", height = "70vh"))),
                 p(tags$small("The last date in 2021 is from 06/20/2021"))
                 )
       ),
@@ -1203,7 +1195,7 @@ server <- function(input, output, session) {
     # Add maps for locations of programs in Loudoun subpopulation 
     output$map1 <- renderLeaflet({
       
-      a_sub <- loudoun_locations %>% 
+      l_sub <- loudoun_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
         addProviderTiles("CartoDB") %>%
@@ -1216,7 +1208,7 @@ server <- function(input, output, session) {
                          group = ~loudoun_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
                          options = layersControlOptions(collapsed = FALSE))
-      a_sub
+      l_sub
 
 
     })
@@ -1347,47 +1339,287 @@ server <- function(input, output, session) {
     type <- reactive({
       input$type
     })
-    output$overtime <- renderPlotly({
-      
-      ditch_the_axis <- theme(axis.text = element_blank(),
-                              axis.line = element_blank(),
-                              axis.ticks = element_blank(),
-                              panel.border = element_blank(),
-                              panel.grid = element_blank(), 
-                              axis.title = element_blank())
-      
-      va_base <- ggplot(data = l, mapping = aes(x = long, y = lat, group = group)) + 
-        geom_polygon(color = "black", fill = "gray")
-      
-      zip <- va_base + ditch_the_axis + 
-        geom_sf(aes(fill = zip), data = loudoun_sf, inherit.aes = F, size = 0, alpha = 0.6) +
-        coord_sf(ndiscr = F) + 
-        theme(legend.position = "none")
+    output$overtime <- renderLeaflet({
       
       if (type() == "case"){
-      loudoun %>%
-        filter(date == input$time) %>%
-        ggplot() +
-        borders("world", colour = "gray90", fill = "gray85") +
-        theme_map() +
-        geom_point(aes(x = longitude, y = latitude, size = n),
-                   colour = "#351C4D", alpha = 0.55) +
-        labs(size = "Users") +
-        ggtitle("Distribution of Users Online")
-
+        
+        if (input$year == "2016-12-31"){
+            case <- data.frame(overtime[2:4,2:10]) %>%
+              select("...2", "X2016", Lat, Long) 
+            
+        }else if (input$year == "2017-12-31"){
+          case <- data.frame(overtime[2:4,2:10]) %>%
+            select("...2", "X2017", Lat, Long) 
+          
+        }else if (input$year == "2018-12-31"){
+          case <- data.frame(overtime[2:4,2:10]) %>%
+            select("...2", "X2018", Lat, Long) 
+          
+        }else if (input$year == "2019-12-31"){
+          case <- data.frame(overtime[2:4,2:10]) %>%
+            select("...2", "X2019", Lat, Long) 
+          
+        }else if (input$year == "2020-12-30"){
+          case <- data.frame(overtime[2:4,2:10]) %>%
+            select("...2", "X2020", Lat, Long) 
+          
+        }else{
+          case <- data.frame(overtime[2:4,2:10]) %>%
+            select("...2", "X2021", Lat, Long) 
+        }
+        
+        
+        colnames(case) <- c("Zip", "Number", "Lat", "Long")
+        
+        zips_l <- case %>%
+          leaflet(options = leafletOptions(minzoom = 12)) %>% 
+          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+          addProviderTiles("CartoDB") %>%
+          addPolygons(data = loudoun_zips, weight = .5, 
+                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addCircleMarkers(lng = ~Long, lat = ~Lat,
+                           radius = ~Number, 
+                           color = "orange",
+                           fillOpacity = 1,
+                           popup = ~paste0("<b>", 
+                                           case$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
+                                           case$Number)) 
+        
+        zips_l
+       
       } else if (type() == "dis") {
+        
+        if (input$year == "2016-12-31"){
+          dis <- data.frame(overtime[8:9,2:10]) %>%
+            select("...2", "X2016", Lat, Long) 
+          
+        }else if (input$year == "2017-12-31"){
+          dis <- data.frame(overtime[8:9,2:10]) %>%
+            select("...2", "X2017", Lat, Long) 
+          
+        }else if (input$year == "2018-12-31"){
+          dis <- data.frame(overtime[8:9,2:10]) %>%
+            select("...2", "X2018", Lat, Long) 
+          
+        }else if (input$year == "2019-12-31"){
+          dis <- data.frame(overtime[8:9,2:10]) %>%
+            select("...2", "X2019", Lat, Long) 
+          
+        }else if (input$year == "2020-12-30"){
+          dis <- data.frame(overtime[8:9,2:10]) %>%
+            select("...2", "X2020", Lat, Long) 
+          
+        }else{
+          dis <- data.frame(overtime[8:9,2:10]) %>%
+            select("...2", "X2021", Lat, Long) 
+        }
+        
+        
+        colnames(dis) <- c("Zip", "Number", "Lat", "Long")
+        
+        zips_l <- dis %>%
+          leaflet(options = leafletOptions(minzoom = 12)) %>% 
+          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+          addProviderTiles("CartoDB") %>%
+          addPolygons(data = loudoun_zips, weight = .5, 
+                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addCircleMarkers(lng = ~Long, lat = ~Lat,
+                           radius = ~Number, 
+                           color = "orange",
+                           fillOpacity = 1,
+                           popup = ~paste0("<b>", 
+                                           dis$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
+                                           dis$Number))
+
+        zips_l
         
         
       }else if (type() == "emer"){
         
+        if (input$year == "2016-12-31"){
+          emer <- data.frame(overtime[12:14,2:10]) %>%
+            select("...2", "X2016", Lat, Long) 
+          
+        }else if (input$year == "2017-12-31"){
+          emer <- data.frame(overtime[12:14,2:10]) %>%
+            select("...2", "X2017", Lat, Long) 
+          
+        }else if (input$year == "2018-12-31"){
+          emer <- data.frame(overtime[12:14,2:10]) %>%
+            select("...2", "X2018", Lat, Long) 
+          
+        }else if (input$year == "2019-12-31"){
+          emer <- data.frame(overtime[12:14,2:10]) %>%
+            select("...2", "X2019", Lat, Long) 
+          
+        }else if (input$year == "2020-12-30"){
+          emer <- data.frame(overtime[12:14,2:10]) %>%
+            select("...2", "X2020", Lat, Long) 
+          
+        }else{
+          emer <- data.frame(overtime[12:14,2:10]) %>%
+            select("...2", "X2021", Lat, Long) 
+        }
+        
+        
+        colnames(emer) <- c("Zip", "Number", "Lat", "Long")
+        
+        zips_l <- emer %>%
+          leaflet(options = leafletOptions(minzoom = 12)) %>% 
+          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+          addProviderTiles("CartoDB") %>%
+          addPolygons(data = loudoun_zips, weight = .5, 
+                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addCircleMarkers(lng = ~Long, lat = ~Lat,
+                           radius = ~Number/10, 
+                           color = "orange",
+                           fillOpacity = 1,
+                           popup = ~paste0("<b>", 
+                                           emer$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
+                                           emer$Number))
+        
+        zips_l
+        
         
       }else if (type() == "employ"){
+        
+        if (input$year == "2016-12-31"){
+          employ <- data.frame(overtime[18,2:10]) %>%
+            select("...2", "X2016", Lat, Long) 
+          
+        }else if (input$year == "2017-12-31"){
+          employ <- data.frame(overtime[18,2:10]) %>%
+            select("...2", "X2017", Lat, Long) 
+          
+        }else if (input$year == "2018-12-31"){
+          employ <- data.frame(overtime[18,2:10]) %>%
+            select("...2", "X2018", Lat, Long) 
+          
+        }else if (input$year == "2019-12-31"){
+          employ <- data.frame(overtime[18,2:10]) %>%
+            select("...2", "X2019", Lat, Long) 
+          
+        }else if (input$year == "2020-12-30"){
+          employ <- data.frame(overtime[18,2:10]) %>%
+            select("...2", "X2020", Lat, Long) 
+          
+        }else{
+          employ <- data.frame(overtime[18,2:10]) %>%
+            select("...2", "X2021", Lat, Long) 
+        }
+        
+        
+        colnames(employ) <- c("Zip", "Number", "Lat", "Long")
+        
+        zips_l <- employ %>%
+          leaflet(options = leafletOptions(minzoom = 12)) %>% 
+          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+          addProviderTiles("CartoDB") %>%
+          addPolygons(data = loudoun_zips, weight = .5, 
+                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addCircleMarkers(lng = ~Long, lat = ~Lat,
+                           radius = ~Number/10, 
+                           color = "orange",
+                           fillOpacity = 1,
+                           popup = ~paste0("<b>", 
+                                           employ$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
+                                           employ$Number))
+        
+        zips_l
         
         
       }else if (type() == "out"){
         
+        if (input$year == "2016-12-31"){
+          out <- data.frame(overtime[21:23,2:10]) %>%
+            select("...2", "X2016", Lat, Long) 
+          
+        }else if (input$year == "2017-12-31"){
+          out <- data.frame(overtime[21:23,2:10]) %>%
+            select("...2", "X2017", Lat, Long) 
+          
+        }else if (input$year == "2018-12-31"){
+          out <- data.frame(overtime[21:23,2:10]) %>%
+            select("...2", "X2018", Lat, Long) 
+          
+        }else if (input$year == "2019-12-31"){
+          out <- data.frame(overtime[21:23,2:10]) %>%
+            select("...2", "X2019", Lat, Long) 
+          
+        }else if (input$year == "2020-12-30"){
+          out <- data.frame(overtime[21:23,2:10]) %>%
+            select("...2", "X2020", Lat, Long) 
+          
+        }else{
+          out <- data.frame(overtime[21:23,2:10]) %>%
+            select("...2", "X2021", Lat, Long) 
+        }
+        
+        
+        colnames(out) <- c("Zip", "Number", "Lat", "Long")
+        
+        zips_l <- out %>%
+          leaflet(options = leafletOptions(minzoom = 12)) %>% 
+          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+          addProviderTiles("CartoDB") %>%
+          addPolygons(data = loudoun_zips, weight = .5, 
+                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addCircleMarkers(lng = ~Long, lat = ~Lat,
+                           radius = ~Number/10, 
+                           color = "orange",
+                           fillOpacity = 1,
+                           popup = ~paste0("<b>", 
+                                           out$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
+                                           out$Number))
+        
+        zips_l
+        
         
       }else {
+        
+        if (input$year == "2016-12-31"){
+          res <- data.frame(overtime[27:31,2:10]) %>%
+            select("...2", "X2016", Lat, Long) 
+          
+        }else if (input$year == "2017-12-31"){
+          res <- data.frame(overtime[27:31,2:10]) %>%
+            select("...2", "X2017", Lat, Long) 
+          
+        }else if (input$year == "2018-12-31"){
+          res <- data.frame(overtime[27:31,2:10]) %>%
+            select("...2", "X2018", Lat, Long) 
+          
+        }else if (input$year == "2019-12-31"){
+          res <- data.frame(overtime[27:31,2:10]) %>%
+            select("...2", "X2019", Lat, Long) 
+          
+        }else if (input$year == "2020-12-30"){
+          res <- data.frame(overtime[27:31,2:10]) %>%
+            select("...2", "X2020", Lat, Long) 
+          
+        }else{
+          res <- data.frame(overtime[27:31,2:10]) %>%
+            select("...2", "X2021", Lat, Long) 
+        }
+        
+        
+        colnames(res) <- c("Zip", "Number", "Lat", "Long")
+        
+        zips_l <- res %>%
+          leaflet(options = leafletOptions(minzoom = 12)) %>% 
+          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+          addProviderTiles("CartoDB") %>%
+          addPolygons(data = loudoun_zips, weight = .5, 
+                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addCircleMarkers(lng = ~Long, lat = ~Lat,
+                           radius = ~Number*10, 
+                           color = "orange",
+                           fillOpacity = 1,
+                           popup = ~paste0("<b>", 
+                                           res$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
+                                           res$Number))
+        
+        zips_l
         
         
       }
