@@ -302,7 +302,7 @@ body <- dashboardBody(
                   collapsible = TRUE,
                   h1("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
                   h2("Project Description"), 
-                  img(src = 'loudoun-map.png', height = "150", width = "140", align = "center")
+                  img(src = 'loudoun-map.png', height = "150", width = "400", align = "center", style="display: block; margin-left: auto; margin-right: auto;")
                   
                 ) 
               ) 
@@ -681,7 +681,7 @@ body <- dashboardBody(
                   # change the images 
                   img(src = '', height = "150", width = "140", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
-                  img(src = '', height = "150", width = "140", align = "center"),
+                  img(src = 'team-rebstock.png', height = "150", width = "140", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
                   br(),
                   br(),
@@ -691,7 +691,7 @@ body <- dashboardBody(
                   p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, COmputer Science)"),
                   p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University, Economics )"),
                   h2("Virginia Tech Faculty Team Members"),
-                  img(src = 'Susan.Chen.VT.jpg', height = "150", width = "140", align = "center"),
+                  img(src = 'Susan.Chen.VT.jpg', height = "150", width = "150", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
