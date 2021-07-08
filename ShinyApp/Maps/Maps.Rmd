@@ -8,11 +8,11 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(readr)
 library(readxl)
 library(leaflet)
 library(leaflet.extras)
 library(htmlwidgets)
+library(tigris)
 ```
 
 ```{r}
