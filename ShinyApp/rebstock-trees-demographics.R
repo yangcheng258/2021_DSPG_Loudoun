@@ -111,14 +111,14 @@ colnames(healthcare) <- c("Estimate", "Type")
 
 # Mental Illness
 smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
-smi <- data.frame(t(smiwaitlist[1:3,]))[2:7,]
+smi <- data.frame(t(smiwaitlist[1:3,]))[2:6,]
 smi$Year <- rownames(smi)
 colnames(smi) <- c("Not SMI", "SMI", "Unknown", "Year")
 smi$SMI <- as.numeric(smi$SMI)
 smi$`Not SMI` <- as.numeric(smi$`Not SMI`)
 
 
-waitlist <- data.frame(t(smiwaitlist[9:12,]) )[2:7,]
+waitlist <- data.frame(t(smiwaitlist[9:12,]) )[2:6,]
 waitlist$Year <- rownames(waitlist)
 colnames(waitlist) <- c( "Case Management*", "Employment & Day Support", "Outpatient**", "Residental", "Year")
 waitlist$Residental <- as.numeric(waitlist$Residental)
@@ -333,7 +333,15 @@ body <- dashboardBody(
                         in poverty. An estimated 3.2% of children under 18 were below the poverty 
                         level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
                         of people 18 to 64 years were below the poverty level."), 
-              p("Add in description about Transitional Aged Youth... ")) ,
+              p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
+                care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
+                independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
+                this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. 
+                Over 30% of these young adults have either started college and are not finished yet or dropped out and only 18% have a Bachelor's degree. While majority of this 
+                subpopulation is white, when compared to the ratio of those living below the poverty level, 37% of those reported 'other' as their race are living in poverty,
+                and 11% of blacks are living in poverty. Another interesting is 85% of tays have private healthcare which means they are either fully supporting themselves which is unlikely 
+                or they are on their parents' insurance. Those who have aged out of foster care or just got out of the juvenille detention system most likely do 
+                not have their parents' support and need to qualify or apply for Medicaid or VA Health.  " )) ,
               br(),
               box(
                 title = "Visualizations of Transitional Aged Youth (TAYs)",
@@ -481,11 +489,13 @@ body <- dashboardBody(
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                     their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                  p("As you can see from the graph below, the number of waitlist cases have ... "), 
+                  p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different kinds of services to transitional aged youth (tays) in Loudoun and according
+                    to their spreadsheet, ... As you can see in 2019, there was a large dip in Outpatient waitlist person because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
+                    one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
+                    instead of waiting days or even weeks to receive an assessment"), 
                   plotlyOutput("waitlist"),
                   p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
-                  p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")), 
-                  p(tags$small("2021 data as of 6/20/21.")),  
+                  p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")) ,
                  br(), 
                  br(),
                   box(
@@ -566,12 +576,11 @@ body <- dashboardBody(
                     sliderInput(inputId = "year", 
                                 label = "Dates:",
                                 min = as.Date("2016-12-31","%Y-%m-%d"),
-                                max = as.Date("2021-12-31","%Y-%m-%d"),
+                                max = as.Date("2020-12-31","%Y-%m-%d"),
                                 value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
                                 step = 365,
                                 animate = animationOptions(interval = 1800))),
-                  mainPanel(leafletOutput(outputId = "overtime", height = "70vh"))),
-                p(tags$small("The last date in 2021 is from 06/20/2021"))
+                  mainPanel(leafletOutput(outputId = "overtime", height = "70vh")))
                 )
       ),
       
@@ -586,15 +595,7 @@ body <- dashboardBody(
                           status = "primary",
                           solidHeader = TRUE,
                           collapsible = TRUE,
-                           p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
-                                         telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
-                                         than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
-                                         provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
-                           p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
-                                        obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
-                                        to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
-                                        recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
-                                        and internet by census block group."),
+                          
                            br(), 
                            tabsetPanel(
                              tabPanel("Subpopulation",
@@ -618,15 +619,7 @@ body <- dashboardBody(
                           collapsible = TRUE,
                           h4(strong("Fairfax County")),
                           ## description of what we are doin and why we are mapping them out 
-                          p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
-                                         telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
-                                         than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
-                                         provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
-                          p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
-                                        obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
-                                        to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
-                                        recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
-                                        and internet by census block group."),
+                          
                           br(), 
                           tabsetPanel(
                             tabPanel("Subpopulation",
@@ -649,15 +642,7 @@ body <- dashboardBody(
                           collapsible = TRUE,
                            h4(strong("Allegheny County")),
                            ## description of what we are doin and why we are mapping them out 
-                           p("Internet connection and computing devices are key for access to health information and participation in online health-related services like
-                                         telemedicine. Rural areas frequently lack broadband access, experience low internet speeds, and have fewer internet providers available
-                                         than urban areas. It is crucial to consider digital connectivity in improving health care access. We examined digital connectivity in Patrick County in two ways to
-                                         provide the county with insights on where increasing connectivity would facilitate communicating health information and improve online health service access."),
-                           p("We first examined access to computing devices and internet connection types in Patrick County. We used American Community Survey (ACS) data to
-                                        obtain this information at census block group level. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households
-                                        to compile 1-year and 5-year estimates of population sociodemographic and socioeconomic characteristics. We used the most
-                                        recently available 5-year data from 2014/18 to calculate the percentage of the Patrick County residents with access to devices
-                                        and internet by census block group."),
+                          
                            br(), 
                            tabsetPanel(
                              tabPanel("Subpopulation",
@@ -813,7 +798,7 @@ server <- function(input, output, session) {
         ggplot(smi, aes(x=Year)) + 
           geom_line(aes(y = SMI, group = 1), color = "steelblue") + 
           geom_line(aes(y = `Not SMI`, group = 1 ), color="darkred", linetype="twodash")+ 
-          labs(title = "Severe Mental Illness from FY 2016 - 6/20/21")
+          labs(title = "Severe Mental Illness from FY 2016 - 2020")
         
         
       }
@@ -823,7 +808,7 @@ server <- function(input, output, session) {
           ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "plum2")+ 
           labs(title = "Poverty by Race", 
                y = "", 
-               x = "Population Estimate")+coord_flip()
+               x = "Population Estimate") + coord_flip()
 
       }
     
@@ -946,7 +931,9 @@ server <- function(input, output, session) {
         geom_line(aes(y = `Case Management*`, group = 1 ), color="darkred", linetype="twodash") + 
         geom_line(aes(y = `Employment & Day Support`, group = 1 ), color="darkolivegreen3") + 
         geom_line(aes(y = `Outpatient**`, group = 1 ), color="plum2") +
-        labs(title = "Waitlist for Services by Program from FY 2016 - FY 2021") 
+        labs(title = "Waitlist for The Department of Mental Health, Substance Abuse and Developmental Services by Program",
+             y = "Persons", 
+             x = "Year") 
       
     })
     
@@ -1195,16 +1182,34 @@ server <- function(input, output, session) {
     # Add maps for locations of programs in Loudoun subpopulation 
     output$map1 <- renderLeaflet({
       
+      labels <- lapply(
+        paste("<strong>Name: </strong>",
+              str_to_title(loudoun_locations$Program),
+              "<br />",
+              "<strong>Qualifications:</strong>",
+              (loudoun_locations$Qualification) ,
+              "<br />",
+              "<strong>Description:</strong>",
+              (loudoun_locations$Description), 
+              "<br />",
+              "<strong>Website:</strong>",
+              loudoun_locations$Website),
+        htmltools::HTML
+      )
+      
+      
       l_sub <- loudoun_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
-                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         loudoun_locations$Website, "</a>"),
+                         label = labels,
+                         labelOptions = labelOptions(direction = "bottom",
+                                                     style = list(
+                                                       "font-size" = "12px",
+                                                       "border-color" = "rgba(0,0,0,0.5)",
+                                                       direction = "auto")) , 
                          group = ~loudoun_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
                          options = layersControlOptions(collapsed = FALSE))
@@ -1217,17 +1222,34 @@ server <- function(input, output, session) {
     # Pillars Loudoun
     output$map2 <- renderLeaflet({
       
+      labels <- lapply(
+        paste("<strong>Name: </strong>",
+              str_to_title(loudoun_locations$Program),
+              "<br />",
+              "<strong>Qualifications:</strong>",
+              (loudoun_locations$Qualification) ,
+              "<br />",
+              "<strong>Description:</strong>",
+              (loudoun_locations$Description), 
+              "<br />",
+              "<strong>Website:</strong>",
+              loudoun_locations$Website),
+        htmltools::HTML
+      )
+      
       l_pill <- loudoun_locations %>%  
         leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = ~paste0("<b>", loudoun_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         loudoun_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         loudoun_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         loudoun_locations$Website, "</a>"),
+                         lat = ~Latitude,
                          radius = 6, 
+                         label = labels,
+                         labelOptions = labelOptions(direction = "bottom",
+                                                     style = list(
+                                                       "font-size" = "12px",
+                                                       "border-color" = "rgba(0,0,0,0.5)",
+                                                       direction = "auto")) , 
                          group = ~loudoun_locations$Pillars, 
                          color = ~Pillar_pal(Pillars)) %>%  
         addLayersControl(position = "topright",
@@ -1242,16 +1264,33 @@ server <- function(input, output, session) {
     ## map for locations of program in Allegheny
     output$map3 <- renderLeaflet({
       
+      labels <- lapply(
+        paste("<strong>Name: </strong>",
+              str_to_title(allegheny_locations$Program),
+              "<br />",
+              "<strong>Qualifications:</strong>",
+              (allegheny_locations$Qualification) ,
+              "<br />",
+              "<strong>Description:</strong>",
+              (allegheny_locations$Description), 
+              "<br />",
+              "<strong>Website:</strong>",
+              allegheny_locations$Website),
+        htmltools::HTML
+      )
+      
       a_sub <- allegheny_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
-                         popup = ~paste0("<b>", allegheny_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         allegheny_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         allegheny_locations$Website, "</a>"),
+                         label = labels,
+                         labelOptions = labelOptions(direction = "bottom",
+                                                     style = list(
+                                                       "font-size" = "12px",
+                                                       "border-color" = "rgba(0,0,0,0.5)",
+                                                       direction = "auto")) , 
                          group = ~allegheny_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
                          options = layersControlOptions(collapsed = FALSE))
@@ -1263,18 +1302,35 @@ server <- function(input, output, session) {
     
     ## Pillars Allegheny 
     output$map4 <- renderLeaflet({
+      labels <- lapply(
+        paste("<strong>Name: </strong>",
+              str_to_title(allegheny_locations$Program),
+              "<br />",
+              "<strong>Qualifications:</strong>",
+              (allegheny_locations$Qualification) ,
+              "<br />",
+              "<strong>Description:</strong>",
+              (allegheny_locations$Description), 
+              "<br />",
+              "<strong>Website:</strong>",
+              allegheny_locations$Website),
+        htmltools::HTML
+      )
+    
       
       a_pill <- allegheny_locations %>%  
       leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = ~paste0("<b>", allegheny_locations$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         allegheny_locations$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         allegheny_locations$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         allegheny_locations$Website, "</a>"),
+                         lat = ~Latitude,
                          radius = 6, 
+                         label = labels,
+                         labelOptions = labelOptions(direction = "bottom",
+                                                     style = list(
+                                                       "font-size" = "12px",
+                                                       "border-color" = "rgba(0,0,0,0.5)",
+                                                       direction = "auto")) , 
                          group = ~allegheny_locations$Pillars, 
                          color = ~Pillar_pal(Pillars)) %>%  
         addLayersControl(position = "topright",
@@ -1290,16 +1346,33 @@ server <- function(input, output, session) {
     ## map for locations of program in Fairfax
     output$map5 <- renderLeaflet({
       
+      labels <- lapply(
+        paste("<strong>Name: </strong>",
+              str_to_title(fairfax$Program),
+              "<br />",
+              "<strong>Qualifications:</strong>",
+              (fairfax$Qualification) ,
+              "<br />",
+              "<strong>Description:</strong>",
+              (fairfax$Description), 
+              "<br />",
+              "<strong>Website:</strong>",
+              fairfax$Website),
+        htmltools::HTML
+      )
+      
       f_sub <- fairfax %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
-                         popup = ~paste0("<b>", fairfax$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         fairfax$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         fairfax$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         fairfax$Website, "</a>"),
+                         label = labels,
+                         labelOptions = labelOptions(direction = "bottom",
+                                                     style = list(
+                                                       "font-size" = "12px",
+                                                       "border-color" = "rgba(0,0,0,0.5)",
+                                                       direction = "auto")) ,
                          group = ~fairfax$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
                          options = layersControlOptions(collapsed = FALSE))
@@ -1312,17 +1385,35 @@ server <- function(input, output, session) {
     ## Pillars Fairfax 
     output$map6 <- renderLeaflet({
       
+      labels <- lapply(
+        paste("<strong>Name: </strong>",
+              str_to_title(fairfax$Program),
+              "<br />",
+              "<strong>Qualifications:</strong>",
+              (fairfax$Qualification) ,
+              "<br />",
+              "<strong>Description:</strong>",
+              (fairfax$Description), 
+              "<br />",
+              "<strong>Website:</strong>",
+              fairfax$Website),
+        htmltools::HTML
+      )
+      
       f_pill <- fairfax %>%  
         leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude, 
-                         popup = ~paste0("<b>", fairfax$Program, "</b>", "<br/>", "<b>", "Qualifications: ", "</b>", 
-                                         fairfax$Qualification, "<br/>","<b>","Description: ", "</b>", 
-                                         fairfax$Description, "<br/>","<b>","Website: ", "</b>", "<a>",
-                                         fairfax$Website, "</a>"),
+                         lat = ~Latitude,
+                         label = labels, 
                          radius = 6, 
+                         label = labels,
+                         labelOptions = labelOptions(direction = "bottom",
+                                                     style = list(
+                                                       "font-size" = "12px",
+                                                       "border-color" = "rgba(0,0,0,0.5)",
+                                                       direction = "auto")) , 
                          group = ~fairfax$Pillars, 
                          color = ~Pillar_pal(Pillars)) %>%  
         addLayersControl(position = "topright",
@@ -1359,13 +1450,10 @@ server <- function(input, output, session) {
           case <- data.frame(overtime[2:4,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
-        }else if (input$year == "2020-12-30"){
+        }else {
           case <- data.frame(overtime[2:4,2:10]) %>%
             select("...2", "X2020", Lat, Long) 
           
-        }else{
-          case <- data.frame(overtime[2:4,2:10]) %>%
-            select("...2", "X2021", Lat, Long) 
         }
         
         
@@ -1378,7 +1466,7 @@ server <- function(input, output, session) {
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number, 
+                           radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
                            popup = ~paste0("<b>", 
@@ -1405,13 +1493,10 @@ server <- function(input, output, session) {
           dis <- data.frame(overtime[8:9,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
-        }else if (input$year == "2020-12-30"){
+        }else {
           dis <- data.frame(overtime[8:9,2:10]) %>%
             select("...2", "X2020", Lat, Long) 
           
-        }else{
-          dis <- data.frame(overtime[8:9,2:10]) %>%
-            select("...2", "X2021", Lat, Long) 
         }
         
         
@@ -1424,7 +1509,7 @@ server <- function(input, output, session) {
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number, 
+                           radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
                            popup = ~paste0("<b>", 
@@ -1452,13 +1537,10 @@ server <- function(input, output, session) {
           emer <- data.frame(overtime[12:14,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
-        }else if (input$year == "2020-12-30"){
+        }else {
           emer <- data.frame(overtime[12:14,2:10]) %>%
             select("...2", "X2020", Lat, Long) 
           
-        }else{
-          emer <- data.frame(overtime[12:14,2:10]) %>%
-            select("...2", "X2021", Lat, Long) 
         }
         
         
@@ -1471,7 +1553,7 @@ server <- function(input, output, session) {
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/10, 
+                           radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
                            popup = ~paste0("<b>", 
@@ -1499,13 +1581,10 @@ server <- function(input, output, session) {
           employ <- data.frame(overtime[18,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
-        }else if (input$year == "2020-12-30"){
+        }else {
           employ <- data.frame(overtime[18,2:10]) %>%
             select("...2", "X2020", Lat, Long) 
           
-        }else{
-          employ <- data.frame(overtime[18,2:10]) %>%
-            select("...2", "X2021", Lat, Long) 
         }
         
         
@@ -1518,7 +1597,7 @@ server <- function(input, output, session) {
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/10, 
+                           radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
                            popup = ~paste0("<b>", 
@@ -1546,13 +1625,10 @@ server <- function(input, output, session) {
           out <- data.frame(overtime[21:23,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
-        }else if (input$year == "2020-12-30"){
+        }else {
           out <- data.frame(overtime[21:23,2:10]) %>%
             select("...2", "X2020", Lat, Long) 
           
-        }else{
-          out <- data.frame(overtime[21:23,2:10]) %>%
-            select("...2", "X2021", Lat, Long) 
         }
         
         
@@ -1565,7 +1641,7 @@ server <- function(input, output, session) {
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/10, 
+                           radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
                            popup = ~paste0("<b>", 
@@ -1593,13 +1669,10 @@ server <- function(input, output, session) {
           res <- data.frame(overtime[27:31,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
-        }else if (input$year == "2020-12-30"){
+        }else{
           res <- data.frame(overtime[27:31,2:10]) %>%
             select("...2", "X2020", Lat, Long) 
           
-        }else{
-          res <- data.frame(overtime[27:31,2:10]) %>%
-            select("...2", "X2021", Lat, Long) 
         }
         
         
@@ -1612,7 +1685,7 @@ server <- function(input, output, session) {
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number*10, 
+                           radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
                            popup = ~paste0("<b>", 
