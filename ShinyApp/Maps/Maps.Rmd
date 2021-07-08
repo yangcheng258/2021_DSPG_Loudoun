@@ -97,9 +97,9 @@ loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%
 loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
 loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
 loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
-map_by_subpop <- map_by_subpop %>% addPolygons(data = loudoun_zips, weight = 1, fillOpacity = 0.1, label = ~loudoun_zip_code_city_names,  highlightOptions = highlightOptions(bringToFront = T), group = "Zip Codes") %>% addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Zip Codes"))
+map_by_subpop <- map_by_subpop %>% addPolygons(data = loudoun_zips, weight = 1, fillOpacity = 0.1, label = ~ZCTA5CE10,  highlightOptions = highlightOptions(bringToFront = T), group = "Zip Codes") %>% addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Zip Codes"))
 
-map_by_pillar <- map_by_pillar %>% addPolygons(data = loudoun_zips, weight = 1, fillOpacity = 0.1, label = ~loudoun_zip_code_city_names,  highlightOptions = highlightOptions(bringToFront = T), group = "Zip Codes") %>% addLayersControl(overlayGroups = c(unique(locations$Pillars), "Zip Codes"))
+map_by_pillar <- map_by_pillar %>% addPolygons(data = loudoun_zips, weight = 1, fillOpacity = 0.1, label = ~ZCTA5CE10,  highlightOptions = highlightOptions(bringToFront = T), group = "Zip Codes") %>% addLayersControl(overlayGroups = c(unique(locations$Pillars), "Zip Codes"))
 
 
 ```
