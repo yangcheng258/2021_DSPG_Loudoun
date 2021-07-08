@@ -252,6 +252,9 @@ l_zips <- bind_rows(
 loudoun_sf <- zips_sf %>%
   inner_join(l_zips, by = "zip")
 
+overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
+
+
 
 # sidebar -----------------------------------------------------------
 sidebar <- dashboardSidebar(
@@ -554,17 +557,29 @@ body <- dashboardBody(
                     solidHeader = TRUE,
                     collapsible = TRUE,
                     h3(strong(""), align = "center")),
-                # sidebarLayout(
-                #   sidebarPanel(
-                #     sliderInput(inputId = "time",
-                #                 label = "Years:",
-                #                 min = as.Date("2016","%Y"),
-                #                 max = as.Date("2021","%Y"),
-                #                 value = as.Date("2020"), timeFormat="%Y",
-                #                 step = 1,
-                #                 animate = animationOptions(interval = 1800))),
-                #   mainPanel(plotOutput(outputId = "time", height = "70vh")))
-                plotlyOutput("overtime")
+                # first select which program you want to see overtime
+                selectInput("type", "Select Type of Program:", width = "100%", choices = c(
+                  "Case Management" = "case",
+                  "Discharge Planning" = "dis",
+                  "Emergency Services" = "emer",
+                  "Employment & Day Support Services" = "employ",
+                  "Outpatient"= "out", 
+                  "Residential" = "res")
+                ),
+                # then according to the type of program, this will show a sliderInput of Loudoun with its zip codes
+                # and the size of circles corresponding to the how many there are 
+                
+                sidebarLayout(
+                  sidebarPanel(
+                    sliderInput(inputId = "year", 
+                                label = "Dates:",
+                                min = as.Date("2016-12-31","%Y-%m-%d"),
+                                max = as.Date("2021-12-31","%Y-%m-%d"),
+                                value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
+                                step = 365,
+                                animate = animationOptions(interval = 1800))),
+                  mainPanel(plotOutput(outputId = "overtime", height = "70vh"))),
+                p(tags$small("The last date in 2021 is from 06/20/2021"))
                 )
       ),
       
@@ -1329,19 +1344,10 @@ server <- function(input, output, session) {
     })
     
     
-    
+    type <- reactive({
+      input$type
+    })
     output$overtime <- renderPlotly({
-
-      # 
-      # loudoun %>%
-      #   filter(date == input$time) %>%
-      #   ggplot() +
-      #   borders("world", colour = "gray90", fill = "gray85") +
-      #   theme_map() +
-      #   geom_point(aes(x = longitude, y = latitude, size = n),
-      #              colour = "#351C4D", alpha = 0.55) +
-      #   labs(size = "Users") +
-      #   ggtitle("Distribution of Users Online")
       
       ditch_the_axis <- theme(axis.text = element_blank(),
                               axis.line = element_blank(),
@@ -1355,11 +1361,38 @@ server <- function(input, output, session) {
       
       zip <- va_base + ditch_the_axis + 
         geom_sf(aes(fill = zip), data = loudoun_sf, inherit.aes = F, size = 0, alpha = 0.6) +
-        coord_sf(ndiscr = F) +
+        coord_sf(ndiscr = F) + 
         theme(legend.position = "none")
-      zip 
+      
+      if (type() == "case"){
+      loudoun %>%
+        filter(date == input$time) %>%
+        ggplot() +
+        borders("world", colour = "gray90", fill = "gray85") +
+        theme_map() +
+        geom_point(aes(x = longitude, y = latitude, size = n),
+                   colour = "#351C4D", alpha = 0.55) +
+        labs(size = "Users") +
+        ggtitle("Distribution of Users Online")
 
-
+      } else if (type() == "dis") {
+        
+        
+      }else if (type() == "emer"){
+        
+        
+      }else if (type() == "employ"){
+        
+        
+      }else if (type() == "out"){
+        
+        
+      }else {
+        
+        
+      }
+      
+      
     })
     
 }
