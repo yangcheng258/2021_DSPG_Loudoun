@@ -1,0 +1,122 @@
+---
+title: "MHS Demographics"
+author: "Austin Burcham"
+date: "7/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(bbplot)
+```
+
+```{r race}
+mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+mhs_race_ethnicity <- read_excel(mhs_demographic_xl, sheet = "RaceEthnicity")
+mhs_race_ethnicity <- mhs_race_ethnicity[-8, -8]
+mhs_race_ethnicity <- mhs_race_ethnicity %>% 
+  pivot_longer(cols = 2:7, names_to = "Year", values_to = "Individuals Served") %>% 
+  filter(Year != "2021 YTD")
+mhs_race_ethnicity_totals <- mhs_race_ethnicity %>% group_by(Year) %>% 
+  summarize("Total" = sum(`Individuals Served`))
+mhs_race_ethnicity <- left_join(mhs_race_ethnicity, mhs_race_ethnicity_totals)
+mhs_race_ethnicity_relative <- mhs_race_ethnicity %>% 
+  mutate(`Individuals Served` = `Individuals Served`/ Total) %>% select(-4) %>% 
+  rename(`Percent` = `Individuals Served`)
+
+
+race_line_graph <- mhs_race_ethnicity_relative %>% 
+  ggplot(aes(group = `Race/Ethnicity`, x = Year, y = `Percent`,
+             color = `Race/Ethnicity`, linetype = `Race/Ethnicity`)) + 
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Race of TAY Served from 2016-2020") +
+  theme_minimal()
+
+race_bar_graph <- mhs_race_ethnicity_relative %>% 
+  ggplot(aes(group = `Race/Ethnicity`, x = Year, y = `Percent`,
+             fill = `Race/Ethnicity`)) + 
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Race of TAY Served from 2016-2020") +
+  scale_fill_viridis_d() +
+  theme_minimal()
+
+
+```
+
+```{r smi }
+mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+mhs_smi <- read_excel(mhs_demographic_xl, sheet = "SMI")
+mhs_smi <- mhs_smi[-4, -8]
+mhs_smi <- mhs_smi %>% 
+  pivot_longer(cols = 2:7, names_to = "Year", values_to = "Individuals Served") %>% 
+  filter(Year != "2021 YTD")
+mhs_smi_totals <- mhs_smi %>% group_by(Year) %>% 
+  summarize("Total" = sum(`Individuals Served`))
+mhs_smi <- left_join(mhs_smi, mhs_smi_totals)
+mhs_smi_relative <- mhs_smi %>% 
+  mutate(`Individuals Served` = `Individuals Served`/ Total) %>% select(-4) %>% 
+  rename(`Percent` = `Individuals Served`)
+View(mhs_smi_relative)
+
+
+smi_line_graph <- mhs_smi_relative %>% 
+  ggplot(aes(group = `SMI Status`, x = Year, y = `Percent`,
+             color = `SMI Status`, shape = `SMI Status`)) + 
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Serious Mental Illness Status of TAY Served from 2016-2020.") +
+  theme_minimal()
+
+smi_bar_graph <- mhs_smi_relative %>% 
+  ggplot(aes(group = `SMI Status`, x = Year, y = `Percent`,
+             fill = `SMI Status`)) + 
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Serious Mental Illness Status of TAY Served from 2016-2020") +
+  scale_fill_viridis_d() +
+  theme_minimal()
+
+
+```
+
+```{r sex_demographic}
+mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+mhs_sex <- read_excel(mhs_demographic_xl, sheet = "Gender")
+mhs_sex <- mhs_sex[-3, -8]
+mhs_sex <- mhs_sex %>% 
+  pivot_longer(cols = 2:7, names_to = "Year", values_to = "Individuals Served") %>% 
+  filter(Year != "2021 YTD")
+mhs_sex_totals <- mhs_sex %>% group_by(Year) %>% 
+  summarize("Total" = sum(`Individuals Served`))
+mhs_sex <- left_join(mhs_sex, mhs_sex_totals)
+mhs_sex_relative <- mhs_sex %>% 
+  mutate(`Individuals Served` = `Individuals Served`/ Total) %>% select(-4) %>% 
+  rename(`Percent` = `Individuals Served`)
+View(mhs_sex_relative)
+
+
+sex_bar_graph <- mhs_sex_relative %>% 
+  ggplot(aes(group = Gender, x = Year, y = `Percent`,
+             fill = Gender)) + 
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Gender of TAY Served from 2016-2020") +
+  theme_minimal()
+```
+
+
+
+
+
+
+
+
+
+
+
