@@ -70,7 +70,7 @@ smi_line_graph <- mhs_smi_relative %>%
   geom_line() +
   scale_y_continuous(labels = scales::percent) +
   labs(title = "Serious Mental Illness Status of TAY Served from 2016-2020.") +
-  theme_minimal()
+  theme_bw()
 
 smi_bar_graph <- mhs_smi_relative %>% 
   ggplot(aes(group = `SMI Status`, x = Year, y = `Percent`,
