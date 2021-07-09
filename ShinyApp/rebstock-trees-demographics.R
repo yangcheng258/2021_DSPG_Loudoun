@@ -19,6 +19,8 @@ library(rvest)
 
 options(tigris_use_cache = TRUE)
 
+census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
+readRenviron("~/.Renviron")
 
 # Loudoun -----------------------------------------------------------
 ## gender and age tays 
@@ -230,7 +232,7 @@ subpop_levels <- c("Foster Care", "Juvenile Detention", "Both")
 subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
                           levels = subpop_levels)
 
-Pillar_levels <- unique(loudoun_locations$Pillars)
+Pillar_levels <- c("Education", "Employment", "Housing", "Transportation", "Health Services", "Funding and Policy ")
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
                           levels = Pillar_levels)
 # Zipcodes and map of Loudoun
@@ -270,7 +272,7 @@ sidebar <- dashboardSidebar(
         icon = icon("server")),
       menuItem(
         tabName = "overtime",
-        text = "Overtime",
+        text = "Individuals Served",
         icon = icon("server")),
       menuItem(
         tabName = "locations",
@@ -552,7 +554,7 @@ body <- dashboardBody(
       ), 
       tabItem(tabName = "overtime",
               fluidPage(
-                box(title = "Services provided overtime from 2016-2021",
+                box(title = "Individuals Served",
                     closable = FALSE,
                     width = NULL,
                     status = "primary",
@@ -579,7 +581,7 @@ body <- dashboardBody(
                                 max = as.Date("2020-12-31","%Y-%m-%d"),
                                 value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
                                 step = 365,
-                                animate = animationOptions(interval = 1800))),
+                                animate = animationOptions(interval = 1500))),
                   mainPanel(leafletOutput(outputId = "overtime", height = "70vh")))
                 )
       ),
@@ -990,7 +992,7 @@ server <- function(input, output, session) {
 
       }else if(input$pillar1%in%"Health Services"){
         Tree%>%filter(County == "Loudoun")%>%
-          filter(Pillars == "Insurance")%>%
+          filter(Pillars == "Health Services")%>%
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
@@ -1070,7 +1072,7 @@ server <- function(input, output, session) {
 
       }else if(input$pillar2%in%"Health Services"){
         Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Insurance")%>%
+          filter(Pillars == "Health Services")%>%
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
@@ -1153,7 +1155,7 @@ server <- function(input, output, session) {
         
       }else if(input$pillar3%in%"Health Services"){
         Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Insurance")%>%
+          filter(Pillars == "Health Services")%>%
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
@@ -1409,7 +1411,6 @@ server <- function(input, output, session) {
                          lat = ~Latitude,
                          label = labels, 
                          radius = 6, 
-                         label = labels,
                          labelOptions = labelOptions(direction = "bottom",
                                                      style = list(
                                                        "font-size" = "12px",
@@ -1458,7 +1459,16 @@ server <- function(input, output, session) {
         }
         
         
+        
         colnames(case) <- c("Zip", "Number", "Lat", "Long")
+        labels <- lapply(
+          paste("<strong>Zip Code: </strong>",
+                str_to_title(case$Zip),
+                "<br />",
+                "<strong>Individuals Served:</strong>",
+                case$Number),
+          htmltools::HTML
+        )
         
         zips_l <- case %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
@@ -1470,9 +1480,7 @@ server <- function(input, output, session) {
                            radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
-                           popup = ~paste0("<b>", 
-                                           case$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
-                                           case$Number)) 
+                           label = labels) 
         
         zips_l
        
@@ -1502,6 +1510,14 @@ server <- function(input, output, session) {
         
         
         colnames(dis) <- c("Zip", "Number", "Lat", "Long")
+        labels <- lapply(
+          paste("<strong>Zip Code: </strong>",
+                str_to_title(dis$Zip),
+                "<br />",
+                "<strong>Individuals Served:</strong>",
+                dis$Number),
+          htmltools::HTML
+        )
         
         zips_l <- dis %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
@@ -1513,9 +1529,7 @@ server <- function(input, output, session) {
                            radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
-                           popup = ~paste0("<b>", 
-                                           dis$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
-                                           dis$Number))
+                           label = labels)
 
         zips_l
         
@@ -1546,6 +1560,14 @@ server <- function(input, output, session) {
         
         
         colnames(emer) <- c("Zip", "Number", "Lat", "Long")
+        labels <- lapply(
+          paste("<strong>Zip Code: </strong>",
+                str_to_title(emer$Zip),
+                "<br />",
+                "<strong>Individuals Served:</strong>",
+                emer$Number),
+          htmltools::HTML
+        )
         
         zips_l <- emer %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
@@ -1557,9 +1579,7 @@ server <- function(input, output, session) {
                            radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
-                           popup = ~paste0("<b>", 
-                                           emer$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
-                                           emer$Number))
+                           label = labels)
         
         zips_l
         
@@ -1590,6 +1610,14 @@ server <- function(input, output, session) {
         
         
         colnames(employ) <- c("Zip", "Number", "Lat", "Long")
+        labels <- lapply(
+          paste("<strong>Zip Code: </strong>",
+                str_to_title(employ$Zip),
+                "<br />",
+                "<strong>Individuals Served:</strong>",
+                employ$Number),
+          htmltools::HTML
+        )
         
         zips_l <- employ %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
@@ -1601,9 +1629,7 @@ server <- function(input, output, session) {
                            radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
-                           popup = ~paste0("<b>", 
-                                           employ$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
-                                           employ$Number))
+                           label = labels)
         
         zips_l
         
@@ -1634,6 +1660,14 @@ server <- function(input, output, session) {
         
         
         colnames(out) <- c("Zip", "Number", "Lat", "Long")
+        labels <- lapply(
+          paste("<strong>Zip Code: </strong>",
+                str_to_title(out$Zip),
+                "<br />",
+                "<strong>Individuals Served:</strong>",
+                out$Number),
+          htmltools::HTML
+        )
         
         zips_l <- out %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
@@ -1645,9 +1679,7 @@ server <- function(input, output, session) {
                            radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
-                           popup = ~paste0("<b>", 
-                                           out$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
-                                           out$Number))
+                           label = labels)
         
         zips_l
         
@@ -1678,6 +1710,14 @@ server <- function(input, output, session) {
         
         
         colnames(res) <- c("Zip", "Number", "Lat", "Long")
+        labels <- lapply(
+          paste("<strong>Zip Code: </strong>",
+                str_to_title(res$Zip),
+                "<br />",
+                "<strong>Individuals Served:</strong>",
+                res$Number),
+          htmltools::HTML
+        )
         
         zips_l <- res %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
@@ -1689,9 +1729,7 @@ server <- function(input, output, session) {
                            radius = ~Number/5, 
                            color = "orange",
                            fillOpacity = 1,
-                           popup = ~paste0("<b>", 
-                                           res$Zip, "</b>", "<br/>", "<b>", "Number of Programs provided: ", "</b>", 
-                                           res$Number))
+                           label = labels)
         
         zips_l
         
