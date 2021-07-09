@@ -510,7 +510,7 @@ body <- dashboardBody(
                       "Employment",
                       "Housing",
                       "Transportation",
-                      "Insurance",
+                      "Health Services",
                       "Policy and Funding")), 
                     collapsibleTreeOutput("tree1")),
                 box(
@@ -525,7 +525,7 @@ body <- dashboardBody(
                     "Employment",
                     "Housing",
                     "Transportation",
-                    "Insurance",
+                    "Health Services",
                     "Policy and Funding")), 
                   collapsibleTreeOutput("tree3")), 
                 
@@ -542,7 +542,7 @@ body <- dashboardBody(
                       "Employment",
                       "Housing",
                       "Transportation",
-                      "Insurance",
+                      "Health Services",
                       "Policy and Funding")
                     ),
                     collapsibleTreeOutput("tree2")) 
@@ -988,7 +988,7 @@ server <- function(input, output, session) {
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
 
-      }else if(input$pillar1%in%"Insurance"){
+      }else if(input$pillar1%in%"Health Services"){
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
@@ -1068,7 +1068,7 @@ server <- function(input, output, session) {
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
 
-      }else if(input$pillar2%in%"Insurance"){
+      }else if(input$pillar2%in%"Health Services"){
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
@@ -1151,7 +1151,7 @@ server <- function(input, output, session) {
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
         
-      }else if(input$pillar3%in%"Insurance"){
+      }else if(input$pillar3%in%"Health Services"){
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Insurance")%>%
           group_by(Pillars)%>%
