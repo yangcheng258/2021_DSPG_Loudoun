@@ -228,7 +228,7 @@ fairfax <- map%>%
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
 fairfax$Latitude <- as.numeric(fairfax$Latitude)
 
-subpop_levels <- c("Foster Care", "Juvenile Detention", "Both")
+subpop_levels <- c("TAYs", "Foster Care", "Juvenile Detention")
 subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
                           levels = subpop_levels)
 
@@ -614,6 +614,7 @@ body <- dashboardBody(
                fluidRow(style = "margin: 6px;",
                         h1(strong("Location of Programs and Services"), align = "center"),
                         box(
+                          title = "Loudoun County, VA", 
                           closable = FALSE,
                           width = NULL,
                           status = "primary",
@@ -636,12 +637,12 @@ body <- dashboardBody(
                            br(),
                         br(), 
                         box(
+                          title = "Fairfax County, VA", 
                           closable = FALSE,
                           width = NULL,
                           status = "primary",
                           solidHeader = TRUE,
                           collapsible = TRUE,
-                          h4(strong("Fairfax County")),
                           ## description of what we are doin and why we are mapping them out 
                           
                           br(), 
@@ -659,12 +660,12 @@ body <- dashboardBody(
                           )), 
                         br(), 
                         box(
+                          title = "Allegheny County, PA ", 
                          closable = FALSE,
                           width = NULL,
                           status = "primary",
                           solidHeader = TRUE,
                           collapsible = TRUE,
-                           h4(strong("Allegheny County")),
                            ## description of what we are doin and why we are mapping them out 
                           
                            br(), 
@@ -969,9 +970,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -980,9 +981,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Employment")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -992,9 +993,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Housing")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1004,9 +1005,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Transportation")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1016,9 +1017,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Health Services")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1033,9 +1034,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1044,9 +1045,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Employment")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1056,9 +1057,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Housing")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1068,9 +1069,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Transportation")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1080,9 +1081,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1098,9 +1099,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1109,9 +1110,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Employment")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1121,9 +1122,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Housing")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1133,9 +1134,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Transportation")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1145,9 +1146,9 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+                          root="Pillars",
+                          attribute = "Pillars",
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1164,10 +1165,13 @@ server <- function(input, output, session) {
               str_to_title(loudoun_locations$Program),
               "<br />",
               "<strong>Qualifications:</strong>",
-              (loudoun_locations$Qualification) ,
+              loudoun_locations$Qualification ,
               "<br />",
               "<strong>Description:</strong>",
-              (loudoun_locations$Description), 
+              loudoun_locations$Description, 
+              "<br />",
+              "<strong>Location:</strong>",
+              loudoun_locations$Office_Location,
               "<br />",
               "<strong>Website:</strong>",
               loudoun_locations$Website),
@@ -1177,7 +1181,7 @@ server <- function(input, output, session) {
       
       l_sub <- loudoun_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
-        setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
+        setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
@@ -1188,7 +1192,7 @@ server <- function(input, output, session) {
                                                        "border-color" = "rgba(0,0,0,0.5)",
                                                        direction = "auto")) , 
                          group = ~loudoun_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
+        addLayersControl(overlayGroups = c("TAYs", "Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       l_sub
 
@@ -1209,6 +1213,9 @@ server <- function(input, output, session) {
               "<strong>Description:</strong>",
               (loudoun_locations$Description), 
               "<br />",
+              "<strong>Location:</strong>",
+              loudoun_locations$Office_Location,
+              "<br />",
               "<strong>Website:</strong>",
               loudoun_locations$Website),
         htmltools::HTML
@@ -1216,7 +1223,7 @@ server <- function(input, output, session) {
       
       l_pill <- loudoun_locations %>%  
         leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -76.9, lat = 38.35, zoom = 8) %>% 
+        setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
         addProviderTiles("CartoDB") %>% 
         addCircleMarkers(lng = ~Longitude, 
                          lat = ~Latitude,
@@ -1251,6 +1258,9 @@ server <- function(input, output, session) {
               "<strong>Description:</strong>",
               (allegheny_locations$Description), 
               "<br />",
+              "<strong>Location:</strong>",
+              allegheny_locations$Office_Location,
+              "<br />",
               "<strong>Website:</strong>",
               allegheny_locations$Website),
         htmltools::HTML
@@ -1269,7 +1279,7 @@ server <- function(input, output, session) {
                                                        "border-color" = "rgba(0,0,0,0.5)",
                                                        direction = "auto")) , 
                          group = ~allegheny_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
+        addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
       
@@ -1288,6 +1298,9 @@ server <- function(input, output, session) {
               "<br />",
               "<strong>Description:</strong>",
               (allegheny_locations$Description), 
+              "<br />",
+              "<strong>Location:</strong>",
+              allegheny_locations$Office_Location,
               "<br />",
               "<strong>Website:</strong>",
               allegheny_locations$Website),
@@ -1333,6 +1346,9 @@ server <- function(input, output, session) {
               "<strong>Description:</strong>",
               (fairfax$Description), 
               "<br />",
+              "<strong>Location:</strong>",
+              fairfax$Office_Location,
+              "<br />",
               "<strong>Website:</strong>",
               fairfax$Website),
         htmltools::HTML
@@ -1351,7 +1367,7 @@ server <- function(input, output, session) {
                                                        "border-color" = "rgba(0,0,0,0.5)",
                                                        direction = "auto")) ,
                          group = ~fairfax$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Both"),
+        addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       f_sub
       
@@ -1371,6 +1387,9 @@ server <- function(input, output, session) {
               "<br />",
               "<strong>Description:</strong>",
               (fairfax$Description), 
+              "<br />",
+              "<strong>Location:</strong>",
+              fairfax$Office_Location,
               "<br />",
               "<strong>Website:</strong>",
               fairfax$Website),
