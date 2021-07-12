@@ -5,10 +5,10 @@ account: rebstock-julie
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4369791
-bundleId: 4804195
+bundleId: 4811142
 url: https://rebstock-julie.shinyapps.io/Midterm-Loudoun/
-when: 1625851824.9628
-lastSyncTime: 1625851824.96305
+when: 1626095349.80583
+lastSyncTime: 1626095349.80585
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: images/loudoun-map.png|Maps/Maps.Rmd|Template/app.R|Template/theme.R
+ignoredFiles: Maps/Maps.Rmd|Template/app.R|Template/theme.R

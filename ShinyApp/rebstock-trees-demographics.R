@@ -232,8 +232,8 @@ subpop_levels <- c("Foster Care", "Juvenile Detention", "Both")
 subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
                           levels = subpop_levels)
 
-Pillar_levels <- c("Education", "Employment", "Housing", "Transportation", "Health Services", "Funding and Policy ")
-Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green', 'pink'), 
+Pillar_levels <- c("Education", "Employment", "Housing", "Transportation", "Health Services")
+Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green'), 
                           levels = Pillar_levels)
 # Zipcodes and map of Loudoun
 va_zips <- zctas(state = "VA", year = 2010)
@@ -458,22 +458,34 @@ body <- dashboardBody(
       ## Data and Methodology--------------------------------------------
       tabItem(tabName = "data",
               fluidRow(style = "margin: 6px;",
-                   h1(strong("Data and Methodology"), align = "center"),
-                   h2("Sources"),
-                   br(),
-                   p("", style = "padding-top:10px;"),
-                   h4(strong("")),
+                   box(title = "Data and Methodology",
+                       closable = FALSE,
+                       width = NULL,
+                       status = "primary",
+                       solidHeader = TRUE,
+                       collapsible = TRUE,
                    p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
                                         residents that the county serves."),
+                   img(src = 'data-acs.png', style = "display: inline; float: left;", width = "130px"),
                    p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
                                         the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,
                                         educational attainment, health insurance coverage, and poverty level."),
+                   img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "200px"),
                    p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
                      We needed a better idea of how many youths need services to transition out of the system. "),
+                   br(),
+                   img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "100px"),
                    p("We used  Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                     We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
+                     We used these numbers to get a better idea of how many youths need services to transition out of the system."),
+                   br(),
+                   br(),
+                   p("We began our research with a literature review...... "), 
+                   p("Next we webscraped information on the demographics of our target population: 18-24; in foster care or juvenile detention. "),
+                   p("Webscrapped the services and programs available and got their locations to map. "),
+                   br(),
+                   p("Compare against Fairfax, VA and Allegheny, PA ")),
               br(), 
-              br()
+              br()) 
               
       ),
       
@@ -481,8 +493,13 @@ body <- dashboardBody(
       ## Services--------------------------------------------
       tabItem(tabName = "services", 
               fluidRow(
-                  h1("Service Availability for Transitional Aged Youth"),
-                  h2("Why are these programs and services so important? "),
+                box(title = "Service Availability for Transitional Aged Youth",
+                    closable = FALSE,
+                    width = NULL,
+                    status = "primary",
+                    solidHeader = TRUE,
+                    collapsible = TRUE,
+                  h2(strong("Why are these programs and services so important? ")) ,
                   p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
                     because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
                     the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
@@ -491,13 +508,15 @@ body <- dashboardBody(
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                     their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                  p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different kinds of services to transitional aged youth (tays) in Loudoun and according
-                    to their spreadsheet, ... As you can see in 2019, there was a large dip in Outpatient waitlist person because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
+                  p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
+                    As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
                     one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
-                    instead of waiting days or even weeks to receive an assessment"), 
+                    instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
+                    substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
+                    "), 
                   plotlyOutput("waitlist"),
                   p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
-                  p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")) ,
+                  p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))  ,
                  br(), 
                  br(),
                   box(
@@ -512,8 +531,7 @@ body <- dashboardBody(
                       "Employment",
                       "Housing",
                       "Transportation",
-                      "Health Services",
-                      "Policy and Funding")), 
+                      "Health Services")), 
                     collapsibleTreeOutput("tree1")),
                 box(
                   title = "Fairfax County",
@@ -527,8 +545,7 @@ body <- dashboardBody(
                     "Employment",
                     "Housing",
                     "Transportation",
-                    "Health Services",
-                    "Policy and Funding")), 
+                    "Health Services")), 
                   collapsibleTreeOutput("tree3")), 
                 
                   box(
@@ -544,8 +561,7 @@ body <- dashboardBody(
                       "Employment",
                       "Housing",
                       "Transportation",
-                      "Health Services",
-                      "Policy and Funding")
+                      "Health Services")
                     ),
                     collapsibleTreeOutput("tree2")) 
                   
@@ -560,7 +576,13 @@ body <- dashboardBody(
                     status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
-                    h3(strong(""), align = "center")),
+                    h3(strong(""), align = "center"),
+                    p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
+                  programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
+                  Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
+                  walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
+                   ")),
+                
                 # first select which program you want to see overtime
                 selectInput("type", "Select Type of Program:", width = "100%", choices = c(
                   "Case Management" = "case",
@@ -663,7 +685,7 @@ body <- dashboardBody(
               ) ,
       tabItem(tabName = "findings", 
               fluidRow(style = "margin: 6px;",
-                       h1(strong("Conclusion"), align = "center") ) 
+                       h1(strong("Conclusion"), align = "center")) 
               
             ), 
       tabItem(tabName = "team",
@@ -681,9 +703,9 @@ body <- dashboardBody(
                   p("Our project goal was to identify the gaps in the services available for transitional aged youth in Loudoun County, VA. We visualized the programs by education, employment, housing, transportation, insurance and funding & policy and mapped their locations. Our team is comprised of talented individuals with a broad range of skills and experience."),
                   h2("DSPG Team Members"),
                   # change the images 
+                  img(src = 'team-yang.png', height = "150", width = "120", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
-                  img(src = '', height = "150", width = "140", align = "center"),
-                  img(src = 'team-rebstock.png', height = "150", width = "140", align = "center"),
+                  img(src = 'team-rebstock.png', height = "145", width = "150", align = "center"),
                   img(src = 'team-austin.png', height = "150", width = "140", align = "center"),
                   img(src = '', height = "150", width = "140", align = "center"),
                   br(),
@@ -990,21 +1012,9 @@ server <- function(input, output, session) {
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
 
-      }else if(input$pillar1%in%"Health Services"){
-        Tree%>%filter(County == "Loudoun")%>%
-          filter(Pillars == "Health Services")%>%
-          group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
-                          width=1800,
-                          zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount',
-                          fillByLevel = T)
-
       }else {
         Tree%>%filter(County == "Loudoun")%>%
-          filter(Pillars == "Funding and Policy")%>%
+          filter(Pillars == "Health Services")%>%
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
@@ -1021,24 +1031,22 @@ server <- function(input, output, session) {
     output$tree2 <- renderCollapsibleTree({
       if(input$pillar2%in%"Education"){
         Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Education")%>%
+          filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
       }else if(input$pillar2%in%"Employment"){
         Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Employment")%>%
+          filter(Pillars == "Employment")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1046,12 +1054,11 @@ server <- function(input, output, session) {
 
       }else if(input$pillar2%in%"Housing"){
         Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Housing")%>%
+          filter(Pillars == "Housing")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1059,39 +1066,24 @@ server <- function(input, output, session) {
 
       }else if(input$pillar2%in%"Transportation"){
         Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Transportation")%>%
+          filter(Pillars == "Transportation")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
-                          fill = "Category", 
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
 
-      }else if(input$pillar2%in%"Health Services"){
+      }else{
         Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Health Services")%>%
+          filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
-                          zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount',
-                          fillByLevel = T)
-
-      }else {
-        Tree%>%filter(County == "Allegheny")%>%
-          filter(Pillars == "Funding & Policy")%>%
-          group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
-                          fill = "Category", 
-                          width = 1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
@@ -1104,24 +1096,22 @@ server <- function(input, output, session) {
     output$tree3 <- renderCollapsibleTree({
       if(input$pillar3%in%"Education"){
         Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Education")%>%
+          filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
       }else if(input$pillar3%in%"Employment"){
         Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Employment")%>%
+          filter(Pillars == "Employment")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1129,12 +1119,11 @@ server <- function(input, output, session) {
         
       }else if(input$pillar3%in%"Housing"){
         Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Housing")%>%
+          filter(Pillars == "Housing")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
@@ -1142,39 +1131,24 @@ server <- function(input, output, session) {
         
       }else if(input$pillar3%in%"Transportation"){
         Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Transportation")%>%
+          filter(Pillars == "Transportation")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
                           width=1800,
-                          fill = "Category", 
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
         
-      }else if(input$pillar3%in%"Health Services"){
+      }else{
         Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Health Services")%>%
+          filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
                           root="County",
                           attribute = "County",
-                          fill = "Category", 
                           width=1800,
-                          zoomable=F, 
-                          collapsed = T, nodeSize = 'leafCount',
-                          fillByLevel = T)
-        
-      }else {
-        Tree%>%filter(County == "Fairfax")%>%
-          filter(Pillars == "Funding & Policy")%>%
-          group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range"),
-                          root="County",
-                          attribute = "County",
-                          fill = "Category", 
-                          width = 1800,
                           zoomable=F, 
                           collapsed = T, nodeSize = 'leafCount',
                           fillByLevel = T)
