@@ -88,15 +88,23 @@ map_by_subpop <- leaflet(options = leafletOptions(minzoom = 12)) %>%
 ```
 
 ```{r zip code outlines}
+# Load in zip codes for virginia 
 options(tigris_use_cache = TRUE)
 va_zips <- zctas(state = "VA", year = 2010)
+
+# Find zip codes just for Loudoun
 loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
 loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
   html_table() %>% select(c(1,2)) %>% rename(`Zip Code` = X1, City = X2) %>%
   slice(-c(1, 2)) 
-loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
+
+# Get just the zip codes 
 loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
+
+# Get loudoun zip code geo info 
 loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
+
+# Add polygons to map 
 map_by_subpop <- map_by_subpop %>% addPolygons(data = loudoun_zips, weight = 1, fillOpacity = 0.1, label = ~ZCTA5CE10,  highlightOptions = highlightOptions(bringToFront = T), group = "Zip Codes") %>% addLayersControl(overlayGroups = c("Foster Care", "Juvenile Detention", "Zip Codes"))
 
 map_by_pillar <- map_by_pillar %>% addPolygons(data = loudoun_zips, weight = 1, fillOpacity = 0.1, label = ~ZCTA5CE10,  highlightOptions = highlightOptions(bringToFront = T), group = "Zip Codes") %>% addLayersControl(overlayGroups = c(unique(locations$Pillars), "Zip Codes"))
