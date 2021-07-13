@@ -466,7 +466,7 @@ body <- dashboardBody(
                        collapsible = TRUE,
                    p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
                                         residents that the county serves."),
-                   img(src = 'data-acs.png', style = "display: inline; float: left;", width = "130px"),
+                   img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
                    p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
                                         the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,
                                         educational attainment, health insurance coverage, and poverty level."),
@@ -475,7 +475,15 @@ body <- dashboardBody(
                      We needed a better idea of how many youths need services to transition out of the system. "),
                    br(),
                    img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "100px"),
-                   p("We used  Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                   p("We used Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                     We used these numbers to get a better idea of how many youths need services to transition out of the system."),
+                   br(),
+                   img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "200px"),
+                   p("We used Virginia Department of Social Services to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                     We used these numbers to get a better idea of how many youths need services to transition out of the system."),
+                   br(),
+                   img(src = 'data-usCensus.png', style = "display: inline; float: left;", width = "150px"),
+                   p("We used US Census Bureau to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
                      We used these numbers to get a better idea of how many youths need services to transition out of the system."),
                    br(),
                    br(),
@@ -714,7 +722,7 @@ body <- dashboardBody(
                   p("Yang Cheng, Fellow (Ph.D. Student at Virginia Tech, Economics )"),
                   p("JaiDa Robinson, Fellow (M.Ed Student at Virginia State University, Counselor Education )"),
                   p("Julie Rebstock, Intern (Undergraduate Student at Virginia Tech, Computational Modeling and Data Anaylytics and Economics)"),
-                  p("Austin Burcham, Intern (Undergraduate. Student at Virginia Tech, Computer Science)"),
+                  p("Austin Burcham, Intern (Undergraduate Student at Virginia Tech, Computer Science)"),
                   p("Kyle Jacobs, Intern (Undergraduate Student at Virginia State University, Economics )"),
                   h2("Virginia Tech Faculty Team Members"),
                   img(src = 'Susan.Chen.VT.jpg', height = "150", width = "140", align = "center"),
