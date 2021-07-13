@@ -202,11 +202,29 @@ jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>%
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 # Maps -----------------------------------------------------------
+# Population Density
+m_pop <- get_acs(geography = "tract", 
+                 variables = c("B01001_007", "B01001_008", "B01001_009", "B01001_010"), 
+                 state = "VA",
+                 county = "Loudoun County",
+                 geometry = TRUE)
+f_pop <- get_acs(geography = "tract", 
+                 variables = c("B01001_022", "B01001_023", "B01001_024", "B01001_025"), 
+                 state = "VA",
+                 county = "Loudoun County",
+                 geometry = TRUE)
+
+both <- m_pop %>%
+  mutate(f = f_pop$estimate)%>%
+  mutate(both = estimate+f)%>%
+  select(GEOID, NAME, variable, geometry, both)
+
+# Locations 
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  select(Program, Longitude, Latitude, Pillars, Subpopulation, Qualification, Description, Website) %>%
+  select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
@@ -214,7 +232,7 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  select(Program, Longitude, Latitude, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
@@ -222,7 +240,7 @@ allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
 fairfax <- map%>%
   filter(County == "Fairfax") %>% 
-  select(Program, Longitude, Latitude, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
@@ -688,7 +706,9 @@ body <- dashboardBody(
                                       p(strong("Map of Programs")),
                                       leafletOutput("map4")
                              )
-                           ) )
+                           ) ),
+                        h2(strong("Population Density of TAYs")), 
+                        leafletOutput("density")
                
                   )
               ) ,
@@ -1179,7 +1199,7 @@ server <- function(input, output, session) {
               loudoun_locations$Description, 
               "<br />",
               "<strong>Location:</strong>",
-              loudoun_locations$Office_Location,
+              loudoun_locations$Office,
               "<br />",
               "<strong>Website:</strong>",
               loudoun_locations$Website),
@@ -1190,7 +1210,7 @@ server <- function(input, output, session) {
       l_sub <- loudoun_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>%
+        addTiles() %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
                          label = labels,
@@ -1199,7 +1219,7 @@ server <- function(input, output, session) {
                                                        "font-size" = "12px",
                                                        "border-color" = "rgba(0,0,0,0.5)",
                                                        direction = "auto")) , 
-                         group = ~loudoun_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
+                         group = ~loudoun_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("TAYs", "Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       l_sub
@@ -1222,7 +1242,7 @@ server <- function(input, output, session) {
               (loudoun_locations$Description), 
               "<br />",
               "<strong>Location:</strong>",
-              loudoun_locations$Office_Location,
+              loudoun_locations$Office,
               "<br />",
               "<strong>Website:</strong>",
               loudoun_locations$Website),
@@ -1232,10 +1252,10 @@ server <- function(input, output, session) {
       l_pill <- loudoun_locations %>%  
         leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>% 
+        addTiles() %>%
         addCircleMarkers(lng = ~Longitude, 
                          lat = ~Latitude,
-                         radius = 6, 
+                         radius = 8, 
                          label = labels,
                          labelOptions = labelOptions(direction = "bottom",
                                                      style = list(
@@ -1267,7 +1287,7 @@ server <- function(input, output, session) {
               (allegheny_locations$Description), 
               "<br />",
               "<strong>Location:</strong>",
-              allegheny_locations$Office_Location,
+              allegheny_locations$Office,
               "<br />",
               "<strong>Website:</strong>",
               allegheny_locations$Website),
@@ -1277,7 +1297,7 @@ server <- function(input, output, session) {
       a_sub <- allegheny_locations %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>%
+        addTiles() %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
                          label = labels,
@@ -1286,7 +1306,7 @@ server <- function(input, output, session) {
                                                        "font-size" = "12px",
                                                        "border-color" = "rgba(0,0,0,0.5)",
                                                        direction = "auto")) , 
-                         group = ~allegheny_locations$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
+                         group = ~allegheny_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       a_sub
@@ -1308,7 +1328,7 @@ server <- function(input, output, session) {
               (allegheny_locations$Description), 
               "<br />",
               "<strong>Location:</strong>",
-              allegheny_locations$Office_Location,
+              allegheny_locations$Office,
               "<br />",
               "<strong>Website:</strong>",
               allegheny_locations$Website),
@@ -1319,10 +1339,10 @@ server <- function(input, output, session) {
       a_pill <- allegheny_locations %>%  
       leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>% 
+        addTiles() %>%
         addCircleMarkers(lng = ~Longitude, 
                          lat = ~Latitude,
-                         radius = 6, 
+                         radius = 8, 
                          label = labels,
                          labelOptions = labelOptions(direction = "bottom",
                                                      style = list(
@@ -1355,7 +1375,7 @@ server <- function(input, output, session) {
               (fairfax$Description), 
               "<br />",
               "<strong>Location:</strong>",
-              fairfax$Office_Location,
+              fairfax$Office,
               "<br />",
               "<strong>Website:</strong>",
               fairfax$Website),
@@ -1365,7 +1385,7 @@ server <- function(input, output, session) {
       f_sub <- fairfax %>% 
         leaflet( options = leafletOptions(minzoom = 12)) %>%
         setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>%
+        addTiles() %>%
         addCircleMarkers(lng = ~Longitude,
                          lat = ~Latitude,
                          label = labels,
@@ -1374,7 +1394,7 @@ server <- function(input, output, session) {
                                                        "font-size" = "12px",
                                                        "border-color" = "rgba(0,0,0,0.5)",
                                                        direction = "auto")) ,
-                         group = ~fairfax$Subpopulation, radius = 6, color = ~subpop_pal(Subpopulation)) %>%
+                         group = ~fairfax$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
         addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
                          options = layersControlOptions(collapsed = FALSE))
       f_sub
@@ -1397,7 +1417,7 @@ server <- function(input, output, session) {
               (fairfax$Description), 
               "<br />",
               "<strong>Location:</strong>",
-              fairfax$Office_Location,
+              fairfax$Office,
               "<br />",
               "<strong>Website:</strong>",
               fairfax$Website),
@@ -1407,11 +1427,11 @@ server <- function(input, output, session) {
       f_pill <- fairfax %>%  
         leaflet(options = leafletOptions(minzoom = 12)) %>% 
         setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
-        addProviderTiles("CartoDB") %>% 
+        addTiles() %>%
         addCircleMarkers(lng = ~Longitude, 
                          lat = ~Latitude,
                          label = labels, 
-                         radius = 6, 
+                         radius = 8, 
                          labelOptions = labelOptions(direction = "bottom",
                                                      style = list(
                                                        "font-size" = "12px",
@@ -1474,7 +1494,7 @@ server <- function(input, output, session) {
         zips_l <- case %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addProviderTiles("CartoDB") %>%
+          addTiles() %>%
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
@@ -1523,7 +1543,7 @@ server <- function(input, output, session) {
         zips_l <- dis %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addProviderTiles("CartoDB") %>%
+          addTiles() %>%
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
@@ -1573,7 +1593,7 @@ server <- function(input, output, session) {
         zips_l <- emer %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addProviderTiles("CartoDB") %>%
+          addTiles() %>%
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
@@ -1623,7 +1643,7 @@ server <- function(input, output, session) {
         zips_l <- employ %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addProviderTiles("CartoDB") %>%
+          addTiles() %>%
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
@@ -1673,7 +1693,7 @@ server <- function(input, output, session) {
         zips_l <- out %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addProviderTiles("CartoDB") %>%
+          addTiles() %>%
           addPolygons(data = loudoun_zips, weight = .5, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
@@ -1723,9 +1743,9 @@ server <- function(input, output, session) {
         zips_l <- res %>%
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addProviderTiles("CartoDB") %>%
-          addPolygons(data = loudoun_zips, weight = .5, 
-                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
+          addTiles() %>%
+          addPolygons(data = loudoun_zips, weight = 1, 
+                      fillOpacity = 0.05, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
                            radius = ~Number/5, 
                            color = "orange",
@@ -1739,6 +1759,44 @@ server <- function(input, output, session) {
       
       
     })
+    
+    output$density <- renderLeaflet({ 
+      
+      pal <- colorNumeric(palette = "viridis", 
+                          domain = both$both)
+      
+      
+      labels <- lapply(
+        paste("<strong>Area: </strong>",
+              both$NAME,
+              "<br />",
+              "<strong>Total Population: </strong>",
+              formatC(both$both, format = "f", big.mark =",", digits = 0)),
+        htmltools::HTML
+      )
+      
+      
+      both %>%
+        st_transform(crs = "+init=epsg:4326") %>%
+        leaflet(width = "100%") %>%
+        addTiles() %>%
+        addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                    stroke = FALSE,
+                    smoothFactor = 0,
+                    fillOpacity = 0.5,
+                    label = labels,
+                    color = ~ pal(both)) %>%
+        addLegend("bottomright", 
+                  pal = pal, 
+                  values = ~ both,
+                  title = "Total Population",
+                  opacity = .7)
+      
+      
+      
+      })
+    
+ 
     
 }
 
