@@ -1,0 +1,40 @@
+---
+title: "serving"
+author: "Rebstock"
+date: "7/13/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Local Bus 
+https://www.loudoun.gov/DocumentCenter/View/122385/TDP-2018-2028-?bidId=
+https://www.loudoun.gov/3444/Transit-Development-Plan
+
+
+OAR
+https://oarnova.org/accountability/financial-documents 
+2020 report 
+https://www.oarnova.org/images/FY_2020_AR.pdf 
+
+
+Medicaid (all of VA)
+Monthly enrollments 
+https://www.dmas.virginia.gov/media/3619/dmas-enrollment-report-july-2021.pdf
+https://www.dmas.virginia.gov/media/3503/medicaid-expansion-infographic.pdf
+
+WIOA Monthly reports 
+https://vcwnorthern.com/program-reports/
+
+
+
+
+Contact some of these to ask 
+https://www.loudoun.gov/1796/Homeless-Services
+https://www.loudounfreeclinic.org/
+https://www.nvcc.edu/acp/expectations.html 
+
+
+
