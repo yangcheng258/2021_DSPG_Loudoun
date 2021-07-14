@@ -16,6 +16,7 @@ library(shinycssloaders)
 library(leaflet)
 library(leaflet.extras)
 library(rvest)
+library(sf)
 
 options(tigris_use_cache = TRUE)
 
@@ -48,16 +49,15 @@ colnames(race) <- "Estimate"
 race$Race <- c("White", "Black", "Indian", "Asian", "Native Hawaiian", "Other")
 
 # education 
-male_edu <- c("B15001_003","B15001_004","B15001_005","B15001_006","B15001_007","B15001_008","B15001_009","B15001_010") 
-female_edu <- c("B15001_044","B15001_045", "B15001_046", "B15001_047", "B15001_048", "B15001_049","B15001_050","B15001_051") 
+male_edu <- c("B15001_004","B15001_005","B15001_006","B15001_007","B15001_008","B15001_009","B15001_010") 
+female_edu <- c("B15001_045", "B15001_046", "B15001_047", "B15001_048", "B15001_049","B15001_050","B15001_051") 
 education <- get_acs(geography = 'county', variables = c(male_edu, female_edu) , state= 'VA',county='Loudoun')
 
 school <- c("Less than 9th", "9th to 12th (no diploma)", "High school diploma", "Some college (no degree)", "Associate's degree", "Bachelor's degree", "Graduate or professional degree")
-
-medu <- education[2:8,]%>%
+medu <- education[1:7,]%>%
   select(variable, estimate)
 medu$variable <- school
-fedu <- education[10:16,]%>%
+fedu <- education[8:14,]%>%
   select(estimate)
 
 ## Poverty 
@@ -602,7 +602,7 @@ body <- dashboardBody(
                     status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
-                    h3(strong(""), align = "center"),
+                    h3(strong("Individuals Served from the Department of Mental Health, Substance Abuse and Developmental Services"), align = "center"),
                     p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
                   programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
                   Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
@@ -832,7 +832,7 @@ server <- function(input, output, session) {
         both$variable <- factor(both$variable, levels=unique(both$variable))
         
         both %>%
-          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "indianred1")+ 
+          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "lavenderblush3")+ 
           labs(title = "Educational Attainment", 
                y = "", 
                x = "Population Estimate") 
@@ -998,7 +998,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1009,7 +1009,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Employment")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1021,7 +1021,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Housing")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1033,7 +1033,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Transportation")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1045,7 +1045,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Loudoun")%>%
           filter(Pillars == "Health Services")%>%
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1062,7 +1062,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1073,7 +1073,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Employment")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1085,7 +1085,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Housing")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1097,7 +1097,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Transportation")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1109,7 +1109,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Allegheny")%>%
           filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1127,7 +1127,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Education")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1138,7 +1138,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Employment")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1150,7 +1150,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Housing")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1162,7 +1162,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Transportation")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1174,7 +1174,7 @@ server <- function(input, output, session) {
         Tree%>%filter(County == "Fairfax")%>%
           filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
-          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office_Location"),
+          collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1495,7 +1495,7 @@ server <- function(input, output, session) {
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
           addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = .5, 
+          addPolygons(data = loudoun_zips, weight = 1, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
                            radius = ~Number/5, 
@@ -1544,7 +1544,7 @@ server <- function(input, output, session) {
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
           addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = .5, 
+          addPolygons(data = loudoun_zips, weight = 1, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
                            radius = ~Number/5, 
@@ -1594,7 +1594,7 @@ server <- function(input, output, session) {
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
           addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = .5, 
+          addPolygons(data = loudoun_zips, weight = 1, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
                            radius = ~Number/5, 
@@ -1644,7 +1644,7 @@ server <- function(input, output, session) {
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
           addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = .5, 
+          addPolygons(data = loudoun_zips, weight = 1, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
                            radius = ~Number/5, 
@@ -1694,7 +1694,7 @@ server <- function(input, output, session) {
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
           setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
           addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = .5, 
+          addPolygons(data = loudoun_zips, weight = 1, 
                       fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
           addCircleMarkers(lng = ~Long, lat = ~Lat,
                            radius = ~Number/5, 

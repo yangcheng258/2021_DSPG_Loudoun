@@ -9,32 +9,159 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Local Bus 
+Local Bus 2018-2023 
 https://www.loudoun.gov/DocumentCenter/View/122385/TDP-2018-2028-?bidId=
 https://www.loudoun.gov/3444/Transit-Development-Plan
 
+* Serves 3 shopping centers 
+*  Start point is a stop in the Shenandoah Square shopping center north of the County offices
+(Shenandoah Building) and adjacent to Mail Stop
+*  The route has never charged a fare. The Town of Leesburg contributes a portion of the
+cost to fund the service
 
-OAR
+```{r}
+# number of riders monthly for weekdays, saturday, sunday 
+mar15 <- c(1148, 228, 210)
+# average of riders for weekday, sat, sun 
+averg <- c(52, 57, 42)
+
+```
+
+
+
+OAR 2020 
 https://oarnova.org/accountability/financial-documents 
 2020 report 
 https://www.oarnova.org/images/FY_2020_AR.pdf 
+```{r}
+# 2020 
+1 <- 180
+c <- 3355
+m <- .75
+f <- .23
+undisclosed <- .2 
+
+tay <- .3 
+no_high <- .17 
+college <- .11 
+
+#2019 
+l <- 221
+c <- 4757
+m <- .72
+f <- .27
+
+tay <- .36 
+no_high <- .15 
+college <- .11 
+
+#2018
+l <- 142
+c <- 3917
+m <- .76
+f <- .24
+
+tay <- .36 
+no_high <- .15 
+ 
+#2017
+l <- 159
+c <- 3413
+m <- .75
+f <- .24
+
+tay <- .31 
+no_high <- .19 
 
 
-Medicaid (all of VA)
+```
+
+
+Oxford House for all Virginia Houses November 2019 -2020 
+https://oxfordhouse.org/userfiles/file/evaluations.php
+https://oxfordhouse.org/userfiles/file/doc/eval_va2020.pdf 
+
+They take 17-74 ages, NO time limit as long as they stay sober 
+
+```{r}
+
+
+average_stay <- 9 #months 
+median_stay <- 5 
+prior_home <- 61.3 #percent 
+prior_jail <- 79.6
+edu <- 12.1 #years '
+
+
+```
+
+
+
+
+Medicaid (all of VA) july 2021
 Monthly enrollments 
 https://www.dmas.virginia.gov/media/3619/dmas-enrollment-report-july-2021.pdf
 https://www.dmas.virginia.gov/media/3503/medicaid-expansion-infographic.pdf
+https://www.dmas.virginia.gov/data/ 
 
-WIOA Monthly reports 
+WIOA Monthly reports 2020
 https://vcwnorthern.com/program-reports/
 
+Affordable Dwelling Unit Program 2020
+Monthly reports on how many ADU are sold and rented out and a waitlist number 
+https://www.loudoun.gov/431/Affordable-Dwelling-Unit-Advisory-Board 
+
+Continum of Care Homeless Shelters in Northern VA 202-2021
+file:///Users/julierebstock/Downloads/2021_PIT_Combined1.pdf
+
+553 single adults who were formerly in foster care are homeless (pg44) 
+
+2017-10
+2018-7
+2019-20
+2020-22
+2021-12
+
+page 46 
+21% of total homeless in Loudoun are 18-24 
+
+
+Good Shepherd Alliance 
+https://goodshepherdalliance.org/how-we-serve/
+3000+ are helped each year 
+10000+ beds 
+77% go on to stable housing following 
+
+
+Adult Literacy Program Loudoun
+https://loudounliteracy.org/wp-content/uploads/2020/11/Annual-Report-FY20.pdf 
+
+```{r}
+
+
+classroom <- 396
+tutoring <- 20
+jobsite <- 49 
+ged <- 2 
+workforce <- 105 
+
+served <- 543 
+hispanic <- 58
+asian <- 24
+white <- 10
+other <- 6 
+
+
+```
 
 
 
-Contact some of these to ask 
-https://www.loudoun.gov/1796/Homeless-Services
-https://www.loudounfreeclinic.org/
-https://www.nvcc.edu/acp/expectations.html 
+
+
+
+
+
+
 
 
 
