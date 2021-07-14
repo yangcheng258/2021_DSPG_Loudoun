@@ -35,7 +35,7 @@ https://oarnova.org/accountability/financial-documents
 https://www.oarnova.org/images/FY_2020_AR.pdf 
 ```{r}
 # 2020 
-1 <- 180
+l <- 180
 c <- 3355
 m <- .75
 f <- .23

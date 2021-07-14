@@ -533,64 +533,59 @@ body <- dashboardBody(
                     them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
-                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                  p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
-                    As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
-                    one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
-                    instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
-                    substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
-                    "), 
-                  plotlyOutput("waitlist"),
-                  p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
-                  p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))  ,
+                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. ")
+                  )  ,
                  br(), 
                  br(),
                   box(
-                    title = "Loudoun County",
-                    closable = FALSE,
-                    width = NULL,
-                    status = "primary",
-                    solidHeader = TRUE,
-                    collapsible = TRUE,
-                    selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
-                      "Education",
-                      "Employment",
-                      "Housing",
-                      "Transportation",
-                      "Health Services")), 
-                    collapsibleTreeOutput("tree1")),
-                box(
-                  title = "Fairfax County",
-                  closable = FALSE,
-                  width = NULL,
-                  status = "primary",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  selectInput("pillar3", "Select Pillar:", width = "100%", choices = c(
-                    "Education",
-                    "Employment",
-                    "Housing",
-                    "Transportation",
-                    "Health Services")), 
-                  collapsibleTreeOutput("tree3")), 
-                
+                        title = "Service Availability",
+                        closable = FALSE,
+                        width = NULL,
+                        status = "primary",
+                        solidHeader = TRUE,
+                        collapsible = TRUE,
+                        tabsetPanel(
+                          tabPanel("Loudoun",
+                                   selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
+                                     "Education",
+                                     "Employment",
+                                     "Housing",
+                                     "Transportation",
+                                     "Health Services")), 
+                                   collapsibleTreeOutput("tree1")
+                          ),
+                          tabPanel("Fairfax",
+                                   selectInput("pillar3", "Select Pillar:", width = "100%", choices = c(
+                                     "Education",
+                                     "Employment",
+                                     "Housing",
+                                     "Transportation",
+                                     "Health Services")), 
+                                   collapsibleTreeOutput("tree3")), 
+                          tabPanel("Allegheny",
+                                   selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
+                                     "Education",
+                                     "Employment",
+                                     "Housing",
+                                     "Transportation",
+                                     "Health Services")
+                                   ),
+                                   collapsibleTreeOutput("tree2"))
+                                   
+                          )
+                        ),
                   box(
-                    title = "Allegheny County",
+                    
+                    title = "Comparison",
                     closable = FALSE,
                     width = NULL,
                     status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
-                    h3(strong(""), align = "center"),
-                    selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
-                      "Education",
-                      "Employment",
-                      "Housing",
-                      "Transportation",
-                      "Health Services")
-                    ),
-                    collapsibleTreeOutput("tree2")) 
-                  
+                    collapsibleTreeOutput("compare")
+                    
+                    
+                  )
                 ) 
              
       ), 
@@ -607,7 +602,16 @@ body <- dashboardBody(
                   programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
                   Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
                   walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
-                   ")),
+                   "),
+                    p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
+                    As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
+                    one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
+                    instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
+                    substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
+                    "), 
+                    plotlyOutput("waitlist"),
+                    p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
+                    p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))),
                 
                 # first select which program you want to see overtime
                 selectInput("type", "Select Type of Program:", width = "100%", choices = c(
