@@ -198,10 +198,6 @@ jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>%
   mutate(Proportion = readr::parse_number(as.character(Proportion)))
 
 
-
-# Trees -----------------------------------------------------------
-Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
-# Maps -----------------------------------------------------------
 # Population Density
 m_pop <- get_acs(geography = "tract", 
                  variables = c("B01001_007", "B01001_008", "B01001_009", "B01001_010"), 
@@ -219,6 +215,9 @@ both <- m_pop %>%
   mutate(both = estimate+f)%>%
   select(GEOID, NAME, variable, geometry, both)
 
+# Trees -----------------------------------------------------------
+Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
+# Maps -----------------------------------------------------------
 # Locations 
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 
@@ -533,7 +532,12 @@ body <- dashboardBody(
                     them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
-                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. ")
+                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
+                  h2("Number of Programs by Category"), 
+                  selectInput("table1", "Select Category:", width = "100%", choices = c(
+                    "Subpopulation",
+                    "Pillar")), 
+                  tableOutput("table1")
                   )  ,
                  br(), 
                  br(),
@@ -544,8 +548,10 @@ body <- dashboardBody(
                         status = "primary",
                         solidHeader = TRUE,
                         collapsible = TRUE,
+                        
                         tabsetPanel(
                           tabPanel("Loudoun",
+                                   br(),
                                    selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
                                      "Education",
                                      "Employment",
@@ -582,6 +588,13 @@ body <- dashboardBody(
                     status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
+                    selectInput("compare1", "Select Pillar:", width = "100%", choices = c(
+                      "Education",
+                      "Employment",
+                      "Housing",
+                      "Transportation",
+                      "Health Services")
+                    ),
                     collapsibleTreeOutput("compare")
                     
                     
@@ -1179,6 +1192,70 @@ server <- function(input, output, session) {
           filter(Pillars == "Health Services")%>% 
           group_by(Pillars)%>%
           collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Office"),
+                          root="Pillars",
+                          attribute = "Pillars",
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }
+    })
+    
+    
+    output$compare <- renderCollapsibleTree({
+      if(input$compare1%in%"Education"){
+        Tree%>%
+          filter(Pillars == "Education")%>% 
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+                          root="Pillars",
+                          attribute = "Pillars",
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+      }else if(input$compare1%in%"Employment"){
+        Tree%>%
+          filter(Pillars == "Employment")%>% 
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+                          root="Pillars",
+                          attribute = "Pillars",
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else if(input$compare1%in%"Housing"){
+        Tree%>%
+          filter(Pillars == "Housing")%>% 
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+                          root="Pillars",
+                          attribute = "Pillars",
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else if(input$pillar3%in%"Transportation"){
+        Tree%>%
+          filter(Pillars == "Transportation")%>% 
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+                          root="Pillars",
+                          attribute = "Pillars",
+                          width=1800,
+                          zoomable=F, 
+                          collapsed = T, nodeSize = 'leafCount',
+                          fillByLevel = T)
+        
+      }else{
+        Tree%>%
+          filter(Pillars == "Health Services")%>% 
+          group_by(Pillars)%>%
+          collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
                           root="Pillars",
                           attribute = "Pillars",
                           width=1800,
@@ -1800,7 +1877,18 @@ server <- function(input, output, session) {
       
       })
     
- 
+    
+    output$table1 <- renderTable({
+      if(input$table1%in%"Subpopulation"){
+        table <- read.csv("data/program_subpop_counts.csv")
+        table
+      }else {
+        table <- read.csv("data/program_pillar_counts.csv")
+        table
+        
+      }
+      
+    }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
     
 }
 
