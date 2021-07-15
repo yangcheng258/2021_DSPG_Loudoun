@@ -143,7 +143,7 @@ Affordable Dwelling Unit Program 2020
 Monthly reports on how many ADU are sold and rented out and a waitlist number 
 https://www.loudoun.gov/431/Affordable-Dwelling-Unit-Advisory-Board 
 
-Continum of Care Homeless Shelters in Northern VA 202-2021
+Continuum of Care Homeless Shelters in Northern VA 202-2021
 file:///Users/julierebstock/Downloads/2021_PIT_Combined1.pdf
 https://www.mwcog.org/documents/2021/05/05/homelessness-in-metropolitan-washington-results-and-analysis-from-the-annual-point-in-time-pit-count-of-persons-experiencing-homelessness-featured-publications-homelessness/ 
 
@@ -205,6 +205,14 @@ tutoring <- 20
 jobsite <- 49 
 ged <- 2 
 workforce <- 105 
+programs <- data.frame((rbind(classroom, tutoring, jobsite, ged, workforce)))  %>%
+  mutate(Type = c("Classroom", "Tutoring", "Jobsite", "GED", "Workforce Development Week")) 
+colnames(programs) <- c("Number", "Type")
+
+ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
+  labs(title = "Adult Literacy Program",
+       y = "Persons Served")+
+  theme(axis.text.x = element_text(angle = 90, vjust = .5, color = "black"))
 
 served <- 543 
 hispanic <- 58

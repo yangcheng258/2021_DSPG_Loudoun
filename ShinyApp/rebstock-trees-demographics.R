@@ -265,8 +265,6 @@ loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
 
 overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
 
-
-
 # sidebar -----------------------------------------------------------
 sidebar <- dashboardSidebar(
   sidebarMenu(
@@ -288,7 +286,7 @@ sidebar <- dashboardSidebar(
         text = "Service Availability",
         icon = icon("server")),
       menuItem(
-        tabName = "overtime",
+        tabName = "served",
         text = "Individuals Served",
         icon = icon("server")),
       menuItem(
@@ -602,7 +600,7 @@ body <- dashboardBody(
                 ) 
              
       ), 
-      tabItem(tabName = "overtime",
+      tabItem(tabName = "served",
               fluidPage(
                 box(title = "Individuals Served",
                     closable = FALSE,
@@ -626,28 +624,46 @@ body <- dashboardBody(
                     p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                     p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))),
                 
-                # first select which program you want to see overtime
-                selectInput("type", "Select Type of Program:", width = "100%", choices = c(
-                  "Case Management" = "case",
-                  "Discharge Planning" = "dis",
-                  "Emergency Services" = "emer",
-                  "Employment & Day Support Services" = "employ",
-                  "Outpatient"= "out", 
-                  "Residential" = "res")
-                ),
-                # then according to the type of program, this will show a sliderInput of Loudoun with its zip codes
-                # and the size of circles corresponding to the how many there are 
+                    # first select which program you want to see overtime 
+                    selectInput("type", "Select Type of Program:", width = "100%", choices = c(
+                      "Case Management" = "case",
+                      "Discharge Planning" = "dis",
+                      "Emergency Services" = "emer",
+                      "Employment & Day Support Services" = "employ",
+                      "Outpatient"= "out", 
+                      "Residential" = "res")
+                    ),
+                    # then according to the type of program, this will show a sliderInput of Loudoun with its zip codes
+                    # and the size of circles corresponding to the how many there are 
+                    sidebarLayout(
+                      sidebarPanel(
+                        sliderInput(inputId = "year", 
+                                    label = "Dates:",
+                                    min = as.Date("2016-12-31","%Y-%m-%d"),
+                                    max = as.Date("2020-12-31","%Y-%m-%d"),
+                                    value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
+                                    step = 365,
+                                    animate = animationOptions(interval = 1500))),
+                      mainPanel(leafletOutput(outputId = "overtime", height = "70vh"))), 
+                    box(title = "Who do the programs serve? ",
+                        closable = FALSE,
+                        width = NULL,
+                        status = "primary",
+                        solidHeader = TRUE,
+                        collapsible = TRUE,
+                        selectInput("type", "Select Type of Program:", width = "100%", choices = c(
+                          "Workforce Innovation and Opportunity Act" = "wioa",
+                          "Adult Literacy Program Loudoun" = "literacy",
+                          "Continuum of Care" = "care",
+                          "Affordable Dwelling Unit Program" ="afford", 
+                          "Oxford House" = "oxford",
+                          "OAR"= "oar", 
+                          "Route 54 Safe-T" = "bus",
+                          "Medicaid" = "med")
+                        )
+                      
+                    )
                 
-                sidebarLayout(
-                  sidebarPanel(
-                    sliderInput(inputId = "year", 
-                                label = "Dates:",
-                                min = as.Date("2016-12-31","%Y-%m-%d"),
-                                max = as.Date("2020-12-31","%Y-%m-%d"),
-                                value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
-                                step = 365,
-                                animate = animationOptions(interval = 1500))),
-                  mainPanel(leafletOutput(outputId = "overtime", height = "70vh")))
                 )
       ),
       
