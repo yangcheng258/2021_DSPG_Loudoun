@@ -85,16 +85,14 @@ They take 17-74 ages, NO time limit as long as they stay sober
 
 ```{r}
 
-
 average_stay <- 9 #months 
 median_stay <- 5 
 prior_home <- 61.3 #percent 
 prior_jail <- 79.6
-edu <- 12.1 #years '
+edu <- 12.1 #years 
 
 
 ```
-
 
 
 
@@ -104,29 +102,93 @@ https://www.dmas.virginia.gov/media/3619/dmas-enrollment-report-july-2021.pdf
 https://www.dmas.virginia.gov/media/3503/medicaid-expansion-infographic.pdf
 https://www.dmas.virginia.gov/data/ 
 
+```{r}
+library(readxl)
+library(ggplot2)
+enroll <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/ShinyApp/data/medicaid-enrollment.xlsx")
+
+
+total <- enroll[1:13,]
+total$`Adults, Pregnant Women and Children` <- as.numeric(total$`Adults, Pregnant Women and Children`)
+med <- enroll[16:20,1:3]
+colnames(med) <- c("Year", "Children", "Childless Adults")
+med$`Childless Adults` <- as.numeric(med$`Childless Adults`)
+med$Children <- as.numeric(med$Children)
+
+
+
+ggplot() + 
+  geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
+  geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="red", size = 2) + 
+  labs(y = "Persons", 
+       title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")
+
+
+ggplot() + 
+  geom_line(mapping = aes(Year, `Childless Adults`, group = 1), data = med) + 
+  geom_line(mapping = aes(Year, Children, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
+  labs(y = "Persons", 
+       title = "Medcaid for Children and Childless Adults")
+
+```
+
+
 WIOA Monthly reports 2020
 https://vcwnorthern.com/program-reports/
+**potentially getting the raw data** 
+
 
 Affordable Dwelling Unit Program 2020
+**potentially getting the raw data** 
 Monthly reports on how many ADU are sold and rented out and a waitlist number 
 https://www.loudoun.gov/431/Affordable-Dwelling-Unit-Advisory-Board 
 
 Continum of Care Homeless Shelters in Northern VA 202-2021
 file:///Users/julierebstock/Downloads/2021_PIT_Combined1.pdf
+https://www.mwcog.org/documents/2021/05/05/homelessness-in-metropolitan-washington-results-and-analysis-from-the-annual-point-in-time-pit-count-of-persons-experiencing-homelessness-featured-publications-homelessness/ 
 
-553 single adults who were formerly in foster care are homeless (pg44) 
 
-2017-10
-2018-7
-2019-20
-2020-22
-2021-12
+Jennifer Hope
+Continuum of Care Coordinator
+Loudoun County Department of Family Services (703) 771-5881
+Jennifer.Hope@loudoun.gov
 
-page 46 
-21% of total homeless in Loudoun are 18-24 
+
+```{r}
+# homeless Single transition aged youth in 2021 in Loudoun 
+2017 <- 10
+2018 <- 7
+2019 <-20
+2020 <- 22
+2021 <-12
+
+# total single adults (TAYs) in the regions included 
+total <- 453
+fc <- 92
+black <- .80
+white <- .12
+multi <- .5
+
+
+#Number of Literally Homeless TAYs (single adults and family hosueholds) in Loudoun 
+percent_21 <- .21 
+2021 <- 16
+2020 <- 22
+2019 <- 17 
+
+# Housing Inventory as of Jan 2021 in Loudoun 
+year_round_emer <- 58 
+year_round_transition <- 28
+hypothermia <- 26
+perm <- 21
+domestic <- 12 
+
+
+```
 
 
 Good Shepherd Alliance 
+**if can get more data** 
 https://goodshepherdalliance.org/how-we-serve/
 3000+ are helped each year 
 10000+ beds 
@@ -134,11 +196,10 @@ https://goodshepherdalliance.org/how-we-serve/
 
 
 Adult Literacy Program Loudoun
+**not super specific on what ages** 
 https://loudounliteracy.org/wp-content/uploads/2020/11/Annual-Report-FY20.pdf 
 
 ```{r}
-
-
 classroom <- 396
 tutoring <- 20
 jobsite <- 49 
@@ -155,6 +216,18 @@ other <- 6
 ```
 
 
+Culmore Clinic 
+**not specific on ages** 
+https://www.culmoreclinic.org/patient-enrollment 
+
+65% are employed
+$10,945 annual income
+90% require English interpretation services
+69% are 30 to 64 years old; 10% are 18 to 29; 10% are 65 and over.
+36% are male and 64% are female
+65% of these patients have been with us for 3-4 years. We are their primary care. 
+2,188 providers visits 
+885 patient calls 
 
 
 
