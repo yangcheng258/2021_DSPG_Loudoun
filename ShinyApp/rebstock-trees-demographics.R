@@ -128,6 +128,21 @@ waitlist$`Case Management*` <- as.numeric(waitlist$`Case Management*`)
 waitlist$`Employment & Day Support` <- as.numeric(waitlist$`Employment & Day Support`)
 waitlist$`Outpatient**` <- as.numeric(waitlist$`Outpatient**`)
 
+#ADult Literacy Individuals Served
+classroom <- 396
+tutoring <- 20
+jobsite <- 49 
+ged <- 2 
+workforce <- 105 
+#Medicaid
+enroll <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/ShinyApp/data/medicaid-enrollment.xlsx")
+total <- enroll[1:13,]
+total$`Adults, Pregnant Women and Children` <- as.numeric(total$`Adults, Pregnant Women and Children`)
+med <- enroll[16:20,1:3]
+colnames(med) <- c("Year", "Children", "Childless Adults")
+med$`Childless Adults` <- as.numeric(med$`Childless Adults`)
+med$Children <- as.numeric(med$Children)
+
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
 fc_2020 <- read_excel(paste0(getwd(),"/data/foster-care-2020.xlsx")) 
@@ -287,6 +302,10 @@ sidebar <- dashboardSidebar(
         icon = icon("server")),
       menuItem(
         tabName = "served",
+        text = "DMHSA Served",
+        icon = icon("server")),
+      menuItem(
+        tabName = "served_all",
         text = "Individuals Served",
         icon = icon("server")),
       menuItem(
@@ -305,6 +324,7 @@ sidebar <- dashboardSidebar(
 ) 
 # body -----------------------------------------------------------
 body <- dashboardBody(
+  shinythemes::themeSelector(), 
   fluidPage(
     tabItems(
       ## Tab Overview--------------------------------------------
@@ -366,7 +386,6 @@ body <- dashboardBody(
                 width = NULL,
                 status = "primary",
                 solidHeader = TRUE,
-                collapsible = TRUE,
                 selectInput("var1", "Select Variable:", width = "100%", choices = c(
                   "Gender and Age" = "age",
                   "Percentage of TAYs" = "percent", 
@@ -531,14 +550,14 @@ body <- dashboardBody(
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                     their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                  h2("Number of Programs by Category"), 
-                  selectInput("table1", "Select Category:", width = "100%", choices = c(
-                    "Subpopulation",
-                    "Pillar")), 
-                  tableOutput("table1")
-                  )  ,
-                 br(), 
-                 br(),
+                  column(6, 
+                         h4("Number of Programs by Subpopulation"), 
+                         tableOutput("table1") ),
+                  column(6, 
+                         h4("Number of Programs by Pillar"), 
+                         tableOutput("table2"))
+                  )),
+                fluidRow(
                   box(
                         title = "Service Availability",
                         closable = FALSE,
@@ -579,7 +598,6 @@ body <- dashboardBody(
                           )
                         ),
                   box(
-                    
                     title = "Comparison",
                     closable = FALSE,
                     width = NULL,
@@ -602,7 +620,7 @@ body <- dashboardBody(
       ), 
       tabItem(tabName = "served",
               fluidPage(
-                box(title = "Individuals Served",
+                box(title = "Department of Mental health, Substance Abuse, and Developmental Services",
                     closable = FALSE,
                     width = NULL,
                     status = "primary",
@@ -638,13 +656,13 @@ body <- dashboardBody(
                     sidebarLayout(
                       sidebarPanel(
                         sliderInput(inputId = "year", 
-                                    label = "Dates:",
-                                    min = as.Date("2016-12-31","%Y-%m-%d"),
-                                    max = as.Date("2020-12-31","%Y-%m-%d"),
-                                    value = as.Date("2016-12-31"), timeFormat="%Y-%m-%d", 
-                                    step = 365,
+                                    label = "Select a year:",
+                                    value = 2016,
+                                    min = 2016,
+                                    max = 2020,
                                     animate = animationOptions(interval = 1500))),
                       mainPanel(leafletOutput(outputId = "overtime", height = "70vh"))), 
+                # should have valueBox for each program to highlight the important ones???? 
                     box(title = "Who do the programs serve? ",
                         closable = FALSE,
                         width = NULL,
@@ -660,12 +678,21 @@ body <- dashboardBody(
                           "OAR"= "oar", 
                           "Route 54 Safe-T" = "bus",
                           "Medicaid" = "med")
-                        )
+                        ),
+                        plotlyOutput("served")
                       
                     )
                 
                 )
       ),
+      tabItem(tabName = "served_all",
+              fluidRow(style = "margin: 6px;",
+                       h1(strong("Individuals Served"), align = "center"),
+                       valueBoxOutput("medicaid", width = 4),
+                       valueBoxOutput("wioa", width = 4),
+                       valueBoxOutput("transit" , width = 4 )
+              )
+      ) , 
       
       
       ## Locations --------------------------------------------
@@ -801,21 +828,22 @@ body <- dashboardBody(
       ) 
   ) 
     
-  
+# ui -----------------------------------------------------------
 ui <- dashboardPage(
     dashboardHeader(title = "DSPG 2021"), 
     sidebar = sidebar, 
     body = body,
     skin = "black"
 )
-   
+
+# server -----------------------------------------------------------
 server <- function(input, output, session) {
     
     var1 <- reactive({
       input$var1
     })
     output$plot1 <- renderPlotly({
-      if(var1() == "age") {
+      if(var1() == "age") { 
         
         l_ages_gender <- l_ages_gender%>%
           select(variable, estimate, summary_est)
@@ -1554,19 +1582,19 @@ server <- function(input, output, session) {
       
       if (type() == "case"){
         
-        if (input$year == "2016-12-31"){
+        if (input$year == 2016){
             case <- data.frame(overtime[2:4,2:10]) %>%
               select("...2", "X2016", Lat, Long) 
             
-        }else if (input$year == "2017-12-31"){
+        }else if (input$year == 2017){
           case <- data.frame(overtime[2:4,2:10]) %>%
             select("...2", "X2017", Lat, Long) 
           
-        }else if (input$year == "2018-12-31"){
+        }else if (input$year == 2018){
           case <- data.frame(overtime[2:4,2:10]) %>%
             select("...2", "X2018", Lat, Long) 
           
-        }else if (input$year == "2019-12-31"){
+        }else if (input$year == 2019){
           case <- data.frame(overtime[2:4,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
@@ -1604,19 +1632,19 @@ server <- function(input, output, session) {
        
       } else if (type() == "dis") {
         
-        if (input$year == "2016-12-31"){
+        if (input$year == 2016){
           dis <- data.frame(overtime[8:9,2:10]) %>%
             select("...2", "X2016", Lat, Long) 
           
-        }else if (input$year == "2017-12-31"){
+        }else if (input$year == 2017){
           dis <- data.frame(overtime[8:9,2:10]) %>%
             select("...2", "X2017", Lat, Long) 
           
-        }else if (input$year == "2018-12-31"){
+        }else if (input$year == 2018){
           dis <- data.frame(overtime[8:9,2:10]) %>%
             select("...2", "X2018", Lat, Long) 
           
-        }else if (input$year == "2019-12-31"){
+        }else if (input$year == 2019){
           dis <- data.frame(overtime[8:9,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
@@ -1654,19 +1682,19 @@ server <- function(input, output, session) {
         
       }else if (type() == "emer"){
         
-        if (input$year == "2016-12-31"){
+        if (input$year == 2016){
           emer <- data.frame(overtime[12:14,2:10]) %>%
             select("...2", "X2016", Lat, Long) 
           
-        }else if (input$year == "2017-12-31"){
+        }else if (input$year == 2017){
           emer <- data.frame(overtime[12:14,2:10]) %>%
             select("...2", "X2017", Lat, Long) 
           
-        }else if (input$year == "2018-12-31"){
+        }else if (input$year == 2018){
           emer <- data.frame(overtime[12:14,2:10]) %>%
             select("...2", "X2018", Lat, Long) 
           
-        }else if (input$year == "2019-12-31"){
+        }else if (input$year ==2019){
           emer <- data.frame(overtime[12:14,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
@@ -1704,19 +1732,19 @@ server <- function(input, output, session) {
         
       }else if (type() == "employ"){
         
-        if (input$year == "2016-12-31"){
+        if (input$year == 2016){
           employ <- data.frame(overtime[18,2:10]) %>%
             select("...2", "X2016", Lat, Long) 
           
-        }else if (input$year == "2017-12-31"){
+        }else if (input$year == 2017){
           employ <- data.frame(overtime[18,2:10]) %>%
             select("...2", "X2017", Lat, Long) 
           
-        }else if (input$year == "2018-12-31"){
+        }else if (input$year == 2018){
           employ <- data.frame(overtime[18,2:10]) %>%
             select("...2", "X2018", Lat, Long) 
           
-        }else if (input$year == "2019-12-31"){
+        }else if (input$year == 2019){
           employ <- data.frame(overtime[18,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
@@ -1754,19 +1782,19 @@ server <- function(input, output, session) {
         
       }else if (type() == "out"){
         
-        if (input$year == "2016-12-31"){
+        if (input$year == 2016){
           out <- data.frame(overtime[21:23,2:10]) %>%
             select("...2", "X2016", Lat, Long) 
           
-        }else if (input$year == "2017-12-31"){
+        }else if (input$year == 2017){
           out <- data.frame(overtime[21:23,2:10]) %>%
             select("...2", "X2017", Lat, Long) 
           
-        }else if (input$year == "2018-12-31"){
+        }else if (input$year == 2018){
           out <- data.frame(overtime[21:23,2:10]) %>%
             select("...2", "X2018", Lat, Long) 
           
-        }else if (input$year == "2019-12-31"){
+        }else if (input$year == 2019){
           out <- data.frame(overtime[21:23,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
@@ -1804,19 +1832,19 @@ server <- function(input, output, session) {
         
       }else {
         
-        if (input$year == "2016-12-31"){
+        if (input$year == 2016){
           res <- data.frame(overtime[27:31,2:10]) %>%
             select("...2", "X2016", Lat, Long) 
           
-        }else if (input$year == "2017-12-31"){
+        }else if (input$year == 2017){
           res <- data.frame(overtime[27:31,2:10]) %>%
             select("...2", "X2017", Lat, Long) 
           
-        }else if (input$year == "2018-12-31"){
+        }else if (input$year == 2018){
           res <- data.frame(overtime[27:31,2:10]) %>%
             select("...2", "X2018", Lat, Long) 
           
-        }else if (input$year == "2019-12-31"){
+        }else if (input$year == 2019){
           res <- data.frame(overtime[27:31,2:10]) %>%
             select("...2", "X2019", Lat, Long) 
           
@@ -1895,16 +1923,65 @@ server <- function(input, output, session) {
     
     
     output$table1 <- renderTable({
-      if(input$table1%in%"Subpopulation"){
         table <- read.csv("data/program_subpop_counts.csv")
         table
-      }else {
+      
+    }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
+    
+    output$table2 <- renderTable({
         table <- read.csv("data/program_pillar_counts.csv")
         table
+    }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
+    
+    
+    type <- reactive({
+      input$type
+    })
+    
+    output$served <- renderPlotly({
+      if (type() == "med"){
+        ggplot() + 
+          geom_line(mapping = aes(Year, `Childless Adults`, group = 1), data = med) + 
+          geom_line(mapping = aes(Year, Children, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
+          labs(y = "Persons", 
+               title = "Medcaid for Children and Childless Adults")
+        
+      }else if (type() == "literacy"){
+        ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
+          labs(title = "Adult Literacy Program",
+               y = "Persons Served")+
+          theme(axis.text.x = element_text(angle = 90, vjust = .5, color = "black"))
+        
+      }else if (type() == "wioa") {
+        
+      }else {
         
       }
       
-    }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
+      
+    })
+    
+    output$medicaid <- renderValueBox({
+      
+      valueBox(value =244362, 
+               subtitle = "Childless Adults Served by Medicaid 2021",
+                icon = icon("clinic-medical"))
+    })
+    
+    output$wioa <- renderValueBox({
+      
+      valueBox(value = 108, 
+               subtitle = "Individuals emrolled at WIOA so far in 2021",
+               icon = icon("briefcase"), color = "green")
+    })
+    
+    output$transit <- renderValueBox({
+      
+      valueBox(value = "52, 57, 42", 
+               subtitle = "Average Riders Weekdays, Saturday, Sunday",
+               icon = icon("bus"),
+               color = "maroon")
+    })
     
 }
 
