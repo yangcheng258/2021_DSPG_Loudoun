@@ -324,7 +324,6 @@ sidebar <- dashboardSidebar(
 ) 
 # body -----------------------------------------------------------
 body <- dashboardBody(
-  shinythemes::themeSelector(), 
   fluidPage(
     tabItems(
       ## Tab Overview--------------------------------------------
@@ -380,112 +379,129 @@ body <- dashboardBody(
                 or they are on their parents' insurance. Those who have aged out of foster care or just got out of the juvenille detention system most likely do 
                 not have their parents' support and need to qualify or apply for Medicaid or VA Health.  " )) ,
               br(),
-              box(
-                title = "Visualizations of Transitional Aged Youth (TAYs)",
-                closable = FALSE,
-                width = NULL,
-                status = "primary",
-                solidHeader = TRUE,
-                selectInput("var1", "Select Variable:", width = "100%", choices = c(
-                  "Gender and Age" = "age",
-                  "Percentage of TAYs" = "percent", 
-                  "Educational Attainment" = "education",
-                  "Races" = "race",
-                  "Poverty Level" = "poverty",
-                  "Healthcare Coverage" = "health", 
-                  "Severe Mental Illness" = "mental")
+              sidebarLayout(
+                sidebarPanel(
+                  h4("Visualizations of Transition Aged Youth (TAYs)"),
+                  
+                  radioButtons(
+                    "var1",
+                    label = "Select Demographic" ,
+                    choices = list(
+                      "Gender and Age" = "age",
+                      "Percentage of TAYs" = "percent", 
+                      "Educational Attainment" = "education",
+                      "Races" = "race",
+                      "Poverty Level" = "poverty",
+                      "Healthcare Coverage" = "health", 
+                      "Severe Mental Illness" = "mental")
+                    ),
+                    selected = "Gender and Age"
+                  ),
+                mainPanel(
+                  plotlyOutput("plot1"),
+                  p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
+                  p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)")), 
+                  tags$br(),
+                  tags$br()
+                )
                 ),
-                plotlyOutput("plot1"),
-                p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
-                p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)"))), 
               
               br(),
               br(),
-              box(
-                title = "Visualizations of the Subpopulations Demographics",
-                closable = FALSE,
-                width = NULL,
-                status = "primary",
-                solidHeader = TRUE,
-                collapsible = TRUE,
                 tabsetPanel(
                   tabPanel("Foster Care",
                            h3(strong(""), align = "center"),
-                           br(),
-                           selectInput("var2", "Select Topic:", width = "100%", choices = c(
-                             "Age" = "age",
-                             "Sex" = "sex", 
-                             "Race" = "race",
-                             "Ethnicity" = "eth",
-                             "TAYs" = "tays")
-                           ),
-                           plotlyOutput("plot2"),
-                           p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")) ,
-                           br(),
-                           p("In the US 2019, 423,997 children were in the foster system with 251,359 
-                             newly entered children and 248,669 exiting. The average age of a child in 
-                             foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
-                             Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
-                             the US. 44% of foster care youth are white and 23% were black. Similar to foster 
-                             care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
-                             According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
-                             the foster care system were 18+ and it was most likely due to neglect. However, 
-                             there were 20,465 (8%) youths 18+ who exited the system most likely due to
-                             aging out and emancipation."), 
-                           p("According to the The Adoption and Foster Care Analysis and Reporting System, 
-                             in 2020 there were 48 children in foster care in only Loudoun County which was 
-                             .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
-                             of those children were boys and 1/3 were girls and the minority of them of 
-                             ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
-                             and less than 5% Asian and multi-racial as you can see from the barplot below. 
-                             When we are looking at only transitional aged youth from 18-24 where 21 years 
-                             old is the average time a foster child ages out, there were only 8 children. 
-                             In Loudoun County, it does not seem like there are many foster care youths 
-                             who are aging out of the system but only 9 other counties have greater than 9 
-                             foster care kids over the age of 18 ")
-                  
+                           sidebarLayout(
+                             sidebarPanel(
+                               radioButtons(
+                                 "var2",
+                                 label = "Select Demographic" ,
+                                 choices = list(
+                                   "Age" = "age",
+                                     "Sex" = "sex",
+                                     "Race" = "race",
+                                     "Ethnicity" = "eth",
+                                     "TAYs" = "tays")
+                               ),
+                               selected = "Age"
+                             ),
+                             mainPanel(
+                               plotlyOutput("plot2"),
+                               p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")),
+                               tags$br(),
+                               tags$br()
+                             )
+                           )
+                           # p("In the US 2019, 423,997 children were in the foster system with 251,359 
+                           #   newly entered children and 248,669 exiting. The average age of a child in 
+                           #   foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
+                           #   Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
+                           #   the US. 44% of foster care youth are white and 23% were black. Similar to foster 
+                           #   care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
+                           #   According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
+                           #   the foster care system were 18+ and it was most likely due to neglect. However, 
+                           #   there were 20,465 (8%) youths 18+ who exited the system most likely due to
+                           #   aging out and emancipation."), 
+                           # p("According to the The Adoption and Foster Care Analysis and Reporting System, 
+                           #   in 2020 there were 48 children in foster care in only Loudoun County which was 
+                           #   .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
+                           #   of those children were boys and 1/3 were girls and the minority of them of 
+                           #   ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
+                           #   and less than 5% Asian and multi-racial as you can see from the barplot below. 
+                           #   When we are looking at only transitional aged youth from 18-24 where 21 years 
+                           #   old is the average time a foster child ages out, there were only 8 children. 
+                           #   In Loudoun County, it does not seem like there are many foster care youths 
+                           #   who are aging out of the system but only 9 other counties have greater than 9 
+                           #   foster care kids over the age of 18 ")
                   ),
                   tabPanel("Juvenille Detention",
                            h3(strong(""), align = "center"),
-                           br(),
-                           selectInput("var3", "Select Topic:", width = "100%", choices = c(
-                             "Age" = "age",
-                             "Sex" = "sex",
-                             "Race" = "race",
-                             "Ethnicity" = "eth")
-                           ),
-                           plotlyOutput("plot3"),
-                           p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
-                           br(),
-                           p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
-                             and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
-                             Black youth are overrepresented among offenders in residential placement, making up 
-                             40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
-                             asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
-                             the vast majority of offenders in residential placement, at 85.2% of residents. 
-                             Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
-                             52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
-                             youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
-                             youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
-                             Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
-                             (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                           p("Virginia has some of the highest referral and incarceration rates of youth, 
-                             with the highest number of student referrals in the country and a rate of youth 
-                             incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
-                             (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
-                             spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
-                             recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
-                             60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
-                             youths being released from direct care for the Fiscal Year of 2015 only received high school 
-                             diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
-                             youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
-                             pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
-                             with youth imprisonment down 65% in Virginia between 2003 and 2016. "))
-                     
-                  
-                    )
-                  )
-                
+                           sidebarLayout(
+                             sidebarPanel(
+                               radioButtons(
+                                 "var3",
+                                 label = "Select Demographic" ,
+                                 choices = list(
+                                   "Age" = "age",
+                                   "Sex" = "sex",
+                                   "Race" = "race",
+                                   "Ethnicity" = "eth")
+                               ),
+                               selected = "Age"
+                             ),
+                             mainPanel(
+                               plotlyOutput("plot3"),
+                               p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
+                               tags$br(),
+                               tags$br()
+                             )
+                           )
+                           # p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
+                           #   and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
+                           #   Black youth are overrepresented among offenders in residential placement, making up 
+                           #   40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
+                           #   asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
+                           #   the vast majority of offenders in residential placement, at 85.2% of residents. 
+                           #   Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
+                           #   52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
+                           #   youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
+                           #   youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
+                           #   Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
+                           #   (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
+                           # p("Virginia has some of the highest referral and incarceration rates of youth, 
+                           #   with the highest number of student referrals in the country and a rate of youth 
+                           #   incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
+                           #   (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
+                           #   spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
+                           #   recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
+                           #   60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
+                           #   youths being released from direct care for the Fiscal Year of 2015 only received high school 
+                           #   diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
+                           #   youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
+                           #   pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
+                           #   with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
+                  )) 
+              
               ),
       
       
@@ -578,6 +594,7 @@ body <- dashboardBody(
                                    collapsibleTreeOutput("tree1")
                           ),
                           tabPanel("Fairfax",
+                                   br(),
                                    selectInput("pillar3", "Select Pillar:", width = "100%", choices = c(
                                      "Education",
                                      "Employment",
@@ -586,6 +603,7 @@ body <- dashboardBody(
                                      "Health Services")), 
                                    collapsibleTreeOutput("tree3")), 
                           tabPanel("Allegheny",
+                                   br(),
                                    selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
                                      "Education",
                                      "Employment",
@@ -604,6 +622,7 @@ body <- dashboardBody(
                     status = "primary",
                     solidHeader = TRUE,
                     collapsible = TRUE,
+                    br(),
                     selectInput("compare1", "Select Pillar:", width = "100%", choices = c(
                       "Education",
                       "Employment",
@@ -628,9 +647,9 @@ body <- dashboardBody(
                     collapsible = TRUE,
                     h3(strong("Individuals Served from the Department of Mental Health, Substance Abuse and Developmental Services"), align = "center"),
                     p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
-                  programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
-                  Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
-                  walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
+                    programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
+                    Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
+                    walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
                    "),
                     p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
                     As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
@@ -638,31 +657,40 @@ body <- dashboardBody(
                     instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
                     substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
                     "), 
+                    br(),
                     plotlyOutput("waitlist"),
                     p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                     p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))),
-                
-                    # first select which program you want to see overtime 
-                    selectInput("type", "Select Type of Program:", width = "100%", choices = c(
-                      "Case Management" = "case",
-                      "Discharge Planning" = "dis",
-                      "Emergency Services" = "emer",
-                      "Employment & Day Support Services" = "employ",
-                      "Outpatient"= "out", 
-                      "Residential" = "res")
-                    ),
-                    # then according to the type of program, this will show a sliderInput of Loudoun with its zip codes
-                    # and the size of circles corresponding to the how many there are 
                     sidebarLayout(
                       sidebarPanel(
+                        radioButtons(
+                          "type",
+                          label = "Select Program Type" ,
+                          choices = list(
+                            "Case Management" = "case",
+                            "Discharge Planning" = "dis",
+                            "Emergency Services" = "emer",
+                            "Employment & Day Support Services" = "employ",
+                            "Outpatient"= "out", 
+                            "Residential" = "res")
+                        ),
+                        selected = "Case Management", 
+                        br(), 
                         sliderInput(inputId = "year", 
                                     label = "Select a year:",
                                     value = 2016,
                                     min = 2016,
                                     max = 2020,
-                                    animate = animationOptions(interval = 1500))),
-                      mainPanel(leafletOutput(outputId = "overtime", height = "70vh"))), 
-                # should have valueBox for each program to highlight the important ones???? 
+                                    animate = animationOptions(interval = 1500))
+                        
+                      ),
+                      mainPanel(
+                        leafletOutput(outputId = "overtime", height = "70vh"), 
+                        p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services")),
+                        tags$br(),
+                        tags$br()
+                      )
+                    ), 
                     box(title = "Who do the programs serve? ",
                         closable = FALSE,
                         width = NULL,
@@ -685,6 +713,7 @@ body <- dashboardBody(
                 
                 )
       ),
+      # trying out the valueBoxes 
       tabItem(tabName = "served_all",
               fluidRow(style = "margin: 6px;",
                        h1(strong("Individuals Served"), align = "center"),
