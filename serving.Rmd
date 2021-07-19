@@ -10,7 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Local Bus 2018-2023 
+
 https://www.loudoun.gov/DocumentCenter/View/122385/TDP-2018-2028-?bidId=
+
 https://www.loudoun.gov/3444/Transit-Development-Plan
 
 * Serves 3 shopping centers 
@@ -30,20 +32,50 @@ averg <- c(52, 57, 42)
 
 
 OAR 2020 
+
 https://oarnova.org/accountability/financial-documents 
+
 2020 report 
+
 https://www.oarnova.org/images/FY_2020_AR.pdf 
+
 ```{r}
+
+library(ggplot2)
 # 2020 
 l <- 180
 c <- 3355
-m <- .75
-f <- .23
-undisclosed <- .2 
+m <- 75
+f <- 23
+undisclosed <- 2
 
-tay <- .3 
-no_high <- .17 
-college <- .11 
+tay <- 30
+no_high <- 17
+college <- 11 
+
+all <- data.frame(rbind(l, c, m, f, undisclosed, tay, no_high, college)) 
+all$Category <- c("Served in Loduoun", 
+                  "Total Served", 
+                  "Male",
+                  "Female",
+                  "Undisclosed Gender", 
+                  "TAYs",
+                  "Did not finish high school",
+                  "Have a college education")
+colnames(all) <-c("Number", "Category") 
+all$Category <- factor(all$Category, levels=unique(all$Category))
+
+
+ggplot() + geom_col(mapping = aes(Category, Number), data = all[1:2,],fill =  "plum4") + 
+  labs(title = "Oar Nova 2020",
+       y = "Persons Served")+
+  theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+
+ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:8,],fill =  "gold3") + 
+  labs(title = "Oar Nova 2020",
+       y = "Percent Served") +
+  theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+
 
 #2019 
 l <- 221
@@ -78,6 +110,7 @@ no_high <- .19
 
 
 Oxford House for all Virginia Houses November 2019 -2020 
+
 https://oxfordhouse.org/userfiles/file/evaluations.php
 https://oxfordhouse.org/userfiles/file/doc/eval_va2020.pdf 
 
@@ -91,13 +124,32 @@ prior_home <- 61.3 #percent
 prior_jail <- 79.6
 edu <- 12.1 #years 
 
+ox <- data.frame(rbind(average_stay, median_stay, prior_home, prior_jail, edu)) 
+ox$Category <- c("Average Stay (mo) ", 
+                  "Median Stay (mo) ", 
+                  "Prior Homelessness (%) ",
+                  "Prior Jail time (%) ",
+                  "Average Education (yrs) ") 
+colnames(ox) <-c("Number", "Category") 
+ox$Category <- factor(ox$Category, levels=unique(ox$Category))
+
+
+ggplot() + geom_col(mapping = aes(Category, Number), data = ox,fill =  "chocolate2") + 
+  labs(title = "Oxford Houses in VA 2019-2020",
+       y = "Number") +
+  theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+
+
+
 
 ```
 
 
 
 Medicaid (all of VA) july 2021
+
 Monthly enrollments 
+
 https://www.dmas.virginia.gov/media/3619/dmas-enrollment-report-july-2021.pdf
 https://www.dmas.virginia.gov/media/3503/medicaid-expansion-infographic.pdf
 https://www.dmas.virginia.gov/data/ 
@@ -134,16 +186,21 @@ ggplot() +
 
 
 WIOA Monthly reports 2020
+
 https://vcwnorthern.com/program-reports/
+
 **potentially getting the raw data** 
 
 
 Affordable Dwelling Unit Program 2020
+
 **potentially getting the raw data** 
+
 Monthly reports on how many ADU are sold and rented out and a waitlist number 
 https://www.loudoun.gov/431/Affordable-Dwelling-Unit-Advisory-Board 
 
 Continuum of Care Homeless Shelters in Northern VA 202-2021
+
 file:///Users/julierebstock/Downloads/2021_PIT_Combined1.pdf
 https://www.mwcog.org/documents/2021/05/05/homelessness-in-metropolitan-washington-results-and-analysis-from-the-annual-point-in-time-pit-count-of-persons-experiencing-homelessness-featured-publications-homelessness/ 
 
@@ -156,11 +213,11 @@ Jennifer.Hope@loudoun.gov
 
 ```{r}
 # homeless Single transition aged youth in 2021 in Loudoun 
-2017 <- 10
-2018 <- 7
-2019 <-20
-2020 <- 22
-2021 <-12
+x_2017 <- 10
+x_2018 <- 7
+x_2019 <-20
+x_2020 <- 22
+x_2021 <-12
 
 # total single adults (TAYs) in the regions included 
 total <- 453
@@ -172,9 +229,9 @@ multi <- .5
 
 #Number of Literally Homeless TAYs (single adults and family hosueholds) in Loudoun 
 percent_21 <- .21 
-2021 <- 16
-2020 <- 22
-2019 <- 17 
+x_2021 <- 16
+x_2020 <- 22
+x_2019 <- 17 
 
 # Housing Inventory as of Jan 2021 in Loudoun 
 year_round_emer <- 58 
@@ -188,15 +245,20 @@ domestic <- 12
 
 
 Good Shepherd Alliance 
+
 **if can get more data** 
+
 https://goodshepherdalliance.org/how-we-serve/
+
 3000+ are helped each year 
 10000+ beds 
 77% go on to stable housing following 
 
 
 Adult Literacy Program Loudoun
+
 **not super specific on what ages** 
+
 https://loudounliteracy.org/wp-content/uploads/2020/11/Annual-Report-FY20.pdf 
 
 ```{r}
@@ -205,14 +267,15 @@ tutoring <- 20
 jobsite <- 49 
 ged <- 2 
 workforce <- 105 
-programs <- data.frame((rbind(classroom, tutoring, jobsite, ged, workforce)))  %>%
-  mutate(Type = c("Classroom", "Tutoring", "Jobsite", "GED", "Workforce Development Week")) 
+
+programs <- data.frame((rbind(classroom, tutoring, jobsite, ged, workforce)))
+programs$Type <- c("Classroom", "Tutoring", "Jobsite", "GED", "Workforce Development Week")
 colnames(programs) <- c("Number", "Type")
 
 ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
   labs(title = "Adult Literacy Program",
        y = "Persons Served")+
-  theme(axis.text.x = element_text(angle = 90, vjust = .5, color = "black"))
+  theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
 
 served <- 543 
 hispanic <- 58
@@ -225,6 +288,7 @@ other <- 6
 
 
 Culmore Clinic 
+
 **not specific on ages** 
 https://www.culmoreclinic.org/patient-enrollment 
 

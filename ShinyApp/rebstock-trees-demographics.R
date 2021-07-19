@@ -585,33 +585,73 @@ body <- dashboardBody(
                         tabsetPanel(
                           tabPanel("Loudoun",
                                    br(),
-                                   selectInput("pillar1", "Select Pillar:", width = "100%", choices = c(
-                                     "Education",
-                                     "Employment",
-                                     "Housing",
-                                     "Transportation",
-                                     "Health Services")), 
-                                   collapsibleTreeOutput("tree1")
+                                   sidebarLayout(
+                                     sidebarPanel(
+                                       radioButtons(
+                                         "pillar1",
+                                         label = "Select Pillar" ,
+                                         choices = list(
+                                           "Education",
+                                           "Employment",
+                                           "Housing",
+                                           "Transportation",
+                                           "Health Services")
+                                       ),
+                                       selected = "Education"
+                                     ),
+                                     mainPanel(
+                                       collapsibleTreeOutput("tree1"), 
+                                       tags$br(),
+                                       tags$br()
+                                     )
+                                   ) 
                           ),
                           tabPanel("Fairfax",
                                    br(),
-                                   selectInput("pillar3", "Select Pillar:", width = "100%", choices = c(
-                                     "Education",
-                                     "Employment",
-                                     "Housing",
-                                     "Transportation",
-                                     "Health Services")), 
-                                   collapsibleTreeOutput("tree3")), 
+                                   sidebarLayout(
+                                     sidebarPanel(
+                                       radioButtons(
+                                         "pillar3",
+                                         label = "Select Pillar" ,
+                                         choices = list(
+                                           "Education",
+                                           "Employment",
+                                           "Housing",
+                                           "Transportation",
+                                           "Health Services")
+                                       ),
+                                       selected = "Education"
+                                     ),
+                                     mainPanel(
+                                       collapsibleTreeOutput("tree3"), 
+                                       tags$br(),
+                                       tags$br()
+                                     )
+                                   ) 
+                                   ), 
+                          
                           tabPanel("Allegheny",
                                    br(),
-                                   selectInput("pillar2", "Select Pillar:", width = "100%", choices = c(
-                                     "Education",
-                                     "Employment",
-                                     "Housing",
-                                     "Transportation",
-                                     "Health Services")
-                                   ),
-                                   collapsibleTreeOutput("tree2"))
+                                   sidebarLayout(
+                                     sidebarPanel(
+                                       radioButtons(
+                                         "pillar2",
+                                         label = "Select Pillar" ,
+                                         choices = list(
+                                           "Education",
+                                           "Employment",
+                                           "Housing",
+                                           "Transportation",
+                                           "Health Services")
+                                       ),
+                                       selected = "Education"
+                                     ),
+                                     mainPanel(
+                                       collapsibleTreeOutput("tree2"), 
+                                       tags$br(),
+                                       tags$br()
+                                     )
+                                   ) )
                                    
                           )
                         ),
@@ -623,15 +663,26 @@ body <- dashboardBody(
                     solidHeader = TRUE,
                     collapsible = TRUE,
                     br(),
-                    selectInput("compare1", "Select Pillar:", width = "100%", choices = c(
-                      "Education",
-                      "Employment",
-                      "Housing",
-                      "Transportation",
-                      "Health Services")
-                    ),
-                    collapsibleTreeOutput("compare")
-                    
+                    sidebarLayout(
+                      sidebarPanel(
+                        radioButtons(
+                          "compare1",
+                          label = "Select Pillar" ,
+                          choices = list(
+                            "Education",
+                            "Employment",
+                            "Housing",
+                            "Transportation",
+                            "Health Services")
+                        ),
+                        selected = "Education"
+                      ),
+                      mainPanel(
+                        collapsibleTreeOutput("compare"), 
+                        tags$br(),
+                        tags$br()
+                      )
+                    ) 
                     
                   )
                 ) 
@@ -698,13 +749,12 @@ body <- dashboardBody(
                         solidHeader = TRUE,
                         collapsible = TRUE,
                         selectInput("type", "Select Type of Program:", width = "100%", choices = c(
-                          "Workforce Innovation and Opportunity Act" = "wioa",
                           "Adult Literacy Program Loudoun" = "literacy",
-                          "Continuum of Care" = "care",
-                          "Affordable Dwelling Unit Program" ="afford", 
-                          "Oxford House" = "oxford",
-                          "OAR"= "oar", 
-                          "Route 54 Safe-T" = "bus",
+                          # "Continuum of Care" = "care",
+                          # "Affordable Dwelling Unit Program" ="afford", 
+                          # "Oxford House" = "oxford",
+                          "OAR Nova, Loudoun"= "oar",
+                          # "Route 54 Safe-T" = "bus",
                           "Medicaid" = "med")
                         ),
                         plotlyOutput("served")
@@ -728,29 +778,60 @@ body <- dashboardBody(
       tabItem(tabName = "locations", 
                fluidRow(style = "margin: 6px;",
                         h1(strong("Location of Programs and Services"), align = "center"),
-                        box(
-                          title = "Loudoun County, VA", 
-                          closable = FALSE,
-                          width = NULL,
-                          status = "primary",
-                          solidHeader = TRUE,
-                          collapsible = TRUE,
-                          
-                           br(), 
-                           tabsetPanel(
-                             tabPanel("Subpopulation",
-                                      p(""),
-                                      p(strong("Map of Programs")), 
-                                      leafletOutput("map1")
-                             ),
-                             tabPanel("Pillars",
-                                      p(""),
-                                      p(strong("Map of Programs")), 
-                                      leafletOutput("map2")
-                             )
-                           )) , 
-                           br(),
-                        br(), 
+                        tags$br(),
+                        tags$br(), ,
+                        column(
+                          4,
+                          selectInput(
+                            "county",
+                            "Select County",
+                            choices = unique(map$County),
+                            selected = "Loudoun",
+                            width = 400
+                          )
+                        ),
+                        column(8,
+                                 radioButtons(
+                                   "category",
+                                   label = "Select Category" ,
+                                   choices = c("Subpopulation", "Pillars"),
+                                 ),
+                                 selected = "Subpopulation", 
+                               ), 
+                        
+                        tags$br(),
+                        tags$br(),
+                        tags$hr(),
+                        tags$br(),
+                        
+                        fluidRow(
+                         h4("Map of Locations", align="center"), leafletOutput(outputId = "map1", height = "400px"),
+                        ),
+                        
+                        
+                        # box(
+                        #   title = "Loudoun County, VA", 
+                        #   closable = FALSE,
+                        #   width = NULL,
+                        #   status = "primary",
+                        #   solidHeader = TRUE,
+                        #   collapsible = TRUE,
+                        #   
+                        #    br(), 
+                        #    tabsetPanel(
+                        #      tabPanel("Subpopulation",
+                        #               p(""),
+                        #               p(strong("Map of Programs")), 
+                        #               leafletOutput("map1")
+                        #      ),
+                        #      tabPanel("Pillars",
+                        #               p(""),
+                        #               p(strong("Map of Programs")), 
+                        #               leafletOutput("map2")
+                        #      )
+                        #    )) , 
+                        #    br(),
+                        # br(), 
                         box(
                           title = "Fairfax County, VA", 
                           closable = FALSE,
@@ -1340,270 +1421,275 @@ server <- function(input, output, session) {
     })
     
     # Add maps for locations of programs in Loudoun subpopulation 
+    county <- reactive({
+      input$county
+    })
+    category <- reactive({
+      input$category
+    })
+    
     output$map1 <- renderLeaflet({
       
-      labels <- lapply(
-        paste("<strong>Name: </strong>",
-              str_to_title(loudoun_locations$Program),
-              "<br />",
-              "<strong>Qualifications:</strong>",
-              loudoun_locations$Qualification ,
-              "<br />",
-              "<strong>Description:</strong>",
-              loudoun_locations$Description, 
-              "<br />",
-              "<strong>Location:</strong>",
-              loudoun_locations$Office,
-              "<br />",
-              "<strong>Website:</strong>",
-              loudoun_locations$Website),
-        htmltools::HTML
-      )
-      
-      
-      l_sub <- loudoun_locations %>% 
-        leaflet( options = leafletOptions(minzoom = 12)) %>%
-        setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
-        addTiles() %>%
-        addCircleMarkers(lng = ~Longitude,
-                         lat = ~Latitude,
-                         label = labels,
-                         labelOptions = labelOptions(direction = "bottom",
-                                                     style = list(
-                                                       "font-size" = "12px",
-                                                       "border-color" = "rgba(0,0,0,0.5)",
-                                                       direction = "auto")) , 
-                         group = ~loudoun_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("TAYs", "Foster Care", "Juvenile Detention"),
-                         options = layersControlOptions(collapsed = FALSE))
-      l_sub
+      if (county() == "Loudoun") {
+        if (category() == "Subpopulation") {
+          
+          labels <- lapply(
+            paste("<strong>Name: </strong>",
+                  str_to_title(loudoun_locations$Program),
+                  "<br />",
+                  "<strong>Qualifications:</strong>",
+                  loudoun_locations$Qualification ,
+                  "<br />",
+                  "<strong>Description:</strong>",
+                  loudoun_locations$Description, 
+                  "<br />",
+                  "<strong>Location:</strong>",
+                  loudoun_locations$Office,
+                  "<br />",
+                  "<strong>Website:</strong>",
+                  loudoun_locations$Website),
+            htmltools::HTML
+          )
+          
+          
+          
+          l_sub <- loudoun_locations %>% 
+            leaflet( options = leafletOptions(minzoom = 12)) %>%
+            setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
+            addTiles() %>%
+            addCircleMarkers(lng = ~Longitude,
+                             lat = ~Latitude,
+                             label = labels,
+                             labelOptions = labelOptions(direction = "bottom",
+                                                         style = list(
+                                                           "font-size" = "12px",
+                                                           "border-color" = "rgba(0,0,0,0.5)",
+                                                           direction = "auto")) , 
+                             group = ~loudoun_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
+            addLayersControl(overlayGroups = c("TAYs", "Foster Care", "Juvenile Detention"),
+                             options = layersControlOptions(collapsed = FALSE))
+          l_sub
+          
+        }else{
+          labels <- lapply(
+            paste("<strong>Name: </strong>",
+                  str_to_title(loudoun_locations$Program),
+                  "<br />",
+                  "<strong>Qualifications:</strong>",
+                  (loudoun_locations$Qualification) ,
+                  "<br />",
+                  "<strong>Description:</strong>",
+                  (loudoun_locations$Description), 
+                  "<br />",
+                  "<strong>Location:</strong>",
+                  loudoun_locations$Office,
+                  "<br />",
+                  "<strong>Website:</strong>",
+                  loudoun_locations$Website),
+            htmltools::HTML
+          )
+          
+          l_pill <- loudoun_locations %>%  
+            leaflet(options = leafletOptions(minzoom = 12)) %>% 
+            setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
+            addTiles() %>%
+            addCircleMarkers(lng = ~Longitude, 
+                             lat = ~Latitude,
+                             radius = 8, 
+                             label = labels,
+                             labelOptions = labelOptions(direction = "bottom",
+                                                         style = list(
+                                                           "font-size" = "12px",
+                                                           "border-color" = "rgba(0,0,0,0.5)",
+                                                           direction = "auto")) , 
+                             group = ~loudoun_locations$Pillars, 
+                             color = ~Pillar_pal(Pillars)) %>%  
+            addLayersControl(position = "topright",
+                             overlayGroups = Pillar_levels, 
+                             options = layersControlOptions(collapsed = FALSE)) %>%
+            addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+          
+          l_pill
+          
+        }
+      }
+      else if (county() == "Fairfax") {
+        if (category() == "Subpopulation"){
+          
+          labels <- lapply(
+            paste("<strong>Name: </strong>",
+                  str_to_title(fairfax$Program),
+                  "<br />",
+                  "<strong>Qualifications:</strong>",
+                  (fairfax$Qualification) ,
+                  "<br />",
+                  "<strong>Description:</strong>",
+                  (fairfax$Description), 
+                  "<br />",
+                  "<strong>Location:</strong>",
+                  fairfax$Office,
+                  "<br />",
+                  "<strong>Website:</strong>",
+                  fairfax$Website),
+            htmltools::HTML
+          )
+          
+          f_sub <- fairfax %>% 
+            leaflet( options = leafletOptions(minzoom = 12)) %>%
+            setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
+            addTiles() %>%
+            addCircleMarkers(lng = ~Longitude,
+                             lat = ~Latitude,
+                             label = labels,
+                             labelOptions = labelOptions(direction = "bottom",
+                                                         style = list(
+                                                           "font-size" = "12px",
+                                                           "border-color" = "rgba(0,0,0,0.5)",
+                                                           direction = "auto")) ,
+                             group = ~fairfax$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
+            addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
+                             options = layersControlOptions(collapsed = FALSE))
+          f_sub
+          
+        }else {
+          
+          labels <- lapply(
+            paste("<strong>Name: </strong>",
+                  str_to_title(fairfax$Program),
+                  "<br />",
+                  "<strong>Qualifications:</strong>",
+                  (fairfax$Qualification) ,
+                  "<br />",
+                  "<strong>Description:</strong>",
+                  (fairfax$Description), 
+                  "<br />",
+                  "<strong>Location:</strong>",
+                  fairfax$Office,
+                  "<br />",
+                  "<strong>Website:</strong>",
+                  fairfax$Website),
+            htmltools::HTML
+          )
+          
+          f_pill <- fairfax %>%  
+            leaflet(options = leafletOptions(minzoom = 12)) %>% 
+            setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
+            addTiles() %>%
+            addCircleMarkers(lng = ~Longitude, 
+                             lat = ~Latitude,
+                             label = labels, 
+                             radius = 8, 
+                             labelOptions = labelOptions(direction = "bottom",
+                                                         style = list(
+                                                           "font-size" = "12px",
+                                                           "border-color" = "rgba(0,0,0,0.5)",
+                                                           direction = "auto")) , 
+                             group = ~fairfax$Pillars, 
+                             color = ~Pillar_pal(Pillars)) %>%  
+            addLayersControl(position = "topright",
+                             overlayGroups = Pillar_levels, 
+                             options = layersControlOptions(collapsed = FALSE)) %>%
+            addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+          
+          f_pill
+          
+          
+        }
+      }
+      else {
+        if (category() == "Subpopulation"){
+          
+          labels <- lapply(
+            paste("<strong>Name: </strong>",
+                  str_to_title(allegheny_locations$Program),
+                  "<br />",
+                  "<strong>Qualifications:</strong>",
+                  (allegheny_locations$Qualification) ,
+                  "<br />",
+                  "<strong>Description:</strong>",
+                  (allegheny_locations$Description), 
+                  "<br />",
+                  "<strong>Location:</strong>",
+                  allegheny_locations$Office,
+                  "<br />",
+                  "<strong>Website:</strong>",
+                  allegheny_locations$Website),
+            htmltools::HTML
+          )
+          
+          a_sub <- allegheny_locations %>% 
+            leaflet( options = leafletOptions(minzoom = 12)) %>%
+            setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
+            addTiles() %>%
+            addCircleMarkers(lng = ~Longitude,
+                             lat = ~Latitude,
+                             label = labels,
+                             labelOptions = labelOptions(direction = "bottom",
+                                                         style = list(
+                                                           "font-size" = "12px",
+                                                           "border-color" = "rgba(0,0,0,0.5)",
+                                                           direction = "auto")) , 
+                             group = ~allegheny_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
+            addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
+                             options = layersControlOptions(collapsed = FALSE))
+          a_sub
+          
+          
+          
+        }
+        else {
+          
+          labels <- lapply(
+            paste("<strong>Name: </strong>",
+                  str_to_title(allegheny_locations$Program),
+                  "<br />",
+                  "<strong>Qualifications:</strong>",
+                  (allegheny_locations$Qualification) ,
+                  "<br />",
+                  "<strong>Description:</strong>",
+                  (allegheny_locations$Description), 
+                  "<br />",
+                  "<strong>Location:</strong>",
+                  allegheny_locations$Office,
+                  "<br />",
+                  "<strong>Website:</strong>",
+                  allegheny_locations$Website),
+            htmltools::HTML
+          )
+          
+          
+          a_pill <- allegheny_locations %>%  
+            leaflet(options = leafletOptions(minzoom = 12)) %>% 
+            setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
+            addTiles() %>%
+            addCircleMarkers(lng = ~Longitude, 
+                             lat = ~Latitude,
+                             radius = 8, 
+                             label = labels,
+                             labelOptions = labelOptions(direction = "bottom",
+                                                         style = list(
+                                                           "font-size" = "12px",
+                                                           "border-color" = "rgba(0,0,0,0.5)",
+                                                           direction = "auto")) , 
+                             group = ~allegheny_locations$Pillars, 
+                             color = ~Pillar_pal(Pillars)) %>%  
+            addLayersControl(position = "topright",
+                             overlayGroups = Pillar_levels, 
+                             options = layersControlOptions(collapsed = FALSE)) %>%
+            addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
+          
+          a_pill
+          
+          
+          
+          
+        }
+      }
 
 
     })
     
-    
-    # Pillars Loudoun
-    output$map2 <- renderLeaflet({
-      
-      labels <- lapply(
-        paste("<strong>Name: </strong>",
-              str_to_title(loudoun_locations$Program),
-              "<br />",
-              "<strong>Qualifications:</strong>",
-              (loudoun_locations$Qualification) ,
-              "<br />",
-              "<strong>Description:</strong>",
-              (loudoun_locations$Description), 
-              "<br />",
-              "<strong>Location:</strong>",
-              loudoun_locations$Office,
-              "<br />",
-              "<strong>Website:</strong>",
-              loudoun_locations$Website),
-        htmltools::HTML
-      )
-      
-      l_pill <- loudoun_locations %>%  
-        leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng= -77.431622, lat = 39, zoom = 10) %>% 
-        addTiles() %>%
-        addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude,
-                         radius = 8, 
-                         label = labels,
-                         labelOptions = labelOptions(direction = "bottom",
-                                                     style = list(
-                                                       "font-size" = "12px",
-                                                       "border-color" = "rgba(0,0,0,0.5)",
-                                                       direction = "auto")) , 
-                         group = ~loudoun_locations$Pillars, 
-                         color = ~Pillar_pal(Pillars)) %>%  
-        addLayersControl(position = "topright",
-                         overlayGroups = Pillar_levels, 
-                         options = layersControlOptions(collapsed = FALSE)) %>%
-        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
-      
-      l_pill
-    })
-    
-    
-    ## map for locations of program in Allegheny
-    output$map3 <- renderLeaflet({
-      
-      labels <- lapply(
-        paste("<strong>Name: </strong>",
-              str_to_title(allegheny_locations$Program),
-              "<br />",
-              "<strong>Qualifications:</strong>",
-              (allegheny_locations$Qualification) ,
-              "<br />",
-              "<strong>Description:</strong>",
-              (allegheny_locations$Description), 
-              "<br />",
-              "<strong>Location:</strong>",
-              allegheny_locations$Office,
-              "<br />",
-              "<strong>Website:</strong>",
-              allegheny_locations$Website),
-        htmltools::HTML
-      )
-      
-      a_sub <- allegheny_locations %>% 
-        leaflet( options = leafletOptions(minzoom = 12)) %>%
-        setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
-        addTiles() %>%
-        addCircleMarkers(lng = ~Longitude,
-                         lat = ~Latitude,
-                         label = labels,
-                         labelOptions = labelOptions(direction = "bottom",
-                                                     style = list(
-                                                       "font-size" = "12px",
-                                                       "border-color" = "rgba(0,0,0,0.5)",
-                                                       direction = "auto")) , 
-                         group = ~allegheny_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
-                         options = layersControlOptions(collapsed = FALSE))
-      a_sub
-      
-      
-    })
-    
-    
-    ## Pillars Allegheny 
-    output$map4 <- renderLeaflet({
-      labels <- lapply(
-        paste("<strong>Name: </strong>",
-              str_to_title(allegheny_locations$Program),
-              "<br />",
-              "<strong>Qualifications:</strong>",
-              (allegheny_locations$Qualification) ,
-              "<br />",
-              "<strong>Description:</strong>",
-              (allegheny_locations$Description), 
-              "<br />",
-              "<strong>Location:</strong>",
-              allegheny_locations$Office,
-              "<br />",
-              "<strong>Website:</strong>",
-              allegheny_locations$Website),
-        htmltools::HTML
-      )
-    
-      
-      a_pill <- allegheny_locations %>%  
-      leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -79.997030, lat = 40.5, zoom = 10) %>% 
-        addTiles() %>%
-        addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude,
-                         radius = 8, 
-                         label = labels,
-                         labelOptions = labelOptions(direction = "bottom",
-                                                     style = list(
-                                                       "font-size" = "12px",
-                                                       "border-color" = "rgba(0,0,0,0.5)",
-                                                       direction = "auto")) , 
-                         group = ~allegheny_locations$Pillars, 
-                         color = ~Pillar_pal(Pillars)) %>%  
-        addLayersControl(position = "topright",
-                         overlayGroups = Pillar_levels, 
-                         options = layersControlOptions(collapsed = FALSE)) %>%
-        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
-      
-      a_pill
-      
 
-    })
-    
-    ## map for locations of program in Fairfax
-    output$map5 <- renderLeaflet({
-      
-      labels <- lapply(
-        paste("<strong>Name: </strong>",
-              str_to_title(fairfax$Program),
-              "<br />",
-              "<strong>Qualifications:</strong>",
-              (fairfax$Qualification) ,
-              "<br />",
-              "<strong>Description:</strong>",
-              (fairfax$Description), 
-              "<br />",
-              "<strong>Location:</strong>",
-              fairfax$Office,
-              "<br />",
-              "<strong>Website:</strong>",
-              fairfax$Website),
-        htmltools::HTML
-      )
-      
-      f_sub <- fairfax %>% 
-        leaflet( options = leafletOptions(minzoom = 12)) %>%
-        setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
-        addTiles() %>%
-        addCircleMarkers(lng = ~Longitude,
-                         lat = ~Latitude,
-                         label = labels,
-                         labelOptions = labelOptions(direction = "bottom",
-                                                     style = list(
-                                                       "font-size" = "12px",
-                                                       "border-color" = "rgba(0,0,0,0.5)",
-                                                       direction = "auto")) ,
-                         group = ~fairfax$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
-        addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
-                         options = layersControlOptions(collapsed = FALSE))
-      f_sub
-      
-      
-    })
-    
-    
-    ## Pillars Fairfax 
-    output$map6 <- renderLeaflet({
-      
-      labels <- lapply(
-        paste("<strong>Name: </strong>",
-              str_to_title(fairfax$Program),
-              "<br />",
-              "<strong>Qualifications:</strong>",
-              (fairfax$Qualification) ,
-              "<br />",
-              "<strong>Description:</strong>",
-              (fairfax$Description), 
-              "<br />",
-              "<strong>Location:</strong>",
-              fairfax$Office,
-              "<br />",
-              "<strong>Website:</strong>",
-              fairfax$Website),
-        htmltools::HTML
-      )
-      
-      f_pill <- fairfax %>%  
-        leaflet(options = leafletOptions(minzoom = 12)) %>% 
-        setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
-        addTiles() %>%
-        addCircleMarkers(lng = ~Longitude, 
-                         lat = ~Latitude,
-                         label = labels, 
-                         radius = 8, 
-                         labelOptions = labelOptions(direction = "bottom",
-                                                     style = list(
-                                                       "font-size" = "12px",
-                                                       "border-color" = "rgba(0,0,0,0.5)",
-                                                       direction = "auto")) , 
-                         group = ~fairfax$Pillars, 
-                         color = ~Pillar_pal(Pillars)) %>%  
-        addLayersControl(position = "topright",
-                         overlayGroups = Pillar_levels, 
-                         options = layersControlOptions(collapsed = FALSE)) %>%
-        addLegend(title = "Service Type", position = "topleft", pal = Pillar_pal, values = Pillar_levels)
-      
-      f_pill
-      
-      
-    })
-    
-    
     type <- reactive({
       input$type
     })
