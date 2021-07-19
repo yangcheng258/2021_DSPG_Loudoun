@@ -229,8 +229,12 @@ f_pop <- get_acs(geography = "tract",
 
 both <- m_pop %>%
   mutate(f = f_pop$estimate)%>%
-  mutate(both = estimate+f)%>%
-  select(GEOID, NAME, variable, geometry, both)
+  mutate(count = estimate+f)%>%
+  select(GEOID, NAME, variable, geometry, count)
+
+both <- both%>%
+  group_by(NAME) %>%
+  summarize(both = sum(count))
 
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
@@ -738,6 +742,7 @@ body <- dashboardBody(
                         
                       ),
                       mainPanel(
+                        h4(strong("Map of Individuals Served by Population Density")), 
                         leafletOutput(outputId = "overtime", height = "70vh"), 
                         p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services")),
                         tags$br(),
@@ -809,11 +814,7 @@ body <- dashboardBody(
                         
                         fluidRow(
                          h4("Map of Locations", align="center"), leafletOutput(outputId = "map1", height = "400px"),
-                        ),
-                        tags$br(), 
-                        tags$br(), 
-                        h2(strong("Population Density of TAYs")), 
-                        leafletOutput("density")
+                        )
                
                   )
               ) ,
@@ -1666,19 +1667,40 @@ server <- function(input, output, session) {
           htmltools::HTML
         )
         
-        zips_l <- case %>%
-          leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = 1, 
-                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
-          addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/5, 
-                           color = "orange",
-                           fillOpacity = 1,
-                           label = labels) 
+        pal <- colorNumeric(palette = "viridis", 
+                            domain = both$both)
         
-        zips_l
+        
+        labelsP <- lapply(
+          paste("<strong>Area: </strong>",
+                both$NAME,
+                "<br />",
+                "<strong>Total Population: </strong>",
+                formatC(both$both, format = "f", big.mark =",", digits = 0)),
+          htmltools::HTML
+        )
+        
+        
+        both %>%
+          st_transform(crs = "+init=epsg:4326") %>%
+          leaflet(width = "100%") %>%
+          addTiles() %>%
+          addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                      stroke = FALSE,
+                      smoothFactor = 0,
+                      fillOpacity = 0.4,
+                      label = labelsP,
+                      color = ~ pal(both)) %>%
+          addCircleMarkers(lng = ~case$Long, lat = ~case$Lat,
+                           radius = ~case$Number/5, 
+                           color = "orange",
+                           fillOpacity = 2,
+                           label = labels)%>%
+          addLegend("bottomright", 
+                    pal = pal, 
+                    values = ~both,
+                    title = "Total Population",
+                    opacity = .7)
        
       } else if (type() == "dis") {
         
@@ -1715,19 +1737,40 @@ server <- function(input, output, session) {
           htmltools::HTML
         )
         
-        zips_l <- dis %>%
-          leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
+        pal <- colorNumeric(palette = "viridis", 
+                            domain = both$both)
+        
+        
+        labelsP <- lapply(
+          paste("<strong>Area: </strong>",
+                both$NAME,
+                "<br />",
+                "<strong>Total Population: </strong>",
+                formatC(both$both, format = "f", big.mark =",", digits = 0)),
+          htmltools::HTML
+        )
+        
+        
+        both %>%
+          st_transform(crs = "+init=epsg:4326") %>%
+          leaflet(width = "100%") %>%
           addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = 1, 
-                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
-          addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/5, 
+          addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                      stroke = FALSE,
+                      smoothFactor = 0,
+                      fillOpacity = 0.4,
+                      label = labelsP,
+                      color = ~ pal(both)) %>%
+          addCircleMarkers(lng = ~dis$Long, lat = ~dis$Lat,
+                           radius = ~dis$Number/5, 
                            color = "orange",
-                           fillOpacity = 1,
-                           label = labels)
-
-        zips_l
+                           fillOpacity = 2,
+                           label = labels)%>%
+          addLegend("bottomright", 
+                    pal = pal, 
+                    values = ~both,
+                    title = "Total Population",
+                    opacity = .7)
         
         
       }else if (type() == "emer"){
@@ -1765,19 +1808,40 @@ server <- function(input, output, session) {
           htmltools::HTML
         )
         
-        zips_l <- emer %>%
-          leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = 1, 
-                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
-          addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/5, 
-                           color = "orange",
-                           fillOpacity = 1,
-                           label = labels)
+        pal <- colorNumeric(palette = "viridis", 
+                            domain = both$both)
         
-        zips_l
+        
+        labelsP <- lapply(
+          paste("<strong>Area: </strong>",
+                both$NAME,
+                "<br />",
+                "<strong>Total Population: </strong>",
+                formatC(both$both, format = "f", big.mark =",", digits = 0)),
+          htmltools::HTML
+        )
+        
+        
+        both %>%
+          st_transform(crs = "+init=epsg:4326") %>%
+          leaflet(width = "100%") %>%
+          addTiles() %>%
+          addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                      stroke = FALSE,
+                      smoothFactor = 0,
+                      fillOpacity = 0.4,
+                      label = labelsP,
+                      color = ~ pal(both)) %>%
+          addCircleMarkers(lng = ~emer$Long, lat = ~emer$Lat,
+                           radius = ~emer$Number/5, 
+                           color = "orange",
+                           fillOpacity = 2,
+                           label = labels)%>%
+          addLegend("bottomright", 
+                    pal = pal, 
+                    values = ~both,
+                    title = "Total Population",
+                    opacity = .7)
         
         
       }else if (type() == "employ"){
@@ -1815,19 +1879,40 @@ server <- function(input, output, session) {
           htmltools::HTML
         )
         
-        zips_l <- employ %>%
-          leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = 1, 
-                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
-          addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/5, 
-                           color = "orange",
-                           fillOpacity = 1,
-                           label = labels)
+        pal <- colorNumeric(palette = "viridis", 
+                            domain = both$both)
         
-        zips_l
+        
+        labelsP <- lapply(
+          paste("<strong>Area: </strong>",
+                both$NAME,
+                "<br />",
+                "<strong>Total Population: </strong>",
+                formatC(both$both, format = "f", big.mark =",", digits = 0)),
+          htmltools::HTML
+        )
+        
+        
+        both %>%
+          st_transform(crs = "+init=epsg:4326") %>%
+          leaflet(width = "100%") %>%
+          addTiles() %>%
+          addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                      stroke = FALSE,
+                      smoothFactor = 0,
+                      fillOpacity = 0.4,
+                      label = labelsP,
+                      color = ~ pal(both)) %>%
+          addCircleMarkers(lng = ~employ$Long, lat = ~employ$Lat,
+                           radius = ~employ$Number/5, 
+                           color = "orange",
+                           fillOpacity = 2,
+                           label = labels)%>%
+          addLegend("bottomright", 
+                    pal = pal, 
+                    values = ~both,
+                    title = "Total Population",
+                    opacity = .7)
         
         
       }else if (type() == "out"){
@@ -1865,19 +1950,40 @@ server <- function(input, output, session) {
           htmltools::HTML
         )
         
-        zips_l <- out %>%
-          leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = 1, 
-                      fillOpacity = 0.01, label = ~loudoun_zip_codes) %>% 
-          addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/5, 
-                           color = "orange",
-                           fillOpacity = 1,
-                           label = labels)
+        pal <- colorNumeric(palette = "viridis", 
+                            domain = both$both)
         
-        zips_l
+        
+        labelsP <- lapply(
+          paste("<strong>Area: </strong>",
+                both$NAME,
+                "<br />",
+                "<strong>Total Population: </strong>",
+                formatC(both$both, format = "f", big.mark =",", digits = 0)),
+          htmltools::HTML
+        )
+        
+        
+        both %>%
+          st_transform(crs = "+init=epsg:4326") %>%
+          leaflet(width = "100%") %>%
+          addTiles() %>%
+          addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                      stroke = FALSE,
+                      smoothFactor = 0,
+                      fillOpacity = 0.4,
+                      label = labelsP,
+                      color = ~ pal(both)) %>%
+          addCircleMarkers(lng = ~out$Long, lat = ~out$Lat,
+                           radius = ~out$Number/5, 
+                           color = "orange",
+                           fillOpacity = 2,
+                           label = labels)%>%
+          addLegend("bottomright", 
+                    pal = pal, 
+                    values = ~both,
+                    title = "Total Population",
+                    opacity = .7)
         
         
       }else {
@@ -1915,19 +2021,41 @@ server <- function(input, output, session) {
           htmltools::HTML
         )
         
-        zips_l <- res %>%
-          leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.6, lat = 39.1, zoom = 10) %>% 
-          addTiles() %>%
-          addPolygons(data = loudoun_zips, weight = 1, 
-                      fillOpacity = 0.05, label = ~loudoun_zip_codes) %>% 
-          addCircleMarkers(lng = ~Long, lat = ~Lat,
-                           radius = ~Number/5, 
-                           color = "orange",
-                           fillOpacity = 1,
-                           label = labels)
+        pal <- colorNumeric(palette = "viridis", 
+                            domain = both$both)
         
-        zips_l
+        
+        labelsP <- lapply(
+          paste("<strong>Area: </strong>",
+                both$NAME,
+                "<br />",
+                "<strong>Total Population: </strong>",
+                formatC(both$both, format = "f", big.mark =",", digits = 0)),
+          htmltools::HTML
+        )
+        
+        
+        both %>%
+          st_transform(crs = "+init=epsg:4326") %>%
+          leaflet(width = "100%") %>%
+          addTiles() %>%
+          addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
+                      stroke = FALSE,
+                      smoothFactor = 0,
+                      fillOpacity = 0.4,
+                      label = labelsP,
+                      color = ~ pal(both)) %>%
+          addCircleMarkers(lng = ~res$Long, lat = ~res$Lat,
+                           radius = ~res$Number/5, 
+                           color = "orange",
+                           fillOpacity = 2,
+                           label = labels)%>%
+          addLegend("bottomright", 
+                    pal = pal, 
+                    values = ~both,
+                    title = "Total Population",
+                    opacity = .7)
+
         
         
       }
@@ -1935,41 +2063,6 @@ server <- function(input, output, session) {
       
     })
     
-    output$density <- renderLeaflet({ 
-      
-      pal <- colorNumeric(palette = "viridis", 
-                          domain = both$both)
-      
-      
-      labels <- lapply(
-        paste("<strong>Area: </strong>",
-              both$NAME,
-              "<br />",
-              "<strong>Total Population: </strong>",
-              formatC(both$both, format = "f", big.mark =",", digits = 0)),
-        htmltools::HTML
-      )
-      
-      
-      both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
-        leaflet(width = "100%") %>%
-        addTiles() %>%
-        addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
-                    stroke = FALSE,
-                    smoothFactor = 0,
-                    fillOpacity = 0.5,
-                    label = labels,
-                    color = ~ pal(both)) %>%
-        addLegend("bottomright", 
-                  pal = pal, 
-                  values = ~ both,
-                  title = "Total Population",
-                  opacity = .7)
-      
-      
-      
-      })
     
     
     output$table1 <- renderTable({
