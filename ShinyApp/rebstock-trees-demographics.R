@@ -23,6 +23,8 @@ options(tigris_use_cache = TRUE)
 census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
 readRenviron("~/.Renviron")
 
+source("theme.R")
+
 # Loudoun -----------------------------------------------------------
 ## gender and age tays 
 males_tays <- c('B01001_007','B01001_008','B01001_009','B01001_010')
@@ -749,11 +751,12 @@ body <- dashboardBody(
                         solidHeader = TRUE,
                         collapsible = TRUE,
                         selectInput("type", "Select Type of Program:", width = "100%", choices = c(
+                          "Workforce Innovation and Opportunity Act" = "wioa",
                           "Adult Literacy Program Loudoun" = "literacy",
                           # "Continuum of Care" = "care",
                           # "Affordable Dwelling Unit Program" ="afford", 
-                          # "Oxford House" = "oxford",
-                          "OAR Nova, Loudoun"= "oar",
+                          "Oxford House" = "oxford",
+                          "OAR"= "oar", 
                           # "Route 54 Safe-T" = "bus",
                           "Medicaid" = "med")
                         ),
@@ -763,7 +766,7 @@ body <- dashboardBody(
                 
                 )
       ),
-      # trying out the valueBoxes 
+      # trying out the valueBoxes to see how they look compared to ^^^ 
       tabItem(tabName = "served_all",
               fluidRow(style = "margin: 6px;",
                        h1(strong("Individuals Served"), align = "center"),
@@ -779,7 +782,7 @@ body <- dashboardBody(
                fluidRow(style = "margin: 6px;",
                         h1(strong("Location of Programs and Services"), align = "center"),
                         tags$br(),
-                        tags$br(), ,
+                    
                         column(
                           4,
                           selectInput(
@@ -807,76 +810,8 @@ body <- dashboardBody(
                         fluidRow(
                          h4("Map of Locations", align="center"), leafletOutput(outputId = "map1", height = "400px"),
                         ),
-                        
-                        
-                        # box(
-                        #   title = "Loudoun County, VA", 
-                        #   closable = FALSE,
-                        #   width = NULL,
-                        #   status = "primary",
-                        #   solidHeader = TRUE,
-                        #   collapsible = TRUE,
-                        #   
-                        #    br(), 
-                        #    tabsetPanel(
-                        #      tabPanel("Subpopulation",
-                        #               p(""),
-                        #               p(strong("Map of Programs")), 
-                        #               leafletOutput("map1")
-                        #      ),
-                        #      tabPanel("Pillars",
-                        #               p(""),
-                        #               p(strong("Map of Programs")), 
-                        #               leafletOutput("map2")
-                        #      )
-                        #    )) , 
-                        #    br(),
-                        # br(), 
-                        box(
-                          title = "Fairfax County, VA", 
-                          closable = FALSE,
-                          width = NULL,
-                          status = "primary",
-                          solidHeader = TRUE,
-                          collapsible = TRUE,
-                          ## description of what we are doin and why we are mapping them out 
-                          
-                          br(), 
-                          tabsetPanel(
-                            tabPanel("Subpopulation",
-                                     p(""),
-                                     p(strong("Map of Programs")),
-                                     leafletOutput("map5")
-                            ),
-                            tabPanel("Pillars",
-                                     p(""),
-                                     p(strong("Map of Programs")),
-                                     leafletOutput("map6")
-                            )
-                          )), 
-                        br(), 
-                        box(
-                          title = "Allegheny County, PA ", 
-                         closable = FALSE,
-                          width = NULL,
-                          status = "primary",
-                          solidHeader = TRUE,
-                          collapsible = TRUE,
-                           ## description of what we are doin and why we are mapping them out 
-                          
-                           br(), 
-                           tabsetPanel(
-                             tabPanel("Subpopulation",
-                                      p(""),
-                                      p(strong("Map of Programs")),
-                                      leafletOutput("map3")
-                             ),
-                             tabPanel("Pillars",
-                                      p(""),
-                                      p(strong("Map of Programs")),
-                                      leafletOutput("map4")
-                             )
-                           ) ),
+                        tags$br(), 
+                        tags$br(), 
                         h2(strong("Population Density of TAYs")), 
                         leafletOutput("density")
                
