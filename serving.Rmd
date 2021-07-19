@@ -283,6 +283,16 @@ asian <- 24
 white <- 10
 other <- 6 
 
+library(memisc)
+
+persons <- data.frame((rbind(hispanic, asian, white, other)))
+persons$Race <- c("Hispanic", "Asian", "White", "Other")
+colnames(persons) <- c("Number", "Race")
+
+ggplot(persons, aes(x="", y=Number, fill=Race)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)+theme_void()
+
 
 ```
 

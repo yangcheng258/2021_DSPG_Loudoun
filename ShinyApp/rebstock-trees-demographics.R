@@ -748,28 +748,44 @@ body <- dashboardBody(
                         tags$br(),
                         tags$br()
                       )
-                    ), 
+                    )), 
+              fluidRow(
                     box(title = "Who do the programs serve? ",
                         closable = FALSE,
                         width = NULL,
                         status = "primary",
                         solidHeader = TRUE,
                         collapsible = TRUE,
-                        selectInput("type", "Select Type of Program:", width = "100%", choices = c(
-                          "Workforce Innovation and Opportunity Act" = "wioa",
-                          "Adult Literacy Program Loudoun" = "literacy",
-                          # "Continuum of Care" = "care",
-                          # "Affordable Dwelling Unit Program" ="afford", 
-                          "Oxford House" = "oxford",
-                          "OAR"= "oar", 
-                          # "Route 54 Safe-T" = "bus",
-                          "Medicaid" = "med")
-                        ),
-                        plotlyOutput("served")
+                        sidebarLayout(
+                          sidebarPanel(
+                            radioButtons(
+                              "type2",
+                              label = "Select Program Type" ,
+                              choices = list(
+                                "Adult Literacy Program Loudoun" = "literacy",
+                                # "Continuum of Care" = "care",
+                                # "Affordable Dwelling Unit Program" ="afford", 
+                                "Oxford House" = "oxford",
+                                "OAR"= "oar", 
+                                # "Route 54 Safe-T" = "bus",
+                                "Medicaid" = "med")
+                            ),
+                            selected = "literacy"
+                            
+                          ),
+                          mainPanel(
+                            leafletOutput(outputId = "served", height = "70vh"), 
+                            p(tags$small("Data source: ")),
+                            tags$br(),
+                            tags$br()
+                          )
+                        )
+                      
                       
                     )
+              ) 
                 
-                )
+                
       ),
       # trying out the valueBoxes to see how they look compared to ^^^ 
       tabItem(tabName = "served_all",
@@ -778,7 +794,12 @@ body <- dashboardBody(
                        valueBoxOutput("medicaid", width = 4),
                        valueBoxOutput("wioa", width = 4),
                        valueBoxOutput("transit" , width = 4 )
-              )
+              ), 
+              fluidRow(style = "margin: 6px;",
+                       valueBoxOutput("food", width = 4),
+                       valueBoxOutput("shelters", width = 4),
+                       valueBoxOutput("homeless", width = 4)
+              ),
       ) , 
       
       
@@ -884,7 +905,8 @@ ui <- dashboardPage(
 
 # server -----------------------------------------------------------
 server <- function(input, output, session) {
-    
+  ## demographics -----------------------------------------------------------
+  
     var1 <- reactive({
       input$var1
     })
@@ -1099,7 +1121,7 @@ server <- function(input, output, session) {
     })
     
     
-    ## Tree for Loudoun
+    ## Trees -----------------------------------------------------------
     output$tree1 <- renderCollapsibleTree({
       if(input$pillar1%in%"Education"){
         Tree%>%filter(County == "Loudoun")%>%
@@ -1356,7 +1378,7 @@ server <- function(input, output, session) {
       }
     })
     
-    # Add maps for locations of programs in Loudoun subpopulation 
+    ## map locations-----------------------------------------------------------
     county <- reactive({
       input$county
     })
@@ -1624,7 +1646,7 @@ server <- function(input, output, session) {
 
 
     })
-    
+    ## overtime slider -----------------------------------------------------------
 
     type <- reactive({
       input$type
@@ -1688,7 +1710,7 @@ server <- function(input, output, session) {
           addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                       stroke = FALSE,
                       smoothFactor = 0,
-                      fillOpacity = 0.4,
+                      fillOpacity = 0.5,
                       label = labelsP,
                       color = ~ pal(both)) %>%
           addCircleMarkers(lng = ~case$Long, lat = ~case$Lat,
@@ -1758,7 +1780,7 @@ server <- function(input, output, session) {
           addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                       stroke = FALSE,
                       smoothFactor = 0,
-                      fillOpacity = 0.4,
+                      fillOpacity = 0.5,
                       label = labelsP,
                       color = ~ pal(both)) %>%
           addCircleMarkers(lng = ~dis$Long, lat = ~dis$Lat,
@@ -1829,7 +1851,7 @@ server <- function(input, output, session) {
           addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                       stroke = FALSE,
                       smoothFactor = 0,
-                      fillOpacity = 0.4,
+                      fillOpacity = 0.5,
                       label = labelsP,
                       color = ~ pal(both)) %>%
           addCircleMarkers(lng = ~emer$Long, lat = ~emer$Lat,
@@ -1900,7 +1922,7 @@ server <- function(input, output, session) {
           addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                       stroke = FALSE,
                       smoothFactor = 0,
-                      fillOpacity = 0.4,
+                      fillOpacity = 0.5,
                       label = labelsP,
                       color = ~ pal(both)) %>%
           addCircleMarkers(lng = ~employ$Long, lat = ~employ$Lat,
@@ -1971,7 +1993,7 @@ server <- function(input, output, session) {
           addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                       stroke = FALSE,
                       smoothFactor = 0,
-                      fillOpacity = 0.4,
+                      fillOpacity = 0.5,
                       label = labelsP,
                       color = ~ pal(both)) %>%
           addCircleMarkers(lng = ~out$Long, lat = ~out$Lat,
@@ -2042,7 +2064,7 @@ server <- function(input, output, session) {
           addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                       stroke = FALSE,
                       smoothFactor = 0,
-                      fillOpacity = 0.4,
+                      fillOpacity = 0.5,
                       label = labelsP,
                       color = ~ pal(both)) %>%
           addCircleMarkers(lng = ~res$Long, lat = ~res$Lat,
@@ -2064,6 +2086,7 @@ server <- function(input, output, session) {
     })
     
     
+    ## count -----------------------------------------------------------
     
     output$table1 <- renderTable({
         table <- read.csv("data/program_subpop_counts.csv")
@@ -2103,18 +2126,19 @@ server <- function(input, output, session) {
       
       
     })
+    ## valueBoxes -----------------------------------------------------------
     
     output$medicaid <- renderValueBox({
       
-      valueBox(value =244362, 
+      valueBox(value = 244362, 
                subtitle = "Childless Adults Served by Medicaid 2021",
                 icon = icon("clinic-medical"))
     })
     
     output$wioa <- renderValueBox({
       
-      valueBox(value = 108, 
-               subtitle = "Individuals emrolled at WIOA so far in 2021",
+      valueBox(value = 28, 
+               subtitle = "Youths enrolled at WIOA 2020",
                icon = icon("briefcase"), color = "green")
     })
     
@@ -2126,6 +2150,29 @@ server <- function(input, output, session) {
                color = "maroon")
     })
     
+    output$food <- renderValueBox({
+      
+      valueBox(value = 175, 
+               subtitle = "TAYs were on SNAP benefits in 2020",
+               icon = icon("utensils"),
+               color = "purple")
+    })
+    
+    output$shelters <- renderValueBox({
+      
+      valueBox(value = 27, 
+               subtitle = "TAYs used Emergency Shelters in 2019" , 
+               icon = icon("house-user"),
+               color = "red")
+    })
+    
+    output$homeless <- renderValueBox({
+      
+      valueBox(value = 22, 
+               subtitle = "Homeless TAYs in 2020" , 
+               icon = icon("home"),
+               color = "light-blue")
+    })
 }
 
 
