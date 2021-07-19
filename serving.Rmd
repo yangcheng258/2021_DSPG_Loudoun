@@ -134,9 +134,15 @@ colnames(ox) <-c("Number", "Category")
 ox$Category <- factor(ox$Category, levels=unique(ox$Category))
 
 
-ggplot() + geom_col(mapping = aes(Category, Number), data = ox,fill =  "chocolate2") + 
+ggplot() + geom_col(mapping = aes(Category, Number), data = ox[1:2,],fill =  "chocolate2") + 
   labs(title = "Oxford Houses in VA 2019-2020",
-       y = "Number") +
+       y = "Months") +
+  theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+
+
+ggplot() + geom_col(mapping = aes(Category, Number), data = ox[3:5,],fill =  "chocolate2") + 
+  labs(title = "Oxford Houses in VA 2019-2020",
+       y = "%/Years") +
   theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
 
 

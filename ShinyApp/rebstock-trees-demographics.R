@@ -1,9 +1,7 @@
-
 library(shiny)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(ggplot2)
-library(DT)
 library(maps)
 library(plotly)
 library(dplyr)
@@ -22,8 +20,6 @@ options(tigris_use_cache = TRUE)
 
 census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
 readRenviron("~/.Renviron")
-
-source("theme.R")
 
 # Loudoun -----------------------------------------------------------
 ## gender and age tays 
@@ -53,14 +49,23 @@ race$Race <- c("White", "Black", "Indian", "Asian", "Native Hawaiian", "Other")
 # education 
 male_edu <- c("B15001_004","B15001_005","B15001_006","B15001_007","B15001_008","B15001_009","B15001_010") 
 female_edu <- c("B15001_045", "B15001_046", "B15001_047", "B15001_048", "B15001_049","B15001_050","B15001_051") 
-education <- get_acs(geography = 'county', variables = c(male_edu, female_edu) , state= 'VA',county='Loudoun')
+education <- get_acs(geography = 'county', 
+                     variables = c(male_edu, female_edu), 
+                     state= 'VA',
+                     county='Loudoun')
 
 school <- c("Less than 9th", "9th to 12th (no diploma)", "High school diploma", "Some college (no degree)", "Associate's degree", "Bachelor's degree", "Graduate or professional degree")
-medu <- education[1:7,]%>%
-  select(variable, estimate)
+medu <- education[1:7,]
+
+medu <- medu%>%
+  dplyr::select(variable, estimate)
+
 medu$variable <- school
-fedu <- education[8:14,]%>%
-  select(estimate)
+
+fedu <- education[8:14,]
+
+fedu <- fedu%>%
+  dplyr::select(estimate)
 
 ## Poverty 
 w <- c("B17001A_010","B17001A_024") 
@@ -79,27 +84,27 @@ poverty <- get_acs(
 
 w_p <- data.frame(poverty[1,], poverty[2,])%>%
   mutate(sum = estimate + estimate.1)%>%
-  select(variable, sum)%>%
+  dplyr::select(variable, sum)%>%
   mutate(variable = "White")
 b_p <- data.frame(poverty[3,], poverty[4,])%>%
   mutate(sum = estimate + estimate.1)%>%
-  select(variable, sum)%>%
+  dplyr::select(variable, sum)%>%
   mutate(variable = "Black")
 i_p <- data.frame(poverty[5,], poverty[6,])%>%
   mutate(sum = estimate + estimate.1)%>%
-  select(variable, sum)%>%
+  dplyr::select(variable, sum)%>%
   mutate(variable = "Indian")
 as_p <- data.frame(poverty[7,], poverty[8,])%>%
   mutate(sum = estimate + estimate.1)%>%
-  select(variable, sum)%>%
+  dplyr::select(variable, sum)%>%
   mutate(variable = "Asian")
 n_p <- data.frame(poverty[9,], poverty[10,])%>%
   mutate(sum = estimate + estimate.1)%>%
-  select(variable, sum)%>%
+  dplyr::select(variable, sum)%>%
   mutate(variable = "Native")
 o_p <- data.frame(poverty[11,], poverty[12,])%>%
   mutate(sum = estimate + estimate.1)%>%
-  select(variable, sum)%>%
+  dplyr::select(variable, sum)%>%
   mutate(variable = "Other")
 
 # Health Care
@@ -177,10 +182,10 @@ colnames(fc_sex) <- c("Gender", "Value")
 intake_race <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Race_Intake.csv")) 
 colnames(intake_race) <-intake_race[1,]
 intake_race <-intake_race[-1,]
-jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>% 
+jv_race <- intake_race %>% dplyr::select(RACE, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
-  rename(Proportion = `FY20 %`) %>% 
-  select(RACE, Proportion) %>% 
+  dplyr::rename(Proportion = `FY20 %`) %>% 
+  dplyr::select(RACE, Proportion) %>% 
   rename(Race = RACE)%>%
   mutate(Proportion = readr::parse_number(as.character(Proportion)))
 
@@ -189,28 +194,28 @@ jv_race <- intake_race %>% select(RACE, `FY20 %`, CSU) %>%
 intake_eth <- read_csv(paste0(getwd(), "/data/DJJ-2020-Juvenile_Detention_Locality-Ethnicity_Intake.csv")) 
 colnames(intake_eth) <-intake_eth[1,]
 intake_eth <- intake_eth[-1,]
-jv_eth <- intake_eth %>% select(ETHNICITY, `FY20 %`, CSU) %>% 
+jv_eth <- intake_eth %>% dplyr::select(ETHNICITY, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
-  rename(Proportion = `FY20 %`, Ethnicity = ETHNICITY) %>%
-  select(Ethnicity, Proportion)%>%
+  dplyr::rename(Proportion = `FY20 %`, Ethnicity = ETHNICITY) %>%
+  dplyr::select(Ethnicity, Proportion)%>%
   mutate(Proportion = readr::parse_number(as.character(Proportion)))
 
 # Sex
 intake_sex <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Sex_Intake.csv")) 
-jv_sex <- intake_sex %>% select(SEX, `FY20 %`, CSU) %>% 
+jv_sex <- intake_sex %>% dplyr::select(SEX, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
-  rename(Proportion = `FY20 %`, Sex = SEX) %>%
-  select(Sex, Proportion)%>%
+  dplyr::rename(Proportion = `FY20 %`, Sex = SEX) %>%
+  dplyr::select(Sex, Proportion)%>%
   mutate(Proportion = readr::parse_number(as.character(Proportion)))
 
 # Age
 intake_age <- read_csv(paste0(getwd(),"/data/DJJ-2020-Juvenile_Detention_Locality-Age_Intake.csv")) 
 colnames(intake_age) <-intake_age[1,]
 intake_age <- intake_age[-1,]
-jv_age <- intake_age %>% select(AGE, `FY20 %`, CSU) %>% 
+jv_age <- intake_age %>% dplyr::select(AGE, `FY20 %`, CSU) %>% 
   filter(CSU == "20L") %>% 
-  rename(Proportion = `FY20 %`, Age = AGE) %>%
-  select(Age, Proportion) %>% 
+  dplyr::rename(Proportion = `FY20 %`, Age = AGE) %>%
+  dplyr::select(Age, Proportion) %>% 
   filter(Age != "Total Cases")%>%
   mutate(Proportion = readr::parse_number(as.character(Proportion)))
 
@@ -230,7 +235,7 @@ f_pop <- get_acs(geography = "tract",
 both <- m_pop %>%
   mutate(f = f_pop$estimate)%>%
   mutate(count = estimate+f)%>%
-  select(GEOID, NAME, variable, geometry, count)
+  dplyr::select(GEOID, NAME, variable, geometry, count)
 
 both <- both%>%
   group_by(NAME) %>%
@@ -244,7 +249,7 @@ map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx"))
 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
@@ -252,7 +257,7 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
@@ -260,7 +265,7 @@ allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
 fairfax <- map%>%
   filter(County == "Fairfax") %>% 
-  select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
@@ -277,7 +282,7 @@ Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green'),
 va_zips <- zctas(state = "VA", year = 2010)
 loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
 loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
-  html_table() %>% select(c(1,2)) %>% rename(`Zip Code` = X1, City = X2) %>%
+  html_table() %>% dplyr::select(c(1,2)) %>% dplyr::rename(`Zip Code` = X1, City = X2) %>%
   slice(-c(1, 2)) 
 loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
 loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
@@ -285,6 +290,79 @@ loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
 
 
 overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
+
+## Persons Served
+classroom <- 396
+tutoring <- 20
+jobsite <- 49 
+ged <- 2 
+workforce <- 105 
+
+programs <- data.frame((rbind(classroom, tutoring, jobsite, ged, workforce)))
+programs$Type <- c("Classroom", "Tutoring", "Jobsite", "GED", "Workforce Development Week")
+colnames(programs) <- c("Number", "Type")
+
+served <- 543 
+hispanic <- 58
+asian <- 24
+white <- 10
+other <- 6 
+
+
+persons <- data.frame((rbind(hispanic, asian, white, other)))
+persons$Race <- c("Hispanic", "Asian", "White", "Other")
+colnames(persons) <- c("Number", "Race")
+
+
+enroll <- read_excel("~/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/ShinyApp/data/medicaid-enrollment.xlsx")
+
+total <- enroll[1:13,]
+total$`Adults, Pregnant Women and Children` <- as.numeric(total$`Adults, Pregnant Women and Children`)
+med <- enroll[16:20,1:3]
+colnames(med) <- c("Year", "Children", "Childless Adults")
+med$`Childless Adults` <- as.numeric(med$`Childless Adults`)
+med$Children <- as.numeric(med$Children)
+
+
+
+average_stay <- 9 #months 
+median_stay <- 5 
+prior_home <- 61.3 #percent 
+prior_jail <- 79.6
+edu <- 12.1 #years 
+
+ox <- data.frame(rbind(average_stay, median_stay, prior_home, prior_jail, edu)) 
+ox$Category <- c("Average Stay (mo) ", 
+                 "Median Stay (mo) ", 
+                 "Prior Homelessness (%) ",
+                 "Prior Jail time (%) ",
+                 "Average Education (yrs) ") 
+colnames(ox) <-c("Number", "Category") 
+ox$Category <- factor(ox$Category, levels=unique(ox$Category))
+
+
+l <- 180
+c <- 3355
+m <- 75
+f <- 23
+undisclosed <- 2
+
+tay <- 30
+no_high <- 17
+college <- 11 
+
+all <- data.frame(rbind(l, c, m, f, undisclosed, tay, no_high, college)) 
+all$Category <- c("Served in Loduoun", 
+                  "Total Served", 
+                  "Male",
+                  "Female",
+                  "Undisclosed Gender", 
+                  "TAYs",
+                  "Did not finish high school",
+                  "Have a college education")
+colnames(all) <-c("Number", "Category") 
+all$Category <- factor(all$Category, levels=unique(all$Category))
+
 
 # sidebar -----------------------------------------------------------
 sidebar <- dashboardSidebar(
@@ -344,7 +422,11 @@ body <- dashboardBody(
                   collapsible = TRUE,
                   h1("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
                   h2("Project Description"), 
-                  img(src = 'loudoun-map.png', height = "150", width = "400", align = "center",style="display: block; margin-left: auto; margin-right: auto;" )
+                  img(src = 'loudoun-map.png', height = "150", width = "400", align = "center",style="display: block; margin-left: auto; margin-right: auto;" ),
+                  br(),
+                  br(),
+                  # JaiDa needs to add description 
+                  p()
                   
                 ) 
               ) 
@@ -358,32 +440,16 @@ body <- dashboardBody(
                         br(),
                         p("", style = "padding-top:10px;"),
                         h4(strong("Who does Loudoun County Serve?")),
-              p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
-                        in the United States. It covers 515.6 square miles ranking 20th-largest county 
-                        in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
-                        Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
-                        Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County, 
-                        Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 
-                        395,134, making it Virginia’s third-most populous county. Loudoun County is part of 
-                        the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
-              p("The median income of households in Loudoun County, Virginia was $142,299, 
-                        the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had 
-                        income below $10,000 a year and 30.0 percent had income over $200,000 or more. 
-                        As of 2018, Loudoun County had a median household income of $136,268.[6] Since 2008, 
-                        the county has been ranked first in the U.S. in median household income among jurisdictions
-                        with a population of 65,000 or more. In 2015-2019, 3.4% of people were 
-                        in poverty. An estimated 3.2% of children under 18 were below the poverty 
-                        level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
-                        of people 18 to 64 years were below the poverty level."), 
+              p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
+                in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
+                Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County,  Maryland, and Frederick County, Maryland. In 2019, the population was estimated at 
+                395,134, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
+              p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
+                with a population of 65,000 or more. " ), 
               p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
                 care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
                 independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
-                this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. 
-                Over 30% of these young adults have either started college and are not finished yet or dropped out and only 18% have a Bachelor's degree. While majority of this 
-                subpopulation is white, when compared to the ratio of those living below the poverty level, 37% of those reported 'other' as their race are living in poverty,
-                and 11% of blacks are living in poverty. Another interesting is 85% of tays have private healthcare which means they are either fully supporting themselves which is unlikely 
-                or they are on their parents' insurance. Those who have aged out of foster care or just got out of the juvenille detention system most likely do 
-                not have their parents' support and need to qualify or apply for Medicaid or VA Health.  " )) ,
+                this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. " )) ,
               br(),
               sidebarLayout(
                 sidebarPanel(
@@ -569,9 +635,11 @@ body <- dashboardBody(
                     the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
                     With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
                     them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
+                  br(), 
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                     their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
+                  br(), 
                   column(6, 
                          h4("Number of Programs by Subpopulation"), 
                          tableOutput("table1") ),
@@ -685,8 +753,6 @@ body <- dashboardBody(
                       ),
                       mainPanel(
                         collapsibleTreeOutput("compare"), 
-                        tags$br(),
-                        tags$br()
                       )
                     ) 
                     
@@ -708,6 +774,7 @@ body <- dashboardBody(
                     Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
                     walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
                    "),
+                    tags$br(),
                     p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
                     As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
                     one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
@@ -715,10 +782,14 @@ body <- dashboardBody(
                     substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
                     "), 
                     br(),
+                    br(),
                     plotlyOutput("waitlist"),
                     p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                     p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))),
-                    sidebarLayout(
+                   br(),
+                  br(), 
+                
+                 sidebarLayout(
                       sidebarPanel(
                         radioButtons(
                           "type",
@@ -749,40 +820,35 @@ body <- dashboardBody(
                         tags$br()
                       )
                     )), 
+              tags$br(), 
+              tags$br(),
+              tags$br(), 
               fluidRow(
-                    box(title = "Who do the programs serve? ",
-                        closable = FALSE,
-                        width = NULL,
-                        status = "primary",
-                        solidHeader = TRUE,
-                        collapsible = TRUE,
-                        sidebarLayout(
-                          sidebarPanel(
-                            radioButtons(
-                              "type2",
-                              label = "Select Program Type" ,
-                              choices = list(
-                                "Adult Literacy Program Loudoun" = "literacy",
-                                # "Continuum of Care" = "care",
-                                # "Affordable Dwelling Unit Program" ="afford", 
-                                "Oxford House" = "oxford",
-                                "OAR"= "oar", 
-                                # "Route 54 Safe-T" = "bus",
-                                "Medicaid" = "med")
-                            ),
-                            selected = "literacy"
-                            
-                          ),
-                          mainPanel(
-                            leafletOutput(outputId = "served", height = "70vh"), 
-                            p(tags$small("Data source: ")),
-                            tags$br(),
-                            tags$br()
-                          )
-                        )
+                   h4(strong("Persons Served")), 
+                   p(),
+                   p(), 
+                  radioButtons(
+                    "type2",
+                    label = "Select Program Type" ,
+                    choices = list(
+                      "Adult Literacy Program Loudoun" = "literacy",
+                      # "Continuum of Care" = "care",
+                      # "Affordable Dwelling Unit Program" ="afford", 
+                      "Oxford House" = "oxford",
+                      "OAR"= "oar", 
+                      # "Route 54 Safe-T" = "bus",
+                      "Medicaid" = "med")
+                  ),
+                  selected = "literacy", 
+                  tags$br(),
+                  tags$br(), 
+                  column(6, 
+                        plotlyOutput(outputId = "plotServed")) ,
+                  column(6, 
+                         plotlyOutput(outputId = "plotServed2"))
+                          
                       
-                      
-                    )
+                    
               ) 
                 
                 
@@ -1657,23 +1723,23 @@ server <- function(input, output, session) {
         
         if (input$year == 2016){
             case <- data.frame(overtime[2:4,2:10]) %>%
-              select("...2", "X2016", Lat, Long) 
+              dplyr::select("...2", "X2016", Lat, Long) 
             
         }else if (input$year == 2017){
           case <- data.frame(overtime[2:4,2:10]) %>%
-            select("...2", "X2017", Lat, Long) 
+            dplyr::select("...2", "X2017", Lat, Long) 
           
         }else if (input$year == 2018){
           case <- data.frame(overtime[2:4,2:10]) %>%
-            select("...2", "X2018", Lat, Long) 
+            dplyr::select("...2", "X2018", Lat, Long) 
           
         }else if (input$year == 2019){
           case <- data.frame(overtime[2:4,2:10]) %>%
-            select("...2", "X2019", Lat, Long) 
+            dplyr::select("...2", "X2019", Lat, Long) 
           
         }else {
           case <- data.frame(overtime[2:4,2:10]) %>%
-            select("...2", "X2020", Lat, Long) 
+            dplyr::select("...2", "X2020", Lat, Long) 
           
         }
         
@@ -1728,23 +1794,23 @@ server <- function(input, output, session) {
         
         if (input$year == 2016){
           dis <- data.frame(overtime[8:9,2:10]) %>%
-            select("...2", "X2016", Lat, Long) 
+            dplyr::select("...2", "X2016", Lat, Long) 
           
         }else if (input$year == 2017){
           dis <- data.frame(overtime[8:9,2:10]) %>%
-            select("...2", "X2017", Lat, Long) 
+            dplyr::select("...2", "X2017", Lat, Long) 
           
         }else if (input$year == 2018){
           dis <- data.frame(overtime[8:9,2:10]) %>%
-            select("...2", "X2018", Lat, Long) 
+            dplyr::select("...2", "X2018", Lat, Long) 
           
         }else if (input$year == 2019){
           dis <- data.frame(overtime[8:9,2:10]) %>%
-            select("...2", "X2019", Lat, Long) 
+            dplyr::select("...2", "X2019", Lat, Long) 
           
         }else {
           dis <- data.frame(overtime[8:9,2:10]) %>%
-            select("...2", "X2020", Lat, Long) 
+            dplyr::select("...2", "X2020", Lat, Long) 
           
         }
         
@@ -1799,23 +1865,23 @@ server <- function(input, output, session) {
         
         if (input$year == 2016){
           emer <- data.frame(overtime[12:14,2:10]) %>%
-            select("...2", "X2016", Lat, Long) 
+            dplyr::select("...2", "X2016", Lat, Long) 
           
         }else if (input$year == 2017){
           emer <- data.frame(overtime[12:14,2:10]) %>%
-            select("...2", "X2017", Lat, Long) 
+            dplyr::select("...2", "X2017", Lat, Long) 
           
         }else if (input$year == 2018){
           emer <- data.frame(overtime[12:14,2:10]) %>%
-            select("...2", "X2018", Lat, Long) 
+            dplyr::select("...2", "X2018", Lat, Long) 
           
         }else if (input$year ==2019){
           emer <- data.frame(overtime[12:14,2:10]) %>%
-            select("...2", "X2019", Lat, Long) 
+            dplyr::select("...2", "X2019", Lat, Long) 
           
         }else {
           emer <- data.frame(overtime[12:14,2:10]) %>%
-            select("...2", "X2020", Lat, Long) 
+            dplyr::select("...2", "X2020", Lat, Long) 
           
         }
         
@@ -1870,23 +1936,23 @@ server <- function(input, output, session) {
         
         if (input$year == 2016){
           employ <- data.frame(overtime[18,2:10]) %>%
-            select("...2", "X2016", Lat, Long) 
+            dplyr::select("...2", "X2016", Lat, Long) 
           
         }else if (input$year == 2017){
           employ <- data.frame(overtime[18,2:10]) %>%
-            select("...2", "X2017", Lat, Long) 
+            dplyr::select("...2", "X2017", Lat, Long) 
           
         }else if (input$year == 2018){
           employ <- data.frame(overtime[18,2:10]) %>%
-            select("...2", "X2018", Lat, Long) 
+            dplyr::select("...2", "X2018", Lat, Long) 
           
         }else if (input$year == 2019){
           employ <- data.frame(overtime[18,2:10]) %>%
-            select("...2", "X2019", Lat, Long) 
+            dplyr::select("...2", "X2019", Lat, Long) 
           
         }else {
           employ <- data.frame(overtime[18,2:10]) %>%
-            select("...2", "X2020", Lat, Long) 
+            dplyr::select("...2", "X2020", Lat, Long) 
           
         }
         
@@ -1941,23 +2007,23 @@ server <- function(input, output, session) {
         
         if (input$year == 2016){
           out <- data.frame(overtime[21:23,2:10]) %>%
-            select("...2", "X2016", Lat, Long) 
+            dplyr::select("...2", "X2016", Lat, Long) 
           
         }else if (input$year == 2017){
           out <- data.frame(overtime[21:23,2:10]) %>%
-            select("...2", "X2017", Lat, Long) 
+            dplyr::select("...2", "X2017", Lat, Long) 
           
         }else if (input$year == 2018){
           out <- data.frame(overtime[21:23,2:10]) %>%
-            select("...2", "X2018", Lat, Long) 
+            dplyr::select("...2", "X2018", Lat, Long) 
           
         }else if (input$year == 2019){
           out <- data.frame(overtime[21:23,2:10]) %>%
-            select("...2", "X2019", Lat, Long) 
+            dplyr::select("...2", "X2019", Lat, Long) 
           
         }else {
           out <- data.frame(overtime[21:23,2:10]) %>%
-            select("...2", "X2020", Lat, Long) 
+            dplyr::select("...2", "X2020", Lat, Long) 
           
         }
         
@@ -2012,23 +2078,23 @@ server <- function(input, output, session) {
         
         if (input$year == 2016){
           res <- data.frame(overtime[27:31,2:10]) %>%
-            select("...2", "X2016", Lat, Long) 
+            dplyr::select("...2", "X2016", Lat, Long) 
           
         }else if (input$year == 2017){
           res <- data.frame(overtime[27:31,2:10]) %>%
-            select("...2", "X2017", Lat, Long) 
+            dplyr::select("...2", "X2017", Lat, Long) 
           
         }else if (input$year == 2018){
           res <- data.frame(overtime[27:31,2:10]) %>%
-            select("...2", "X2018", Lat, Long) 
+            dplyr::select("...2", "X2018", Lat, Long) 
           
         }else if (input$year == 2019){
           res <- data.frame(overtime[27:31,2:10]) %>%
-            select("...2", "X2019", Lat, Long) 
+            dplyr::select("...2", "X2019", Lat, Long) 
           
         }else{
           res <- data.frame(overtime[27:31,2:10]) %>%
-            select("...2", "X2020", Lat, Long) 
+            dplyr::select("...2", "X2020", Lat, Long) 
           
         }
         
@@ -2100,27 +2166,74 @@ server <- function(input, output, session) {
     }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
     
     
-    type <- reactive({
-      input$type
+    type2 <- reactive({
+      input$type2
     })
     
-    output$served <- renderPlotly({
-      if (type() == "med"){
+    output$plotServed <- renderPlotly({
+      if (type2() == "med"){
+        ggplot() + 
+          geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
+          geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="red", size = 2) + 
+          labs(y = "Persons", 
+               title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
+          theme(plot.title = element_text(size = 8))
+        
+      }else if (type2() == "literacy"){
+        ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
+          labs(title = "Adult Literacy Program",
+               y = "Persons Served")+
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        
+      }else if (type2() == "oar") {
+        
+        ggplot() + geom_col(mapping = aes(Category, Number), data = all[1:2,],fill =  "plum4") + 
+          labs(title = "Oar Nova 2020",
+               y = "Persons Served")+
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        
+      }
+      #Oxford houses
+      else {
+        
+        ggplot() + geom_col(mapping = aes(Category, Number), data = ox[1:2,],fill =  "chocolate2") + 
+          labs(title = "Oxford Houses in VA 2019-2020",
+               y = "Months") +
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        
+      }
+      
+      
+    })
+    output$plotServed2 <- renderPlotly({
+      if (type2() == "med"){
         ggplot() + 
           geom_line(mapping = aes(Year, `Childless Adults`, group = 1), data = med) + 
           geom_line(mapping = aes(Year, Children, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
           labs(y = "Persons", 
                title = "Medcaid for Children and Childless Adults")
         
-      }else if (type() == "literacy"){
-        ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
-          labs(title = "Adult Literacy Program",
-               y = "Persons Served")+
-          theme(axis.text.x = element_text(angle = 90, vjust = .5, color = "black"))
+      }else if (type2() == "literacy"){
         
-      }else if (type() == "wioa") {
+        # ggplot(persons, aes(x="", y=Number, fill=Race)) +
+        #   geom_bar(stat="identity", width=1) +
+        #   coord_polar("y", start=0)+theme_void() 
         
-      }else {
+      }else if (type2() == "oar") {
+        
+        ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:8,],fill =  "plum4") + 
+          labs(title = "Oar Nova 2020",
+               y = "Percent Served") +
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        
+      }
+      #Oxford houses
+      else {
+        
+        ggplot() + geom_col(mapping = aes(Category, Number), data = ox[3:5,],fill =  "chocolate2") + 
+          labs(title = "Oxford Houses in VA 2019-2020",
+               y = "%/Years") +
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
         
       }
       
