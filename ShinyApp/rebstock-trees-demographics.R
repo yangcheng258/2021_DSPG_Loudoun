@@ -20,14 +20,14 @@ library(sf)
 
 options(tigris_use_cache = TRUE)
 
-# census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
-# readRenviron("~/.Renviron")
+census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
+readRenviron("~/.Renviron")
 
-#Yang's API Key
-census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
-Sys.getenv("CENSUS_API_KEY")
-# I am seeting my working directory
-setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
+# #Yang's API Key
+# census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
+# Sys.getenv("CENSUS_API_KEY")
+# # I am seeting my working directory
+# setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
 
 
 
