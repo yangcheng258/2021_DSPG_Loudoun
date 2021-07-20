@@ -1,6 +1,6 @@
 library(shiny)
-library(shinydashboard)
-library(shinydashboardPlus)
+library(shinythemes)
+library(shinyjs)
 library(ggplot2)
 library(maps)
 library(plotly)
@@ -418,6 +418,7 @@ ui <- navbarPage(title = "DSPG 2021",
                  selected = "overview",
                  theme = shinytheme("lumen"),
                  tags$head(tags$style('.selectize-dropdown {z-index: 10000}')), 
+                 useShinyjs(),
 
       ## Tab Overview--------------------------------------------
       tabPanel("Overview", value = "overview",
@@ -504,22 +505,21 @@ tabPanel("Sociodemographics", value = "soci",
          fluidRow(style = "margin: 6px;",
                   h1(strong("Loudoun County Residents' Sociodemographic Characteristics"), align = "center"),
                   p("", style = "padding-top:10px;"), 
-              h4(strong("Who does Loudoun County Serve?")),
-              p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
-                in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
-                Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County,  Maryland, and Frederick County, Maryland. In 2019, the population was estimated at 
-                395,134, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
-              p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
-                with a population of 65,000 or more. " ), 
-              p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
-                care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
-                independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
-                this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. " )) ,
-              br(),
+                  h4(strong("Who does Loudoun County Serve?")),
+                  p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
+                    in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
+                    Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County,  Maryland, and Frederick County, Maryland. In 2019, the population was estimated at 
+                    395,134, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
+                  p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
+                    with a population of 65,000 or more. " ), 
+                  p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
+                    care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
+                    independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
+                    this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. " )) ,
+        br(), 
               sidebarLayout(
                 sidebarPanel(
-                  h4("Visualizations of Transition Aged Youth (TAYs)"),
-                  
+                  h3("Visualizations of Transition Aged Youth (TAYs)"),
                   radioButtons(
                     "var1",
                     label = "Select Demographic" ,
@@ -542,14 +542,12 @@ tabPanel("Sociodemographics", value = "soci",
                   tags$br()
                 )
                 ),
-              
-              br(),
-              br(),
                 tabsetPanel(
                   tabPanel("Foster Care",
                            h3(strong(""), align = "center"),
                            sidebarLayout(
                              sidebarPanel(
+                               h3("Visualizations of Subpopulations"),
                                radioButtons(
                                  "var2",
                                  label = "Select Demographic" ,
@@ -646,36 +644,38 @@ tabPanel("Sociodemographics", value = "soci",
 tabPanel("Data and Methodology", value = "data",
          fluidRow(style = "margin: 6px;",
                   h1(strong("Data and Methodology"), align = "center"),
-                  br(),
+                  p("", style = "padding-top:10px;"), 
                   column(4,
-                   p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
-                                        residents that the county serves."),
-                   img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
-                   p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
-                                        the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,
-                                        educational attainment, health insurance coverage, and poverty level."),
-                   img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "200px"),
-                   p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
-                     We needed a better idea of how many youths need services to transition out of the system. "),
-                   br(),
-                   img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "100px")),
+                       p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the residents that the county serves."),
+          
+                       img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
+                       p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
+                      the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,educational attainment, health insurance coverage, and poverty level."),
+                       
+                       img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "200px"),
+                       p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
+                         We needed a better idea of how many youths need services to transition out of the system. "),
+                       
+                      
+                       img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "100px"),
+                       p("We used Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                        We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
+                  
                   column(4,
-                   p("We used Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                     We used these numbers to get a better idea of how many youths need services to transition out of the system."),
-                   br(),
-                   img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "200px"),
-                   p("We used Virginia Department of Social Services to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                     We used these numbers to get a better idea of how many youths need services to transition out of the system."),
-                   br(),
-                   img(src = 'data-usCensus.png', style = "display: inline; float: left;", width = "150px"),
-                   p("We used US Census Bureau to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                     We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
+                       img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "200px"),
+                       p("We used Virginia Department of Social Services to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                         We used these numbers to get a better idea of how many youths need services to transition out of the system."),
+                       
+                       img(src = 'data-usCensus.png', style = "display: inline; float: left;", width = "150px"),
+                       p("We used US Census Bureau to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                         We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
+                  
                    column(4, 
-                   p("We began our research with a literature review...... "), 
-                   p("Next we webscraped information on the demographics of our target population: 18-24; in foster care or juvenile detention. "),
-                   p("Webscrapped the services and programs available and got their locations to map. "),
-                   br(),
-                   p("Compare against Fairfax, VA and Allegheny, PA "))
+                       p("We began our research with a literature review...... "), 
+                       p("Next we webscraped information on the demographics of our target population: 18-24; in foster care or juvenile detention. "),
+                       p("Webscrapped the services and programs available and got their locations to map. "),
+                       br(),
+                       p("Compare against Fairfax, VA and Allegheny, PA "))
                   )
              
       ),
@@ -685,28 +685,29 @@ tabPanel("Data and Methodology", value = "data",
 tabPanel("Services", value = "services", 
          fluidRow(style = "margin: 6px;",
                   h1(strong("Service Availability"), align = "center"),
-                  p("", style = "padding-top:10px;"),
-                  h4("Why are these programs and services so important? ") ,
-                  p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
-                    because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
-                    the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
-                    With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
-                    them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
-                  br(), 
-                  p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
-                    Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
-                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                  br(), 
+                  p("", style = "padding-top:10px;"), 
                   column(6, 
-                         h4("Number of Programs by Subpopulation"), 
-                         tableOutput("table1") ),
-                  column(6, 
-                         h4("Number of Programs by Pillar"), 
-                         tableOutput("table2"))
-                  ),
+                        h4(strong("Why are these services and programs so important?")),
+                        p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
+                          because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
+                          the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
+                          With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
+                          them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
+                        br(), 
+                        p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
+                          Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
+                          their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. ")) ,
+                        column(6, 
+                               h4("Number of Programs by Subpopulation"), 
+                               tableOutput("table1"),
+                               tags$br(), 
+                               h4("Number of Programs by Pillar"), 
+                               tableOutput("table2")) 
+                  ) ,
+         tags$br(), 
          fluidRow(style = "margin: 6px;",
-                  h4("Programs and Services", align = "center"),
-                  p("", style = "padding-top:10px;"),
+                  p("", style = "padding-top:10px;"), 
+                  h4(strong("Services and Programs")),
                         tabsetPanel(
                           tabPanel("Loudoun",
                                    br(),
@@ -781,8 +782,8 @@ tabPanel("Services", value = "services",
                           )
                         ),
          fluidRow(style = "margin: 6px;",
-                  h4("Comparison", align = "center"),
-                  p("", style = "padding-top:10px;"),
+                  p("", style = "padding-top:10px;"), 
+                  h4(strong("Where are the gaps?")),
                     sidebarLayout(
                       sidebarPanel(
                         radioButtons(
@@ -808,26 +809,30 @@ tabPanel("DMHSA" , value = "dmhsa",
          fluidRow(style = "margin: 6px;",
                   h1(strong("Department of Mental Health, Substance Abuse, and Developmental Services"), align = "center"),
                   p("", style = "padding-top:10px;"), 
-                    h3(strong("Individuals Served from the Department of Mental Health, Substance Abuse and Developmental Services"), align = "center"),
-                    p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
-                    programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
-                    Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
-                    walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
-                   "),
-                    tags$br(),
-                    p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
-                    As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
-                    one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
-                    instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
-                    substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
-                    "), 
-                    br(),
-                    br(),
-                    plotlyOutput("waitlist"),
-                    p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
-                    p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))),
-                   br(),
-                  br(), 
+                  column(4,
+                        h4(strong("Vulnerable Transition Aged Youth")),
+                          p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
+                          programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
+                          Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
+                          walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
+                         "),
+                          tags$br(),
+                          p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
+                          As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
+                          one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
+                          instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
+                          substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
+                          ")), 
+                  column(8,
+                        p("", style = "padding-top:10px;"), 
+                        p("", style = "padding-top:10px;"), 
+                        plotlyOutput("waitlist"),
+                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
+                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))))  ,
+         tags$br(),
+         tags$br(),
+                fluidRow(style = "margin: 6px;",
+                         p("", style = "padding-top:10px;"), 
                  sidebarLayout(
                       sidebarPanel(
                         radioButtons(
@@ -854,59 +859,50 @@ tabPanel("DMHSA" , value = "dmhsa",
                       mainPanel(
                         h4(strong("Map of Individuals Served by Population Density")), 
                         leafletOutput(outputId = "overtime", height = "70vh"), 
-                        p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services")),
-                        tags$br(),
-                        tags$br()
+                        p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services"))
+                        
                       )
-                    ), 
-              tags$br(), 
-              tags$br(),
-              tags$br(), 
-         fluidRow(style = "margin: 6px;",
-                  h4(strong("Others Served"), align = "center"),
-                  p("", style = "padding-top:10px;"), 
-                   p(),
-                   p(), 
-                  radioButtons(
-                    "type2",
-                    label = "Select Program Type" ,
-                    choices = list(
-                      "Adult Literacy Program Loudoun" = "literacy",
-                      # "Continuum of Care" = "care",
-                      # "Affordable Dwelling Unit Program" ="afford", 
-                      "Oxford House" = "oxford",
-                      "OAR"= "oar", 
-                      # "Route 54 Safe-T" = "bus",
-                      "Medicaid" = "med")
-                  ),
-                  selected = "literacy", 
-                  tags$br(),
-                  tags$br(), 
-                  column(6, 
-                        plotlyOutput(outputId = "plotServed")) ,
-                  column(6, 
-                         plotlyOutput(outputId = "plotServed2"))
-                          
-                      
-                    
-              ) 
+                    )) 
+         
                 
                 
       ),
       # trying out the valueBoxes to see how they look compared to ^^^ 
-      # tabPanel("Values" tabName = "served_all",
-      #         fluidRow(style = "margin: 6px;",
-      #                  h1(strong("Individuals Served"), align = "center"),
-      #                  valueBoxOutput("medicaid", width = 4),
-      #                  valueBoxOutput("wioa", width = 4),
-      #                  valueBoxOutput("transit" , width = 4 )
-      #         ), 
-      #         fluidRow(style = "margin: 6px;",
-      #                  valueBoxOutput("food", width = 4),
-      #                  valueBoxOutput("shelters", width = 4),
-      #                  valueBoxOutput("homeless", width = 4)
-      #         ),
-      # ) , 
+      tabPanel("Individuals Served", value = "served",
+               fluidRow(style = "margin: 6px;",
+                        p("", style = "padding-top:10px;"), 
+                        column(6, 
+                               h1(strong("Statistics"), align = "center"),
+                               p("", style = "padding-top:10px;"), 
+                               infoBoxOutput("medicaid", width = 6),
+                               infoBoxOutput("wioa", width = 6),
+                               infoBoxOutput("transit" , width = 6),
+                               infoBoxOutput("food", width = 6),
+                               infoBoxOutput("shelters", width = 6),
+                               infoBoxOutput("homeless", width = 6)
+                        ), 
+                        column(6, 
+                               h1(strong("Program Graphs"), align = "center"),
+                               p("", style = "padding-top:10px;"), 
+                               radioButtons(
+                                 "type2",
+                                 label = "Select Program Type" ,
+                                 choices = list(
+                                   "Adult Literacy Program Loudoun" = "literacy",
+                                   # "Continuum of Care" = "care",
+                                   # "Affordable Dwelling Unit Program" ="afford", 
+                                   "Oxford House" = "oxford",
+                                   "OAR"= "oar", 
+                                   # "Route 54 Safe-T" = "bus",
+                                   "Medicaid" = "med")
+                               ),
+                               selected = "literacy",
+                               tags$br(), 
+                               plotlyOutput(outputId = "plotServed") ,
+                               tags$br(), 
+                               plotlyOutput(outputId = "plotServed2"))
+               ) 
+      ) ,
       
       
       ## Locations --------------------------------------------
@@ -914,41 +910,37 @@ tabPanel("DMHSA" , value = "dmhsa",
                fluidRow(style = "margin: 6px;",
                         h1(strong("Location of Programs and Services"), align = "center"),
                         p("", style = "padding-top:10px;"), 
-                        tags$br(),
-                        column(
-                          4,
-                          selectInput(
-                            "county",
-                            "Select County",
-                            choices = unique(map$County),
-                            selected = "Loudoun",
-                            width = 400
-                          )
-                        ),
-                        column(8,
-                                 radioButtons(
-                                   "category",
-                                   label = "Select Category" ,
-                                   choices = c("Subpopulation", "Pillars"),
-                                 ),
-                                 selected = "Subpopulation", 
+                        column(4, 
+                               h4(strong("Where are these services and programs located?")),
+                               p(),
+                                
                                ), 
+                        column(8, 
+                               column(4,
+                               selectInput(
+                                 "county",
+                                 "Select County",
+                                 choices = unique(map$County),
+                                 selected = "Loudoun",
+                                 width = 400
+                               )),
+                               column(4, 
+                               radioButtons(
+                                 "category",
+                                 label = "Select Category" ,
+                                 choices = c("Subpopulation", "Pillars"),
+                               ),
+                               selected = "Subpopulation" ), 
+                            leafletOutput(outputId = "map1", height = "400px")) 
                         
-                        tags$br(),
-                        tags$br(),
-                        tags$hr(),
-                        tags$br(),
-                        
-                        fluidRow(
-                         h4("Map of Locations", align="center"), leafletOutput(outputId = "map1", height = "400px"),
-                        )
                
                   )
               ) ,
-      tabPanel("Findings" value = "findings", 
+      tabPanel("Conclusion",  value = "conclusion", 
               fluidRow(style = "margin: 6px;",
                        h1(strong("Conclusion"), align = "center")),  
                 p("", style = "padding-top:10px;"), 
+                p()
               
             ), 
 tabPanel("Team", value = "team",
@@ -968,14 +960,16 @@ tabPanel("Team", value = "team",
          fluidRow(style = "margin-left: 100px; margin-right: 100px;",
                   column(6, align = "center",
                          h4(strong("DSPG Team Members")),
+                         img(src = "team-yang.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                          img(src = "", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
-                         img(src = "team-julie.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
+                         img(src = "team-rebstock.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
+                         img(src = "team-austin.png", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
                          img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
-                         img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
-                         p(a(href = '', 'Esha Dwibedi', target = '_blank'), "(Virginia Tech, Applied Microeconomics);",
+                         p(a(href = '', 'Yang Cheng', target = '_blank'), "(Virginia Tech, Applied Microeconomics);",
+                           a(href = '', 'JaiDa Robinson', target = '_blank'), "(Virginia State University, Applied Microeconomics);",
                            a(href = 'https://www.linkedin.com/in/julie-rebstock', 'Julie Rebstock', target = '_blank'), "(Virgina Tech, Economics and Computational Modeling and Data Analytics);",
-                           a(href = '', 'Ryan Jacobs', target = '_blank'), "(Virginia Tech, Statistical and Data Science).",
-                           a(href = '', 'John Wright', target = '_blank'), "(Virginia State Univeristy, Statistical and Data Science)."),
+                           a(href = '', 'Austin Burcham', target = '_blank'), "(Virginia Tech, Statistical and Data Science).",
+                           a(href = '', 'Kyle Jacobs', target = '_blank'), "(Virginia State Univeristy, Statistical and Data Science)."),
                          p("", style = "padding-top:10px;") 
                   ),
                   column(6, align = "center",
@@ -983,12 +977,10 @@ tabPanel("Team", value = "team",
                          img(src = "", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                          img(src = "", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                          img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
-                         p(a(href = "", 'Susna Chen', target = '_blank'), "(Project Lead, Research Assistant Professor);",
-                           a(href = "", 'Brianna Posadas', target = '_blank'), "(VT, Postdoctoral Research Associate);",
-                           a(href = '', 'Sarah M. Witiak', target = '_blank'), "(VSU, Division Director and Distinguished Professor)."),
+                         p(a(href = "", 'Chainta Holmes', target = '_blank'), "(Project Lead, Research Assistant Professor);",
+                           a(href = "", 'Isabel Bradburn', target = '_blank'), "(VT, Postdoctoral Research Associate);") , 
                          p("", style = "padding-top:10px;")
-                  )
-         ),
+         )) ,
          fluidRow(style = "margin-left: 100px; margin-right: 100px;",
                   h4(strong("Project Stakeholders")),
                   p(a(href = '', 'Dawn Barnes', target = '_blank'), "(Virginia Cooperative Extension, Floyd County at Virginia Tech);",
@@ -996,12 +988,12 @@ tabPanel("Team", value = "team",
                   p("", style = "padding-top:10px;"),
                   h4(strong("Acknowledgments"))
          )
-      ), inverse = T
-  ) 
+      )
+      , inverse = T ) 
     
 
 # server -----------------------------------------------------------
-server <- function(input, output, session) {
+server <- function(input, output) {
   
   runjs(jscode)
   ## demographics -----------------------------------------------------------
@@ -1019,8 +1011,8 @@ server <- function(input, output, session) {
         l_ages_gender$variable <- names
         l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
         
-        ggplot(l_ages_gender, aes(fill = gender, x = estimate, y = variable)) + 
-          geom_bar(position="dodge", stat="identity") + 
+        ggplot(l_ages_gender, aes(x = estimate, y = variable)) + 
+          geom_bar(position="dodge", stat="identity", fill = "blue") + 
           labs(title = "Gender and Age Groups ", 
                y = "", 
                x = "Population Estimate") +coord_flip()
@@ -1037,7 +1029,7 @@ server <- function(input, output, session) {
         
         
         percent %>%
-          ggplot() + geom_col(mapping = aes(x = Percent, y = Gender ), fill = "darkgreen")+
+          ggplot() + geom_col(mapping = aes(x = Percent, y = Gender ), fill = "cadetblue")+
           labs(title = "Percent of TAYs by Gender", 
                y = "", 
                x = "Percent %") + coord_flip() 
@@ -1060,7 +1052,7 @@ server <- function(input, output, session) {
         both$variable <- factor(both$variable, levels=unique(both$variable))
         
         both %>%
-          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "lavenderblush3")+ 
+          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "paleturquoise")+ 
           labs(title = "Educational Attainment", 
                y = "", 
                x = "Population Estimate") 
@@ -1069,7 +1061,7 @@ server <- function(input, output, session) {
       }
       else if (var1() == "health"){
         healthcare %>%
-          ggplot(mapping = aes(x = Estimate, y = Type ))  + geom_col(fill = "gold2")+ 
+          ggplot(mapping = aes(x = Estimate, y = Type ))  + geom_col(fill = "dodgerblue")+ 
           labs(title = "Types of Healthcare Coverage", 
                y = "", 
                x = "Population Estimate") + 
@@ -1079,7 +1071,7 @@ server <- function(input, output, session) {
         
         ggplot(smi, aes(x=Year)) + 
           geom_line(aes(y = SMI, group = 1), color = "steelblue") + 
-          geom_line(aes(y = `Not SMI`, group = 1 ), color="darkred", linetype="twodash")+ 
+          geom_line(aes(y = `Not SMI`, group = 1 ), color="darkblue", linetype="twodash")+ 
           labs(title = "Severe Mental Illness from FY 2016 - 2020")
         
         
@@ -1087,7 +1079,7 @@ server <- function(input, output, session) {
       else {
         pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
         pov %>%
-          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "plum2")+ 
+          ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "lightblue3")+ 
           labs(title = "Poverty by Race", 
                y = "", 
                x = "Population Estimate") + coord_flip()
@@ -1106,8 +1098,7 @@ server <- function(input, output, session) {
         fc_ages$Age.Group <- factor(fc_ages$Age.Group, levels=unique(fc_ages$Age.Group))
         
         ggplot(data = fc_ages, aes(x= Age.Group, y = Value) ) + 
-          geom_col(width = .95, alpha = .75, fill = "coral") + coord_flip()+
-          theme_minimal(base_family = 'Verdana' ) + 
+          geom_col(width = .95, alpha = .75, fill = "royalblue2") + coord_flip()+
           labs(x = "", 
                y = "Population Estimate",
                title = "Age Groups for Foster Care", 
@@ -1115,7 +1106,7 @@ server <- function(input, output, session) {
         
       }else if(var2() == "race"){
         ggplot(data = fc_races, aes(x= Race, y = Value) ) + 
-          geom_col(width = .95, alpha = .75, fill = "darkseagreen2") + coord_flip()+
+          geom_col(width = .95, alpha = .75, fill = "navy") + coord_flip()+
           labs(x = "", 
                y = "Population Estimate",
                title = "Racial Demographics for Foster Care", 
@@ -1123,7 +1114,7 @@ server <- function(input, output, session) {
         
     } else if (var2() == "eth") {
       g <- ggplot(fc_eth, aes(eth, value))
-      g + geom_bar(stat = "identity",fill = rgb(0.9,0.1,0.1,0.9)) + 
+      g + geom_bar(stat = "identity",fill = rgb(0.2,0.1,0.9,0.9)) + 
         labs(title = "Ethinic Demographics of Foster children",
              x = "Ethnicity", 
              y = "Population Estimate") + theme(legend.position = "none")
@@ -1155,7 +1146,7 @@ server <- function(input, output, session) {
           mutate(Age = recode(Age, `12-Aug` = "8-12" ))
         jv_age %>% 
           ggplot(aes(x = Age, y = `Relative Frequency`)) +
-          geom_col(fill = "brown1") +
+          geom_col(fill = "midnightblue") +
           labs(x = "Age", y = "Relative Frequency",
                title = "Age Groups of Loudoun Intakes") + 
           theme_minimal() + 
@@ -1167,7 +1158,7 @@ server <- function(input, output, session) {
         jv_race <- jv_race %>% mutate(`Relative Frequency` = Proportion)
         jv_race %>% 
           ggplot(aes(x = Race, y = `Relative Frequency`)) +
-          geom_col(fill = "coral") +
+          geom_col(fill = "slateblue1") +
           labs(x = "Race", y = "Relative Frequency",
                title = "Racial Demographics of Loudoun Intakes") + 
           theme_minimal() + 
@@ -1180,7 +1171,7 @@ server <- function(input, output, session) {
         jv_eth <- jv_eth %>% mutate(`Relative Frequency` = Proportion)
         jv_eth %>% 
           ggplot(aes(x = Ethnicity, y = `Relative Frequency`))  +
-          geom_col(fill = "darkseagreen2") +
+          geom_col(fill = "lightblue4") +
           labs(x = "Ethnicity", y = "Relative Frequency",
                title = "Ethnic Demographics of Loudoun Intakes") + 
           theme_minimal() + 
@@ -1193,7 +1184,7 @@ server <- function(input, output, session) {
         jv_sex <- jv_sex %>% mutate(`Relative Frequency` = Proportion)
         jv_sex %>% 
           ggplot(aes(x = Sex, y = `Relative Frequency`)) +
-          geom_col(fill = "darkslategray2" ) +
+          geom_col(fill = "cyan" ) +
           labs(x = "Sex", y = "Relative Frequency",
                title = "Sex Demographics of Loudoun Intakes") + 
           theme_minimal() + 
@@ -1210,10 +1201,10 @@ server <- function(input, output, session) {
       
       ggplot(waitlist, aes(x=Year)) + 
         geom_line(aes(y = Residental, group = 1), color = "steelblue") + 
-        geom_line(aes(y = `Case Management*`, group = 1 ), color="darkred", linetype="twodash") + 
-        geom_line(aes(y = `Employment & Day Support`, group = 1 ), color="darkolivegreen3") + 
-        geom_line(aes(y = `Outpatient**`, group = 1 ), color="plum2") +
-        labs(title = "Waitlist for The Department of Mental Health, Substance Abuse and Developmental Services by Program",
+        geom_line(aes(y = `Case Management*`, group = 1 ), color="darkblue", linetype="twodash", size = 2) + 
+        geom_line(aes(y = `Employment & Day Support`, group = 1 ), color="skyblue", linetype="dotted", size = 2) + 
+        geom_line(aes(y = `Outpatient**`, group = 1 ), color="mediumblue") +
+        labs(title = "Waitlist for DMHSA by Program",
              y = "Persons", 
              x = "Year") 
       
@@ -2207,7 +2198,7 @@ server <- function(input, output, session) {
       if (type2() == "med"){
         ggplot() + 
           geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
-          geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="red", size = 2) + 
+          geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
           labs(y = "Persons", 
                title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
           theme(plot.title = element_text(size = 8))
@@ -2220,7 +2211,7 @@ server <- function(input, output, session) {
         
       }else if (type2() == "oar") {
         
-        ggplot() + geom_col(mapping = aes(Category, Number), data = all[1:2,],fill =  "plum4") + 
+        ggplot() + geom_col(mapping = aes(Category, Number), data = all[1:2,],fill =  "lightblue2") + 
           labs(title = "Oar Nova 2020",
                y = "Persons Served")+
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
@@ -2229,7 +2220,7 @@ server <- function(input, output, session) {
       #Oxford houses
       else {
         
-        ggplot() + geom_col(mapping = aes(Category, Number), data = ox[1:2,],fill =  "chocolate2") + 
+        ggplot() + geom_col(mapping = aes(Category, Number), data = ox[1:2,],fill =  "cornflowerblue") + 
           labs(title = "Oxford Houses in VA 2019-2020",
                y = "Months") +
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
@@ -2254,7 +2245,7 @@ server <- function(input, output, session) {
         
       }else if (type2() == "oar") {
         
-        ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:8,],fill =  "plum4") + 
+        ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:8,],fill =  "lightblue2") + 
           labs(title = "Oar Nova 2020",
                y = "Percent Served") +
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
@@ -2263,7 +2254,7 @@ server <- function(input, output, session) {
       #Oxford houses
       else {
         
-        ggplot() + geom_col(mapping = aes(Category, Number), data = ox[3:5,],fill =  "chocolate2") + 
+        ggplot() + geom_col(mapping = aes(Category, Number), data = ox[3:5,],fill =  "cornflowerblue") + 
           labs(title = "Oxford Houses in VA 2019-2020",
                y = "%/Years") +
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
@@ -2272,52 +2263,59 @@ server <- function(input, output, session) {
       
       
     })
-    ## valueBoxes -----------------------------------------------------------
+    ## infoBox -----------------------------------------------------------
     
-    output$medicaid <- renderValueBox({
+    output$medicaid <- renderInfoBox({
       
-      valueBox(value = 244362, 
+      infoBox(title = "Medicaid", 
+                value = 244362, 
                subtitle = "Childless Adults Served by Medicaid 2021",
-                icon = icon("clinic-medical"))
+                icon = icon("clinic-medical"),
+              fill = TRUE)
     })
     
-    output$wioa <- renderValueBox({
+    output$wioa <- renderInfoBox({
       
-      valueBox(value = 28, 
+      infoBox(title = "WIOA", value = 28, 
                subtitle = "Youths enrolled at WIOA 2020",
-               icon = icon("briefcase"), color = "green")
+               icon = icon("briefcase"), color = "green",
+              fill = T)
     })
     
-    output$transit <- renderValueBox({
+    output$transit <- renderInfoBox({
       
-      valueBox(value = "52, 57, 42", 
+      infoBox(title = "Route 54 Safe-T", value = "52, 57, 42", 
                subtitle = "Average Riders Weekdays, Saturday, Sunday",
                icon = icon("bus"),
-               color = "maroon")
+               color = "maroon",
+              fill = T)
     })
     
-    output$food <- renderValueBox({
+    output$food <- renderInfoBox({
       
-      valueBox(value = 175, 
+      infoBox(title = "SNAP", value = 175, 
                subtitle = "TAYs were on SNAP benefits in 2020",
                icon = icon("utensils"),
-               color = "purple")
+               color = "purple",
+              fill = T)
     })
     
-    output$shelters <- renderValueBox({
+    output$shelters <- renderInfoBox({
       
-      valueBox(value = 27, 
+      infoBox(title = "Shelters", value = 27, 
                subtitle = "TAYs used Emergency Shelters in 2019" , 
                icon = icon("house-user"),
-               color = "red")
+               color = "red",
+              fill = T)
     })
     
-    output$homeless <- renderValueBox({
+    output$homeless <- renderInfoBox({
       
-      valueBox(value = 22, 
+      infoBox(title = "Homelessness", value = 22, 
                subtitle = "Homeless TAYs in 2020" , 
                icon = icon("home"),
-               color = "light-blue")
+               color = "light-blue",
+              fill = T)
     })
 }
 
