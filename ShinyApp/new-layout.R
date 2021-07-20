@@ -699,9 +699,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                    p("", style = "padding-top:10px;"), 
                                    column(6, 
                                           h4(strong("Why are these services and programs so important?")),
-                                          p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
-                                          Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
-                                          their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. ")) ,
+                                          p("The following tables provide counts of programs  
+                                                       and services available in each county by subpopulation and by pillar.
+                                                       They allow for simple comparison of program types across counties.")) ,
                                    column(6, 
                                           h4(strong("Number of Programs by Subpopulation")), 
                                           tableOutput("table1"),
@@ -714,8 +714,16 @@ ui <- navbarPage(title = "DSPG 2021",
                                    p("", style = "padding-top:10px;"), 
                                    column(4, 
                                           h4(strong("Trees")),
-                                          p(), 
-                                          p(),
+                                          p("These interactive tree diagrams allow for 
+                                                       the comparison of programs/services at the county 
+                                                       level in Loudoun, Fairfax and Allegheny county. 
+                                                       Each diagram represents
+                                                       the programs of the selected pillar in the selected county.
+                                                       Nodes represent
+                                                       first the pillar, then the targeted subpopulation,
+                                                       followed by the program/service name, then the intended 
+                                                       age range of the program/service and lastly the 
+                                                       city or county location of its office"),
                                    ),
                                    column(8, 
                                           h4(strong("Map of Locations")),
@@ -776,7 +784,14 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin: 6px;",
                                    p("", style = "padding-top:10px;"), 
                                    column(4,  
-                                   h4(strong("Where are the gaps?"))) ,
+                                   h4(strong("Where are the gaps?")), 
+                                   p("These interactive tree diagrams contain all programs
+                                                     and services available in Loudoun, Fairfax and Allegheny
+                                                     county organized by pillar. The diagrams are intended for 
+                                                     comparison between counties. Its nodes first represent 
+                                                     pillar, then subpopulation, followed by program name, 
+                                                     intended age range of program, and then finally the county 
+                                                     which the program serves. ")) ,
                                    column(8, 
                                           h4(strong("Comparison Tree by Pillar")),
                                            radioButtons(
@@ -804,7 +819,13 @@ ui <- navbarPage(title = "DSPG 2021",
                                    p("", style = "padding-top:10px;"), 
                                    column(4, 
                                           h4(strong("Where are these services and programs located?")),
-                                          p(),
+                                          p("The following interactive maps mark the office locations 
+                                                       of the services and programs found available to vulnerable
+                                                       TAY. Hovering over the circle markers will display the name of the service/program,
+                                                       while clicking on the circle markers will open a popup with a detailed description of 
+                                                       the program/service. Maps are available by county; each county's services and programs can be 
+                                                       catagorized by subpopulation served and by the pillar the program/service best 
+                                                       fits. The switchboards at the topright allow the user to further filter locations."),
                                           
                                    ), 
                                    column(8, 
@@ -1490,7 +1511,8 @@ server <- function(input, output) {
       if (county() == "Loudoun") {
         if (category() == "Subpopulation") {
           
-          labels <- lapply(
+          labels <- loudoun_locations$Program
+          popups <- lapply(
             paste("<strong>Name: </strong>",
                   str_to_title(loudoun_locations$Program),
                   "<br />",
@@ -1517,18 +1539,15 @@ server <- function(input, output) {
             addCircleMarkers(lng = ~Longitude,
                              lat = ~Latitude,
                              label = labels,
-                             labelOptions = labelOptions(direction = "bottom",
-                                                         style = list(
-                                                           "font-size" = "12px",
-                                                           "border-color" = "rgba(0,0,0,0.5)",
-                                                           direction = "auto")) , 
+                             popup = popups,
                              group = ~loudoun_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
             addLayersControl(overlayGroups = c("TAYs", "Foster Care", "Juvenile Detention"),
                              options = layersControlOptions(collapsed = FALSE))
           l_sub
           
         }else{
-          labels <- lapply(
+          labels <- loudoun_locations$Program
+          popups <- lapply(
             paste("<strong>Name: </strong>",
                   str_to_title(loudoun_locations$Program),
                   "<br />",
@@ -1554,11 +1573,7 @@ server <- function(input, output) {
                              lat = ~Latitude,
                              radius = 8, 
                              label = labels,
-                             labelOptions = labelOptions(direction = "bottom",
-                                                         style = list(
-                                                           "font-size" = "12px",
-                                                           "border-color" = "rgba(0,0,0,0.5)",
-                                                           direction = "auto")) , 
+                             popup = popups, 
                              group = ~loudoun_locations$Pillars, 
                              color = ~Pillar_pal(Pillars)) %>%  
             addLayersControl(position = "topright",
@@ -1573,7 +1588,8 @@ server <- function(input, output) {
       else if (county() == "Fairfax") {
         if (category() == "Subpopulation"){
           
-          labels <- lapply(
+           labels <- fairfax$Program
+           popups <- lapply(
             paste("<strong>Name: </strong>",
                   str_to_title(fairfax$Program),
                   "<br />",
@@ -1598,19 +1614,15 @@ server <- function(input, output) {
             addCircleMarkers(lng = ~Longitude,
                              lat = ~Latitude,
                              label = labels,
-                             labelOptions = labelOptions(direction = "bottom",
-                                                         style = list(
-                                                           "font-size" = "12px",
-                                                           "border-color" = "rgba(0,0,0,0.5)",
-                                                           direction = "auto")) ,
+                             popup = popups,
                              group = ~fairfax$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
             addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
                              options = layersControlOptions(collapsed = FALSE))
           f_sub
           
         }else {
-          
-          labels <- lapply(
+          labels <- fairfax$Program
+          popups <- lapply(
             paste("<strong>Name: </strong>",
                   str_to_title(fairfax$Program),
                   "<br />",
@@ -1636,11 +1648,7 @@ server <- function(input, output) {
                              lat = ~Latitude,
                              label = labels, 
                              radius = 8, 
-                             labelOptions = labelOptions(direction = "bottom",
-                                                         style = list(
-                                                           "font-size" = "12px",
-                                                           "border-color" = "rgba(0,0,0,0.5)",
-                                                           direction = "auto")) , 
+                             popup = popups , 
                              group = ~fairfax$Pillars, 
                              color = ~Pillar_pal(Pillars)) %>%  
             addLayersControl(position = "topright",
@@ -1655,8 +1663,8 @@ server <- function(input, output) {
       }
       else {
         if (category() == "Subpopulation"){
-          
-          labels <- lapply(
+          labels <- allegheny_locations$Program
+          popups <- lapply(
             paste("<strong>Name: </strong>",
                   str_to_title(allegheny_locations$Program),
                   "<br />",
@@ -1681,11 +1689,7 @@ server <- function(input, output) {
             addCircleMarkers(lng = ~Longitude,
                              lat = ~Latitude,
                              label = labels,
-                             labelOptions = labelOptions(direction = "bottom",
-                                                         style = list(
-                                                           "font-size" = "12px",
-                                                           "border-color" = "rgba(0,0,0,0.5)",
-                                                           direction = "auto")) , 
+                             popup = popups , 
                              group = ~allegheny_locations$Subpopulation, radius = 8, color = ~subpop_pal(Subpopulation)) %>%
             addLayersControl(overlayGroups = c("TAYs","Foster Care", "Juvenile Detention"),
                              options = layersControlOptions(collapsed = FALSE))
@@ -1695,8 +1699,8 @@ server <- function(input, output) {
           
         }
         else {
-          
-          labels <- lapply(
+          labels <- allegheny_locations$Program
+          popups <- lapply(
             paste("<strong>Name: </strong>",
                   str_to_title(allegheny_locations$Program),
                   "<br />",
@@ -1723,11 +1727,7 @@ server <- function(input, output) {
                              lat = ~Latitude,
                              radius = 8, 
                              label = labels,
-                             labelOptions = labelOptions(direction = "bottom",
-                                                         style = list(
-                                                           "font-size" = "12px",
-                                                           "border-color" = "rgba(0,0,0,0.5)",
-                                                           direction = "auto")) , 
+                             popup = popups , 
                              group = ~allegheny_locations$Pillars, 
                              color = ~Pillar_pal(Pillars)) %>%  
             addLayersControl(position = "topright",
