@@ -20,8 +20,16 @@ library(sf)
 
 options(tigris_use_cache = TRUE)
 
-census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
-readRenviron("~/.Renviron")
+# census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
+# readRenviron("~/.Renviron")
+
+#Yang's API Key
+census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
+Sys.getenv("CENSUS_API_KEY")
+# I am seeting my working directory
+setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
+
+
 
 source("theme.R")
 
@@ -303,21 +311,30 @@ sidebar <- dashboardSidebar(
         text = "Data and Methodology",
         icon = icon("database")) ,
       menuItem(
-        tabName = "services",
-        text = "Service Availability",
-        icon = icon("server")),
+        tabName = "services_sum",
+        text ="Services Provision",
+        icon = icon("bar-chart-o"),
+        startExpanded = TRUE,
+        menuSubItem(tabName = "services",
+                    text = "Availability",
+                    icon = icon("server")),
+        menuSubItem(tabName = "locations",
+                    text = "Locations",
+                    icon = icon("map-marked-alt"))
+      ),
+      
       menuItem(
-        tabName = "served",
-        text = "DMHSA Served",
-        icon = icon("server")),
-      menuItem(
-        tabName = "served_all",
-        text = "Individuals Served",
-        icon = icon("server")),
-      menuItem(
-        tabName = "locations",
-        text = "Locations",
-        icon = icon("map-marked-alt")), 
+        tabName = "utilization",
+        text = "Services Utilization",
+        icon = icon("bar-chart-o"),
+        startExpanded = TRUE,
+        menuSubItem( tabName = "served_all",
+                     text = "Individuals Served",
+                     icon = icon("server")),
+        menuSubItem(tabName = "served_1",
+                    text = "DMHSA Served",
+                    icon = icon("server"))
+      ),
       menuItem(
         tabName = "findings", 
         text = "Findings", 
@@ -325,7 +342,8 @@ sidebar <- dashboardSidebar(
       menuItem(
         tabName = "team",
         text = "Team Members",
-        icon = icon("user-friends")) 
+        icon = icon("user-friends"))
+      
   ) 
 ) 
 # body -----------------------------------------------------------
@@ -335,18 +353,21 @@ body <- dashboardBody(
       ## Tab Overview--------------------------------------------
       tabItem(tabName = "overview",
               fluidRow(
-                box(
-                  title = "Project Overview",
-                  closable = FALSE,
-                  width = NULL,
-                  status = "primary",
-                  solidHeader = TRUE,
-                  collapsible = TRUE,
-                  h1("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
-                  h2("Project Description"), 
-                  img(src = 'loudoun-map.png', height = "150", width = "400", align = "center",style="display: block; margin-left: auto; margin-right: auto;" )
                   
-                ) 
+
+                  h1(strong("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"), align = "center"),
+                  
+                  h2("Project Description"), 
+                  
+                  img(src = 'loudoun-map.png', height = "150", width = "400", align = "center",style="display: block; margin-left: auto; margin-right: auto;" ),
+                  
+                  h2("Project Goals"), 
+                  p("By Yang"),
+                  h2("Project Approach"), 
+                  p("By Yang"),
+                  h3("References"),
+                  p("By Yang")
+                
               ) 
       ),
       
@@ -354,10 +375,10 @@ body <- dashboardBody(
       tabItem(tabName = "intro",
                fluidRow(style = "margin: 6px;",
                         h1(strong("Loudoun County Residents' Demographic Characteristics"), align = "center"),
-                        h2("Project Description"),
+                       
                         br(),
                         p("", style = "padding-top:10px;"),
-                        h4(strong("Who does Loudoun County Serve?")),
+                        
               p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
                         in the United States. It covers 515.6 square miles ranking 20th-largest county 
                         in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
@@ -375,6 +396,7 @@ body <- dashboardBody(
                         in poverty. An estimated 3.2% of children under 18 were below the poverty 
                         level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
                         of people 18 to 64 years were below the poverty level."), 
+              h4(strong("Who does Loudoun County Serve?")),
               p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
                 care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
                 independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
@@ -514,12 +536,7 @@ body <- dashboardBody(
       ## Data and Methodology--------------------------------------------
       tabItem(tabName = "data",
               fluidRow(style = "margin: 6px;",
-                   box(title = "Data and Methodology",
-                       closable = FALSE,
-                       width = NULL,
-                       status = "primary",
-                       solidHeader = TRUE,
-                       collapsible = TRUE,
+                  h1(strong("Data"),align = "center"),
                    p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the
                                         residents that the county serves."),
                    img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
@@ -543,11 +560,15 @@ body <- dashboardBody(
                      We used these numbers to get a better idea of how many youths need services to transition out of the system."),
                    br(),
                    br(),
+                  
+                  h1(strong("Methodology"), align = "center"),
                    p("We began our research with a literature review...... "), 
                    p("Next we webscraped information on the demographics of our target population: 18-24; in foster care or juvenile detention. "),
                    p("Webscrapped the services and programs available and got their locations to map. "),
                    br(),
-                   p("Compare against Fairfax, VA and Allegheny, PA ")),
+                   p("Compare against Fairfax, VA and Allegheny, PA "),
+                   
+                   
               br(), 
               br()) 
               
@@ -556,30 +577,26 @@ body <- dashboardBody(
       
       ## Services--------------------------------------------
       tabItem(tabName = "services", 
-              fluidRow(
-                box(title = "Service Availability for Transitional Aged Youth",
-                    closable = FALSE,
-                    width = NULL,
-                    status = "primary",
-                    solidHeader = TRUE,
-                    collapsible = TRUE,
-                  h2(strong("Why are these programs and services so important? ")) ,
-                  p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
+              
+                fluidRow(
+                  fluidRow(
+                    h2(strong("Target Population"),align = "center"),
+                        p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
                     because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
                     the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
                     With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
                     them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
-                  p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
+                        p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                     their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                  column(6, 
-                         h4("Number of Programs by Subpopulation"), 
-                         tableOutput("table1") ),
-                  column(6, 
-                         h4("Number of Programs by Pillar"), 
-                         tableOutput("table2"))
-                  )),
-                fluidRow(
+                        column(6, 
+                               h4("Number of Programs by Subpopulation"), 
+                               tableOutput("table1") ),
+                        column(6, 
+                               h4("Number of Programs by Pillar"), 
+                               tableOutput("table2"))
+                    ),
+                  
                   box(
                         title = "Service Availability",
                         closable = FALSE,
@@ -694,7 +711,10 @@ body <- dashboardBody(
                 ) 
              
       ), 
-      tabItem(tabName = "served",
+      
+      ## Utilization --------
+        ### DMHSA served--------
+      tabItem(tabName = "served_1",
               fluidPage(
                 box(title = "Department of Mental health, Substance Abuse, and Developmental Services",
                     closable = FALSE,
@@ -839,11 +859,14 @@ body <- dashboardBody(
                
                   )
               ) ,
+      
+      ## Findlings ----------------
       tabItem(tabName = "findings", 
               fluidRow(style = "margin: 6px;",
                        h1(strong("Conclusion"), align = "center")) 
               
             ), 
+      ## Team-----------------
       tabItem(tabName = "team",
               fluidRow(
                 box(
@@ -2176,5 +2199,5 @@ server <- function(input, output, session) {
 }
 
 
-# Run the application 
+# Run the application----------
 shinyApp(ui = ui, server = server)
