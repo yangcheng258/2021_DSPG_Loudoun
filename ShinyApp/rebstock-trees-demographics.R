@@ -435,17 +435,6 @@ body <- dashboardBody(
                   
 
                   h1(strong("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"), align = "center"),
-                  
-                  h2("Project Description"), 
-<<<<<<< HEAD
-=======
-                  img(src = 'loudoun-map.png', height = "150", width = "400", align = "center",style="display: block; margin-left: auto; margin-right: auto;" ),
-                  br(),
-                  br(),
-                  # JaiDa needs to add description 
-                  p()
->>>>>>> ec7e143c60d75379f70c41380783d16fd7084d5e
-                  
                   img(src = 'loudoun-map.png', height = "150", width = "400", align = "center",style="display: block; margin-left: auto; margin-right: auto;" ),
                   
                   h2("Project Goals"), 
@@ -465,35 +454,31 @@ body <- dashboardBody(
                        
                         br(),
                         p("", style = "padding-top:10px;"),
-<<<<<<< HEAD
-                        
-              p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
-                        in the United States. It covers 515.6 square miles ranking 20th-largest county 
-                        in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
-                        Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
-                        Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County, 
-                        Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 
-                        395,134, making it Virginia’s third-most populous county. Loudoun County is part of 
-                        the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
-              p("The median income of households in Loudoun County, Virginia was $142,299, 
-                        the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had 
-                        income below $10,000 a year and 30.0 percent had income over $200,000 or more. 
-                        As of 2018, Loudoun County had a median household income of $136,268.[6] Since 2008, 
-                        the county has been ranked first in the U.S. in median household income among jurisdictions
-                        with a population of 65,000 or more. In 2015-2019, 3.4% of people were 
-                        in poverty. An estimated 3.2% of children under 18 were below the poverty 
-                        level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
-                        of people 18 to 64 years were below the poverty level."), 
+              # p("Loudoun County is located in the northern part of the Commonwealth of Virginia 
+              #           in the United States. It covers 515.6 square miles ranking 20th-largest county 
+              #           in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West 
+              #           Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
+              #           Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County, 
+              #           Maryland, and Frederick County, Maryland.[1] In 2019, the population was estimated at 
+              #           395,134, making it Virginia’s third-most populous county. Loudoun County is part of 
+              #           the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
+              # p("The median income of households in Loudoun County, Virginia was $142,299, 
+              #           the poverty rate is 3.4% in 2019. An estimated 1.6 percent of households had 
+              #           income below $10,000 a year and 30.0 percent had income over $200,000 or more. 
+              #           As of 2018, Loudoun County had a median household income of $136,268.[6] Since 2008, 
+              #           the county has been ranked first in the U.S. in median household income among jurisdictions
+              #           with a population of 65,000 or more. In 2015-2019, 3.4% of people were 
+              #           in poverty. An estimated 3.2% of children under 18 were below the poverty 
+              #           level, compared with 4.5% of people 65 years old and over. An estimated 3.3% 
+              #           of people 18 to 64 years were below the poverty level."), 
+              # h4(strong("Who does Loudoun County Serve?")),
               h4(strong("Who does Loudoun County Serve?")),
-=======
-                        h4(strong("Who does Loudoun County Serve?")),
               p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
                 in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
                 Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County,  Maryland, and Frederick County, Maryland. In 2019, the population was estimated at 
                 395,134, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
               p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
                 with a population of 65,000 or more. " ), 
->>>>>>> ec7e143c60d75379f70c41380783d16fd7084d5e
               p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
                 care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
                 independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
@@ -678,19 +663,19 @@ body <- dashboardBody(
                     the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
                     With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
                     them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
-<<<<<<< HEAD
-                        p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
-                    Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
-                    their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
-                        column(6, 
-                               h4("Number of Programs by Subpopulation"), 
-                               tableOutput("table1") ),
-                        column(6, 
-                               h4("Number of Programs by Pillar"), 
-                               tableOutput("table2"))
-                    ),
+
+                    #     p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
+                    # Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
+                    # their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. "),
+                    #     column(6, 
+                    #            h4("Number of Programs by Subpopulation"), 
+                    #            tableOutput("table1") ),
+                    #     column(6, 
+                    #            h4("Number of Programs by Pillar"), 
+                    #            tableOutput("table2"))
+                    # ),
                   
-=======
+
                   br(), 
                   p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                     Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
@@ -704,7 +689,6 @@ body <- dashboardBody(
                          tableOutput("table2"))
                   )),
                 fluidRow(
->>>>>>> ec7e143c60d75379f70c41380783d16fd7084d5e
                   box(
                         title = "Service Availability",
                         closable = FALSE,
