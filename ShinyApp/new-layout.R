@@ -15,14 +15,21 @@ library(leaflet)
 library(leaflet.extras)
 library(rvest)
 library(sf)
-
+library(shinydashboard)
+library(shinydashboardPlus)
 options(tigris_use_cache = TRUE)
 
 census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
 readRenviron("~/.Renviron")
 
-# Loudoun -----------------------------------------------------------
-## gender and age tays 
+#Yang's API Key
+# census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
+# Sys.getenv("CENSUS_API_KEY")
+# # I am seeting my working directory
+# setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
+
+# Data-----------------------------------------------------------
+## gender and age tays
 males_tays <- c('B01001_007','B01001_008','B01001_009','B01001_010')
 females_tays <- c('B01001_031','B01001_032','B01001_033','B01001_034') 
 
@@ -244,7 +251,7 @@ both <- both%>%
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 # Maps -----------------------------------------------------------
-# Locations 
+## Locations ---------
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 
 loudoun_locations <- map %>%
@@ -278,7 +285,7 @@ subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
 Pillar_levels <- c("Education", "Employment", "Housing", "Transportation", "Health Services")
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green'), 
                           levels = Pillar_levels)
-# Zipcodes and map of Loudoun
+## Zipcodes and map of Loudoun-------
 va_zips <- zctas(state = "VA", year = 2010)
 loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
 loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
@@ -291,7 +298,7 @@ loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
 
 overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
 
-## Persons Served
+## Persons Served------------
 classroom <- 396
 tutoring <- 20
 jobsite <- 49 
@@ -413,13 +420,15 @@ jscode <- "function getUrlVars() {
 
 
 
-# ui -----------------------------------------------------------
+# UI -----------------------------------------------------------
 ui <- navbarPage(title = "DSPG 2021",
                  selected = "overview",
                  theme = shinytheme("lumen"),
                  tags$head(tags$style('.selectize-dropdown {z-index: 10000}')), 
                  useShinyjs(),
 
+                 
+                 
       ## Tab Overview--------------------------------------------
       tabPanel("Overview", value = "overview",
                fluidRow(style = "margin: 2px;",
@@ -500,148 +509,154 @@ ui <- navbarPage(title = "DSPG 2021",
                
       ),
       
-      ## Introduction to Loudoun County--------------------------------------------
-tabPanel("Sociodemographics", value = "soci",
-         fluidRow(style = "margin: 6px;",
-                  h1(strong("Loudoun County Residents' Sociodemographic Characteristics"), align = "center"),
-                  p("", style = "padding-top:10px;"), 
-                  h4(strong("Who does Loudoun County Serve?")),
-                  p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
+      ## Tab Introduction to Loudoun County& TAY--------------------------------------------
+      navbarMenu("Sociodemographics",
+                 tabPanel("Loudoun",
+                          fluidRow(style = "margin: 6px;",
+                                               h1(strong("Loudoun County Residents' Sociodemographic Characteristics"), align = "center"),
+                                               p("", style = "padding-top:10px;"), 
+                                               h4(strong("Who does Loudoun County Serve?")),
+                                               p("Loudoun County is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
                     in Virginia by area. Loudoun County, Virginia is bordered by Jefferson County, West Virginia, Fauquier County, Virginia, Fairfax County, Virginia, Prince William County,
                     Virginia, Clarke County, Virginia, Washington County, Maryland, Montgomery County,  Maryland, and Frederick County, Maryland. In 2019, the population was estimated at 
                     395,134, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.") ,
-                  p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
+                                               p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
                     with a population of 65,000 or more. " ), 
-                  p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
+                                               p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
                     care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
                     independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
-                    this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. " )) ,
-        br(), 
-              sidebarLayout(
-                sidebarPanel(
-                  h3("Visualizations of Transition Aged Youth (TAYs)"),
-                  radioButtons(
-                    "var1",
-                    label = "Select Demographic" ,
-                    choices = list(
-                      "Gender and Age" = "age",
-                      "Percentage of TAYs" = "percent", 
-                      "Educational Attainment" = "education",
-                      "Races" = "race",
-                      "Poverty Level" = "poverty",
-                      "Healthcare Coverage" = "health", 
-                      "Severe Mental Illness" = "mental")
-                    ),
-                    selected = "Gender and Age"
-                  ),
-                mainPanel(
-                  plotlyOutput("plot1"),
-                  p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
-                  p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)")), 
-                  tags$br(),
-                  tags$br()
-                )
-                ),
-                tabsetPanel(
-                  tabPanel("Foster Care",
-                           h3(strong(""), align = "center"),
-                           sidebarLayout(
-                             sidebarPanel(
-                               h3("Visualizations of Subpopulations"),
-                               radioButtons(
-                                 "var2",
-                                 label = "Select Demographic" ,
-                                 choices = list(
-                                   "Age" = "age",
-                                     "Sex" = "sex",
-                                     "Race" = "race",
-                                     "Ethnicity" = "eth",
-                                     "TAYs" = "tays")
-                               ),
-                               selected = "Age"
-                             ),
-                             mainPanel(
-                               plotlyOutput("plot2"),
-                               p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")),
-                               tags$br(),
-                               tags$br()
-                             )
-                           )
-                           # p("In the US 2019, 423,997 children were in the foster system with 251,359 
-                           #   newly entered children and 248,669 exiting. The average age of a child in 
-                           #   foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
-                           #   Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
-                           #   the US. 44% of foster care youth are white and 23% were black. Similar to foster 
-                           #   care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
-                           #   According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
-                           #   the foster care system were 18+ and it was most likely due to neglect. However, 
-                           #   there were 20,465 (8%) youths 18+ who exited the system most likely due to
-                           #   aging out and emancipation."), 
-                           # p("According to the The Adoption and Foster Care Analysis and Reporting System, 
-                           #   in 2020 there were 48 children in foster care in only Loudoun County which was 
-                           #   .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
-                           #   of those children were boys and 1/3 were girls and the minority of them of 
-                           #   ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
-                           #   and less than 5% Asian and multi-racial as you can see from the barplot below. 
-                           #   When we are looking at only transitional aged youth from 18-24 where 21 years 
-                           #   old is the average time a foster child ages out, there were only 8 children. 
-                           #   In Loudoun County, it does not seem like there are many foster care youths 
-                           #   who are aging out of the system but only 9 other counties have greater than 9 
-                           #   foster care kids over the age of 18 ")
-                  ),
-                  tabPanel("Juvenille Detention",
-                           h3(strong(""), align = "center"),
-                           sidebarLayout(
-                             sidebarPanel(
-                               radioButtons(
-                                 "var3",
-                                 label = "Select Demographic" ,
-                                 choices = list(
-                                   "Age" = "age",
-                                   "Sex" = "sex",
-                                   "Race" = "race",
-                                   "Ethnicity" = "eth")
-                               ),
-                               selected = "Age"
-                             ),
-                             mainPanel(
-                               plotlyOutput("plot3"),
-                               p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
-                               tags$br(),
-                               tags$br()
-                             )
-                           )
-                           # p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
-                           #   and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
-                           #   Black youth are overrepresented among offenders in residential placement, making up 
-                           #   40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
-                           #   asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
-                           #   the vast majority of offenders in residential placement, at 85.2% of residents. 
-                           #   Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
-                           #   52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
-                           #   youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
-                           #   youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
-                           #   Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
-                           #   (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                           # p("Virginia has some of the highest referral and incarceration rates of youth, 
-                           #   with the highest number of student referrals in the country and a rate of youth 
-                           #   incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
-                           #   (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
-                           #   spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
-                           #   recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
-                           #   60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
-                           #   youths being released from direct care for the Fiscal Year of 2015 only received high school 
-                           #   diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
-                           #   youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
-                           #   pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
-                           #   with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
-                  )) 
-              
-              ),
+                    this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. " ))),
+                 tabPanel("TAY",
+                          br(), 
+                          sidebarLayout(
+                            sidebarPanel(
+                              h3("Visualizations of Transition Aged Youth (TAYs)"),
+                              radioButtons(
+                                "var1",
+                                label = "Select Demographic" ,
+                                choices = list(
+                                  "Gender and Age" = "age",
+                                  "Percentage of TAYs" = "percent", 
+                                  "Educational Attainment" = "education",
+                                  "Races" = "race",
+                                  "Poverty Level" = "poverty",
+                                  "Healthcare Coverage" = "health", 
+                                  "Severe Mental Illness" = "mental")
+                              ),
+                              selected = "Gender and Age"
+                            ),
+                            mainPanel(
+                              plotlyOutput("plot1"),
+                              p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
+                              p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)")), 
+                              tags$br(),
+                              tags$br()
+                            )
+                          )),
+                 tabPanel("Foster Care/Jevenile Dtention",
+                          tabsetPanel(
+                            tabPanel("Foster Care",
+                                     h3(strong(""), align = "center"),
+                                     sidebarLayout(
+                                       sidebarPanel(
+                                         h3("Visualizations of Subpopulations"),
+                                         radioButtons(
+                                           "var2",
+                                           label = "Select Demographic" ,
+                                           choices = list(
+                                             "Age" = "age",
+                                             "Sex" = "sex",
+                                             "Race" = "race",
+                                             "Ethnicity" = "eth",
+                                             "TAYs" = "tays")
+                                         ),
+                                         selected = "Age"
+                                       ),
+                                       mainPanel(
+                                         plotlyOutput("plot2"),
+                                         p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019")),
+                                         tags$br(),
+                                         tags$br()
+                                       )
+                                     )
+                                     # p("In the US 2019, 423,997 children were in the foster system with 251,359 
+                                     #   newly entered children and 248,669 exiting. The average age of a child in 
+                                     #   foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
+                                     #   Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
+                                     #   the US. 44% of foster care youth are white and 23% were black. Similar to foster 
+                                     #   care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
+                                     #   According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
+                                     #   the foster care system were 18+ and it was most likely due to neglect. However, 
+                                     #   there were 20,465 (8%) youths 18+ who exited the system most likely due to
+                                     #   aging out and emancipation."), 
+                                     # p("According to the The Adoption and Foster Care Analysis and Reporting System, 
+                                     #   in 2020 there were 48 children in foster care in only Loudoun County which was 
+                                     #   .8% in the state of Virginia. As you can see in the pie chart above, over 2/3 
+                                     #   of those children were boys and 1/3 were girls and the minority of them of 
+                                     #   ethnicity of Hispanic. Almost 50% of those children were white, 25% black 
+                                     #   and less than 5% Asian and multi-racial as you can see from the barplot below. 
+                                     #   When we are looking at only transitional aged youth from 18-24 where 21 years 
+                                     #   old is the average time a foster child ages out, there were only 8 children. 
+                                     #   In Loudoun County, it does not seem like there are many foster care youths 
+                                     #   who are aging out of the system but only 9 other counties have greater than 9 
+                                     #   foster care kids over the age of 18 ")
+                            ),
+                            tabPanel("Juvenille Detention",
+                                     h3(strong(""), align = "center"),
+                                     sidebarLayout(
+                                       sidebarPanel(
+                                         radioButtons(
+                                           "var3",
+                                           label = "Select Demographic" ,
+                                           choices = list(
+                                             "Age" = "age",
+                                             "Sex" = "sex",
+                                             "Race" = "race",
+                                             "Ethnicity" = "eth")
+                                         ),
+                                         selected = "Age"
+                                       ),
+                                       mainPanel(
+                                         plotlyOutput("plot3"),
+                                         p(tags$small("Data source: Department of Juvenile Justice (DJJ) ")),
+                                         tags$br(),
+                                         tags$br()
+                                       )
+                                     )
+                                     # p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
+                                     #   and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
+                                     #   Black youth are overrepresented among offenders in residential placement, making up 
+                                     #   40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
+                                     #   asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
+                                     #   the vast majority of offenders in residential placement, at 85.2% of residents. 
+                                     #   Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
+                                     #   52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
+                                     #   youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
+                                     #   youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
+                                     #   Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
+                                     #   (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
+                                     # p("Virginia has some of the highest referral and incarceration rates of youth, 
+                                     #   with the highest number of student referrals in the country and a rate of youth 
+                                     #   incarceration at 75 percent higher than the national average at 79 per 100,000 youths 
+                                     #   (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia 
+                                     #   spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high 
+                                     #   recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and 
+                                     #   60.7% of parole placements being repeat offenders. In addition to high recidivism rates, 
+                                     #   youths being released from direct care for the Fiscal Year of 2015 only received high school 
+                                     #   diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total 
+                                     #   youth offenders received a high school diploma or GED (DJJ 2019). However, the public 
+                                     #   pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
+                                     #   with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
+                            )) 
+                          
+                          
+                          )
+      ),
       
+     
       
-      ## Data and Methodology--------------------------------------------
-tabPanel("Data and Methodology", value = "data",
+      ## Tab Data and Methodology--------------------------------------------
+      tabPanel("Data and Methodology", value = "data",
          fluidRow(style = "margin: 6px;",
                   h1(strong("Data and Methodology"), align = "center"),
                   p("", style = "padding-top:10px;"), 
@@ -681,63 +696,114 @@ tabPanel("Data and Methodology", value = "data",
       ),
       
       
-      ## Services--------------------------------------------
-tabPanel("Services", value = "services", 
-         fluidRow(style = "margin: 6px;",
-                  h1(strong("Service Availability"), align = "center"),
-                  p("", style = "padding-top:10px;"), 
-                  column(6, 
-                        h4(strong("Why are these services and programs so important?")),
-                        p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
+      ## Tab Services--------------------------------------------
+      navbarMenu("Service",
+                 tabPanel("Availability", value = "services", 
+                          fluidRow(style = "margin: 6px;",
+                                   h1(strong("Service Availability"), align = "center"),
+                                   p("", style = "padding-top:10px;"), 
+                                   column(6, 
+                                          h4(strong("Why are these services and programs so important?")),
+                                          p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
                           because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
                           the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
                           With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
                           them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
-                        br(), 
-                        p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
+                                          br(), 
+                                          p("The programs in Loudoun County fall into 5 pillars: Education, Employment, Housing, Transportation, and Insurance. Below the tree diagrams for Loudoun County are tree diagrams for 
                           Fairfax County, VA and Allegheny County, PA because they have had a very successful transition rate. Loudoun County is trying to see where their gaps are in their services and programs in order to improve 
                           their transition rate and help more young adults with their fresh start like Prince William County. Many of the programs and services are similar because they are provided at the federal or state level. ")) ,
-                        column(6, 
-                               h4("Number of Programs by Subpopulation"), 
-                               tableOutput("table1"),
-                               tags$br(), 
-                               h4("Number of Programs by Pillar"), 
-                               tableOutput("table2")) 
-                  ) ,
-         tags$br(), 
-         fluidRow(style = "margin: 6px;",
-                  p("", style = "padding-top:10px;"), 
-                  h4(strong("Services and Programs")),
-                        tabsetPanel(
-                          tabPanel("Loudoun",
-                                   br(),
-                                   sidebarLayout(
-                                     sidebarPanel(
-                                       radioButtons(
-                                         "pillar1",
-                                         label = "Select Pillar" ,
-                                         choices = list(
-                                           "Education",
-                                           "Employment",
-                                           "Housing",
-                                           "Transportation",
-                                           "Health Services")
-                                       ),
-                                       selected = "Education"
+                                   column(6, 
+                                          h4("Number of Programs by Subpopulation"), 
+                                          tableOutput("table1"),
+                                          tags$br(), 
+                                          h4("Number of Programs by Pillar"), 
+                                          tableOutput("table2")) 
+                          ) ,
+                          tags$br(), 
+                          fluidRow(style = "margin: 6px;",
+                                   p("", style = "padding-top:10px;"), 
+                                   h4(strong("Services and Programs")),
+                                   tabsetPanel(
+                                     tabPanel("Loudoun",
+                                              br(),
+                                              sidebarLayout(
+                                                sidebarPanel(
+                                                  radioButtons(
+                                                    "pillar1",
+                                                    label = "Select Pillar" ,
+                                                    choices = list(
+                                                      "Education",
+                                                      "Employment",
+                                                      "Housing",
+                                                      "Transportation",
+                                                      "Health Services")
+                                                  ),
+                                                  selected = "Education"
+                                                ),
+                                                mainPanel(
+                                                  collapsibleTreeOutput("tree1"), 
+                                                  tags$br(),
+                                                  tags$br()
+                                                )
+                                              ) 
                                      ),
-                                     mainPanel(
-                                       collapsibleTreeOutput("tree1"), 
-                                       tags$br(),
-                                       tags$br()
-                                     )
-                                   ) 
+                                     tabPanel("Fairfax",
+                                              br(),
+                                              sidebarLayout(
+                                                sidebarPanel(
+                                                  radioButtons(
+                                                    "pillar3",
+                                                    label = "Select Pillar" ,
+                                                    choices = list(
+                                                      "Education",
+                                                      "Employment",
+                                                      "Housing",
+                                                      "Transportation",
+                                                      "Health Services")
+                                                  ),
+                                                  selected = "Education"
+                                                ),
+                                                mainPanel(
+                                                  collapsibleTreeOutput("tree3"), 
+                                                  tags$br(),
+                                                  tags$br()
+                                                )
+                                              ) 
+                                     ), 
+                                     
+                                     tabPanel("Allegheny",
+                                              br(),
+                                              sidebarLayout(
+                                                sidebarPanel(
+                                                  radioButtons(
+                                                    "pillar2",
+                                                    label = "Select Pillar" ,
+                                                    choices = list(
+                                                      "Education",
+                                                      "Employment",
+                                                      "Housing",
+                                                      "Transportation",
+                                                      "Health Services")
+                                                  ),
+                                                  selected = "Education"
+                                                ),
+                                                mainPanel(
+                                                  collapsibleTreeOutput("tree2"), 
+                                                  tags$br(),
+                                                  tags$br()
+                                                )
+                                              ) )
+                                     
+                                   )
                           ),
-                          tabPanel("Fairfax",
-                                   br(),
+                          fluidRow(style = "margin: 6px;",
+                                   p("", style = "padding-top:10px;"), 
+                                   h4(strong("Where are the gaps?")),
                                    sidebarLayout(
                                      sidebarPanel(
                                        radioButtons(
-                                         "pillar3",
+                                         "compare1",
                                          label = "Select Pillar" ,
                                          choices = list(
                                            "Education",
@@ -749,201 +815,168 @@ tabPanel("Services", value = "services",
                                        selected = "Education"
                                      ),
                                      mainPanel(
-                                       collapsibleTreeOutput("tree3"), 
-                                       tags$br(),
-                                       tags$br()
+                                       collapsibleTreeOutput("compare"), 
                                      )
                                    ) 
-                                   ), 
-                          
-                          tabPanel("Allegheny",
-                                   br(),
-                                   sidebarLayout(
-                                     sidebarPanel(
-                                       radioButtons(
-                                         "pillar2",
-                                         label = "Select Pillar" ,
-                                         choices = list(
-                                           "Education",
-                                           "Employment",
-                                           "Housing",
-                                           "Transportation",
-                                           "Health Services")
-                                       ),
-                                       selected = "Education"
-                                     ),
-                                     mainPanel(
-                                       collapsibleTreeOutput("tree2"), 
-                                       tags$br(),
-                                       tags$br()
-                                     )
-                                   ) )
                                    
                           )
-                        ),
-         fluidRow(style = "margin: 6px;",
-                  p("", style = "padding-top:10px;"), 
-                  h4(strong("Where are the gaps?")),
-                    sidebarLayout(
-                      sidebarPanel(
-                        radioButtons(
-                          "compare1",
-                          label = "Select Pillar" ,
-                          choices = list(
-                            "Education",
-                            "Employment",
-                            "Housing",
-                            "Transportation",
-                            "Health Services")
-                        ),
-                        selected = "Education"
-                      ),
-                      mainPanel(
-                        collapsibleTreeOutput("compare"), 
-                      )
-                    ) 
-                    
-                  )
-      ), 
-tabPanel("DMHSA" , value = "dmhsa",
-         fluidRow(style = "margin: 6px;",
-                  h1(strong("Department of Mental Health, Substance Abuse, and Developmental Services"), align = "center"),
-                  p("", style = "padding-top:10px;"), 
-                  column(4,
-                        h4(strong("Vulnerable Transition Aged Youth")),
-                          p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
+                 ),
+                 
+                 
+                 tabPanel("Locations", 
+                          fluidRow(style = "margin: 6px;",
+                                   h1(strong("Location of Programs and Services"), align = "center"),
+                                   p("", style = "padding-top:10px;"), 
+                                   column(4, 
+                                          h4(strong("Where are these services and programs located?")),
+                                          p(),
+                                          
+                                   ), 
+                                   column(8, 
+                                          column(4,
+                                                 selectInput(
+                                                   "county",
+                                                   "Select County",
+                                                   choices = unique(map$County),
+                                                   selected = "Loudoun",
+                                                   width = 400
+                                                 )),
+                                          column(4, 
+                                                 radioButtons(
+                                                   "category",
+                                                   label = "Select Category" ,
+                                                   choices = c("Subpopulation", "Pillars"),
+                                                 ),
+                                                 selected = "Subpopulation" ), 
+                                          leafletOutput(outputId = "map1", height = "400px")) 
+                                   
+                                   
+                          )
+                 )
+        
+      ),
+      
+      
+       
+
+      # trying out the valueBoxes to see how they look compared to ^^^ 
+      
+      
+      ## Tab Utilization-------------------------------------------
+
+   navbarMenu("Utilization",
+              ### Individual served------------
+              tabPanel("Individuals Served", value = "served",
+                       fluidRow(style = "margin: 6px;",
+                                p("", style = "padding-top:10px;"), 
+                                column(6, 
+                                       h1(strong("Statistics"), align = "center"),
+                                       p("", style = "padding-top:10px;"), 
+                                       infoBoxOutput("medicaid", width = 6),
+                                       infoBoxOutput("wioa", width = 6),
+                                       infoBoxOutput("transit" , width = 6),
+                                       infoBoxOutput("food", width = 6),
+                                       infoBoxOutput("shelters", width = 6),
+                                       infoBoxOutput("homeless", width = 6)
+                                ), 
+                                column(6, 
+                                       h1(strong("Program Graphs"), align = "center"),
+                                       p("", style = "padding-top:10px;"), 
+                                       radioButtons(
+                                         "type2",
+                                         label = "Select Program Type" ,
+                                         choices = list(
+                                           "Adult Literacy Program Loudoun" = "literacy",
+                                           # "Continuum of Care" = "care",
+                                           # "Affordable Dwelling Unit Program" ="afford", 
+                                           "Oxford House" = "oxford",
+                                           "OAR"= "oar", 
+                                           # "Route 54 Safe-T" = "bus",
+                                           "Medicaid" = "med")
+                                       ),
+                                       selected = "literacy",
+                                       tags$br(), 
+                                       plotlyOutput(outputId = "plotServed") ,
+                                       tags$br(), 
+                                       plotlyOutput(outputId = "plotServed2"))
+                       ) 
+              ) ,
+              
+              ### DMHSA------
+              tabPanel("DMHSA" , value = "dmhsa",
+                       fluidRow(style = "margin: 6px;",
+                                h1(strong("Department of Mental Health, Substance Abuse, and Developmental Services"), align = "center"),
+                                p("", style = "padding-top:10px;"), 
+                                column(4,
+                                       h4(strong("Vulnerable Transition Aged Youth")),
+                                       p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
                           programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
                           Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
                           walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
                          "),
-                          tags$br(),
-                          p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
+                                       tags$br(),
+                                       p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
                           As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
                           one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
                           instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
                           substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
                           ")), 
-                  column(8,
-                        p("", style = "padding-top:10px;"), 
-                        p("", style = "padding-top:10px;"), 
-                        plotlyOutput("waitlist"),
-                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
-                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))))  ,
-         tags$br(),
-         tags$br(),
-                fluidRow(style = "margin: 6px;",
-                         p("", style = "padding-top:10px;"), 
-                 sidebarLayout(
-                      sidebarPanel(
-                        radioButtons(
-                          "type",
-                          label = "Select Program Type" ,
-                          choices = list(
-                            "Case Management" = "case",
-                            "Discharge Planning" = "dis",
-                            "Emergency Services" = "emer",
-                            "Employment & Day Support Services" = "employ",
-                            "Outpatient"= "out", 
-                            "Residential" = "res")
-                        ),
-                        selected = "Case Management", 
-                        br(), 
-                        sliderInput(inputId = "year", 
-                                    label = "Select a year:",
-                                    value = 2016,
-                                    min = 2016,
-                                    max = 2020,
-                                    animate = animationOptions(interval = 1500))
-                        
-                      ),
-                      mainPanel(
-                        h4(strong("Map of Individuals Served by Population Density")), 
-                        leafletOutput(outputId = "overtime", height = "70vh"), 
-                        p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services"))
-                        
-                      )
-                    )) 
-         
-                
-                
-      ),
-      # trying out the valueBoxes to see how they look compared to ^^^ 
-      tabPanel("Individuals Served", value = "served",
-               fluidRow(style = "margin: 6px;",
-                        p("", style = "padding-top:10px;"), 
-                        column(6, 
-                               h1(strong("Statistics"), align = "center"),
-                               p("", style = "padding-top:10px;"), 
-                               infoBoxOutput("medicaid", width = 6),
-                               infoBoxOutput("wioa", width = 6),
-                               infoBoxOutput("transit" , width = 6),
-                               infoBoxOutput("food", width = 6),
-                               infoBoxOutput("shelters", width = 6),
-                               infoBoxOutput("homeless", width = 6)
-                        ), 
-                        column(6, 
-                               h1(strong("Program Graphs"), align = "center"),
-                               p("", style = "padding-top:10px;"), 
-                               radioButtons(
-                                 "type2",
-                                 label = "Select Program Type" ,
-                                 choices = list(
-                                   "Adult Literacy Program Loudoun" = "literacy",
-                                   # "Continuum of Care" = "care",
-                                   # "Affordable Dwelling Unit Program" ="afford", 
-                                   "Oxford House" = "oxford",
-                                   "OAR"= "oar", 
-                                   # "Route 54 Safe-T" = "bus",
-                                   "Medicaid" = "med")
-                               ),
-                               selected = "literacy",
-                               tags$br(), 
-                               plotlyOutput(outputId = "plotServed") ,
-                               tags$br(), 
-                               plotlyOutput(outputId = "plotServed2"))
-               ) 
-      ) ,
-      
-      
-      ## Locations --------------------------------------------
-      tabPanel("Locations", value = "locations", 
-               fluidRow(style = "margin: 6px;",
-                        h1(strong("Location of Programs and Services"), align = "center"),
-                        p("", style = "padding-top:10px;"), 
-                        column(4, 
-                               h4(strong("Where are these services and programs located?")),
-                               p(),
-                                
-                               ), 
-                        column(8, 
-                               column(4,
-                               selectInput(
-                                 "county",
-                                 "Select County",
-                                 choices = unique(map$County),
-                                 selected = "Loudoun",
-                                 width = 400
-                               )),
-                               column(4, 
-                               radioButtons(
-                                 "category",
-                                 label = "Select Category" ,
-                                 choices = c("Subpopulation", "Pillars"),
-                               ),
-                               selected = "Subpopulation" ), 
-                            leafletOutput(outputId = "map1", height = "400px")) 
-                        
-               
-                  )
-              ) ,
-      tabPanel("Conclusion",  value = "conclusion", 
+                                column(8,
+                                       p("", style = "padding-top:10px;"), 
+                                       p("", style = "padding-top:10px;"), 
+                                       plotlyOutput("waitlist"),
+                                       p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
+                                       p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. "))))  ,
+                       tags$br(),
+                       tags$br(),
+                       fluidRow(style = "margin: 6px;",
+                                p("", style = "padding-top:10px;"), 
+                                sidebarLayout(
+                                  sidebarPanel(
+                                    radioButtons(
+                                      "type",
+                                      label = "Select Program Type" ,
+                                      choices = list(
+                                        "Case Management" = "case",
+                                        "Discharge Planning" = "dis",
+                                        "Emergency Services" = "emer",
+                                        "Employment & Day Support Services" = "employ",
+                                        "Outpatient"= "out", 
+                                        "Residential" = "res")
+                                    ),
+                                    selected = "Case Management", 
+                                    br(), 
+                                    sliderInput(inputId = "year", 
+                                                label = "Select a year:",
+                                                value = 2016,
+                                                min = 2016,
+                                                max = 2020,
+                                                animate = animationOptions(interval = 1500))
+                                    
+                                  ),
+                                  mainPanel(
+                                    h4(strong("Map of Individuals Served by Population Density")), 
+                                    leafletOutput(outputId = "overtime", height = "70vh"), 
+                                    p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services"))
+                                    
+                                  )
+                                )) 
+                       
+                    
+                       
+              )
+              
+              ),
+      ## Tab Conclusion --------------------------------------------
+    tabPanel("Conclusion",  value = "conclusion", 
               fluidRow(style = "margin: 6px;",
                        h1(strong("Conclusion"), align = "center")),  
                 p("", style = "padding-top:10px;"), 
                 p()
               
             ), 
-tabPanel("Team", value = "team",
+     ## Tab Team------
+      tabPanel("Team", value = "team",
          fluidRow(style = "margin-left: 100px; margin-right: 100px;",
                   h1(strong("Team"), align = "center"),
                   br(),
@@ -2320,5 +2353,5 @@ server <- function(input, output) {
 }
 
 
-# Run the application 
+# Run the application-----------
 shinyApp(ui = ui, server = server)
