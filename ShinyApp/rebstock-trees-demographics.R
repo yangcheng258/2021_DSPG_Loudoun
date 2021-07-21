@@ -705,7 +705,19 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      h4(strong("Why are these services and programs so important?")),
                                                      p("The following tables provide counts of programs  
                                                        and services available in each county by subpopulation and by pillar.
-                                                       They allow for simple comparison of program types across counties.")) ,
+                                                       They allow for simple comparison of program types across counties."), 
+                                                     p("It is to be noted that the greater majority of the programs/services found 
+                                                       across all counties were directed towards vulnerable TAY in general.  This highlights
+                                                       a lack of targeted programs and a potential need to increase the number of those
+                                                       programs and services specifically catering to the needs of those formerly involvded
+                                                       in the juvenile detention or foster care system."), 
+                                                     p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
+                                                       the number of programs/services are fairly equal by pillar, with the notible exception 
+                                                       of transportation. Transportation services in Loudoun county useful to vulnerale TAY 
+                                                       are not targeted to those formely involved in Foster Care or Juvenile detention, and 
+                                                       are rather limited outside of medical transportation and commuter buses. This illustrates 
+                                                       the potential need to expand transportation services to those TAY formerly involved in Foster Care 
+                                                       or the Juvenile Detention system.")) ,
                                               column(6, 
                                                      h4(strong("Number of Programs by Subpopulation")), 
                                                      tableOutput("table1"),
@@ -837,6 +849,13 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        the program/service. Maps are available by county; each county's services and programs can be 
                                                        catagorized by subpopulation served and by the pillar the program/service best 
                                                        fits. The switchboards at the topright allow the user to further filter locations."),
+                                                     p("The Loudoun county maps make more apparent the higher concentration of 
+                                                     offices for programs/services 
+                                                       found towards the east side of the county, near 
+                                                       the DC Metropolitan area. This divide between the eastern part of the county and the rest of the county
+                                                      highlights the need for greater access to 
+                                                      in-person services and 
+                                                       programs useful to vulnerable TAY in all parts of the county. ")
                                                      
                                               ), 
                                               column(8, 
