@@ -247,9 +247,7 @@ both <- both%>%
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 # Maps -----------------------------------------------------------
 ## Locations ---------
-map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
-map <- map %>% reverse_geocode(lat = Latitude, long = Longitude)
-map <- map %>% rename(address = )
+map <- read_csv(paste0(getwd(),"/data/combined-programs.csv")) 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
   dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, address) %>%
@@ -1584,8 +1582,7 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 loudoun_locations$address,
                 "<br />",
-                "<strong>Website:</strong>",
-                loudoun_locations$Website),
+                "<a href = ",loudoun_locations$Website, "> Website </a>"),
           htmltools::HTML
         )
         
@@ -1619,8 +1616,7 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 loudoun_locations$address,
                 "<br />",
-                "<strong>Website:</strong>",
-                loudoun_locations$Website),
+                "<a href = ",loudoun_locations$Website, "> Website </a>"),
           htmltools::HTML
         )
         
@@ -1661,8 +1657,7 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 fairfax$address,
                 "<br />",
-                "<strong>Website:</strong>",
-                fairfax$Website),
+                "<a href = ",fairfax$Website, "> Website </a>"),
           htmltools::HTML
         )
         
@@ -1694,8 +1689,7 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 fairfax$address,
                 "<br />",
-                "<strong>Website:</strong>",
-                fairfax$Website),
+                "<a href = ",fairfax$Website, "> Website </a>"),
           htmltools::HTML
         )
         
@@ -1736,8 +1730,7 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 allegheny_locations$address,
                 "<br />",
-                "<strong>Website:</strong>",
-                allegheny_locations$Website),
+                "<a href = ",allegheny_locations$Website, "> Website </a>"),
           htmltools::HTML
         )
         
@@ -1772,8 +1765,7 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 allegheny_locations$address,
                 "<br />",
-                "<strong>Website:</strong>",
-                allegheny_locations$Website),
+                "<a href = ",allegheny_locations$Website, "> Website </a>"),
           htmltools::HTML
         )
         
