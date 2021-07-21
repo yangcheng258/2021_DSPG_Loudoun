@@ -2220,8 +2220,7 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
         geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
         labs(y = "Persons", 
-             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
-        theme(plot.title = element_text(size = 8))
+             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")
       
     }else if (type2() == "literacy"){
       ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
