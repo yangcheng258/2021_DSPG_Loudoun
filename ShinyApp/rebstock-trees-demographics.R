@@ -26,7 +26,7 @@ options(tigris_use_cache = TRUE)
 census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
 Sys.getenv("CENSUS_API_KEY")
 # I am seeting my working directory
-setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
+# setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
 
 # Data-----------------------------------------------------------
 ## gender and age tays
@@ -529,19 +529,20 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"),
                                               column(4, 
                                                      h4(strong("Who does Loudoun County Serve?")),
+                                                     p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the residents that the county serves."),
+                                                     p("We retrieved American Community Survey (ACS) data to calculate this information and visualize through graphs.
+                                                      ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. 
+                                                      We used the most recently available 1-year estimates from 2018/19 to compute statistics for Loudoun county residents by age, race, ethnicity, 
+                                                      employment, health insurance coverage, and other relevant characteristics."), 
+                                                     
                                                      p("In Loudoun county, 5% of the population makes up transition aged youth (18-24) who are at a disadvantage when trying to live indpendently especially those who have aged out of the foster care
                                                        system or who have gotten out of juvenile detnetion.They are looking for a way to be more independent and responsible, but
                                                     because of their past experiences may not have enough resources on their own to make a living and survive. "),
                                                      p("Based on our literature review done in the first 2 weeks of research, 
                                                     the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
                                                     With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
-                                                    them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
-                                                     p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the residents that the county serves."),
-                                                     p("We retrieved American Community Survey (ACS) data to calculate this information and visualize through graphs.
-                                                      ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. 
-                                                      We used the most recently available 1-year estimates from 2018/19 to compute statistics for Loudoun county residents by age, race, ethnicity, 
-                                                      employment, health insurance coverage, and other relevant characteristics.")
-                                              ), 
+                                                    them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly.")
+                                                 ), 
                                               column(8, 
                                                      h4(strong("Visualizations of Resident Socioeconomic Characteristics")),
                                                      selectInput("var1", "Select Demographic:", width = "100%", choices = c(
@@ -621,7 +622,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                               column(8, h4(strong("Visualizations of Subpopulation")),
                                                      tabsetPanel(
                                                        tabPanel("Foster Care",
-                                                                h4(strong("Visualization for Foster Care")),
                                                                 selectInput("var2", "Select Demographic:", width = "100%", choices = c(
                                                                   "Age" = "age",
                                                                   "Sex" = "sex",
@@ -634,7 +634,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 
                                                        ),
                                                        tabPanel("Juvenile Detention",
-                                                                h4(strong("Visualization for Juvenile Detention")),
                                                                 selectInput("var3", "Select Demographic:", width = "100%", choices = c(
                                                                   "Age" = "age",
                                                                   "Sex" = "sex",
@@ -702,10 +701,29 @@ ui <- navbarPage(title = "DSPG 2021",
                                               h1(strong("Service Availability"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                               column(6, 
-                                                     h4(strong("Why are these services and programs so important?")),
+                                                     h4(strong("What services and programs are available?")),
                                                      p("The following tables provide counts of programs  
                                                        and services available in each county by subpopulation and by pillar.
-                                                       They allow for simple comparison of program types across counties.")) ,
+                                                       They allow for simple comparison of program types across counties."), 
+                                                     
+                                                     p("To gather this information for the interactive tree diagrams, our team researched for three weeks the different programs available to transition aged youth, either
+                                                       specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
+                                                       Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
+                                                       pillar were not easily accessible and were hidden in multiple documents. "),
+                                                     
+                                                     p("It is to be noted that the greater majority of the programs/services found 
+                                                       across all counties were directed towards vulnerable TAY in general.  This highlights
+                                                       a lack of targeted programs and a potential need to increase the number of those
+                                                       programs and services specifically catering to the needs of those formerly involved
+                                                       in the juvenile detention or foster care system."), 
+                                                     
+                                                     p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
+                                                       the number of programs/services are fairly equal by pillar, with the notible exception 
+                                                       of transportation. Transportation services in Loudoun county useful to vulnerale TAY 
+                                                       are not targeted to those formely involved in Foster Care or Juvenile detention, and 
+                                                       are rather limited outside of medical transportation and commuter buses. This illustrates 
+                                                       the potential need to expand transportation services to those TAY formerly involved in Foster Care 
+                                                       or the Juvenile Detention system.")) ,
                                               column(6, 
                                                      h4(strong("Number of Programs by Subpopulation")), 
                                                      tableOutput("table1"),
@@ -722,16 +740,17 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        level in Loudoun, Fairfax and Allegheny county. Each diagram represents
                                                        the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
                                                        followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office"),
-                                                     p("To gather this information for the interactive tree diagrams, our team researched for 3 weeks the different programs available to transition aged youth, either
-                                                       specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
-                                                       Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
-                                                       pillar were not easily accessible and were hidden in multiple documents. "),
-                                                       p("While going through the interactive trees, you may see that there are many services and programs for pillars like 
-                                                       education and employment in Loudoun but again, not many for transportation and housing. Here is where we noticed the first pillars in what type of programs Loudoun are lacking in. 
-                                                       While Loudoun county has many programs supporting the education and employment pillars, the transition aged youth may have a hard time taking advantage of those programs without 
-                                                       transportation or health services available to them. Due to Loudoun having a gap in the transportation pillar, the other pillars' programs are being used as much as youths want to which is
-                                                       why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
-                                                       ")
+                                                     
+                                                     p("We chose to compare Loudoun County to Farifax County and Alleghney County for two reasons. 
+                                                       As the stakeholders had mentioned, Fairfax and Loudoun are constantly being compared because of their close proximity and similar demographics. Therefore, we looked at programs in each of these counties to see 
+                                                       if the gaps in services was for only Loudoun county or in the DC Metropolitan area, Northern Virginia area. Second, we chose Allegheny County because based on our research, they have a successful
+                                                       transition rate of young adults 18-24 and looking at the programs available for those previously involved in foster care and juvenile detention, it seems that they have more programs specific towards them. 
+                                                       Allegheny County is a great county to look at and see what they are doing compared to a county like Loudoun who wants to provide more programs and services to vulnerable transition aged youth in the future. "), 
+                                                     
+                                                     p("Using these interactive trees, we can see all of the programs we webscrapped for for each of the counties with the last node being where the person must go to apply. 
+                                                       Since the pandemic, most of the applications can be done online but obviously some of the programs and services are in person. With this information, we can see how easy or difficult it is for 
+                                                       these transition aged youth to access each program depending if they have to travel far in order to even apply or if that can be done online within a couple of hours. These trees leads us into the question of where are the gaps 
+                                                       in services and programs and which pillar are they under. ")
                                               ),
                                               column(8, 
                                                      h4(strong("Tree Diagram of Programs")),
@@ -793,14 +812,25 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4,  
                                                      h4(strong("Where are the gaps?")), 
-                                                     p("These interactive tree diagrams contain all programs and services available in Loudoun, Fairfax and Allegheny county organized by pillar. The diagrams are intended for 
-                                                     comparison between counties. Its nodes first represent pillar, then subpopulation, followed by program name,  intended age range of program, and then finally the county 
-                                                     which the program is accessible from.  "),
-                                                     br(), 
-                                                     p("Shown are all the same programs and services from the above trees but merged together into 1 big tree to better compare with Fairfax County and Allegheny County. As noted above,
+                                                      p("These interactive tree diagrams contain all programs and services available in Loudoun, Fairfax and Allegheny county organized by pillar. The diagrams are intended for 
+                                                      comparison between counties. Its nodes first represent pillar, then subpopulation, followed by program name, intended age range of program, and then finally the county 
+                                                      which the program is accessible from."),
+                                                     
+                                                     p("While going through the interactive trees, you may see that there are an abundant amount of services and programs for pillars like 
+                                                       education and employment in Loudoun but again, not many for transportation and housing. Here is where we noticed the first pillars in what type of programs Loudoun are lacking in. 
+                                                       While Loudoun county has many programs supporting the education and employment pillars, the transition aged youth may have a hard time taking advantage of those programs without 
+                                                       transportation or health services available to them. Due to Loudoun having a gap in the transportation pillar, the other pillars' programs are being used as much as youths want to which is
+                                                       why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
+                                                       "), 
+                                                    
+                                                     p("This one combined tree is used to better compare with Fairfax County and Allegheny County. As noted above,
                                                        the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
                                                        in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
-                                                       With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. ")
+                                                       With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. "), 
+                                                     br(), 
+                                                     br(), 
+                                                     br()
+                                                     
                                                      
                                                      ) ,
                                               column(8, 
@@ -816,7 +846,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          "Health Services")
                                                      ),
                                                      selected = "Education", 
-                                                     collapsibleTreeOutput("compare") 
+                                                     collapsibleTreeOutput("compare") , 
+                                                     br(),
+                                                     br()
                                                      
                                               ) 
                                               
@@ -837,6 +869,13 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        the program/service. Maps are available by county; each county's services and programs can be 
                                                        catagorized by subpopulation served and by the pillar the program/service best 
                                                        fits. The switchboards at the topright allow the user to further filter locations."),
+                                                     p("The Loudoun county maps make more apparent the higher concentration of 
+                                                     offices for programs/services 
+                                                       found towards the east side of the county, near 
+                                                       the DC Metropolitan area. This divide between the eastern part of the county and the rest of the county
+                                                      highlights the need for greater access to 
+                                                      in-person services and 
+                                                       programs useful to vulnerable TAY in all parts of the county. ")
                                                      
                                               ), 
                                               column(8, 
@@ -2220,8 +2259,7 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
         geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
         labs(y = "Persons", 
-             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
-        theme(plot.title = element_text(size = 8))
+             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")
       
     }else if (type2() == "literacy"){
       ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
