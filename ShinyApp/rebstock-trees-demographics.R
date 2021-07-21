@@ -17,14 +17,15 @@ library(rvest)
 library(sf)
 library(shinydashboard)
 library(shinydashboardPlus)
+library(tidygeocoder)
 options(tigris_use_cache = TRUE)
 
 # census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
 # readRenviron("~/.Renviron")
 
 #Yang's API Key
-census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
-Sys.getenv("CENSUS_API_KEY")
+# census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
+# Sys.getenv("CENSUS_API_KEY")
 # I am seeting my working directory
 # setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
 
@@ -247,30 +248,34 @@ Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx"))
 # Maps -----------------------------------------------------------
 ## Locations ---------
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
-
+map <- map %>% reverse_geocode(lat = Latitude, long = Longitude)
+map <- map %>% rename(address = )
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
 loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
+
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
 allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
+
 fairfax <- map%>%
   filter(County == "Fairfax") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
 fairfax$Latitude <- as.numeric(fairfax$Latitude)
+
 
 subpop_levels <- c("TAYs", "Foster Care", "Juvenile Detention")
 subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
@@ -875,7 +880,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        the DC Metropolitan area. This divide between the eastern part of the county and the rest of the county
                                                       highlights the need for greater access to 
                                                       in-person services and 
-                                                       programs useful to vulnerable TAY in all parts of the county. ")
+                                                       programs useful to vulnerable TAY in all parts of the county. "), 
+                                                     p("It is to be noted that not all services/programs on the map require 
+                                                       one to go in-person to the office location, for this reason, primary
+                                                       availability is listed in the detailed description of each service 
+                                                       through the popup.")
                                                      
                                               ), 
                                               column(8, 
@@ -1573,7 +1582,7 @@ server <- function(input, output) {
                 loudoun_locations$Description, 
                 "<br />",
                 "<strong>Location:</strong>",
-                loudoun_locations$Office,
+                loudoun_locations$address,
                 "<br />",
                 "<strong>Website:</strong>",
                 loudoun_locations$Website),
@@ -1608,7 +1617,7 @@ server <- function(input, output) {
                 (loudoun_locations$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                loudoun_locations$Office,
+                loudoun_locations$address,
                 "<br />",
                 "<strong>Website:</strong>",
                 loudoun_locations$Website),
@@ -1650,7 +1659,7 @@ server <- function(input, output) {
                 (fairfax$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                fairfax$Office,
+                fairfax$address,
                 "<br />",
                 "<strong>Website:</strong>",
                 fairfax$Website),
@@ -1683,7 +1692,7 @@ server <- function(input, output) {
                 (fairfax$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                fairfax$Office,
+                fairfax$address,
                 "<br />",
                 "<strong>Website:</strong>",
                 fairfax$Website),
@@ -1725,7 +1734,7 @@ server <- function(input, output) {
                 (allegheny_locations$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                allegheny_locations$Office,
+                allegheny_locations$address,
                 "<br />",
                 "<strong>Website:</strong>",
                 allegheny_locations$Website),
@@ -1761,7 +1770,7 @@ server <- function(input, output) {
                 (allegheny_locations$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                allegheny_locations$Office,
+                allegheny_locations$address,
                 "<br />",
                 "<strong>Website:</strong>",
                 allegheny_locations$Website),
