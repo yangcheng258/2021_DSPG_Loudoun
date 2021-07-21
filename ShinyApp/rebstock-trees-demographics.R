@@ -127,20 +127,14 @@ colnames(healthcare) <- c("Estimate", "Type")
 
 # Mental Illness
 smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
-smi <- data.frame(t(smiwaitlist[1:3,]))[2:6,]
-smi$Year <- rownames(smi)
-colnames(smi) <- c("Not SMI", "SMI", "Unknown", "Year")
-smi$SMI <- as.numeric(smi$SMI)
-smi$`Not SMI` <- as.numeric(smi$`Not SMI`)
+smi <- smiwaitlist[6:20,1:3]
+colnames(smi) <- c("Group", "Year", "Persons")
+smi$Persons <- as.numeric(smi$Persons)
 
+waitlist <- smiwaitlist[6:25,9:11]
+colnames(waitlist) <- c( "Program", "Year", "Persons")
 
-waitlist <- data.frame(t(smiwaitlist[9:12,]) )[2:6,]
-waitlist$Year <- rownames(waitlist)
-colnames(waitlist) <- c( "Case Management*", "Employment & Day Support", "Outpatient**", "Residental", "Year")
-waitlist$Residental <- as.numeric(waitlist$Residental)
-waitlist$`Case Management*` <- as.numeric(waitlist$`Case Management*`)
-waitlist$`Employment & Day Support` <- as.numeric(waitlist$`Employment & Day Support`)
-waitlist$`Outpatient**` <- as.numeric(waitlist$`Outpatient**`)
+waitlist$Persons <- as.numeric(waitlist$Persons)
 
 #ADult Literacy Individuals Served
 classroom <- 396
@@ -535,13 +529,18 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"),
                                               column(4, 
                                                      h4(strong("Who does Loudoun County Serve?")),
-                                                     p("Transitional Aged Youths (18-24) either aging out of the system or getting out juvenille detention are looking for a way to be more independent, but
-                                          because of their past journey do not have enough resources on their own to make a living and survive. Based on our literature review done in the first 2 weeks of research, 
-                                          the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
-                                          With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
-                                          them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly.")
-                                                     
-                                                     
+                                                     p("In Loudoun county, 5% of the population makes up transition aged youth (18-24) who are at a disadvantage when trying to live indpendently especially those who have aged out of the foster care
+                                                       system or who have gotten out of juvenile detnetion.They are looking for a way to be more independent and responsible, but
+                                                    because of their past experiences may not have enough resources on their own to make a living and survive. "),
+                                                     p("Based on our literature review done in the first 2 weeks of research, 
+                                                    the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
+                                                    With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
+                                                    them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly."), 
+                                                     p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the residents that the county serves."),
+                                                     p("We retrieved American Community Survey (ACS) data to calculate this information and visualize through graphs.
+                                                      ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. 
+                                                      We used the most recently available 1-year estimates from 2018/19 to compute statistics for Loudoun county residents by age, race, ethnicity, 
+                                                      employment, health insurance coverage, and other relevant characteristics.")
                                               ), 
                                               column(8, 
                                                      h4(strong("Visualizations of Resident Socioeconomic Characteristics")),
@@ -575,17 +574,20 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      #   the foster care system were 18+ and it was most likely due to neglect. However, 
                                                      #   there were 20,465 (8%) youths 18+ who exited the system most likely due to
                                                      #   aging out and emancipation."), 
+                                                     
                                                      p("According to the The Adoption and Foster Care Analysis and Reporting System,
-                                            in 2020 there were 48 children in foster care in only Loudoun County which was
-                                            .8% in the state of Virginia. As you can see in the pie chart above, over 2/3
-                                            of those children were boys and 1/3 were girls and the minority of them of
-                                            ethnicity of Hispanic. Almost 50% of those children were white, 25% black
-                                            and less than 5% Asian and multi-racial as you can see from the barplot below.
-                                            When we are looking at only transitional aged youth from 18-24 where 21 years
-                                            old is the average time a foster child ages out, there were only 8 children.
-                                            In Loudoun County, it does not seem like there are many foster care youths
-                                            who are aging out of the system but only 9 other counties have greater than 9
-                                            foster care kids over the age of 18 "), 
+                                                      in 2020 there were 48 children in foster care in only Loudoun County which was
+                                                      .8% in the state of Virginia. Over 2/3
+                                                      of those children were boys and 1/3 were girls and the minority of them of
+                                                      ethnicity of Hispanic. Almost 50% of those children were white, 25% black
+                                                      and less than 5% Asian and multi-racial as you can see from the barplot below.
+                                                      When we are looking at only transitional aged youth from 18-24 where 21 years
+                                                      old is the average time a foster child ages out, there were only 8 children.
+                                                      In Loudoun County, it does not seem like there are many foster care youths
+                                                      who are aging out of the system but only 9 other counties have greater than 9
+                                                      foster care kids over the age of 18. "), 
+                                                     p("It was difficult to retrieve data specifically on those who have aged out of the foster care system and are ages 18-24 because once they have aged out, there
+                                                       is not public record of where they go or how they are."), 
                                                      br(), 
                                                      h4(strong("Juvenile Detention")),
                                                      
@@ -601,20 +603,21 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      #   youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
                                                      #   Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
                                                      #   (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                                                     p("Virginia has some of the highest referral and incarceration rates of youth,
-                                            with the highest number of student referrals in the country and a rate of youth
-                                            incarceration at 75 percent higher than the national average at 79 per 100,000 youths
-                                            (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia
-                                            spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high
-                                            recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and
-                                            60.7% of parole placements being repeat offenders. In addition to high recidivism rates,
-                                            youths being released from direct care for the Fiscal Year of 2015 only received high school
-                                            diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total
-                                            youth offenders received a high school diploma or GED (DJJ 2019). However, the public
-                                            pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
-                                            with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
                                                      
-                                              ), 
+                                                     p("Virginia has some of the highest referral and incarceration rates of youth,
+                                                      with the highest number of student referrals in the country and a rate of youth
+                                                      incarceration at 75 percent higher than the national average at 79 per 100,000 youths
+                                                      (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia
+                                                      spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high
+                                                      recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and
+                                                      60.7% of parole placements being repeat offenders. In addition to high recidivism rates,
+                                                      youths being released from direct care for the Fiscal Year of 2015 only received high school
+                                                      diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total
+                                                      youth offenders received a high school diploma or GED (DJJ 2019). However, the public
+                                                      pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
+                                                      with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
+                                                               
+                                                        ), 
                                               column(8, h4(strong("Visualizations of Subpopulation")),
                                                      tabsetPanel(
                                                        tabPanel("Foster Care",
@@ -682,6 +685,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                    column(4, 
                                           
                                           p("We began our research with a literature review...... "), 
+                                          br(), 
                                           p("Next we webscraped information on the demographics of our target population: 18-24; in foster care or juvenile detention. "),
                                           p("Webscrapped the services and programs available and got their locations to map. "),
                                           br(),
@@ -714,19 +718,23 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4, 
                                                      h4(strong("Trees")),
-                                                     p("These interactive tree diagrams allow for 
-                                                       the comparison of programs/services at the county 
-                                                       level in Loudoun, Fairfax and Allegheny county. 
-                                                       Each diagram represents
-                                                       the programs of the selected pillar in the selected county.
-                                                       Nodes represent
-                                                       first the pillar, then the targeted subpopulation,
-                                                       followed by the program/service name, then the intended 
-                                                       age range of the program/service and lastly the 
-                                                       city or county location of its office"),
+                                                     p("These interactive tree diagrams allow for the comparison of programs/services at the county 
+                                                       level in Loudoun, Fairfax and Allegheny county. Each diagram represents
+                                                       the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
+                                                       followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office"),
+                                                     p("To gather this information for the interactive tree diagrams, our team researched for 3 weeks the different programs available to transition aged youth, either
+                                                       specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
+                                                       Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
+                                                       pillar were not easily accessible and were hidden in multiple documents. "),
+                                                       p("While going through the interactive trees, you may see that there are many services and programs for pillars like 
+                                                       education and employment in Loudoun but again, not many for transportation and housing. Here is where we noticed the first pillars in what type of programs Loudoun are lacking in. 
+                                                       While Loudoun county has many programs supporting the education and employment pillars, the transition aged youth may have a hard time taking advantage of those programs without 
+                                                       transportation or health services available to them. Due to Loudoun having a gap in the transportation pillar, the other pillars' programs are being used as much as youths want to which is
+                                                       why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
+                                                       ")
                                               ),
                                               column(8, 
-                                                     h4(strong("Map of Locations")),
+                                                     h4(strong("Tree Diagram of Programs")),
                                                      tabsetPanel(
                                                        tabPanel("Loudoun",
                                                                 br(),
@@ -785,13 +793,16 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4,  
                                                      h4(strong("Where are the gaps?")), 
-                                                     p("These interactive tree diagrams contain all programs
-                                                     and services available in Loudoun, Fairfax and Allegheny
-                                                     county organized by pillar. The diagrams are intended for 
-                                                     comparison between counties. Its nodes first represent 
-                                                     pillar, then subpopulation, followed by program name, 
-                                                     intended age range of program, and then finally the county 
-                                                     which the program serves. ")) ,
+                                                     p("These interactive tree diagrams contain all programs and services available in Loudoun, Fairfax and Allegheny county organized by pillar. The diagrams are intended for 
+                                                     comparison between counties. Its nodes first represent pillar, then subpopulation, followed by program name,  intended age range of program, and then finally the county 
+                                                     which the program is accessible from.  "),
+                                                     br(), 
+                                                     p("Shown are all the same programs and services from the above trees but merged together into 1 big tree to better compare with Fairfax County and Allegheny County. As noted above,
+                                                       the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
+                                                       in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
+                                                       With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. ")
+                                                     
+                                                     ) ,
                                               column(8, 
                                                      h4(strong("Comparison Tree by Pillar")),
                                                      radioButtons(
@@ -856,7 +867,6 @@ ui <- navbarPage(title = "DSPG 2021",
                  
                  
                  ## Tab Utilization-------------------------------------------
-                 
                  navbarMenu("Utilization",
                             ### Individual served------------
                             tabPanel("Individuals Served", value = "served",
@@ -902,18 +912,19 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4,
                                                      h4(strong("Vulnerable Transition Aged Youth")),
-                                                     p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
-                                      programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
-                                      Emergency Services, Employment and Day Support Services, Outpatient and Residental. Starting in 2019, the Same Day Access Program provided
-                                      walk-in hours and 24 hour access over the phone for those in need which increased individuals served for each service.
-                                     "),
+                                                     p("Although we are looking specifically are transition aged youth, those aging out of the foster care system or getting out of juvenile detention, there is another subpopulation we have information on
+                                                     that shows us how important it is to find and close the gaps espeically in the health service pillar. Those living with mental health issues are also at a disadvantage when trying to live independently
+                                                     because receiving treatment and care can be expensive without insurance and again, getting to a clinic or facility can be difficult. Those without a full-time job that provides health benefits
+                                                       either have to qualify for medicaid or other grants or have to pay full payment out of pocket which can thousands of dollars. In addition,  TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
+                                                      substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages.  "),
                                                      tags$br(),
-                                                     p("The Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provides different types of services to transition aged youth (tays) in Loudoun. 
-                                      As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. Same Day Access is now being offered via tele-health which  
-                                      one can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
-                                      instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours. TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
-                                      substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages. 
-                                      ")), 
+                                                     p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
+                                                      programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
+                                                      Emergency Services, Employment and Day Support Services, Outpatient and Residental. As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. 
+                                                      Same Day Access is now being offered via tele-health whichone can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. 
+                                                      A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
+                                                      instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours based on their insurance. 
+                                                      ")), 
                                               column(8,
                                                      h4(strong("Waitlist of DMHSA by Program")), 
                                                      plotlyOutput("waitlist"),
@@ -927,9 +938,16 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4, 
                                                      h4(strong("Individuals Served Overtime")),
-                                                     p() ) ,
+                                                     p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
+                                                       their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
+                                                       from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
+                                                       The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
+                                                     p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
+                                                       of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Do those
+                                                       living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
                                               column(8, 
                                                      h4(strong("Map of Individuals Served by Population Density")), 
+                                                     column(4, 
                                                      radioButtons(
                                                        "type",
                                                        label = "Select Program Type" ,
@@ -941,14 +959,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          "Outpatient"= "out", 
                                                          "Residential" = "res")
                                                      ),
-                                                     selected = "Case Management", 
-                                                     br(), 
+                                                     selected = "Case Management") , 
+                                                     column(4,
                                                      sliderInput(inputId = "year", 
                                                                  label = "Select a year:",
                                                                  value = 2016,
                                                                  min = 2016,
                                                                  max = 2020,
-                                                                 animate = animationOptions(interval = 1500)), 
+                                                                 animate = animationOptions(interval = 1500))) , 
                                                      
                                                      
                                                      leafletOutput(outputId = "overtime", height = "70vh"), 
@@ -1100,9 +1118,8 @@ server <- function(input, output) {
     }else if (var1() == "mental") {
       
       ggplot(smi, aes(x=Year)) + 
-        geom_line(aes(y = SMI, group = 1), color = "steelblue") + 
-        geom_line(aes(y = `Not SMI`, group = 1 ), color="darkblue", linetype="twodash")+ 
-        labs(title = "Severe Mental Illness from FY 2016 - 2020")
+        geom_line(aes(y = Persons, group = Group, color = Group)) + 
+        labs(title = "Severe Mental Illness from FY 2016 - FY 2021")
       
       
     }
@@ -1230,13 +1247,7 @@ server <- function(input, output) {
   output$waitlist <- renderPlotly({
     
     ggplot(waitlist, aes(x=Year)) + 
-      geom_line(aes(y = Residental, group = 1), color = "steelblue") + 
-      geom_line(aes(y = `Case Management*`, group = 1 ), color="darkblue", linetype="twodash", size = 2) + 
-      geom_line(aes(y = `Employment & Day Support`, group = 1 ), color="skyblue", linetype="dotted", size = 2) + 
-      geom_line(aes(y = `Outpatient**`, group = 1 ), color="mediumblue") +
-      labs(title = "Waitlist for DMHSA by Program",
-           y = "Persons", 
-           x = "Year") 
+      geom_line(aes(y = Persons, group = Program, color = Program))
     
   })
   
@@ -1471,7 +1482,7 @@ server <- function(input, output) {
                         collapsed = T, nodeSize = 'leafCount',
                         fillByLevel = T)
       
-    }else if(input$pillar3%in%"Transportation"){
+    }else if(input$compare1%in%"Transportation"){
       Tree%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
