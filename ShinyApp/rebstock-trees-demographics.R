@@ -1064,7 +1064,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                           p(a(href = 'https://www.linkedin.com/in/yang-cheng-200118191/', 'Yang Cheng', target = '_blank'), "(Virginia Tech, Applied Microeconomics);",
                                             a(href = 'https://www.linkedin.com/in/jaida-robinson-92856b194/', 'JaiDa Robinson', target = '_blank'), "(Virginia State University, Applied Microeconomics);",
                                             a(href = 'https://www.linkedin.com/in/julie-rebstock', 'Julie Rebstock', target = '_blank'), "(Virgina Tech, Economics and Computational Modeling and Data Analytics);",
-                                            a(href = 'https://www.linkedin.com/in/austin-burcham-9b32a81ab/', 'Austin Burcham', target = '_blank'), "(Virginia Tech, Statistical and Data Science).",
+                                            a(href = 'https://www.linkedin.com/in/austin-burcham-9b32a81ab/', 'Austin Burcham', target = '_blank'), "(Virginia Tech, Computational Modeling and Data Analytics).",
                                             a(href = 'https://www.linkedin.com/in/kyle-jacobs7/', 'Kyle Jacobs', target = '_blank'), "(Virginia State Univeristy, Statistical and Data Science)."),
                                           p("", style = "padding-top:10px;") 
                                    ),
