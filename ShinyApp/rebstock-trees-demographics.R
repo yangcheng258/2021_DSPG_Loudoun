@@ -19,14 +19,14 @@ library(shinydashboard)
 library(shinydashboardPlus)
 options(tigris_use_cache = TRUE)
 
-census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
-readRenviron("~/.Renviron")
+# census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
+# readRenviron("~/.Renviron")
 
 #Yang's API Key
-# census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
-# Sys.getenv("CENSUS_API_KEY")
-# # I am seeting my working directory
-# setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
+census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
+Sys.getenv("CENSUS_API_KEY")
+# I am seeting my working directory
+setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
 
 # Data-----------------------------------------------------------
 ## gender and age tays
@@ -991,7 +991,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                    column(6, align = "center",
                                           h4(strong("DSPG Team Members")),
                                           img(src = "team-yang.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
-                                          img(src = "", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
+                                          img(src = "team-jaida.jpg", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "team-rebstock.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "team-austin.png", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
