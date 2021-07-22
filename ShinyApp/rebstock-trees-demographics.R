@@ -185,14 +185,14 @@ jv_age <- intake_age %>% dplyr::select(AGE, `FY20 %`, CSU) %>%
 
 # Population Density
 both <- readRDS(paste0(getwd(),"/data/pop.rds")) 
-both <- st_transform(new_both, '+proj=longlat +datum=WGS84')
+both <- st_transform(both, '+proj=longlat +datum=WGS84')
 
 
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 # Maps -----------------------------------------------------------
 ## Locations ---------
-map <- read_csv(paste0(getwd(),"/data/combined-programs.csv")) 
+map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
   dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, address) %>%
@@ -1256,7 +1256,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1267,7 +1267,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Employment")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1279,7 +1279,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Housing")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1291,7 +1291,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Transportation")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1303,7 +1303,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Health Services")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1320,7 +1320,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1331,7 +1331,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1343,7 +1343,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1355,7 +1355,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1367,7 +1367,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1385,7 +1385,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1396,7 +1396,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1408,7 +1408,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1420,7 +1420,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1432,7 +1432,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Apply"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1449,7 +1449,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1460,7 +1460,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1472,7 +1472,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1484,7 +1484,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1496,7 +1496,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
