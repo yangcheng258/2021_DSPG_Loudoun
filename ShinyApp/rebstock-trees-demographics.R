@@ -31,17 +31,7 @@ readRenviron("~/.Renviron")
 
 # Data-----------------------------------------------------------
 ## gender and age tays
-males_tays <- c('B01001_007','B01001_008','B01001_009','B01001_010')
-females_tays <- c('B01001_031','B01001_032','B01001_033','B01001_034') 
-
-l_ages_gender <- get_acs(
-  geography = 'county', 
-  variables = c(males_tays, females_tays) , 
-  state= 'VA', 
-  county='Loudoun', 
-  summary_var = 'B01001_001'
-) 
-
+l_ages_gender <- read.csv(paste0(getwd(),"/data/ages_gender.csv")) 
 
 # race tays 
 white <- 20066
@@ -56,40 +46,11 @@ colnames(race) <- "Estimate"
 race$Race <- c("White", "Black", "Indian", "Asian", "Native Hawaiian", "Other")
 
 # education 
-male_edu <- c("B15001_004","B15001_005","B15001_006","B15001_007","B15001_008","B15001_009","B15001_010") 
-female_edu <- c("B15001_045", "B15001_046", "B15001_047", "B15001_048", "B15001_049","B15001_050","B15001_051") 
-education <- get_acs(geography = 'county', 
-                     variables = c(male_edu, female_edu), 
-                     state= 'VA',
-                     county='Loudoun')
+education <- read.csv(paste0(getwd(),"/data/education.csv")) 
 
-school <- c("Less than 9th", "9th to 12th (no diploma)", "High school diploma", "Some college (no degree)", "Associate's degree", "Bachelor's degree", "Graduate or professional degree")
-medu <- education[1:7,]
-
-medu <- medu%>%
-  dplyr::select(variable, estimate)
-
-medu$variable <- school
-
-fedu <- education[8:14,]
-
-fedu <- fedu%>%
-  dplyr::select(estimate)
 
 ## Poverty 
-w <- c("B17001A_010","B17001A_024") 
-b <- c("B17001B_010", "B17001B_024") 
-i <- c( "B17001C_010", "B17001C_024")
-as <- c("B17001D_010", "B17001D_024")
-n <- c("B17001E_010", "B17001E_024")
-o <- c("B17001F_010", "B17001F_024")
-
-poverty <- get_acs(
-  geography = 'county', 
-  variables = c(w,b,i,as,n,o) , 
-  state= 'VA',
-  county='Loudoun'
-)
+poverty <- read.csv(paste0(getwd(),"/data/poverty.csv")) 
 
 w_p <- data.frame(poverty[1,], poverty[2,])%>%
   mutate(sum = estimate + estimate.1)%>%
@@ -155,7 +116,6 @@ med$Children <- as.numeric(med$Children)
 
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
-fc_2020 <- read_excel(paste0(getwd(),"/data/foster-care-2020.xlsx")) 
 #Age
 totals <- data.frame(fc_virginia[c(2:38),])
 
@@ -224,25 +184,9 @@ jv_age <- intake_age %>% dplyr::select(AGE, `FY20 %`, CSU) %>%
 
 
 # Population Density
-m_pop <- get_acs(geography = "tract", 
-                 variables = c("B01001_007", "B01001_008", "B01001_009", "B01001_010"), 
-                 state = "VA",
-                 county = "Loudoun County",
-                 geometry = TRUE)
-f_pop <- get_acs(geography = "tract", 
-                 variables = c("B01001_022", "B01001_023", "B01001_024", "B01001_025"), 
-                 state = "VA",
-                 county = "Loudoun County",
-                 geometry = TRUE)
+both <- readRDS(paste0(getwd(),"/data/pop.rds")) 
+both <- st_transform(new_both, '+proj=longlat +datum=WGS84')
 
-both <- m_pop %>%
-  mutate(f = f_pop$estimate)%>%
-  mutate(count = estimate+f)%>%
-  dplyr::select(GEOID, NAME, variable, geometry, count)
-
-both <- both%>%
-  group_by(NAME) %>%
-  summarize(both = sum(count))
 
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
@@ -275,7 +219,6 @@ fairfax <- map%>%
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
 fairfax$Latitude <- as.numeric(fairfax$Latitude)
 
-
 subpop_levels <- c("TAYs", "Foster Care", "Juvenile Detention")
 subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
                           levels = subpop_levels)
@@ -283,8 +226,11 @@ subpop_pal <- colorFactor(pal = c('darkorange1', 'mediumpurple1', "firebrick1"),
 Pillar_levels <- c("Education", "Employment", "Housing", "Transportation", "Health Services")
 Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green'), 
                           levels = Pillar_levels)
+
+
 ## Zipcodes and map of Loudoun-------
-va_zips <- zctas(state = "VA", year = 2010)
+va_zips <- readRDS(paste0(getwd(),"/data/va_zips.rds")) 
+va_zips <- st_transform(va_zips, '+proj=longlat +datum=WGS84')
 loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
 loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
   html_table() %>% dplyr::select(c(1,2)) %>% dplyr::rename(`Zip Code` = X1, City = X2) %>%
@@ -510,7 +456,7 @@ ui <- navbarPage(title = "DSPG 2021",
                           
                  ),
                  
-                 ## Tab Introduction to Loudoun County& TAY--------------------------------------------
+                 ## Tab Introduction to Loudoun County-------------------------------------------
                  navbarMenu("Sociodemographics",
                             # tabPanel("Loudoun",
                             #          fluidRow(style = "margin: 6px;",
@@ -527,6 +473,8 @@ ui <- navbarPage(title = "DSPG 2021",
                             #          
                             #          
                             #       ),
+                            
+                            ### Tab TAY--------------------------------------------
                             tabPanel("Target Population",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Transition Aged Youths' Sociodemographic Characteristics"), align = "center"),
@@ -563,6 +511,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      p(tags$small("Data Source: Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS)")) 
                                               )
                                      )) ,
+                            ### Tab subpopulation--------------------------------------------
                             tabPanel("Subpopulation",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Subpopulations" ), align = "center"),
@@ -1106,8 +1055,8 @@ server <- function(input, output) {
       l_ages_gender$variable <- names
       l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
       
-      ggplot(l_ages_gender, aes(x = estimate, y = variable)) + 
-        geom_bar(position="dodge", stat="identity", fill = "blue") + 
+      ggplot(l_ages_gender, aes(x = estimate, y = variable, fill = gender)) + 
+        geom_bar(position="dodge", stat="identity") + 
         labs(title = "Gender and Age Groups ", 
              y = "", 
              x = "Population Estimate") +coord_flip()
@@ -1162,6 +1111,8 @@ server <- function(input, output) {
              x = "Population Estimate") + 
         coord_flip() + 
         theme(legend.position = "none")
+      
+      
     }else if (var1() == "mental") {
       
       ggplot(smi, aes(x=Year)) + 
@@ -1855,7 +1806,6 @@ server <- function(input, output) {
       
       
       both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
         leaflet(width = "100%") %>%
         addTiles() %>%
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
@@ -1925,7 +1875,6 @@ server <- function(input, output) {
       
       
       both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
         leaflet(width = "100%") %>%
         addTiles() %>%
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
@@ -1996,7 +1945,6 @@ server <- function(input, output) {
       
       
       both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
         leaflet(width = "100%") %>%
         addTiles() %>%
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
@@ -2067,7 +2015,6 @@ server <- function(input, output) {
       
       
       both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
         leaflet(width = "100%") %>%
         addTiles() %>%
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
@@ -2138,7 +2085,6 @@ server <- function(input, output) {
       
       
       both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
         leaflet(width = "100%") %>%
         addTiles() %>%
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
@@ -2209,7 +2155,6 @@ server <- function(input, output) {
       
       
       both %>%
-        st_transform(crs = "+init=epsg:4326") %>%
         leaflet(width = "100%") %>%
         addTiles() %>%
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
