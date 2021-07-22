@@ -37,10 +37,11 @@ females_tays <- c('B01001_031','B01001_032','B01001_033','B01001_034')
 l_ages_gender <- get_acs(
   geography = 'county', 
   variables = c(males_tays, females_tays) , 
-  state= 'VA',
+  state= 'VA', 
   county='Loudoun', 
   summary_var = 'B01001_001'
 ) 
+
 
 # race tays 
 white <- 20066
