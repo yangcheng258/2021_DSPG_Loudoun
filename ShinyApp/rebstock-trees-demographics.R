@@ -821,7 +821,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        while clicking on the circle markers will open a popup with a detailed description of 
                                                        the program/service. Maps are available by county; each county's services and programs can be 
                                                        catagorized by subpopulation served and by the pillar the program/service best 
-                                                       fits. The switchboards at the topright allow the user to further filter locations."),
+                                                       fits. The radiobuttons at the topright allow the user to further filter locations."),
                                                      p("The Loudoun county maps make more apparent the higher concentration of 
                                                      offices for programs/services 
                                                        found towards the east side of the county, near 
@@ -830,7 +830,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                       in-person services and 
                                                        programs useful to vulnerable TAY in all parts of the county. "), 
                                                      p("It is to be noted that not all services/programs on the map require 
-                                                       one to go in-person to the office location, for this reason, deliry
+                                                       one to go in-person to the office location, for this reason, delivery
                                                        method of service is listed in the detailed description of each service 
                                                        through the popup.")
                                                      
