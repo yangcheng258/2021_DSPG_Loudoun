@@ -195,7 +195,7 @@ Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx"))
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, address) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
@@ -204,7 +204,7 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, address) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
@@ -213,7 +213,7 @@ allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
 fairfax <- map%>%
   filter(County == "Fairfax") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, address) %>%
+  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
@@ -776,10 +776,12 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
                                                        "), 
                                                     
-                                                     p("This one combined tree is used to better compare with Fairfax County and Allegheny County. As noted above,
+                                                     p("This combined tree is used to better compare Loudoun County with Fairfax and Allegheny County. As noted above,
                                                        the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
                                                        in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
-                                                       With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. "), 
+                                                       With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. Also, we can see that 
+                                                       many of the programs available in Fairfax are also available to those in Loudoun and vice versa. Since the counties are located close, transition aged youth living in Loudoun may have easy access to those
+                                                       programs and services in Fairfax depending on their location. "), 
                                                      br(), 
                                                      br(), 
                                                      br()
@@ -871,6 +873,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(6, 
                                                      h4(strong("Statistics")), 
+                                                     p("Not sure how we are going to format this page yet. Need some gudiance on here"),
+                                                     tags$br(), 
                                                      infoBoxOutput("medicaid", width = 6),
                                                      infoBoxOutput("wioa", width = 6),
                                                      infoBoxOutput("transit" , width = 6),
@@ -880,10 +884,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                               ), 
                                               column(6, 
                                                      h4(strong("Graphs of Program Demographics")), 
-                                                     p("", style = "padding-top:10px;"), 
-                                                     radioButtons(
+                                                     selectInput(
                                                        "type2",
-                                                       label = "Select Program Type" ,
+                                                       "Select Program",
                                                        choices = list(
                                                          "Adult Literacy Program Loudoun" = "literacy",
                                                          # "Continuum of Care" = "care",
@@ -892,12 +895,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          "OAR"= "oar", 
                                                          # "Route 54 Safe-T" = "bus",
                                                          "Medicaid" = "med")
-                                                     ),
-                                                     selected = "literacy",
-                                                     tags$br(), 
+                                                       
+                                                     ), 
                                                      plotlyOutput(outputId = "plotServed") ,
-                                                     tags$br(), 
-                                                     plotlyOutput(outputId = "plotServed2"))
+                                                     plotlyOutput(outputId = "plotServed2")
+                                              )
                                      ) 
                             ) ,
                             
@@ -939,7 +941,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
                                                        The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
                                                      p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
-                                                       of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Do those
+                                                       of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Are those
                                                        living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
                                               column(8, 
                                                      h4(strong("Map of Individuals Served by Population Density")), 
@@ -1256,7 +1258,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1267,7 +1269,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Employment")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1279,7 +1281,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Housing")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1291,7 +1293,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Transportation")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1303,7 +1305,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Health Services")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1320,7 +1322,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1331,7 +1333,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1343,7 +1345,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1355,7 +1357,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1367,7 +1369,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1385,7 +1387,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1396,7 +1398,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1408,7 +1410,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1420,7 +1422,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1432,7 +1434,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery"),
+        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1807,11 +1809,11 @@ server <- function(input, output) {
       
       both %>%
         leaflet(width = "100%") %>%
-        addTiles() %>%
+        addProviderTiles("CartoDB") %>% 
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                     stroke = FALSE,
                     smoothFactor = 0,
-                    fillOpacity = 0.5,
+                    fillOpacity = 0.6,
                     label = labelsP,
                     color = ~ pal(both)) %>%
         addCircleMarkers(lng = ~case$Long, lat = ~case$Lat,
@@ -1876,11 +1878,11 @@ server <- function(input, output) {
       
       both %>%
         leaflet(width = "100%") %>%
-        addTiles() %>%
+        addProviderTiles("CartoDB") %>% 
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                     stroke = FALSE,
                     smoothFactor = 0,
-                    fillOpacity = 0.5,
+                    fillOpacity = 0.6,
                     label = labelsP,
                     color = ~ pal(both)) %>%
         addCircleMarkers(lng = ~dis$Long, lat = ~dis$Lat,
@@ -1946,11 +1948,11 @@ server <- function(input, output) {
       
       both %>%
         leaflet(width = "100%") %>%
-        addTiles() %>%
+        addProviderTiles("CartoDB") %>% 
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                     stroke = FALSE,
                     smoothFactor = 0,
-                    fillOpacity = 0.5,
+                    fillOpacity = 0.6,
                     label = labelsP,
                     color = ~ pal(both)) %>%
         addCircleMarkers(lng = ~emer$Long, lat = ~emer$Lat,
@@ -2016,11 +2018,11 @@ server <- function(input, output) {
       
       both %>%
         leaflet(width = "100%") %>%
-        addTiles() %>%
+        addProviderTiles("CartoDB") %>% 
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                     stroke = FALSE,
                     smoothFactor = 0,
-                    fillOpacity = 0.5,
+                    fillOpacity = 0.6,
                     label = labelsP,
                     color = ~ pal(both)) %>%
         addCircleMarkers(lng = ~employ$Long, lat = ~employ$Lat,
@@ -2086,11 +2088,11 @@ server <- function(input, output) {
       
       both %>%
         leaflet(width = "100%") %>%
-        addTiles() %>%
+        addProviderTiles("CartoDB") %>% 
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                     stroke = FALSE,
                     smoothFactor = 0,
-                    fillOpacity = 0.5,
+                    fillOpacity = 0.6,
                     label = labelsP,
                     color = ~ pal(both)) %>%
         addCircleMarkers(lng = ~out$Long, lat = ~out$Lat,
@@ -2156,11 +2158,11 @@ server <- function(input, output) {
       
       both %>%
         leaflet(width = "100%") %>%
-        addTiles() %>%
+        addProviderTiles("CartoDB") %>% 
         addPolygons(popup = ~ str_extract(NAME, "^([^,]*)"),
                     stroke = FALSE,
                     smoothFactor = 0,
-                    fillOpacity = 0.5,
+                    fillOpacity = 0.6,
                     label = labelsP,
                     color = ~ pal(both)) %>%
         addCircleMarkers(lng = ~res$Long, lat = ~res$Lat,
@@ -2206,7 +2208,8 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
         geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
         labs(y = "Persons", 
-             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")
+             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
+        theme(plot.title = element_text(size = 10))
       
     }else if (type2() == "literacy"){
       ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
@@ -2240,7 +2243,7 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Childless Adults`, group = 1), data = med) + 
         geom_line(mapping = aes(Year, Children, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
         labs(y = "Persons", 
-             title = "Medcaid for Children and Childless Adults")
+             title = "Medcaid for Children and Childless Adults")+ theme(plot.title = element_text(size = 10))
       
     }else if (type2() == "literacy"){
       
