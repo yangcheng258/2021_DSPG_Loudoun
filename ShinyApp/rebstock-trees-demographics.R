@@ -650,6 +650,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Service Availability"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
+                                     tabsetPanel(
+                                     tabPanel("Services", 
+                                       fluidRow(style = "margin: 6px;",
+                                                       p("", style = "padding-top:10px;"), 
                                               column(6, 
                                                      h4(strong("What services and programs are available?")),
                                                      p("The following tables provide counts of programs  
@@ -679,8 +683,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      tableOutput("table1"),
                                                      tags$br(), 
                                                      h4(strong("Number of Programs by Pillar")), 
-                                                     tableOutput("table2")) 
-                                     ) ,
+                                                     tableOutput("table2")))  ,
                                      tags$br(), 
                                      fluidRow(style = "margin: 6px;",
                                               p("", style = "padding-top:10px;"), 
@@ -757,8 +760,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 collapsibleTreeOutput("tree2")
                                                                 
                                                        )) 
-                                              )) ,
-                                     fluidRow(style = "margin: 6px;",
+                                              )) ) ,
+                                    
+                                    tabPanel("Comparison", 
+                                      fluidRow(style = "margin: 6px;",
                                               p("", style = "padding-top:10px;"), 
                                               column(4,  
                                                      h4(strong("Where are the gaps?")), 
@@ -804,7 +809,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      
                                               ) 
                                               
+                                     )) 
                                      )
+                                     ) 
                             ),
                             
                             
