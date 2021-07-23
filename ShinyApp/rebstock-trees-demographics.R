@@ -195,7 +195,6 @@ Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx"))
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
@@ -204,7 +203,6 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
@@ -213,7 +211,6 @@ allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
 fairfax <- map%>%
   filter(County == "Fairfax") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
@@ -823,7 +820,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        while clicking on the circle markers will open a popup with a detailed description of 
                                                        the program/service. Maps are available by county; each county's services and programs can be 
                                                        catagorized by subpopulation served and by the pillar the program/service best 
-                                                       fits. The switchboards at the topright allow the user to further filter locations."),
+                                                       fits. The radiobuttons at the topright allow the user to further filter locations."),
                                                      p("The Loudoun county maps make more apparent the higher concentration of 
                                                      offices for programs/services 
                                                        found towards the east side of the county, near 
@@ -832,7 +829,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                       in-person services and 
                                                        programs useful to vulnerable TAY in all parts of the county. "), 
                                                      p("It is to be noted that not all services/programs on the map require 
-                                                       one to go in-person to the office location, for this reason, deliry
+                                                       one to go in-person to the office location, for this reason, delivery
                                                        method of service is listed in the detailed description of each service 
                                                        through the popup.")
                                                      
@@ -1536,7 +1533,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 loudoun_locations$Address,
                 "<br />",
-                "<a href = ",loudoun_locations$Website, "> Website </a>"),
+                "<a href = ",loudoun_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                loudoun_locations$Delivery), 
           htmltools::HTML
         )
         
@@ -1570,7 +1570,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 loudoun_locations$Address,
                 "<br />",
-                "<a href = ",loudoun_locations$Website, "> Website </a>"),
+                "<a href = ",loudoun_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                loudoun_locations$Delivery), 
           htmltools::HTML
         )
         
@@ -1611,7 +1614,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 fairfax$Address,
                 "<br />",
-                "<a href = ",fairfax$Website, "> Website </a>"),
+                "<a href = ",fairfax$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                fairfax$Delivery), 
           htmltools::HTML
         )
         
@@ -1643,7 +1649,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 fairfax$Address,
                 "<br />",
-                "<a href = ",fairfax$Website, "> Website </a>"),
+                "<a href = ",fairfax$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                fairfax$Delivery), 
           htmltools::HTML
         )
         
@@ -1684,7 +1693,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 allegheny_locations$Address,
                 "<br />",
-                "<a href = ",allegheny_locations$Website, "> Website </a>"),
+                "<a href = ",allegheny_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                allegheny_locations$Delivery),
           htmltools::HTML
         )
         
@@ -1719,7 +1731,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 allegheny_locations$Address,
                 "<br />",
-                "<a href = ",allegheny_locations$Website, "> Website </a>"),
+                "<a href = ",allegheny_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                allegheny_locations$Delivery), 
           htmltools::HTML
         )
         
