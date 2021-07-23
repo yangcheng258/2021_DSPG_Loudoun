@@ -195,7 +195,6 @@ Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx"))
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
 loudoun_locations <- map %>%
   filter(County == "Loudoun") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation, Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 loudoun_locations$Longitude <- as.numeric(loudoun_locations$Longitude)
@@ -204,7 +203,6 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 allegheny_locations <- map%>%
   filter(County == "Allegheny") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
@@ -213,7 +211,6 @@ allegheny_locations$Latitude <- as.numeric(allegheny_locations$Latitude)
 
 fairfax <- map%>%
   filter(County == "Fairfax") %>% 
-  dplyr::select(Program, Longitude, Latitude, Office, Pillars, Subpopulation,  Qualification, Description, Website, Address) %>%
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 fairfax$Longitude <- as.numeric(fairfax$Longitude)
@@ -1536,7 +1533,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 loudoun_locations$Address,
                 "<br />",
-                "<a href = ",loudoun_locations$Website, "> Website </a>"),
+                "<a href = ",loudoun_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                loudoun_locations$Delivery), 
           htmltools::HTML
         )
         
@@ -1570,7 +1570,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 loudoun_locations$Address,
                 "<br />",
-                "<a href = ",loudoun_locations$Website, "> Website </a>"),
+                "<a href = ",loudoun_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                loudoun_locations$Delivery), 
           htmltools::HTML
         )
         
@@ -1611,7 +1614,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 fairfax$Address,
                 "<br />",
-                "<a href = ",fairfax$Website, "> Website </a>"),
+                "<a href = ",fairfax$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                fairfax$Delivery), 
           htmltools::HTML
         )
         
@@ -1643,7 +1649,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 fairfax$Address,
                 "<br />",
-                "<a href = ",fairfax$Website, "> Website </a>"),
+                "<a href = ",fairfax$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                fairfax$Delivery), 
           htmltools::HTML
         )
         
@@ -1684,7 +1693,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 allegheny_locations$Address,
                 "<br />",
-                "<a href = ",allegheny_locations$Website, "> Website </a>"),
+                "<a href = ",allegheny_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                allegheny_locations$Delivery),
           htmltools::HTML
         )
         
@@ -1719,7 +1731,10 @@ server <- function(input, output) {
                 "<strong>Location:</strong>",
                 allegheny_locations$Address,
                 "<br />",
-                "<a href = ",allegheny_locations$Website, "> Website </a>"),
+                "<a href = ",allegheny_locations$Website, "> Website </a>",
+                "<br />", 
+                "<strong>Delivery:</strong>",
+                allegheny_locations$Delivery), 
           htmltools::HTML
         )
         
