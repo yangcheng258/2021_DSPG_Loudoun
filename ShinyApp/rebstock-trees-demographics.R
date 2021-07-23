@@ -872,7 +872,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      h4(strong("Statistics")), 
                                                      p("Not sure how we are going to format this page yet. Need some gudiance on here"),
                                                      tags$br(), 
-                                                     infoBoxOutput("medicaid", width = 6),
+                                                     shinydashboard::valueBoxOutput("medicaid", width = 6), 
+                                                     # infoBoxOutput("medicaid", width = 6),
                                                      infoBoxOutput("wioa", width = 6),
                                                      infoBoxOutput("transit" , width = 6),
                                                      infoBoxOutput("food", width = 6),
@@ -2288,13 +2289,21 @@ server <- function(input, output) {
   })
   ## infoBox -----------------------------------------------------------
   
-  output$medicaid <- renderInfoBox({
+  # output$medicaid <- renderInfoBox({
+  #   
+  #   infoBox(title = "Medicaid", 
+  #           value = 244362, 
+  #           subtitle = "Childless Adults Served by Medicaid 2021",
+  #           icon = icon("clinic-medical"),
+  #           fill = TRUE)
+  # })
+  
+  output$medicaid <- shinydashboard::renderValueBox({
     
-    infoBox(title = "Medicaid", 
+    shinydashboard::valueBox(
             value = 244362, 
             subtitle = "Childless Adults Served by Medicaid 2021",
-            icon = icon("clinic-medical"),
-            fill = TRUE)
+            icon = icon("clinic-medical"), color = "black") 
   })
   
   output$wioa <- renderInfoBox({
