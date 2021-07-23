@@ -832,8 +832,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                       in-person services and 
                                                        programs useful to vulnerable TAY in all parts of the county. "), 
                                                      p("It is to be noted that not all services/programs on the map require 
-                                                       one to go in-person to the office location, for this reason, primary
-                                                       availability is listed in the detailed description of each service 
+                                                       one to go in-person to the office location, for this reason, deliry
+                                                       method of service is listed in the detailed description of each service 
                                                        through the popup.")
                                                      
                                               ), 
@@ -1534,7 +1534,7 @@ server <- function(input, output) {
                 loudoun_locations$Description, 
                 "<br />",
                 "<strong>Location:</strong>",
-                loudoun_locations$address,
+                loudoun_locations$Address,
                 "<br />",
                 "<a href = ",loudoun_locations$Website, "> Website </a>"),
           htmltools::HTML
@@ -1568,7 +1568,7 @@ server <- function(input, output) {
                 (loudoun_locations$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                loudoun_locations$address,
+                loudoun_locations$Address,
                 "<br />",
                 "<a href = ",loudoun_locations$Website, "> Website </a>"),
           htmltools::HTML
@@ -1609,7 +1609,7 @@ server <- function(input, output) {
                 (fairfax$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                fairfax$address,
+                fairfax$Address,
                 "<br />",
                 "<a href = ",fairfax$Website, "> Website </a>"),
           htmltools::HTML
@@ -1641,7 +1641,7 @@ server <- function(input, output) {
                 (fairfax$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                fairfax$address,
+                fairfax$Address,
                 "<br />",
                 "<a href = ",fairfax$Website, "> Website </a>"),
           htmltools::HTML
@@ -1682,7 +1682,7 @@ server <- function(input, output) {
                 (allegheny_locations$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                allegheny_locations$address,
+                allegheny_locations$Address,
                 "<br />",
                 "<a href = ",allegheny_locations$Website, "> Website </a>"),
           htmltools::HTML
@@ -1717,7 +1717,7 @@ server <- function(input, output) {
                 (allegheny_locations$Description), 
                 "<br />",
                 "<strong>Location:</strong>",
-                allegheny_locations$address,
+                allegheny_locations$Address,
                 "<br />",
                 "<a href = ",allegheny_locations$Website, "> Website </a>"),
           htmltools::HTML
