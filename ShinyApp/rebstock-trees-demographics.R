@@ -843,7 +843,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                             selectInput(
                                                               "county",
                                                               "Select County",
-                                                              choices = unique(map$County),
+                                                              choices = c("Loudoun", "Fairfax", "Allegheny"), 
                                                               selected = "Loudoun",
                                                               width = 400
                                                             )),
