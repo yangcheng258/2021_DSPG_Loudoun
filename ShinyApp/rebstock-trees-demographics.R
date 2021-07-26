@@ -1064,10 +1064,11 @@ server <- function(input, output) {
       l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
       
       ggplot(l_ages_gender, aes(x = estimate, y = variable, fill = gender)) +  scale_fill_viridis_d() + 
-        geom_bar(position="dodge", stat="identity") + 
+        geom_bar(position="dodge", stat="identity") + theme_minimal() + 
         labs(title = "Gender and Age Groups ", 
              y = "", 
-             x = "Population Estimate") +coord_flip()
+             x = "Population Estimate") +coord_flip()+
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
     } else if(var1() == "percent") {
@@ -1084,8 +1085,8 @@ server <- function(input, output) {
         ggplot() + geom_col(mapping = aes(x = Percent, y = Gender , fill = Gender))+ scale_fill_viridis_d() + 
         labs(title = "Percent of TAYs by Gender", 
              y = "", 
-             x = "Percent %") + coord_flip()  + 
-        theme(legend.position = "none")
+             x = "Percent %") + coord_flip()  + theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
     }else if(var1() == "race"){
       
@@ -1093,8 +1094,8 @@ server <- function(input, output) {
         ggplot() + geom_col(mapping = aes(x = Estimate, y = Race , fill = Race))+  scale_fill_viridis_d() + 
         labs(title = "Racial Demographics", 
              y = "", 
-             x = "Population Estimate")  + 
-        theme(legend.position = "none")
+             x = "Population Estimate")  + theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
     } 
     else if (var1() == "education")  { 
@@ -1103,8 +1104,8 @@ server <- function(input, output) {
         ggplot(mapping = aes(x = sum, y = variable , fill = variable)) + geom_col()+ scale_fill_viridis_d()+ 
         labs(title = "Educational Attainment", 
              y = "", 
-             x = "Population Estimate")  + 
-        theme(legend.position = "none")
+             x = "Population Estimate")  + theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
     }
@@ -1114,8 +1115,8 @@ server <- function(input, output) {
         labs(title = "Types of Healthcare Coverage", 
              y = "", 
              x = "Population Estimate") + 
-        coord_flip() + 
-        theme(legend.position = "none")
+        coord_flip() + theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
     }else {
@@ -1125,7 +1126,8 @@ server <- function(input, output) {
         labs(title = "Poverty by Race", 
              y = "", 
              x = "Population Estimate") + coord_flip() + 
-        theme(legend.position = "none")
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+        theme_minimal()
       
     }
     
@@ -1141,37 +1143,42 @@ server <- function(input, output) {
       fc_ages$Age.Group <- factor(fc_ages$Age.Group, levels=unique(fc_ages$Age.Group))
       
       ggplot(data = fc_ages, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
-        geom_col(width = .95, alpha = .75) + coord_flip()+ scale_fill_viridis_d() + 
+        geom_col(width = .95, alpha = .75) + coord_flip()+ scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Age Groups for Foster Care", 
-             fill ="") + theme(legend.position = "none") 
+             fill ="") + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
       
     }else if(var2() == "race"){
       ggplot(data = fc_races, aes(x= Race, y = Value, fill = Race) ) + 
-        geom_col(width = .95, alpha = .75) + coord_flip()+scale_fill_viridis_d() + 
+        geom_col(width = .95, alpha = .75) + coord_flip()+scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Racial Demographics for Foster Care", 
-             fill ="") + theme(legend.position = "none")
+             fill ="") + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
     } else if (var2() == "eth") {
       g <- ggplot(fc_eth, aes(eth, value, fill = eth))
-      g + geom_bar(stat = "identity") + scale_fill_viridis_d() + 
+      g + geom_bar(stat = "identity") + scale_fill_viridis_d() + theme_minimal() + 
         labs(title = "Ethinic Demographics of Foster children",
              x = "", 
-             y = "Population Estimate") + theme(legend.position = "none")
+             y = "Population Estimate") + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
     }else if(var2() =="sex") {
       ggplot(fc_sex, aes(x = Gender, y = Value, fill = Gender)) + 
-        geom_bar(stat="identity") + scale_fill_viridis_d() + 
+        geom_bar(stat="identity") + scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "" , y = "Population Estimate", 
-             title = "Sex of Youths in Foster Care") + theme(legend.position = "none")
+             title = "Sex of Youths in Foster Care") + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     }else{
       ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
-        geom_bar(stat="identity") + scale_fill_viridis_d() + 
+        geom_bar(stat="identity") + scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "" , y = "Population Estimate", 
-             title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")
+             title = "Transitional Aged Youth vs Children in Foster Care") + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     }
     
   }) 
@@ -2285,9 +2292,9 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Childless Adults`/1000, group = 1), data = med) + 
         geom_line(mapping = aes(Year, Children/1000, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
         labs(y = "Persons (1,000) ", 
-             title = "Children and Childless Adults")+ scale_fill_viridis_d() +
+             title = "Children and Childless Adults")+ scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              plot.title = element_text(size = 10))
+              plot.title = element_text(size = 10), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
       ggplotly(plot) %>% layout(
@@ -2302,8 +2309,8 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
         labs(title = "Oar Nova 2020",
-             y = "Persons Served")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_blank())
+             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2316,8 +2323,8 @@ server <- function(input, output) {
     }else if (enroll() == "literacy") {
       plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
         labs(title = "Adult Literacy Program",
-             y = "Persons Served")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_blank(), axis.title.x = element_text(vjust = -100))
+             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_blank(), axis.title.x = element_text(vjust = -100), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2333,9 +2340,10 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`/1000, group = 1), data = total) + 
         geom_line(mapping = aes(Year, Total/1000, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
         labs(y = "Persons (1,000) ", 
-             title = "Adults, Pregnant Women, Children Comapred with Total")+
+             title = "Adults, Pregnant Women, Children Comapred with Total")+theme_minimal() + 
         theme(plot.title = element_text(size = 10),
-              axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))+scale_fill_viridis_d() 
+              axis.text.x = element_text(angle = 45, vjust = .5, color = "black"), 
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank())+scale_fill_viridis_d() 
       
       
       ggplotly(plot) %>% layout(
@@ -2360,13 +2368,13 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Race, Percent, fill = Race), data = literacy_demo) + 
         labs(title = "Adult Literacy Program",
-             y = "Percent Served")+scale_fill_viridis_d() +
+             y = "Percent Served")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1,  y = -.2, text = "Data Source: Loudoun County Public School 2019", 
+          list(x = 1,  y = -.1, text = "Data Source: Loudoun County Public School 2019", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2375,9 +2383,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) + 
         labs(title = "Oxford Houses in VA ",
-             y = "Months") +scale_fill_viridis_d() +
+             y = "Months") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2391,9 +2399,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) + 
         labs(title = "Oxford Houses in VA",
-             y = "%/Years") +scale_fill_viridis_d() +
+             y = "%/Years") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2406,9 +2414,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
         labs(title = "Oar Nova",
-             y = "Percent Served") +scale_fill_viridis_d() +
+             y = "Percent Served") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2421,9 +2429,9 @@ server <- function(input, output) {
     }else if (stat() == "mental") {
       
       plot <- ggplot(smi, aes(x=Year)) + 
-        geom_line(aes(y = Persons, group = Group, color = Group)) + 
+        geom_line(aes(y = Persons, group = Group, color = Group)) + theme_minimal() + 
         labs(title = "Severe Mental Illness")+scale_fill_viridis_d() +
-        theme(legend.position = "none")
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2437,9 +2445,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data = publicR) + 
         labs(title = "Public Benefits",
-             y = "Persons")+scale_fill_viridis_d() +
+             y = "Persons")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2454,9 +2462,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data = publicG) + 
         labs(title = "Public Benefits",
-             y = "Persons")+scale_fill_viridis_d() +
+             y = "Persons")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2473,9 +2481,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data = emerG) + 
         labs(title = "Emergency Shelters",
-             y = "Persons")+scale_fill_viridis_d() +
+             y = "Persons")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2490,9 +2498,9 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data = emerR) + 
         labs(title = "Emergency Shelters",
-             y = "Persons")+ scale_fill_viridis_d() +
+             y = "Persons")+ scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none")
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
@@ -2509,11 +2517,11 @@ server <- function(input, output) {
       plot <- mhs_sex_relative %>% 
         ggplot(aes(group = Gender, x = Year, y = `Percent`,
                    fill = Gender)) + 
-        geom_col() +
+        geom_col() +theme_minimal() + 
         scale_y_continuous(labels = scales::percent) +
         labs(title = "Gender of TAY Served") +
         scale_fill_viridis_d() +
-        theme_minimal()
+        theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
                                 annotations = 
