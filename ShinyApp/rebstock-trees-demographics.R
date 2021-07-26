@@ -30,24 +30,16 @@ readRenviron("~/.Renviron")
 # setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
 
 # Data-----------------------------------------------------------
+loudoun <- read_excel(paste0(getwd(), "/data/demographics-loudoun.xlsx"))
 ## gender and age tays
 l_ages_gender <- read.csv(paste0(getwd(),"/data/ages_gender.csv")) 
 
 # race tays 
-white <- 20066
-black <- 2403
-indian <- 82 
-asian <- 3891
-native_hawaiian <- 79
-other <- 425
 
-race <- data.frame(rbind(white, black, indian, asian, native_hawaiian, other))
-colnames(race) <- "Estimate"
-race$Race <- c("White", "Black", "Indian", "Asian", "Native Hawaiian", "Other")
-
+race <- loudoun[1:6, 1:2]
+colnames(race) <- c("Race", "Estimate")
 # education 
 education <- read.csv(paste0(getwd(),"/data/education.csv")) 
-
 
 ## Poverty 
 poverty <- read.csv(paste0(getwd(),"/data/poverty.csv")) 
@@ -78,14 +70,8 @@ o_p <- data.frame(poverty[11,], poverty[12,])%>%
   mutate(variable = "Other")
 
 # Health Care
-covered <- 1473 
-private_cov <- 25418
-medicare <- 58 
-va <- 69
-
-healthcare <- data.frame(rbind(covered, private_cov, medicare, va))
-healthcare$Type <- c("Public", "Private", "Medicare", "VA Health")
-colnames(healthcare) <- c("Estimate", "Type")
+healthcare <- loudoun[1:4, 4:5]
+colnames(healthcare) <- c("Type", "Estimate")
 
 
 # Mental Illness
@@ -98,21 +84,6 @@ waitlist <- smiwaitlist[6:25,9:11]
 colnames(waitlist) <- c( "Program", "Year", "Persons")
 
 waitlist$Persons <- as.numeric(waitlist$Persons)
-
-#ADult Literacy Individuals Served
-classroom <- 396
-tutoring <- 20
-jobsite <- 49 
-ged <- 2 
-workforce <- 105 
-#Medicaid
-enroll <- read_excel(paste0(getwd(),"/data/medicaid-enrollment.xlsx")) 
-total <- enroll[1:13,]
-total$`Adults, Pregnant Women and Children` <- as.numeric(total$`Adults, Pregnant Women and Children`)
-med <- enroll[16:20,1:3]
-colnames(med) <- c("Year", "Children", "Childless Adults")
-med$`Childless Adults` <- as.numeric(med$`Childless Adults`)
-med$Children <- as.numeric(med$Children)
 
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
@@ -240,28 +211,6 @@ loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
 overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
 
 ## Persons Served------------
-classroom <- 396
-tutoring <- 20
-jobsite <- 49 
-ged <- 2 
-workforce <- 105 
-
-programs <- data.frame((rbind(classroom, tutoring, jobsite, ged, workforce)))
-programs$Type <- c("Classroom", "Tutoring", "Jobsite", "GED", "Workforce Development Week")
-colnames(programs) <- c("Number", "Type")
-
-served <- 543 
-hispanic <- 58
-asian <- 24
-white <- 10
-other <- 6 
-
-
-persons <- data.frame((rbind(hispanic, asian, white, other)))
-persons$Race <- c("Hispanic", "Asian", "White", "Other")
-colnames(persons) <- c("Number", "Race")
-
-
 enroll <- read_excel(paste0(getwd(), "/data/medicaid-enrollment.xlsx")) 
 
 total <- enroll[1:13,]
@@ -272,44 +221,43 @@ med$`Childless Adults` <- as.numeric(med$`Childless Adults`)
 med$Children <- as.numeric(med$Children)
 
 
-
-average_stay <- 9 #months 
-median_stay <- 5 
-prior_home <- 61.3 #percent 
-prior_jail <- 79.6
-edu <- 12.1 #years 
-
-ox <- data.frame(rbind(average_stay, median_stay, prior_home, prior_jail, edu)) 
-ox$Category <- c("Average Stay (mo) ", 
-                 "Median Stay (mo) ", 
-                 "Prior Homelessness (%) ",
-                 "Prior Jail time (%) ",
-                 "Average Education (yrs) ") 
-colnames(ox) <-c("Number", "Category") 
+#Oxford
+ox <- loudoun[1:5, 13:14]
+colnames(ox) <- c("Category", "Number")
 ox$Category <- factor(ox$Category, levels=unique(ox$Category))
 
+#Adult Literacy Program
+literacy <- loudoun[1:5, 7:8]
+colnames(literacy) <- c("Type", "Number")
+literacy$Type <- factor(literacy$Type, levels=unique(literacy$Type))
 
-l <- 180
-c <- 3355
-m <- 75
-f <- 23
-undisclosed <- 2
 
-tay <- 30
-no_high <- 17
-college <- 11 
+literacy_demo <- loudoun[1:4, 10:11]
+colnames(literacy_demo) <- c("Race", "Percent")
+literacy_demo$Race <- factor(literacy_demo$Race, levels=unique(literacy_demo$Race))
 
-all <- data.frame(rbind(l, c, m, f, undisclosed, tay, no_high, college)) 
-all$Category <- c("Served in Loduoun", 
-                  "Total Served", 
-                  "Male",
-                  "Female",
-                  "Undisclosed Gender", 
-                  "TAYs",
-                  "Did not finish high school",
-                  "Have a college education")
-colnames(all) <-c("Number", "Category") 
+
+#OAR
+all <- loudoun[1:7, 16:17]
+colnames(all) <- c("Category", "Number")
 all$Category <- factor(all$Category, levels=unique(all$Category))
+
+
+# Public Benefits
+youth <- read_excel("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/ShinyApp/data/vce-youth.xlsx")
+
+emerR <- youth[1:4, 1:2]
+colnames(emerR) <- c("Race", "Number")
+
+emerG <- youth[1:2, 4:5]
+colnames(emerG) <- c("Gender", "Number")
+
+publicR <- youth[1:6, 8:9]
+colnames(publicR) <- c("Race", "Number")
+
+publicG <- youth[1:2, 11:12]
+colnames(publicG) <- c("Gender", "Number")
+
 
 
 # CODE TO DETECT ORIGIN OF LINK AND CHANGE LOGO ACCORDINGLY
@@ -500,8 +448,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        "Educational Attainment" = "education",
                                                        "Races" = "race",
                                                        "Poverty Level" = "poverty",
-                                                       "Healthcare Coverage" = "health", 
-                                                       "Severe Mental Illness" = "mental")
+                                                       "Healthcare Coverage" = "health")
                                                      ),
                                                      plotlyOutput("plot1"),
                                                      p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates.")),
@@ -651,165 +598,165 @@ ui <- navbarPage(title = "DSPG 2021",
                                               h1(strong("Service Availability"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                      tabsetPanel(
-                                     tabPanel("Services", 
-                                       fluidRow(style = "margin: 6px;",
-                                                       p("", style = "padding-top:10px;"), 
-                                              column(6, 
-                                                     h4(strong("What services and programs are available?")),
-                                                     p("The following tables provide counts of programs  
-                                                       and services available in each county by subpopulation and by pillar.
-                                                       They allow for simple comparison of program types across counties."), 
-                                                     
-                                                     p("To gather this information for the interactive tree diagrams, our team researched for three weeks the different programs available to transition aged youth, either
-                                                       specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
-                                                       Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
-                                                       pillar were not easily accessible and were hidden in multiple documents. "),
-                                                     
-                                                     p("It is to be noted that the greater majority of the programs/services found 
-                                                       across all counties were directed towards vulnerable TAY in general.  This highlights
-                                                       a lack of targeted programs and a potential need to increase the number of those
-                                                       programs and services specifically catering to the needs of those formerly involved
-                                                       in the juvenile detention or foster care system."), 
-                                                     
-                                                     p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
-                                                       the number of programs/services are fairly equal by pillar, with the notible exception 
-                                                       of transportation. Transportation services in Loudoun county useful to vulnerale TAY 
-                                                       are not targeted to those formely involved in Foster Care or Juvenile detention, and 
-                                                       are rather limited outside of medical transportation and commuter buses. This illustrates 
-                                                       the potential need to expand transportation services to those TAY formerly involved in Foster Care 
-                                                       or the Juvenile Detention system.")) ,
-                                              column(6, 
-                                                     h4(strong("Number of Programs by Subpopulation")), 
-                                                     tableOutput("table1"),
-                                                     tags$br(), 
-                                                     h4(strong("Number of Programs by Pillar")), 
-                                                     tableOutput("table2")))  ,
-                                     tags$br(), 
-                                     fluidRow(style = "margin: 6px;",
-                                              p("", style = "padding-top:10px;"), 
-                                              column(4, 
-                                                     h4(strong("Trees")),
-                                                     p("These interactive tree diagrams allow for the comparison of programs/services at the county 
-                                                       level in Loudoun, Fairfax and Allegheny county. Each diagram represents
-                                                       the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
-                                                       followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office"),
-                                                     
-                                                     p("We chose to compare Loudoun County to Farifax County and Alleghney County for two reasons. 
-                                                       As the stakeholders had mentioned, Fairfax and Loudoun are constantly being compared because of their close proximity and similar demographics. Therefore, we looked at programs in each of these counties to see 
-                                                       if the gaps in services was for only Loudoun county or in the DC Metropolitan area, Northern Virginia area. Second, we chose Allegheny County because based on our research, they have a successful
-                                                       transition rate of young adults 18-24 and looking at the programs available for those previously involved in foster care and juvenile detention, it seems that they have more programs specific towards them. 
-                                                       Allegheny County is a great county to look at and see what they are doing compared to a county like Loudoun who wants to provide more programs and services to vulnerable transition aged youth in the future. "), 
-                                                     
-                                                     p("Using these interactive trees, we can see all of the programs we webscrapped for for each of the counties with the last node being where the person must go to apply. 
-                                                       Since the pandemic, most of the applications can be done online but obviously some of the programs and services are in person. With this information, we can see how easy or difficult it is for 
-                                                       these transition aged youth to access each program depending if they have to travel far in order to even apply or if that can be done online within a couple of hours. These trees leads us into the question of where are the gaps 
-                                                       in services and programs and which pillar are they under. ")
-                                              ),
-                                              column(8, 
-                                                     h4(strong("Tree Diagram of Programs")),
-                                                     tabsetPanel(
-                                                       tabPanel("Loudoun",
-                                                                br(),
-                                                                radioButtons(
-                                                                  "pillar1",
-                                                                  label = "Select Pillar" ,
-                                                                  choices = list(
-                                                                    "Education",
-                                                                    "Employment",
-                                                                    "Housing",
-                                                                    "Transportation",
-                                                                    "Health Services")
-                                                                ),
-                                                                selected = "Education", 
-                                                                collapsibleTreeOutput("tree1") 
-                                                                
-                                                                
-                                                                
-                                                       ),
-                                                       tabPanel("Fairfax",
-                                                                br(),
-                                                                radioButtons(
-                                                                  "pillar3",
-                                                                  label = "Select Pillar" ,
-                                                                  choices = list(
-                                                                    "Education",
-                                                                    "Employment",
-                                                                    "Housing",
-                                                                    "Transportation",
-                                                                    "Health Services")
-                                                                ),
-                                                                selected = "Education", 
-                                                                collapsibleTreeOutput("tree3") 
-                                                                
-                                                                
-                                                       ), 
-                                                       
-                                                       tabPanel("Allegheny",
-                                                                br(),
-                                                                radioButtons(
-                                                                  "pillar2",
-                                                                  label = "Select Pillar" ,
-                                                                  choices = list(
-                                                                    "Education",
-                                                                    "Employment",
-                                                                    "Housing",
-                                                                    "Transportation",
-                                                                    "Health Services")
-                                                                ),
-                                                                selected = "Education", 
-                                                                collapsibleTreeOutput("tree2")
-                                                                
-                                                       )) 
-                                              )) ) ,
-                                    
-                                    tabPanel("Comparison", 
-                                      fluidRow(style = "margin: 6px;",
-                                              p("", style = "padding-top:10px;"), 
-                                              column(4,  
-                                                     h4(strong("Where are the gaps?")), 
-                                                      p("These interactive tree diagrams contain all programs and services available in Loudoun, Fairfax and Allegheny county organized by pillar. The diagrams are intended for 
-                                                      comparison between counties. Its nodes first represent pillar, then subpopulation, followed by program name, intended age range of program, and then finally the county 
-                                                      which the program is accessible from."),
-                                                     
-                                                     p("While going through the interactive trees, you may see that there are an abundant amount of services and programs for pillars like 
-                                                       education and employment in Loudoun but again, not many for transportation and housing. Here is where we noticed the first pillars in what type of programs Loudoun are lacking in. 
-                                                       While Loudoun county has many programs supporting the education and employment pillars, the transition aged youth may have a hard time taking advantage of those programs without 
-                                                       transportation or health services available to them. Due to Loudoun having a gap in the transportation pillar, the other pillars' programs are being used as much as youths want to which is
-                                                       why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
-                                                       "), 
+                                           tabPanel("Services", 
+                                             fluidRow(style = "margin: 6px;",
+                                                             p("", style = "padding-top:10px;"), 
+                                                    column(6, 
+                                                           h4(strong("What services and programs are available?")),
+                                                           p("The following tables provide counts of programs  
+                                                             and services available in each county by subpopulation and by pillar.
+                                                             They allow for simple comparison of program types across counties."), 
+                                                           
+                                                           p("To gather this information for the interactive tree diagrams, our team researched for three weeks the different programs available to transition aged youth, either
+                                                             specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
+                                                             Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
+                                                             pillar were not easily accessible and were hidden in multiple documents. "),
+                                                           
+                                                           p("It is to be noted that the greater majority of the programs/services found 
+                                                             across all counties were directed towards vulnerable TAY in general.  This highlights
+                                                             a lack of targeted programs and a potential need to increase the number of those
+                                                             programs and services specifically catering to the needs of those formerly involved
+                                                             in the juvenile detention or foster care system."), 
+                                                           
+                                                           p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
+                                                             the number of programs/services are fairly equal by pillar, with the notible exception 
+                                                             of transportation. Transportation services in Loudoun county useful to vulnerale TAY 
+                                                             are not targeted to those formely involved in Foster Care or Juvenile detention, and 
+                                                             are rather limited outside of medical transportation and commuter buses. This illustrates 
+                                                             the potential need to expand transportation services to those TAY formerly involved in Foster Care 
+                                                             or the Juvenile Detention system.")) ,
+                                                    column(6, 
+                                                           h4(strong("Number of Programs by Subpopulation")), 
+                                                           tableOutput("table1"),
+                                                           tags$br(), 
+                                                           h4(strong("Number of Programs by Pillar")), 
+                                                           tableOutput("table2")))  ,
+                                           tags$br(), 
+                                           fluidRow(style = "margin: 6px;",
+                                                    p("", style = "padding-top:10px;"), 
+                                                    column(4, 
+                                                           h4(strong("Trees")),
+                                                           p("These interactive tree diagrams allow for the comparison of programs/services at the county 
+                                                             level in Loudoun, Fairfax and Allegheny county. Each diagram represents
+                                                             the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
+                                                             followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office"),
+                                                           
+                                                           p("We chose to compare Loudoun County to Farifax County and Alleghney County for two reasons. 
+                                                             As the stakeholders had mentioned, Fairfax and Loudoun are constantly being compared because of their close proximity and similar demographics. Therefore, we looked at programs in each of these counties to see 
+                                                             if the gaps in services was for only Loudoun county or in the DC Metropolitan area, Northern Virginia area. Second, we chose Allegheny County because based on our research, they have a successful
+                                                             transition rate of young adults 18-24 and looking at the programs available for those previously involved in foster care and juvenile detention, it seems that they have more programs specific towards them. 
+                                                             Allegheny County is a great county to look at and see what they are doing compared to a county like Loudoun who wants to provide more programs and services to vulnerable transition aged youth in the future. "), 
+                                                           
+                                                           p("Using these interactive trees, we can see all of the programs we webscrapped for for each of the counties with the last node being where the person must go to apply. 
+                                                             Since the pandemic, most of the applications can be done online but obviously some of the programs and services are in person. With this information, we can see how easy or difficult it is for 
+                                                             these transition aged youth to access each program depending if they have to travel far in order to even apply or if that can be done online within a couple of hours. These trees leads us into the question of where are the gaps 
+                                                             in services and programs and which pillar are they under. ")
+                                                    ),
+                                                    column(8, 
+                                                           h4(strong("Tree Diagram of Programs")),
+                                                           tabsetPanel(
+                                                             tabPanel("Loudoun",
+                                                                      br(),
+                                                                      radioButtons(
+                                                                        "pillar1",
+                                                                        label = "Select Pillar" ,
+                                                                        choices = list(
+                                                                          "Education",
+                                                                          "Employment",
+                                                                          "Housing",
+                                                                          "Transportation",
+                                                                          "Health Services")
+                                                                      ),
+                                                                      selected = "Education", 
+                                                                      collapsibleTreeOutput("tree1") 
+                                                                      
+                                                                      
+                                                                      
+                                                             ),
+                                                             tabPanel("Fairfax",
+                                                                      br(),
+                                                                      radioButtons(
+                                                                        "pillar3",
+                                                                        label = "Select Pillar" ,
+                                                                        choices = list(
+                                                                          "Education",
+                                                                          "Employment",
+                                                                          "Housing",
+                                                                          "Transportation",
+                                                                          "Health Services")
+                                                                      ),
+                                                                      selected = "Education", 
+                                                                      collapsibleTreeOutput("tree3") 
+                                                                      
+                                                                      
+                                                             ), 
+                                                             
+                                                             tabPanel("Allegheny",
+                                                                      br(),
+                                                                      radioButtons(
+                                                                        "pillar2",
+                                                                        label = "Select Pillar" ,
+                                                                        choices = list(
+                                                                          "Education",
+                                                                          "Employment",
+                                                                          "Housing",
+                                                                          "Transportation",
+                                                                          "Health Services")
+                                                                      ),
+                                                                      selected = "Education", 
+                                                                      collapsibleTreeOutput("tree2")
+                                                                      
+                                                             )) 
+                                                    )) ) ,
+                                          
+                                          tabPanel("Comparison", 
+                                            fluidRow(style = "margin: 6px;",
+                                                    p("", style = "padding-top:10px;"), 
+                                                    column(4,  
+                                                           h4(strong("Where are the gaps?")), 
+                                                            p("These interactive tree diagrams contain all programs and services available in Loudoun, Fairfax and Allegheny county organized by pillar. The diagrams are intended for 
+                                                            comparison between counties. Its nodes first represent pillar, then subpopulation, followed by program name, intended age range of program, and then finally the county 
+                                                            which the program is accessible from."),
+                                                           
+                                                           p("While going through the interactive trees, you may see that there are an abundant amount of services and programs for pillars like 
+                                                             education and employment in Loudoun but again, not many for transportation and housing. Here is where we noticed the first pillars in what type of programs Loudoun are lacking in. 
+                                                             While Loudoun county has many programs supporting the education and employment pillars, the transition aged youth may have a hard time taking advantage of those programs without 
+                                                             transportation or health services available to them. Due to Loudoun having a gap in the transportation pillar, the other pillars' programs are being used as much as youths want to which is
+                                                             why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
+                                                             "), 
+                                                          
+                                                           p("This combined tree is used to better compare Loudoun County with Fairfax and Allegheny County. As noted above,
+                                                             the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
+                                                             in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
+                                                             With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. Also, we can see that 
+                                                             many of the programs available in Fairfax are also available to those in Loudoun and vice versa. Since the counties are located close, transition aged youth living in Loudoun may have easy access to those
+                                                             programs and services in Fairfax depending on their location. "), 
+                                                           br(), 
+                                                           br(), 
+                                                           br()
+                                                           
+                                                           
+                                                           ) ,
+                                                    column(8, 
+                                                           h4(strong("Comparison Tree by Pillar")),
+                                                           radioButtons(
+                                                             "compare1",
+                                                             label = "Select Pillar" ,
+                                                             choices = list(
+                                                               "Education",
+                                                               "Employment",
+                                                               "Housing",
+                                                               "Transportation",
+                                                               "Health Services")
+                                                           ),
+                                                           selected = "Education", 
+                                                           collapsibleTreeOutput("compare") , 
+                                                           br(),
+                                                           br()
+                                                           
+                                                    ) 
                                                     
-                                                     p("This combined tree is used to better compare Loudoun County with Fairfax and Allegheny County. As noted above,
-                                                       the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
-                                                       in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
-                                                       With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. Also, we can see that 
-                                                       many of the programs available in Fairfax are also available to those in Loudoun and vice versa. Since the counties are located close, transition aged youth living in Loudoun may have easy access to those
-                                                       programs and services in Fairfax depending on their location. "), 
-                                                     br(), 
-                                                     br(), 
-                                                     br()
-                                                     
-                                                     
-                                                     ) ,
-                                              column(8, 
-                                                     h4(strong("Comparison Tree by Pillar")),
-                                                     radioButtons(
-                                                       "compare1",
-                                                       label = "Select Pillar" ,
-                                                       choices = list(
-                                                         "Education",
-                                                         "Employment",
-                                                         "Housing",
-                                                         "Transportation",
-                                                         "Health Services")
-                                                     ),
-                                                     selected = "Education", 
-                                                     collapsibleTreeOutput("compare") , 
-                                                     br(),
-                                                     br()
-                                                     
-                                              ) 
-                                              
-                                     )) 
+                                           )) 
                                      )
                                      ) 
                             ),
@@ -875,36 +822,78 @@ ui <- navbarPage(title = "DSPG 2021",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Individuals Served by Program"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
-                                              column(6, 
-                                                     h4(strong("Statistics")), 
-                                                     p("Not sure how we are going to format this page yet. Need some gudiance on here"),
-                                                     tags$br(), 
-                                                     shinydashboard::valueBoxOutput("medicaid", width = 6), 
-                                                     # infoBoxOutput("medicaid", width = 6),
-                                                     infoBoxOutput("wioa", width = 6),
-                                                     infoBoxOutput("transit" , width = 6),
-                                                     infoBoxOutput("food", width = 6),
-                                                     infoBoxOutput("shelters", width = 6),
-                                                     infoBoxOutput("homeless", width = 6)
-                                              ), 
-                                              column(6, 
-                                                     h4(strong("Graphs of Program Demographics")), 
-                                                     selectInput(
-                                                       "type2",
-                                                       "Select Program",
-                                                       choices = list(
-                                                         "Adult Literacy Program Loudoun" = "literacy",
-                                                         # "Continuum of Care" = "care",
-                                                         # "Affordable Dwelling Unit Program" ="afford", 
-                                                         "Oxford House" = "oxford",
-                                                         "OAR"= "oar", 
-                                                         # "Route 54 Safe-T" = "bus",
-                                                         "Medicaid" = "med")
-                                                       
-                                                     ), 
-                                                     plotlyOutput(outputId = "plotServed") ,
-                                                     plotlyOutput(outputId = "plotServed2")
-                                              )
+                                              tabsetPanel(
+                                                tabPanel("Enrollment", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("Persons Enrolled")), 
+                                                                         infoBoxOutput("wioa", width = 4),
+                                                                         p("Workforce Innovation and Opportunity Act"), 
+                                                                         infoBoxOutput("transit" , width = 4),
+                                                                         p("Public transportation"),
+                                                                         infoBoxOutput("food", width = 4),
+                                                                         p("Food Snaps"), 
+                                                                         infoBoxOutput("shelters", width = 4),
+                                                                         p("Emergency Shelters"),
+                                                                         infoBoxOutput("homeless", width = 4),
+                                                                         p("Homeslessness in Loudoun"), 
+                                                                         
+                                                                         p("Add paragraph highlighting the most interesting stats of enrollment... ")), 
+                                                                  
+                                                                  column(8, 
+                                                                         h4(strong("Graphs of Enrollent")), 
+                                                                         selectInput(
+                                                                           "enroll",
+                                                                           "Select Program",
+                                                                           choices = list(
+                                                                             "Medicaid" = "med2",
+                                                                             "Medicaid Expansion (ACA)" = "med1", 
+                                                                             "Adult Literacy Programs" = "literacy",
+                                                                             "OAR"= "oar"
+                                                                             )
+                                                                           
+                                                                         ), 
+                                                                         plotlyOutput(outputId = "enrollment")
+                                                                         
+                                                                         ))), 
+                                                
+                                                tabPanel("Demographics", 
+                                                        fluidRow(style = "margin: 6px;",
+                                                                 p("", style = "padding-top:10px;"), 
+                                                                 column(4, 
+                                                                        h4(strong("Background")), 
+                                                                        p("Race, Age, backgrounds of programs"), 
+                                                                        p("")
+                                                                        
+                                                                        ), 
+                                                                 column(8, 
+                                                                        
+                                                                        h4(strong("Graphs of Demographics")), 
+                                                                        selectInput(
+                                                                          "stat",
+                                                                          "Select Program",
+                                                                          choices = list(
+                                                                            "Adult Literacy Program Race" = "literacy", 
+                                                                            "Oxford House Average Stay" = "oxford1",
+                                                                            "Oxford House Prior" = "oxford2",
+                                                                            "OAR Demographics"= "oar",
+                                                                            "DMHSA Race" = "dmhsaRace", 
+                                                                            "DMHSA Gender" = "dmhsaGender", 
+                                                                            "DMHSA Mental Illness" = "mental",
+                                                                            "Public Benefits Race" = "publicRace",
+                                                                            "Public Benefits Gender" = "publicGender",
+                                                                            "Emergency Shelter Gender" = "emerG",
+                                                                            "Emergency Shelter Race" = "emerR"
+                                                                            )
+                                                                          
+                                                                        ), 
+                                                                        plotlyOutput(outputId = "demographics") 
+                                                                        )
+                                                                 )
+                                                        )
+                                            
+                                     )
                                      ) 
                             ) ,
                             
@@ -913,72 +902,77 @@ ui <- navbarPage(title = "DSPG 2021",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Department of Mental Health, Substance Abuse, and Developmental Services"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
-                                              column(4,
-                                                     h4(strong("Vulnerable Transition Aged Youth")),
-                                                     p("Although we are looking specifically are transition aged youth, those aging out of the foster care system or getting out of juvenile detention, there is another subpopulation we have information on
-                                                     that shows us how important it is to find and close the gaps espeically in the health service pillar. Those living with mental health issues are also at a disadvantage when trying to live independently
-                                                     because receiving treatment and care can be expensive without insurance and again, getting to a clinic or facility can be difficult. Those without a full-time job that provides health benefits
-                                                       either have to qualify for medicaid or other grants or have to pay full payment out of pocket which can thousands of dollars. In addition,  TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
-                                                      substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages.  "),
-                                                     tags$br(),
-                                                     p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
-                                                      programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
-                                                      Emergency Services, Employment and Day Support Services, Outpatient and Residental. As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. 
-                                                      Same Day Access is now being offered via tele-health whichone can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. 
-                                                      A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
-                                                      instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours based on their insurance. 
-                                                      ")), 
-                                              column(8,
-                                                     h4(strong("Waitlist of DMHSA by Program")), 
-                                                     plotlyOutput("waitlist"),
-                                                     p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
-                                                     p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
+                                              tabsetPanel(
+                                                tabPanel("Waitlist", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("Vulnerable Transition Aged Youth")),
+                                                                         p("Although we are looking specifically are transition aged youth, those aging out of the foster care system or getting out of juvenile detention, there is another subpopulation we have information on
+                                                                       that shows us how important it is to find and close the gaps espeically in the health service pillar. Those living with mental health issues are also at a disadvantage when trying to live independently
+                                                                       because receiving treatment and care can be expensive without insurance and again, getting to a clinic or facility can be difficult. Those without a full-time job that provides health benefits
+                                                                         either have to qualify for medicaid or other grants or have to pay full payment out of pocket which can thousands of dollars. In addition,  TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
+                                                                        substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages.  "),
+                                                                       
+                                                                       p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
+                                                                        programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
+                                                                        Emergency Services, Employment and Day Support Services, Outpatient and Residental. As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. 
+                                                                        Same Day Access is now being offered via tele-health whichone can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. 
+                                                                        A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
+                                                                        instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours based on their insurance. 
+                                                                        ")), 
+                                                                column(8,
+                                                                       h4(strong("Waitlist of DMHSA by Program")), 
+                                                                       plotlyOutput("waitlist"),
+                                                                       p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
+                                                                       p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
                                               
-                                     ),
-                                     tags$br(),
-                                     tags$br(),
-                                     fluidRow(style = "margin: 6px;",
-                                              p("", style = "padding-top:10px;"), 
-                                              column(4, 
-                                                     h4(strong("Individuals Served Overtime")),
-                                                     p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
-                                                       their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
-                                                       from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
-                                                       The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
-                                                     p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
-                                                       of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Are those
-                                                       living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
-                                              column(8, 
-                                                     h4(strong("Map of Individuals Served by Population Density")), 
-                                                     column(4, 
-                                                     radioButtons(
-                                                       "type",
-                                                       label = "Select Program Type" ,
-                                                       choices = list(
-                                                         "Case Management" = "case",
-                                                         "Discharge Planning" = "dis",
-                                                         "Emergency Services" = "emer",
-                                                         "Employment & Day Support Services" = "employ",
-                                                         "Outpatient"= "out", 
-                                                         "Residential" = "res")
-                                                     ),
-                                                     selected = "Case Management") , 
-                                                     column(4,
-                                                     sliderInput(inputId = "year", 
-                                                                 label = "Select a year:",
-                                                                 value = 2016,
-                                                                 min = 2016,
-                                                                 max = 2020,
-                                                                 animate = animationOptions(interval = 1500))) , 
-                                                     
-                                                     
-                                                     leafletOutput(outputId = "overtime", height = "70vh"), 
-                                                     p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services"))
-                                                     
-                                                     
-                                              )
-                                     ) 
-                            ) 
+                                     )), 
+                                     tabPanel("Overtime", 
+                                              fluidRow(style = "margin: 6px;",
+                                                       p("", style = "padding-top:10px;"), 
+                                                       column(4, 
+                                                             h4(strong("Individuals Served Overtime")),
+                                                             p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
+                                                               their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
+                                                               from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
+                                                               The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
+                                                             p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
+                                                               of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Are those
+                                                               living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
+                                                      column(8, 
+                                                             h4(strong("Map of Individuals Served by Population Density")), 
+                                                             column(4, 
+                                                             radioButtons(
+                                                               "type",
+                                                               label = "Select Program Type" ,
+                                                               choices = list(
+                                                                 "Case Management" = "case",
+                                                                 "Discharge Planning" = "dis",
+                                                                 "Emergency Services" = "emer",
+                                                                 "Employment & Day Support Services" = "employ",
+                                                                 "Outpatient"= "out", 
+                                                                 "Residential" = "res")
+                                                             ),
+                                                             selected = "Case Management") , 
+                                                             column(4,
+                                                             sliderInput(inputId = "year", 
+                                                                         label = "Select a year:",
+                                                                         value = 2016,
+                                                                         min = 2016,
+                                                                         max = 2020,
+                                                                         sep = "", 
+                                                                         animate = animationOptions(interval = 1500))) , 
+                                                             
+                                                             
+                                                             leafletOutput(outputId = "overtime", height = "70vh"), 
+                                                             p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services"))
+                                                             
+                                                             
+                                                      )
+                                              ) 
+                                     ))  
+                            ))  
                             
                             
                             
@@ -1120,15 +1114,7 @@ server <- function(input, output) {
         theme(legend.position = "none")
       
       
-    }else if (var1() == "mental") {
-      
-      ggplot(smi, aes(x=Year)) + 
-        geom_line(aes(y = Persons, group = Group, color = Group)) + 
-        labs(title = "Severe Mental Illness from FY 2016 - FY 2021")
-      
-      
-    }
-    else {
+    }else {
       pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
       pov %>%
         ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "lightblue3")+ 
@@ -2221,102 +2207,21 @@ server <- function(input, output) {
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
   
   
-  type2 <- reactive({
-    input$type2
-  })
-  
-  output$plotServed <- renderPlotly({
-    if (type2() == "med"){
-      ggplot() + 
-        geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`, group = 1), data = total) + 
-        geom_line(mapping = aes(Year, Total, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
-        labs(y = "Persons", 
-             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
-        theme(plot.title = element_text(size = 10))
-      
-    }else if (type2() == "literacy"){
-      ggplot() + geom_col(mapping = aes(Type, Number), data = programs,fill =  "deepskyblue1") + 
-        labs(title = "Adult Literacy Program",
-             y = "Persons Served")+
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
-      
-    }else if (type2() == "oar") {
-      
-      ggplot() + geom_col(mapping = aes(Category, Number), data = all[1:2,],fill =  "lightblue2") + 
-        labs(title = "Oar Nova 2020",
-             y = "Persons Served")+
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
-      
-    }
-    #Oxford houses
-    else {
-      
-      ggplot() + geom_col(mapping = aes(Category, Number), data = ox[1:2,],fill =  "cornflowerblue") + 
-        labs(title = "Oxford Houses in VA 2019-2020",
-             y = "Months") +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
-      
-    }
-    
-    
-  })
-  output$plotServed2 <- renderPlotly({
-    if (type2() == "med"){
-      ggplot() + 
-        geom_line(mapping = aes(Year, `Childless Adults`, group = 1), data = med) + 
-        geom_line(mapping = aes(Year, Children, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
-        labs(y = "Persons", 
-             title = "Medcaid for Children and Childless Adults")+ theme(plot.title = element_text(size = 10))
-      
-    }else if (type2() == "literacy"){
-      
-      # ggplot(persons, aes(x="", y=Number, fill=Race)) +
-      #   geom_bar(stat="identity", width=1) +
-      #   coord_polar("y", start=0)+theme_void() 
-      
-    }else if (type2() == "oar") {
-      
-      ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:8,],fill =  "lightblue2") + 
-        labs(title = "Oar Nova 2020",
-             y = "Percent Served") +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
-      
-    }
-    #Oxford houses
-    else {
-      
-      ggplot() + geom_col(mapping = aes(Category, Number), data = ox[3:5,],fill =  "cornflowerblue") + 
-        labs(title = "Oxford Houses in VA 2019-2020",
-             y = "%/Years") +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
-      
-    }
-    
-    
-  })
+  # All info boxes are enrollment numbers
   ## infoBox -----------------------------------------------------------
-  
-  # output$medicaid <- renderInfoBox({
-  #   
-  #   infoBox(title = "Medicaid", 
-  #           value = 244362, 
-  #           subtitle = "Childless Adults Served by Medicaid 2021",
-  #           icon = icon("clinic-medical"),
-  #           fill = TRUE)
-  # })
-  
-  output$medicaid <- shinydashboard::renderValueBox({
-    
-    shinydashboard::valueBox(
-            value = 244362, 
-            subtitle = "Childless Adults Served by Medicaid 2021",
-            icon = icon("clinic-medical"), color = "black") 
+  output$medicaid <- renderInfoBox({
+
+    infoBox(title = "Medicaid",
+            value = 244362,
+            subtitle = "Childless Adults Served in 2021",
+            icon = icon("clinic-medical"),
+            fill = TRUE)
   })
-  
+
   output$wioa <- renderInfoBox({
     
     infoBox(title = "WIOA", value = 28, 
-            subtitle = "Youths enrolled at WIOA 2020",
+            subtitle = "Youths enrolled in 2020",
             icon = icon("briefcase"), color = "green",
             fill = T)
   })
@@ -2332,8 +2237,8 @@ server <- function(input, output) {
   
   output$food <- renderInfoBox({
     
-    infoBox(title = "SNAP", value = 175, 
-            subtitle = "TAYs were on SNAP benefits in 2020",
+    infoBox(title = "SNAP Benefits", value = 175, 
+            subtitle = "TAYs in 2020",
             icon = icon("utensils"),
             color = "purple",
             fill = T)
@@ -2341,8 +2246,8 @@ server <- function(input, output) {
   
   output$shelters <- renderInfoBox({
     
-    infoBox(title = "Shelters", value = 27, 
-            subtitle = "TAYs used Emergency Shelters in 2019" , 
+    infoBox(title = "Emergency Shelters", value = 27, 
+            subtitle = "TAYs in 2019" , 
             icon = icon("house-user"),
             color = "red",
             fill = T)
@@ -2351,11 +2256,163 @@ server <- function(input, output) {
   output$homeless <- renderInfoBox({
     
     infoBox(title = "Homelessness", value = 22, 
-            subtitle = "Homeless TAYs in 2020" , 
+            subtitle = "TAYs in 2020" , 
             icon = icon("home"),
             color = "light-blue",
             fill = T)
   })
+  
+  
+  enroll <- reactive({
+    input$enroll
+  })
+  ## graphs for enrollment
+  output$enrollment <- renderPlotly({
+    if(enroll() == "med1") {
+      ggplot() + 
+        geom_line(mapping = aes(Year, `Childless Adults`/1000, group = 1), data = med) + 
+        geom_line(mapping = aes(Year, Children/1000, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
+        labs(y = "Persons (1,000) ", 
+             title = "Medcaid for Children and Childless Adults")+ theme(plot.title = element_text(size = 10))+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+    } else if (enroll() == "oar") {
+      
+      ggplot() + geom_col(mapping = aes(Category, Number), data = all[1:2,],fill =  "plum4") + 
+        labs(title = "Oar Nova 2020",
+             y = "Persons Served")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+    }else if (enroll() == "literacy") {
+      ggplot() + geom_col(mapping = aes(Type, Number), data = literacy,fill =  "deepskyblue1") + 
+        labs(title = "Adult Literacy Program",
+             y = "Persons Served")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+    }else if (enroll() == "public") {
+      
+      
+    }
+    else {
+      ggplot() + 
+        geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`/1000, group = 1), data = total) + 
+        geom_line(mapping = aes(Year, Total/1000, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
+        labs(y = "Persons (1,000) ", 
+             title = "Medcaid for Adults, Pregnant Women and Children compared with the Total")+
+        theme(plot.title = element_text(size = 10))+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+    }
+    
+  }) 
+  
+  
+  stat <- reactive({
+    input$stat
+  })
+  ##graph for demographics of individuals served
+  output$demographics <- renderPlotly({
+    if(stat() == "literacy") {
+      
+      ggplot() + geom_col(mapping = aes(Race, Percent), data = literacy_demo,fill =  "deepskyblue1") + 
+        labs(title = "Adult Literacy Program",
+             y = "Percent Served")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+    }else if (stat() == "oxford1"){
+      
+      ggplot() + geom_col(mapping = aes(Category, Number), data = ox[1:2,],fill =  "cornflowerblue") + 
+        labs(title = "Oxford Houses in VA 2019-2020",
+             y = "Months") +
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+    }else if (stat() == "oxford2"){
+      
+      ggplot() + geom_col(mapping = aes(Category, Number), data = ox[3:5,],fill =  "cornflowerblue") + 
+        labs(title = "Oxford Houses in VA 2019-2020",
+             y = "%/Years") +
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+    }else if (stat() == "oar"){
+      
+      ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:7,],fill =  "lightblue3") + 
+        labs(title = "Oar Nova 2020",
+             y = "Percent Served") +
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+    }else if (stat() == "mental") {
+      
+      ggplot(smi, aes(x=Year)) + 
+        geom_line(aes(y = Persons, group = Group, color = Group)) + 
+        labs(title = "Severe Mental Illness from FY 2016 - FY 2021")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+    }else if (stat() == "publicRace"){
+      
+      ggplot() + geom_col(mapping = aes(Race, Number), data = publicR,fill =  "plum4") + 
+        labs(title = "Public Benefits 2016-2020",
+             y = "Persons")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+      
+    }else if (stat() == "publicGender"){
+      
+      ggplot() + geom_col(mapping = aes(Gender, Number), data = publicG,fill =  "plum4") + 
+        labs(title = "Public Benefits 2016-2020",
+             y = "Persons")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+      
+      
+    }
+    else if (stat() == "emerG"){
+      
+      ggplot() + geom_col(mapping = aes(Gender, Number), data = emerG,fill =  "plum4") + 
+        labs(title = "Emergency Shelters 2016-2020",
+             y = "Persons")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+      
+    }else if (stat() == "emerR"){
+      
+      ggplot() + geom_col(mapping = aes(Race, Number), data = emerR,fill =  "plum4") + 
+        labs(title = "Emergency Shelters 2016-2020",
+             y = "Persons")+
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+      
+      
+      
+      
+    }else if (stat() == "dmhsaGender"){
+      
+      
+      
+    }else if (stat() == "dmhsaRace"){
+      
+      
+      
+      
+    }else { 
+      
+    }
+    
+    
+  }) 
+  
+  
+  
+  
+  
+  
 }
 
 
