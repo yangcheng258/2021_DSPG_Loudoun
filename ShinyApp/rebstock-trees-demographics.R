@@ -41,7 +41,7 @@ l_ages_gender <- read.csv(paste0(getwd(),"/data/ages_gender.csv"))
 race <- loudoun[1:6, 1:2]
 colnames(race) <- c("Race", "Estimate")
 # education 
-education <- read.csv(paste0(getwd(),"/data/education.csv")) 
+education <- read.csv(paste0(getwd(),"/data/both_education.csv")) 
 
 ## Poverty 
 poverty <- read.csv(paste0(getwd(),"/data/poverty.csv")) 
@@ -524,6 +524,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                               column(8, h4(strong("Visualizations of Subpopulations' Socioeconomic Characteristics")),
                                                      tabsetPanel(
                                                        tabPanel("Foster Care",
+                                                                p("", style = "padding-top:10px;"),
                                                                 selectInput("var2", "Select Socioeconomic Characteristic:", width = "100%", choices = c(
                                                                   "Age" = "age",
                                                                   "Sex" = "sex",
@@ -536,6 +537,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 
                                                        ),
                                                        tabPanel("Juvenile Detention",
+                                                                p("", style = "padding-top:10px;"),
                                                                 selectInput("var3", "Select Socioeconomic Characteristic:", width = "100%", choices = c(
                                                                   "Age" = "age",
                                                                   "Sex" = "sex",
@@ -755,7 +757,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                "Health Services")
                                                            ),
                                                            selected = "Education", 
-                                                           collapsibleTreeOutput("compare") , 
+                                                           collapsibleTreeOutput("compare", height = "500px") , 
                                                            br(),
                                                            br()
                                                            
@@ -1061,7 +1063,7 @@ server <- function(input, output) {
       l_ages_gender$variable <- names
       l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
       
-      ggplot(l_ages_gender, aes(x = estimate, y = variable, fill = gender)) + 
+      ggplot(l_ages_gender, aes(x = estimate, y = variable, fill = gender)) +  scale_fill_viridis_d() + 
         geom_bar(position="dodge", stat="identity") + 
         labs(title = "Gender and Age Groups ", 
              y = "", 
@@ -1079,39 +1081,36 @@ server <- function(input, output) {
       
       
       percent %>%
-        ggplot() + geom_col(mapping = aes(x = Percent, y = Gender ), fill = "cadetblue")+
+        ggplot() + geom_col(mapping = aes(x = Percent, y = Gender , fill = Gender))+ scale_fill_viridis_d() + 
         labs(title = "Percent of TAYs by Gender", 
              y = "", 
-             x = "Percent %") + coord_flip() 
+             x = "Percent %") + coord_flip()  + 
+        theme(legend.position = "none")
       
     }else if(var1() == "race"){
       
       race %>%
-        ggplot() + geom_col(mapping = aes(x = Estimate, y = Race ), fill = "lightblue")+ 
+        ggplot() + geom_col(mapping = aes(x = Estimate, y = Race , fill = Race))+  scale_fill_viridis_d() + 
         labs(title = "Racial Demographics", 
-             y = "Races", 
-             x = "Population Estimate") 
+             y = "", 
+             x = "Population Estimate")  + 
+        theme(legend.position = "none")
       
     } 
     else if (var1() == "education")  { 
       
-      both <- data.frame(medu, fedu)%>%
-        mutate(sum = estimate+estimate.1)%>%
-        select(variable, sum)
-      
-      both$variable <- factor(both$variable, levels=unique(both$variable))
-      
-      both %>%
-        ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "paleturquoise")+ 
+      education %>%
+        ggplot(mapping = aes(x = sum, y = variable , fill = variable)) + geom_col()+ scale_fill_viridis_d()+ 
         labs(title = "Educational Attainment", 
              y = "", 
-             x = "Population Estimate") 
+             x = "Population Estimate")  + 
+        theme(legend.position = "none")
       
       
     }
     else if (var1() == "health"){
       healthcare %>%
-        ggplot(mapping = aes(x = Estimate, y = Type ))  + geom_col(fill = "dodgerblue")+ 
+        ggplot(mapping = aes(x = Estimate, y = Type , fill = Type))  + geom_col()+  scale_fill_viridis_d() + 
         labs(title = "Types of Healthcare Coverage", 
              y = "", 
              x = "Population Estimate") + 
@@ -1122,10 +1121,11 @@ server <- function(input, output) {
     }else {
       pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
       pov %>%
-        ggplot() + geom_col(mapping = aes(x = sum, y = variable ), fill = "lightblue3")+ 
+        ggplot() + geom_col(mapping = aes(x = sum, y = variable, fill = variable))+  scale_fill_viridis_d() + 
         labs(title = "Poverty by Race", 
              y = "", 
-             x = "Population Estimate") + coord_flip()
+             x = "Population Estimate") + coord_flip() + 
+        theme(legend.position = "none")
       
     }
     
@@ -1140,37 +1140,37 @@ server <- function(input, output) {
     if(var2() == "age") {
       fc_ages$Age.Group <- factor(fc_ages$Age.Group, levels=unique(fc_ages$Age.Group))
       
-      ggplot(data = fc_ages, aes(x= Age.Group, y = Value) ) + 
-        geom_col(width = .95, alpha = .75, fill = "royalblue2") + coord_flip()+
+      ggplot(data = fc_ages, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
+        geom_col(width = .95, alpha = .75) + coord_flip()+ scale_fill_viridis_d() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Age Groups for Foster Care", 
              fill ="") + theme(legend.position = "none") 
       
     }else if(var2() == "race"){
-      ggplot(data = fc_races, aes(x= Race, y = Value) ) + 
-        geom_col(width = .95, alpha = .75, fill = "navy") + coord_flip()+
+      ggplot(data = fc_races, aes(x= Race, y = Value, fill = Race) ) + 
+        geom_col(width = .95, alpha = .75) + coord_flip()+scale_fill_viridis_d() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Racial Demographics for Foster Care", 
              fill ="") + theme(legend.position = "none")
       
     } else if (var2() == "eth") {
-      g <- ggplot(fc_eth, aes(eth, value))
-      g + geom_bar(stat = "identity",fill = rgb(0.2,0.1,0.9,0.9)) + 
+      g <- ggplot(fc_eth, aes(eth, value, fill = eth))
+      g + geom_bar(stat = "identity") + scale_fill_viridis_d() + 
         labs(title = "Ethinic Demographics of Foster children",
-             x = "Ethnicity", 
+             x = "", 
              y = "Population Estimate") + theme(legend.position = "none")
       
     }else if(var2() =="sex") {
-      ggplot(fc_sex, aes(x = Gender, y = Value)) + 
-        geom_bar(stat="identity",fill = rgb(0.4,0.4,0.6,0.7)) + 
+      ggplot(fc_sex, aes(x = Gender, y = Value, fill = Gender)) + 
+        geom_bar(stat="identity") + scale_fill_viridis_d() + 
         labs(x = "" , y = "Population Estimate", 
              title = "Sex of Youths in Foster Care") + theme(legend.position = "none")
     }else{
-      ggplot(fc_tays, aes(x = age_19, y = value)) + 
-        geom_bar(stat="identity", fill = rgb(0.1,0.4,0.5,0.7)) + 
-        labs(x = "Age Group" , y = "Population Estimate", 
+      ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
+        geom_bar(stat="identity") + scale_fill_viridis_d() + 
+        labs(x = "" , y = "Population Estimate", 
              title = "Transitional Aged Youth vs Children in Foster Care") + theme(legend.position = "none")
     }
     
@@ -1187,22 +1187,25 @@ server <- function(input, output) {
       jv_age <- jv_age  %>% 
         rename(`Relative Frequency` = Proportion) %>% 
         mutate(Age = recode(Age, `12-Aug` = "8-12" ))
+      
+      
       jv_age %>% 
-        ggplot(aes(x = Age, y = `Relative Frequency`)) +
-        geom_col() +
-        labs(x = "Age", y = "Relative Frequency",
+        ggplot(aes(x = Age, y = `Relative Frequency`, fill = Age)) +
+        geom_col() +scale_fill_viridis_d() + 
+        labs(x = "", y = "Relative Frequency",
              title = "Age Groups of Loudoun Intakes") + 
-        theme_minimal() + scale_fill_viridis_d() +
+        theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
         coord_flip()
     }
     else if(var3() == "race"){
       jv_race$Race <- factor(jv_race$Race, levels=unique(jv_race$Race))
       jv_race <- jv_race %>% mutate(`Relative Frequency` = Proportion)
+      
       jv_race %>% 
-        ggplot(aes(x = Race, y = `Relative Frequency`)) +
+        ggplot(aes(x = Race, y = `Relative Frequency`, fill =Race)) +
         geom_col() +
-        labs(x = "Race", y = "Relative Frequency",
+        labs(x = "", y = "Relative Frequency",
              title = "Racial Demographics of Loudoun Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -1212,10 +1215,12 @@ server <- function(input, output) {
     else if (var3() == "eth") {
       jv_eth$Ethnicity <- factor(jv_eth$Ethnicity, levels=unique(jv_eth$Ethnicity))
       jv_eth <- jv_eth %>% mutate(`Relative Frequency` = Proportion)
+      
+      
       jv_eth %>% 
-        ggplot(aes(x = Ethnicity, y = `Relative Frequency`))  +
+        ggplot(aes(x = Ethnicity, y = `Relative Frequency`, fill = Ethnicity))  +
         geom_col() +
-        labs(x = "Ethnicity", y = "Relative Frequency",
+        labs(x = "", y = "Relative Frequency",
              title = "Ethnic Demographics of Loudoun Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -1225,10 +1230,12 @@ server <- function(input, output) {
     else{
       jv_sex$Sex <- factor(jv_sex$Sex, levels=unique(jv_sex$Sex))
       jv_sex <- jv_sex %>% mutate(`Relative Frequency` = Proportion)
+      
+      
       jv_sex %>% 
-        ggplot(aes(x = Sex, y = `Relative Frequency`)) +
+        ggplot(aes(x = Sex, y = `Relative Frequency`, fill = Sex)) +
         geom_col() +
-        labs(x = "Sex", y = "Relative Frequency",
+        labs(x = "", y = "Relative Frequency",
              title = "Sex Demographics of Loudoun Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -1254,7 +1261,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1265,7 +1272,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Employment")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1277,7 +1284,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Housing")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1289,7 +1296,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Transportation")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1301,7 +1308,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Loudoun")%>%
         filter(Pillars == "Health Services")%>%
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1318,7 +1325,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1329,7 +1336,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1341,7 +1348,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1353,7 +1360,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1365,7 +1372,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Allegheny")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1383,7 +1390,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1394,7 +1401,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1406,7 +1413,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1418,7 +1425,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1430,7 +1437,7 @@ server <- function(input, output) {
       Tree%>%filter(County == "Fairfax")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Pillars","Subpopulation", "Program", "Age_range", "Delivery", "Office"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1447,7 +1454,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1458,7 +1465,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1470,7 +1477,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1482,7 +1489,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -1494,7 +1501,7 @@ server <- function(input, output) {
       Tree%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
-        collapsibleTree(hierarchy = c("Subpopulation", "Program", "Available"),
+        collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
                         root="Pillars",
                         attribute = "Pillars",
                         width=1800,
@@ -2285,7 +2292,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.5,  y = 0, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
+          list(x = 1, y = -0.15, text = "Data Source: Data Warehouse 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2300,7 +2307,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1,  y = -0.1, text = "Source: OAR Annual Report 2019-2020", 
+          list(x = 1.25,  y = .15, text = "Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2314,7 +2321,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.1, text = "Source: Loudoun County Public School 2019-2020", 
+          list(x = 1.4, y = .15, text = "Source: Loudoun County Public School 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size= 9))) 
@@ -2333,7 +2340,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.5,  y = 0, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
+          list(x = 1,  y = -.15, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2354,11 +2361,12 @@ server <- function(input, output) {
       plot <- ggplot() + geom_col(mapping = aes(Race, Percent, fill = Race), data = literacy_demo) + 
         labs(title = "Adult Literacy Program",
              y = "Percent Served")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.5,  y = 0, text = "Data Source: Loudoun County Public School 2019", 
+          list(x = 1,  y = -.2, text = "Data Source: Loudoun County Public School 2019", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2368,11 +2376,12 @@ server <- function(input, output) {
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) + 
         labs(title = "Oxford Houses in VA ",
              y = "Months") +scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.5,  y = 0, text = "Data Source: Oxford Annual Report 2019-2020", 
+          list(x = 1,  y = -.3, text = "Data Source: Oxford Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2383,39 +2392,42 @@ server <- function(input, output) {
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) + 
         labs(title = "Oxford Houses in VA",
              y = "%/Years") +scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.5,  y = 0, text = "Data Source: Oxford Annual Report 2019-2020", 
+          list(x = 1,  y = -.4, text = "Data Source: Oxford Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
       
     }else if (stat() == "oar"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:7,],fill =  "lightblue3") + 
+      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
         labs(title = "Oar Nova",
              y = "Percent Served") +scale_fill_viridis_d() +
-        theme(axis.text.x = element_blank())
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0,1, text = "Data Source: OAR Annual Report 2020", 
+          list(x = 1,  y = -.45, text = "Data Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
+      
       
     }else if (stat() == "mental") {
       
       plot <- ggplot(smi, aes(x=Year)) + 
         geom_line(aes(y = Persons, group = Group, color = Group)) + 
         labs(title = "Severe Mental Illness")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.4, text = "Data Source: DMHSA 2016-2020", 
+          list(x = 1, y = -0.1, text = "Data Source: DMHSA 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2423,14 +2435,15 @@ server <- function(input, output) {
       
     }else if (stat() == "publicRace"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Race, Number), data = publicR,fill =  "plum4") + 
+      plot <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data = publicR) + 
         labs(title = "Public Benefits",
              y = "Persons")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.4, text = "Data Source: Data Warehouse 2016-2020", 
+          list(x = 1, y = -0.2, text = "Data Source: Data Warehouse 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2439,14 +2452,15 @@ server <- function(input, output) {
       
     }else if (stat() == "publicGender"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Gender, Number), data = publicG,fill =  "plum4") + 
+      plot <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data = publicG) + 
         labs(title = "Public Benefits",
              y = "Persons")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.4, text = "Data Source: Data Warehouse 2016-2020", 
+          list(x = 1, y = -0.1, text = "Data Source: Data Warehouse 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2457,14 +2471,15 @@ server <- function(input, output) {
     }
     else if (stat() == "emerG"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Gender, Number), data = emerG,fill =  "plum4") + 
+      plot <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data = emerG) + 
         labs(title = "Emergency Shelters",
              y = "Persons")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.4, text = "Data Source: Data Warehouse 2016-2020", 
+          list(x = 1, y = -0.1, text = "Data Source: Data Warehouse 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2473,14 +2488,15 @@ server <- function(input, output) {
       
     }else if (stat() == "emerR"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Race, Number), data = emerR,fill =  "plum4") + 
+      plot <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data = emerR) + 
         labs(title = "Emergency Shelters",
              y = "Persons")+ scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none")
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.4, text = "Data Source: Data Warehouse 2016-2020", 
+          list(x = 1, y = -0.14, text = "Data Source: Data Warehouse 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2501,7 +2517,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
                                 annotations = 
-                                  list(x = 1, y = -0.4, text = "Data Source: DMHSA 2016-2020", 
+                                  list(x = 1, y = -0.1, text = "Data Source: DMHSA 2016-2020", 
                                        showarrow = F, xref='paper', yref='paper', 
                                        xanchor='right', yanchor='auto', xshift=0, yshift=0,
                                        font=list(size=10))) 
