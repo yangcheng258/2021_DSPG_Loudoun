@@ -246,7 +246,7 @@ all$Category <- factor(all$Category, levels=unique(all$Category))
 
 
 # Public Benefits
-youth <- read_excel("/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/2021_DSPG_Loudoun/ShinyApp/data/vce-youth.xlsx")
+youth <- read_excel(paste0(getwd(), "/data/vce-youth.xlsx"))
 
 emerR <- youth[1:4, 1:2]
 colnames(emerR) <- c("Race", "Number")
@@ -2278,14 +2278,14 @@ server <- function(input, output) {
         geom_line(mapping = aes(Year, `Childless Adults`/1000, group = 1), data = med) + 
         geom_line(mapping = aes(Year, Children/1000, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
         labs(y = "Persons (1,000) ", 
-             title = "hildren and Childless Adults")+ scale_fill_viridis_d() +
+             title = "Children and Childless Adults")+ scale_fill_viridis_d() +
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               plot.title = element_text(size = 10))
       
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
+          list(x = 1.5,  y = 0, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2296,11 +2296,11 @@ server <- function(input, output) {
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
         labs(title = "Oar Nova 2020",
              y = "Persons Served")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: OAR Annual Report 2019-2020", 
+          list(x = 1,  y = -0.1, text = "Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2310,14 +2310,14 @@ server <- function(input, output) {
       plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
         labs(title = "Adult Literacy Program",
              y = "Persons Served")+scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_blank(), axis.title.x = element_text(vjust = -100))
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Loudoun County Public School 2019-2020", 
+          list(x = 1, y = -0.1, text = "Source: Loudoun County Public School 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
+               font=list(size= 9))) 
       
       
     }
@@ -2333,7 +2333,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
+          list(x = 1.5,  y = 0, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2358,7 +2358,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Loudoun County Public School 2019", 
+          list(x = 1.5,  y = 0, text = "Data Source: Loudoun County Public School 2019", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2372,7 +2372,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Oxford Annual Report 2019-2020", 
+          list(x = 1.5,  y = 0, text = "Data Source: Oxford Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2387,7 +2387,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Oxford Annual Report 2019-2020", 
+          list(x = 1.5,  y = 0, text = "Data Source: Oxford Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2397,11 +2397,11 @@ server <- function(input, output) {
       plot <- ggplot() + geom_col(mapping = aes(Category, Number), data = all[3:7,],fill =  "lightblue3") + 
         labs(title = "Oar Nova",
              y = "Percent Served") +scale_fill_viridis_d() +
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"))
+        theme(axis.text.x = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1, y = -0.4, text = "Data Source: OAR Annual Report 2020", 
+          list(x = 1, y = -0,1, text = "Data Source: OAR Annual Report 2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
