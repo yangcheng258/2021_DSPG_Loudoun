@@ -12,7 +12,8 @@ library(readxl)
 ```
 
 ```{r race}
-mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+# mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+mhs_demographic_xl <- "/Users/julierebstock/Desktop/Virginia-Tech/DSPG-2021/Loudoun-County/MHS-demographic-info.xlsx"
 mhs_race_ethnicity <- read_excel(mhs_demographic_xl, sheet = "RaceEthnicity")
 mhs_race_ethnicity <- mhs_race_ethnicity[-8, -8]
 mhs_race_ethnicity <- mhs_race_ethnicity %>% 
@@ -48,7 +49,7 @@ race_bar_graph <- mhs_race_ethnicity_relative %>%
 ```
 
 ```{r smi }
-mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+# mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
 mhs_smi <- read_excel(mhs_demographic_xl, sheet = "SMI")
 mhs_smi <- mhs_smi[-4, -8]
 mhs_smi <- mhs_smi %>% 
@@ -85,7 +86,7 @@ smi_bar_graph <- mhs_smi_relative %>%
 ```
 
 ```{r sex_demographic}
-mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
+# mhs_demographic_xl <- "C:\\Users\\austi\\Documents\\VT DSPG\\R files\\2021_DSPG_Loudoun\\Demographic_summaries\\data\\MHS-demographic-info.xlsx"
 mhs_sex <- read_excel(mhs_demographic_xl, sheet = "Gender")
 mhs_sex <- mhs_sex[-3, -8]
 mhs_sex <- mhs_sex %>% 
