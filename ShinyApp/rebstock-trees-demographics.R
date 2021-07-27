@@ -484,7 +484,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      
                                                  ), 
                                               column(8, 
-                                                     h4(strong("Visualizations of Residents' Socioeconomic Characteristics")),
+                                                     h4(strong("Residents' Socioeconomic Characteristics")),
                                                      selectInput("var1", "Select Socioeconomic Characteristic:", width = "100%", choices = c(
                                                        "Gender and Age Groups" = "age",
                                                        "Percentage of TAYs by Gender" = "percent", 
@@ -493,6 +493,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        "Race by Percent" = "raceP", 
                                                        "Ethnicity by Percent" = "ethP", 
                                                        "Poverty Level by Race" = "poverty",
+                                                       "Homelessness" = "home", 
                                                        "Types of Healthcare Coverage" = "health")
                                                      ),
                                                      plotlyOutput("plot1"),
@@ -549,7 +550,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                         youth offenders received a high school diploma or GED. This snapshot suggests that TAYs leaving 
                                                         the juvenile system would greatly benefit from the availability of health services, education, and employment.")
                                                         ), 
-                                              column(8, h4(strong("Visualizations of Subpopulations' Socioeconomic Characteristics")),
+                                              column(8, h4(strong("Subpopulations' Socioeconomic Characteristics")),
                                                      tabsetPanel(
                                                        tabPanel("Foster Care",
                                                                 p("", style = "padding-top:10px;"),
@@ -820,7 +821,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      
                                               ), 
                                               column(8, 
-                                                     h4(strong("Map of Locations of Services")),
+                                                     h4(strong("Locations of Services")),
                                                      column(4,
                                                             selectInput(
                                                               "county",
@@ -859,22 +860,35 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Vulnerable Transition Aged Youth")),
-                                                                         p("Although we are looking specifically are transition aged youth, those aging out of the foster care system or getting out of juvenile detention, there is another subpopulation we have information on
-                                                                       that shows us how important it is to find and close the gaps espeically in the health service pillar. Those living with mental health issues are also at a disadvantage when trying to live independently
-                                                                       because receiving treatment and care can be expensive without insurance and again, getting to a clinic or facility can be difficult. Those without a full-time job that provides health benefits
-                                                                         either have to qualify for medicaid or other grants or have to pay full payment out of pocket which can thousands of dollars. In addition,  TAYs, espeically those who were in foster care or in juvenile detention are vulnerable to 
-                                                                        substance abuse, mental illnesses and radical behavior because they likely did not have family support or a role model to guide them in their developmental stages.  "),
+                                                                         p("Our target population for this project is transition aged youths. This include those that are “aging out” of the foster care system or 
+                                                                           leaving the juvenile detention system. However, there is another subpopulation of TAY that we examine – youths with mental health, 
+                                                                           substance use, or developmental/intellectual disabilities.  "),
                                                                        
-                                                                       p("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services (MHSADS) provided a number of 
-                                                                        programs and services to transition age youth (18-24) from 2016-2021YD in various zipcodes in Loudoun. The types of programs include Case Management, Discharge Planning,
-                                                                        Emergency Services, Employment and Day Support Services, Outpatient and Residental. As you can see in 2019, there was a large dip in 'Outpatient' waitlist persons because of the Same Day Access Program. 
-                                                                        Same Day Access is now being offered via tele-health whichone can call 703-771-5155 Monday-Friday, from 9:00 a.m. to 2:00 p.m. to begin the process. 
-                                                                        A person in need of a mental health evaluation can now access walk-in hours at any CSB throughout Virginia without an appointment, 
-                                                                        instead of waiting days or even weeks to receive an assessment. This has decreased the need for a waitlist for certain programs where a person can receive help in a couple of hours based on their insurance. 
-                                                                        ")), 
+                                                                       p("TAYs with disabilities or mental or substance issues face even more barriers as they move towards independence.  
+                                                                         These youths experience an adult poverty rate three times higher than their peers.2 This high level of poverty,
+                                                                         difficulty in accessing health services, and homelessness tend to have a very negative impact on the likelihood of 
+                                                                         employment thereby, compounding the transition to self-sufficient adulthood. 3 Moreover, it is estimated that over 
+                                                                         90% of youth incarcerated in Virginia have significant symptoms of a mental health disorder. Guided by this, we examine 
+                                                                         mental health service utilization and gaps. "),
+                                                                       p("We present data on the number of TAYs on the different program waitlists at Loudoun’s Department of Mental Health, Substance Abuse, 
+                                                                         and Developmental Services (DMHSA). The programs provided for TAYs with disabilities or mental health issues include:  "),
+                                                                       tags$li("Case management – services delivered for youths with intellectual and developmental disabilities"),
+                                                                       br(), 
+                                                                       tags$li("Employment and Day Support – assist youths with obtaining employment and volunteering"),
+                                                                       tags$li("Outpatient – psychiatry and individual and group therapy"),
+                                                                       tags$li("Residential – housing programs, including group homes. "),
+                                                                       tags$li("Emergency – mental health evaluation, crisis intervention, and stabilization services"),
+                                                                       br(), 
+                                                                       p("The number of TAYs with severe mental illness served by the Department of Mental Health, Substance Abuse, 
+                                                                         and Developmental Services has increased between 2016 and 2019. Moreover, the employment and day support waitlist 
+                                                                         also increased from 2 in 2016 to 10 in 2019. The waitlist of residential service has been consistent over this period 
+                                                                         moving from 23 to 20 TAYs. These trends highlight the increasing need for such services by TAYs. Note, we did not include 
+                                                                         2020 in our analysis as the usage rate may be affected by the COVID pandemic. ")
+                                                                  ), 
                                                                 column(8,
                                                                        h4(strong("Waitlist of DMHSA by Program")), 
                                                                        plotlyOutput("waitlist"),
+                                                                       p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services"))  ,  
                                                                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                                                                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
                                               
@@ -887,7 +901,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                               p("")
                                                             ), 
                                                        column(8, 
-                                                              h4(strong("Graphs of Demographics")), 
+                                                              h4(strong("Demographics")), 
                                                               selectInput(
                                                                 "dmhsaDemos",
                                                                 "Select Demographic",
@@ -907,16 +921,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                               fluidRow(style = "margin: 6px;",
                                                        p("", style = "padding-top:10px;"), 
                                                        column(4, 
-                                                             h4(strong("Individuals Served Over time")),
-                                                             p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
-                                                               their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
-                                                               from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
-                                                               The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
-                                                             p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
-                                                               of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Are those
-                                                               living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
+                                                             h4(strong("Individuals Served from 2016 – 2020")),
+                                                             p("Visualizing the usage of services allows us to determine whether some services are used more than others. Loudoun County’s Department of Mental Health, Substance Abuse, and Developmental Services (DMHSA) provided us with data on the number of transition aged youth (TAY) served by zip code level. The dropdown box allows for the selection of the various programs. The slider at the right shows how the service number, represented by the orange dots, changes between 2016 and 2020. The orange dots are mapped onto the population density map by census tract of those who live in the area – this shows the utilization of each program by population density."),
+                                                             p("TAYs seems to be consistently utilizing the emergency and outpatient services from the DMHSA. Notably, in comparison to the other services, the residential and employment program is underutilized regardless of location or year.  ")) ,
                                                       column(8, 
-                                                             h4(strong("Map of Individuals Served by Population Density")), 
+                                                             h4(strong("Individuals Served by Population Density")), 
                                                              column(4, 
                                                              radioButtons(
                                                                "type",
@@ -985,7 +994,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   ), 
                                                                   column(8, 
                                                                          
-                                                                         h4(strong("Graphs of Demographics")), 
+                                                                         h4(strong("Demographics")), 
                                                                          selectInput(
                                                                            "familyDemo",
                                                                            "Select Demographic",
@@ -1015,6 +1024,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                            from 2015 to 2020. ")
                                                                         ) ,
                                                                   column(8, 
+                                                                         h4(strong("Enrollment by Program")), 
                                                                          tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
                                                                          br(), 
                                                                          p(tags$small("Data source: Family Services Data Warehouse 2015-2020 varying years"))
@@ -1164,10 +1174,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                    column(6, align = "center",
                                           h4(strong("VT Faculty Team Members")),
                                           img(src = "faculty-chanita.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
-                                          img(src = "faculty-isabel", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
+                                          img(src = "faculty-isabel.jpg", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
-                                          p(a(href = "", 'Chainta Holmes', target = '_blank'), "(Project Lead, VT Research Assistant Professor);") , 
-                                          p(a(href = "", 'Isabel Bradburn', target = '_blank'), "(VT, Postdoctoral Research Associate)."),
+                                          p(a(href = "", 'Chanita Holmes', target = '_blank'), "(Project Lead, VT Research Assistant Professor);") , 
+                                          p(a(href = "", 'Isabel Bradburn', target = '_blank'), "(Research Faulty, Department of Human Development and Family Science, VT)."),
                                           p("", style = "padding-top:10px;")
                                    )) ,
                           fluidRow(style = "margin-left: 100px; margin-right: 100px;",
@@ -1175,7 +1185,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                    p(a(href = 'https://loudoun.ext.vt.edu/staff/Vermaak-Stuart.html', 'Stuart Vermaak', target = '_blank'), "(Virginia Cooperative Extension, Loudoun County at Virginia Tech);"),
                                    p(a(href = 'https://loudoun.ext.vt.edu/staff/Hilleary-James.html', 'James Hilleary', target = '_blank'), "(Virginia Cooperative Extension, Loudoun County at Virginia Tech)."),
                                    p("", style = "padding-top:10px;"),
-                                   h4(strong("Acknowledgments"))
+                                   h4(strong("Acknowledgments"),
+                                      p("We would like to thank Loudoun officials for providing us with data for our project. Specifically, the Department of Mental Health, Substance Abuse, and Developmental Services and the Family Service Department.  "))
                           )
                  )
                  , inverse = T ) 
@@ -1424,7 +1435,8 @@ server <- function(input, output) {
   output$waitlist <- renderPlotly({
     
     ggplot(waitlist, aes(x=Year)) + 
-      geom_line(aes(y = Persons, group = Program, color = Program))
+      geom_line(aes(y = Persons, group = Program, color = Program))+
+      labs(y = "Total Number of TAY")
     
   })
   
@@ -1436,7 +1448,7 @@ server <- function(input, output) {
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Education",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1447,7 +1459,7 @@ server <- function(input, output) {
         filter(Pillars == "Employment")%>%
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Employment",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1459,7 +1471,7 @@ server <- function(input, output) {
         filter(Pillars == "Housing")%>%
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Housing",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1471,7 +1483,7 @@ server <- function(input, output) {
         filter(Pillars == "Transportation")%>%
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Transportation",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1483,7 +1495,7 @@ server <- function(input, output) {
         filter(Pillars == "Health Services")%>%
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Health Services",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1500,7 +1512,7 @@ server <- function(input, output) {
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Education",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1511,7 +1523,7 @@ server <- function(input, output) {
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Employment",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1523,7 +1535,7 @@ server <- function(input, output) {
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Housing",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1535,7 +1547,7 @@ server <- function(input, output) {
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Transportation",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1547,7 +1559,7 @@ server <- function(input, output) {
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Health Services",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1565,7 +1577,7 @@ server <- function(input, output) {
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Education",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1576,7 +1588,7 @@ server <- function(input, output) {
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Employment",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1588,7 +1600,7 @@ server <- function(input, output) {
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Housing",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1600,7 +1612,7 @@ server <- function(input, output) {
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Transportation",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1612,7 +1624,7 @@ server <- function(input, output) {
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
-                        root="Pillars",
+                        root="Health Services",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1629,7 +1641,7 @@ server <- function(input, output) {
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
-                        root="Pillars",
+                        root="Education",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1640,7 +1652,7 @@ server <- function(input, output) {
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
-                        root="Pillars",
+                        root="Employment",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1652,7 +1664,7 @@ server <- function(input, output) {
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
-                        root="Pillars",
+                        root="Housing",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1664,7 +1676,7 @@ server <- function(input, output) {
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
-                        root="Pillars",
+                        root="Transportation",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -1676,7 +1688,7 @@ server <- function(input, output) {
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "County"),
-                        root="Pillars",
+                        root="Health Services",
                         attribute = "Pillars",
                         width=1800,
                         zoomable=F, 
@@ -2555,42 +2567,42 @@ server <- function(input, output) {
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
       
-    }else if (stat() == "oxford1"){
+    # }else if (stat() == "oxford1"){
+    #   
+    #   plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) + 
+    #     labs(title = "Oxford Houses in VA ",
+    #          y = "Months") +scale_fill_viridis_d() +theme_minimal() + 
+    #     theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+    #           legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+    #   
+    #   ggplotly(plot) %>% layout(
+    #     annotations = 
+    #       list(x = 1,  y = -.3, text = "Data Source: Oxford Annual Report 2019-2020", 
+    #            showarrow = F, xref='paper', yref='paper', 
+    #            xanchor='right', yanchor='auto', xshift=0, yshift=0,
+    #            font=list(size=10))) 
       
-      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) + 
-        labs(title = "Oxford Houses in VA ",
-             y = "Months") +scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1,  y = -.3, text = "Data Source: Oxford Annual Report 2019-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
-    }else if (stat() == "oxford2"){
-      
-      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) + 
-        labs(title = "Oxford Houses in VA",
-             y = "%/Years") +scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1,  y = -.4, text = "Data Source: Oxford Annual Report 2019-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
+    # }else if (stat() == "oxford2"){
+    #   
+    #   plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) + 
+    #     labs(title = "Oxford Houses in VA",
+    #          y = "%/Years") +scale_fill_viridis_d() +theme_minimal() + 
+    #     theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+    #           legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+    #   
+    #   ggplotly(plot) %>% layout(
+    #     annotations = 
+    #       list(x = 1,  y = -.4, text = "Data Source: Oxford Annual Report 2019-2020", 
+    #            showarrow = F, xref='paper', yref='paper', 
+    #            xanchor='right', yanchor='auto', xshift=0, yshift=0,
+    #            font=list(size=10))) 
       
     }else if (stat() == "oar") {
       
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
-        labs(title = "Oar Nova 2020",
+        labs(title = "Number of Individuals in the OAR program",
              y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2605,7 +2617,7 @@ server <- function(input, output) {
       }else if (stat() == "oarD"){
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
-        labs(title = "Oar Nova",
+        labs(title = "Demographics of OAR program",
              y = "Percent Served") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
@@ -2635,16 +2647,7 @@ server <- function(input, output) {
     
     
   }) 
-  
-  output$trendsF <- renderPlotly({
-    
-    ggplot(mapping = aes(Year, Number, color = Age), data =wrc) + geom_line() + 
-      labs(title = "Work Resources Center",
-           y = "Persons", 
-           x= "") +scale_fill_viridis_c() +theme_minimal() + 
-      theme(axis.text.x = element_text(size = 10, angle = 45, vjust = .5, color = "black"), 
-            axis.text.y = element_text(size = 10, vjust = .5, color = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-  })
+
   
   
   
