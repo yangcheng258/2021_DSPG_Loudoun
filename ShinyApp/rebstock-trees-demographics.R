@@ -39,46 +39,60 @@ l_ages_gender <- read.csv(paste0(getwd(),"/data/ages_gender.csv"))
 # race tays 
 
 race <- loudoun[1:6, 1:2]
-colnames(race) <- c("Race", "Estimate")
+
+colnames(race) <- c("Race", "Estimate", "Sum") 
+race <- race%>%
+  mutate(Sum = sum(race$Estimate))%>%
+  mutate(Percent = Estimate/Sum*100)
+
+race$Race <- factor(race$Race, levels=unique(race$Race))
 # education 
 education <- read.csv(paste0(getwd(),"/data/both_education.csv")) 
 
 ## Poverty 
 poverty <- read.csv(paste0(getwd(),"/data/poverty.csv")) 
+s <- sum(poverty$estimate)
 
 w_p <- data.frame(poverty[1,], poverty[2,])%>%
   mutate(sum = estimate + estimate.1)%>%
   dplyr::select(variable, sum)%>%
-  mutate(variable = "White")
+  mutate(variable = "White")%>%
+  mutate(Percent = sum/s*100)
 b_p <- data.frame(poverty[3,], poverty[4,])%>%
   mutate(sum = estimate + estimate.1)%>%
   dplyr::select(variable, sum)%>%
-  mutate(variable = "Black")
+  mutate(variable = "Black")%>%
+  mutate(Percent = sum/s*100)
 i_p <- data.frame(poverty[5,], poverty[6,])%>%
   mutate(sum = estimate + estimate.1)%>%
   dplyr::select(variable, sum)%>%
-  mutate(variable = "Indian")
+  mutate(variable = "American Indian/Alaska Native")%>%
+  mutate(Percent = sum/s*100)
 as_p <- data.frame(poverty[7,], poverty[8,])%>%
   mutate(sum = estimate + estimate.1)%>%
   dplyr::select(variable, sum)%>%
-  mutate(variable = "Asian")
+  mutate(variable = "Asian")%>%
+  mutate(Percent = sum/s*100)
 n_p <- data.frame(poverty[9,], poverty[10,])%>%
   mutate(sum = estimate + estimate.1)%>%
   dplyr::select(variable, sum)%>%
-  mutate(variable = "Native")
+  mutate(variable = "Native Hawai’ian/Pacific Islander")%>%
+  mutate(Percent = sum/s*100)
 o_p <- data.frame(poverty[11,], poverty[12,])%>%
   mutate(sum = estimate + estimate.1)%>%
   dplyr::select(variable, sum)%>%
-  mutate(variable = "Other")
+  mutate(variable = "Other")%>%
+  mutate(Percent = sum/s*100)
 
 # Health Care
 healthcare <- loudoun[1:4, 4:5]
 colnames(healthcare) <- c("Type", "Estimate")
+healthcare$Type <- factor(healthcare$Type, levels=unique(healthcare$Type))
 
 
 # Mental Illness
 smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
-smi <- smiwaitlist[6:20,1:3]
+smi <- smiwaitlist[11:20,1:3]
 colnames(smi) <- c("Group", "Year", "Persons")
 smi$Persons <- as.numeric(smi$Persons)
 
@@ -86,6 +100,8 @@ waitlist <- smiwaitlist[6:25,9:11]
 colnames(waitlist) <- c( "Program", "Year", "Persons")
 
 waitlist$Persons <- as.numeric(waitlist$Persons)
+waitlist$Program <- factor(waitlist$Program, levels=unique(waitlist$Program))
+
 
 # Foster Care -----------------------------------------------------------
 fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx")) 
@@ -100,6 +116,7 @@ fc_ages$Value <- as.numeric(fc_ages$Value)
 fc_races <- data.frame(totals[c(7,9,11,13,15,17),])
 colnames(fc_races) <- c("Race", "Value")
 fc_races$Race <- c("Black", "White", "Indian", "Asian", "Hawaiian", "Multi") 
+fc_races$Race <- factor(fc_races$Race, levels=unique(fc_races$Race))
 
 eth <- rep(c("Hispanic" , "Non-Hispanic") , 1) 
 value <- c(14, 34)
@@ -124,6 +141,9 @@ jv_race <- intake_race %>% dplyr::select(RACE, `FY20 %`, CSU) %>%
   dplyr::select(RACE, Proportion) %>% 
   rename(Race = RACE)%>%
   mutate(Proportion = readr::parse_number(as.character(Proportion)))
+
+jv_race$Race <- factor(jv_race$Race, levels=unique(jv_race$Race))
+
 
 
 #Eth 
@@ -247,18 +267,39 @@ all$Category <- factor(all$Category, levels=unique(all$Category))
 
 # Public Benefits
 youth <- read_excel(paste0(getwd(), "/data/vce-youth.xlsx"))
-
 emerR <- youth[1:4, 1:2]
 colnames(emerR) <- c("Race", "Number")
-
 emerG <- youth[1:2, 4:5]
 colnames(emerG) <- c("Gender", "Number")
+emerT <- youth[1:5,7:9]%>%mutate(Percent...8 = Percent...8*100)
+emerT$Program <- "Emergency Shelter"
+colnames(emerT) <- c("Number", "Percent", "Year", "Program")
 
-publicR <- youth[1:6, 8:9]
+publicR <- youth[1:6, 11:12]
 colnames(publicR) <- c("Race", "Number")
-
-publicG <- youth[1:2, 11:12]
+publicG <- youth[1:2, 14:15]
 colnames(publicG) <- c("Gender", "Number")
+publicT <- youth[1:15, 18:20]%>%mutate(Percent...19 = Percent...19*100)
+publicT$Program <- youth$Group
+colnames(publicT) <- c("Number", "Percent", "Year","Program")
+
+wrc <- youth[1:15, 22:25]%>%mutate(Percent...24 = Percent...24*100)
+colnames(wrc) <- c("Age", "Number", "Percent", "Year")
+
+wioa <- youth[1:4, 28]
+wioa$Percent <- 0 
+wioa$Year <- youth$Year...29[1:4]
+wioa$Program <- c("WIOA Youth")
+colnames(wioa) <- c("Number", "Percent", "Year", "Program")
+
+transR <- youth[1:4, 31:32]
+colnames(transR) <- c("Race", "Number")
+transG <- youth[1:2, 34:35]
+colnames(transG) <- c("Gender", "Number")
+transT <- youth[1:5, 37:39]
+transT$Program <- "Transitional Housing"
+colnames(transT) <- c( "Number", "Percent", "Year", "Program")
+
 
 #DMHSA 
 mhs_race_relative <- read.csv(paste0(getwd(), "/data/race_line.csv")) 
@@ -449,15 +490,17 @@ ui <- navbarPage(title = "DSPG 2021",
                                               column(8, 
                                                      h4(strong("Visualizations of Residents' Socioeconomic Characteristics")),
                                                      selectInput("var1", "Select Socioeconomic Characteristic:", width = "100%", choices = c(
-                                                       "Gender and Age" = "age",
-                                                       "Percentage of TAYs" = "percent", 
+                                                       "Gender and Age Groups" = "age",
+                                                       "Percentage of TAYs by Gender" = "percent", 
                                                        "Educational Attainment" = "education",
-                                                       "Races" = "race",
-                                                       "Poverty Level" = "poverty",
-                                                       "Healthcare Coverage" = "health")
+                                                       "Race by Number" = "race", 
+                                                       "Race by Percent" = "raceP", 
+                                                       "Ethnicity by Percent" = "ethP", 
+                                                       "Poverty Level by Race" = "poverty",
+                                                       "Types of Healthcare Coverage" = "health")
                                                      ),
                                                      plotlyOutput("plot1"),
-                                                     p(tags$small("Data Source: American Community Survey 2019 1-Year Estimates."))
+                                                     p(tags$small("Data Source: American Community Survey 2019 1-Year/5-Year Estimates."))
                                               )
                                      )) ,
                             ### Tab subpopulation--------------------------------------------
@@ -824,93 +867,13 @@ ui <- navbarPage(title = "DSPG 2021",
                  
                  ## Tab Utilization-------------------------------------------
                  navbarMenu("Utilization",
-                            ### Individual served------------
-                            tabPanel("Individuals Served", value = "served",
-                                     fluidRow(style = "margin: 6px;",
-                                              h1(strong("Individuals Served by Program"), align = "center"),
-                                              p("", style = "padding-top:10px;"), 
-                                              tabsetPanel(
-                                                tabPanel("Enrollment", 
-                                                         fluidRow(style = "margin: 6px;",
-                                                                  p("", style = "padding-top:10px;"), 
-                                                                  column(4, 
-                                                                         h4(strong("Persons Enrolled")), 
-                                                                         infoBoxOutput("wioa", width = 4),
-                                                                         p("Workforce Innovation and Opportunity Act"), 
-                                                                         infoBoxOutput("transit" , width = 4),
-                                                                         p("Public transportation"),
-                                                                         infoBoxOutput("food", width = 4),
-                                                                         p("Food Snaps"), 
-                                                                         infoBoxOutput("shelters", width = 4),
-                                                                         p("Emergency Shelters"),
-                                                                         infoBoxOutput("homeless", width = 4),
-                                                                         p("Homeslessness in Loudoun"), 
-                                                                         
-                                                                         p("Add paragraph highlighting the most interesting stats of enrollment... ")), 
-                                                                  
-                                                                  column(8, 
-                                                                         h4(strong("Graphs of Enrollent")), 
-                                                                         selectInput(
-                                                                           "enroll",
-                                                                           "Select Program",
-                                                                           choices = list(
-                                                                             "Medicaid" = "med2",
-                                                                             "Medicaid Expansion (ACA)" = "med1", 
-                                                                             "Adult Literacy Programs" = "literacy",
-                                                                             "OAR"= "oar"
-                                                                             )
-                                                                           
-                                                                         ), 
-                                                                         plotlyOutput(outputId = "enrollment", height = "500px")
-                                                                         
-                                                                         ))), 
-                                                
-                                                tabPanel("Demographics", 
-                                                        fluidRow(style = "margin: 6px;",
-                                                                 p("", style = "padding-top:10px;"), 
-                                                                 column(4, 
-                                                                        h4(strong("Background")), 
-                                                                        p("Race, Age, backgrounds of programs"), 
-                                                                        p("")
-                                                                        
-                                                                        ), 
-                                                                 column(8, 
-                                                                        
-                                                                        h4(strong("Graphs of Demographics")), 
-                                                                        selectInput(
-                                                                          "stat",
-                                                                          "Select Program",
-                                                                          choices = list(
-                                                                            "Adult Literacy Program Race" = "literacy", 
-                                                                            "Oxford House Average Stay" = "oxford1",
-                                                                            "Oxford House Prior" = "oxford2",
-                                                                            "OAR Demographics"= "oar",
-                                                                            "DMHSA Race" = "dmhsaRace", 
-                                                                            "DMHSA Gender" = "dmhsaGender", 
-                                                                            "DMHSA Mental Illness" = "mental",
-                                                                            "Public Benefits Race" = "publicRace",
-                                                                            "Public Benefits Gender" = "publicGender",
-                                                                            "Emergency Shelter Gender" = "emerG",
-                                                                            "Emergency Shelter Race" = "emerR"
-                                                                            )
-                                                                          
-                                                                        ), 
-                                                                        plotlyOutput(outputId = "demographics", height = "500px") 
-                                                                        )
-                                                                 )
-                                                        )
-                                            
-                                     )
-                                     ) 
-                            ) ,
-                            
                             ### DMHSA------
-                            tabPanel("DMHSA", 
-                                     fluidRow(style = "margin: 6px;",
+                            tabPanel("DMHSA", value = "dmhsa", 
+                                     fluidRow(style = "margin: 6,px;",
                                               h1(strong("Department of Mental Health, Substance Abuse, and Developmental Services"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                               tabsetPanel(
-                                                tabPanel("Waitlist", 
+                                                tabPanel("Overview", 
                                                          fluidRow(style = "margin: 6px;",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
@@ -935,11 +898,35 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
                                               
                                      )), 
-                                     tabPanel("Overtime", 
+                                     tabPanel("Demographics", 
                                               fluidRow(style = "margin: 6px;",
                                                        p("", style = "padding-top:10px;"), 
                                                        column(4, 
-                                                             h4(strong("Individuals Served Overtime")),
+                                                              h4(strong("Who does DMHSA Serve? ")),
+                                                              p("")
+                                                            ), 
+                                                       column(8, 
+                                                              h4(strong("Graphs of Demographics")), 
+                                                              selectInput(
+                                                                "dmhsaDemos",
+                                                                "Select Demographic",
+                                                                choices = list(
+                                                                  "Race/Ethnicity" = "dmhsaRace", 
+                                                                  "Gender" = "dmhsaGender", 
+                                                                  "Severe Mental Illness" = "mental"
+                                                                )
+                                                                
+                                                              ), 
+                                                              plotlyOutput(outputId = "dmhsaPlot", height = "500px"),
+                                                              p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services 2019"))
+                                                              )
+                                                       
+                                              )), 
+                                     tabPanel("Trends", 
+                                              fluidRow(style = "margin: 6px;",
+                                                       p("", style = "padding-top:10px;"), 
+                                                       column(4, 
+                                                             h4(strong("Individuals Served Over time")),
                                                              p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
                                                                their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
                                                                from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
@@ -962,6 +949,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                  "Residential" = "res")
                                                              ),
                                                              selected = "Case Management") , 
+                                                             
                                                              column(4,
                                                              sliderInput(inputId = "year", 
                                                                          label = "Select a year:",
@@ -969,17 +957,179 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                          min = 2016,
                                                                          max = 2020,
                                                                          sep = "", 
-                                                                         animate = animationOptions(interval = 1500))) , 
+                                                                         animate = animationOptions(interval = 1200))) , 
                                                              
                                                              
                                                              leafletOutput(outputId = "overtime", height = "70vh"), 
-                                                             p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services"))
+                                                             p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services 2019 "))
                                                              
                                                              
                                                       )
                                               ) 
-                                     ))  
-                            ))  
+                                     )
+                                     )  
+                            ))  ,
+                            
+                            ### Family Services served------------
+                            tabPanel("Family Services", value = "family",
+                                     fluidRow(style = "margin: 6px;",
+                                              h1(strong("Family Services"), align = "center"),
+                                              p("", style = "padding-top:10px;"), 
+                                              tabsetPanel(
+                                                tabPanel("Overview", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("What programs do Family Services provide? "))
+                                                                  ), 
+                                                                  column(8, 
+                                                                         h4(strong("programs"))
+                                                                         
+                                                                         
+                                                                  ))
+                                                         ), 
+                                                
+                                                tabPanel("Demographics", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("Who does Family Services serve?")), 
+                                                                         p("Race, Age, backgrounds of programs"), 
+                                                                         p("")
+                                                                         
+                                                                  ), 
+                                                                  column(8, 
+                                                                         
+                                                                         h4(strong("Graphs of Demographics")), 
+                                                                         selectInput(
+                                                                           "familyDemo",
+                                                                           "Select Demographic",
+                                                                           choices = list(
+                                                                             "Public Benefits Race" = "publicRace",
+                                                                             "Public Benefits Gender" = "publicGender",
+                                                                             "Emergency Shelter Gender" = "emerG",
+                                                                             "Emergency Shelter Race" = "emerR",
+                                                                             "Transitional Housing Gender" = "transG",
+                                                                             "Transitional Housing Race" = "transR"
+                                                                           )
+                                                                           
+                                                                         ), 
+                                                                         plotlyOutput(outputId = "familyPlot", height = "500px") ,
+                                                                         p(tags$small("Data Source: Family Services Data Warehouse 2015-2020 varying years"))
+                                                                         
+                                                                  )
+                                                         )
+                                                ),
+                                                tabPanel("Trends", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("Enrollment Trends")),
+                                                                         p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
+                                                                         their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
+                                                                         from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
+                                                                         The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
+                                                                                   p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
+                                                                         of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Are those
+                                                                         living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
+                                                                  column(8, 
+                                                                         h4(strong("Map of Individuals Served by Population Density")), 
+                                                                         column(4, 
+                                                                                radioButtons(
+                                                                                  "familyType",
+                                                                                  label = "Select Program Type" ,
+                                                                                  choices = list(
+                                                                                    # "Public Benefits" = "public",
+                                                                                    # "Work Resource Center" = "wrc",
+                                                                                    # "Workforce Innovation and Opportunity" = "wioa",
+                                                                                    # "Emergency Shelters" = "ermShelters",
+                                                                                    "Transitional Housing Program"= "trans")
+                                                                                ),
+                                                                                selected = "Transitional Housing Program") , 
+                                                                         
+                                                                         column(4,
+                                                                                sliderInput(inputId = "yearF", 
+                                                                                            label = "Select a year:",
+                                                                                            value = 2015,
+                                                                                            min = 2015,
+                                                                                            max = 2020,
+                                                                                            sep = "", 
+                                                                                            animate = animationOptions(interval = 4000))) , 
+                                                                         
+                                                                         
+                                                                         plotOutput(outputId = "trendsF"), 
+                                                                         p(tags$small("Data source: Family Services Data Warehouse 2015-2020 varying years"))
+                                                                         
+                                                                         
+                                                                  )
+                                                         ) 
+                                                )
+                                                
+                                              )
+                                     ) 
+                            ) ,
+                            
+                            ### Individual served------------
+                            tabPanel("Other Programs", value = "served",
+                                     fluidRow(style = "margin: 6px;",
+                                              h1(strong("Individuals Served by Program"), align = "center"),
+                                              p("", style = "padding-top:10px;"), 
+                                              tabsetPanel(
+                                                tabPanel("Overview", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("What Other Programs are in Loudoun? ")), 
+                                                                         # infoBoxOutput("wioa", width = 4),
+                                                                         # p("Workforce Innovation and Opportunity Act"), 
+                                                                         infoBoxOutput("transit" , width = 4),
+                                                                         p("Public transportation"),
+                                                                         
+                                                                         p("Add paragraph highlighting the most interesting stats of enrollment... ")), 
+                                                                  
+                                                                  column(8, 
+                                                                         h4(strong(""))
+                                                                         
+                                                                         
+                                                                  )
+                                                                  )), 
+                                                
+                                                tabPanel("Demographics", 
+                                                         fluidRow(style = "margin: 6px;",
+                                                                  p("", style = "padding-top:10px;"), 
+                                                                  column(4, 
+                                                                         h4(strong("Who do Other Programs serve?")), 
+                                                                         p("Race, Age, backgrounds of programs"), 
+                                                                         p("")
+                                                                         
+                                                                  ), 
+                                                                  column(8, 
+                                                                         
+                                                                         h4(strong("Graphs of Demographics")), 
+                                                                         selectInput(
+                                                                           "stat",
+                                                                           "Select Program",
+                                                                           choices = list(
+                                                                             "Adult Literacy Programs" = "literacy",
+                                                                             "Adult Literacy Program Race" = "literacyR",
+                                                                             "OAR Enrollment"= "oar", 
+                                                                             "OAR Demographics"= "oarD", 
+                                                                             "Oxford House Average Stay" = "oxford1",
+                                                                             "Oxford House Prior" = "oxford2"
+                                                                             
+                                                                           )
+                                                                           
+                                                                         ), 
+                                                                         plotlyOutput(outputId = "demographics", height = "500px"),
+                                                                         p(tags$small("Data Source Vary based on Program"))
+                                                                         
+                                                                  )
+                                                         )
+                                                )
+                                                
+                                              )
+                                     ) 
+                            ) 
                             
                             
                             
@@ -1092,12 +1242,25 @@ server <- function(input, output) {
       
       race %>%
         ggplot() + geom_col(mapping = aes(x = Estimate, y = Race , fill = Race))+  scale_fill_viridis_d() + 
-        labs(title = "Racial Demographics", 
+        labs(title = "Race/Ethnicity", 
              y = "", 
              x = "Population Estimate")  + theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-    } 
+    } else if (var1() == "raceP"){
+      
+      race %>% 
+        ggplot(aes(x = Race, y = Percent, fill = Race)) + 
+        geom_col() +scale_fill_viridis_d()+
+        labs(title = "Race/Ethnicity",
+             y = "Percent (%)",
+             x="") + coord_flip()+ theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+    }else if (var1() == "ethP"){
+      
+      
+    }
     else if (var1() == "education")  { 
       
       education %>%
@@ -1121,13 +1284,16 @@ server <- function(input, output) {
       
     }else {
       pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
+      pov$variable <- factor(pov$variable, levels=unique(pov$variable))
+      
       pov %>%
-        ggplot() + geom_col(mapping = aes(x = sum, y = variable, fill = variable))+  scale_fill_viridis_d() + 
-        labs(title = "Poverty by Race", 
+        ggplot() + geom_col(mapping = aes(x = Percent, y = variable, fill = variable))+  scale_fill_viridis_d() + 
+        labs(title = "Poverty Level by Race", 
              y = "", 
-             x = "Population Estimate") + coord_flip() + 
-        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-        theme_minimal()
+             x = "Percent (%)") + 
+        theme_minimal() + 
+        theme(legend.position = "none",  
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
     }
     
@@ -2212,6 +2378,17 @@ server <- function(input, output) {
   })
   
   
+  familyType <- reactive({
+    input$familyType
+  })
+  
+  
+  output$trendsF <- renderPlot({
+    
+    
+    
+  })
+  
   ## count -----------------------------------------------------------
   
   output$table1 <- renderTable({
@@ -2226,25 +2403,7 @@ server <- function(input, output) {
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
   
   
-  # All info boxes are enrollment numbers
   ## infoBox -----------------------------------------------------------
-  output$medicaid <- renderInfoBox({
-
-    infoBox(title = "Medicaid",
-            value = 244362,
-            subtitle = "Childless Adults Served in 2021",
-            icon = icon("clinic-medical"),
-            fill = TRUE)
-  })
-
-  output$wioa <- renderInfoBox({
-    
-    infoBox(title = "WIOA", value = 28, 
-            subtitle = "Youths enrolled in 2020",
-            icon = icon("briefcase"), color = "green",
-            fill = T)
-  })
-  
   output$transit <- renderInfoBox({
     
     infoBox(title = "Route 54 Safe-T", value = "52, 57, 42", 
@@ -2254,117 +2413,133 @@ server <- function(input, output) {
             fill = T)
   })
   
-  output$food <- renderInfoBox({
+  
+  
+  dmhsaDemos <- reactive({
+    input$dmhsaDemos
+  })
+  ##graph for demographics of individuals served Other Programs
+  output$dmhsaPlot <- renderPlotly({
+    if(dmhsaDemos() == "dmhsaRace") {
+      
+      plot <- mhs_race_relative %>% 
+        ggplot(aes(group = `Race.Ethnicity`, x = Year, y = `Percent`,
+                   fill = `Race.Ethnicity`)) + 
+        geom_col() +
+        scale_y_continuous(labels = scales::percent) +
+        labs(title = "Race of TAY Served") +
+        scale_fill_viridis_d() +
+        theme_minimal()+ theme(legend.position="bottom")
+      
+      ggplotly(plot) %>% layout(legend = list(orientation = "h", y=-0.2) ) 
+      
+    }else if (dmhsaDemos() == "dmhsaGender"){
+      
+      mhs_sex_relative %>% 
+        ggplot(aes(group = Gender, x = Year, y = `Percent`,
+                   fill = Gender)) + 
+        geom_col() +theme_minimal() + 
+        scale_y_continuous(labels = scales::percent) +
+        labs(title = "Gender of TAY Served") +
+        scale_fill_viridis_d() +
+        theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+
+      
+      
+    }else {
+      
+      ggplot(smi, aes(x=Year)) + 
+        geom_line(aes(y = Persons, group = Group, color = Group)) + theme_minimal() + 
+        labs(title = "Severe Mental Illness, 5 Year Count")+scale_fill_viridis_d() +
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+    }
     
-    infoBox(title = "SNAP Benefits", value = 175, 
-            subtitle = "TAYs in 2020",
-            icon = icon("utensils"),
-            color = "purple",
-            fill = T)
-  })
-  
-  output$shelters <- renderInfoBox({
     
-    infoBox(title = "Emergency Shelters", value = 27, 
-            subtitle = "TAYs in 2019" , 
-            icon = icon("house-user"),
-            color = "red",
-            fill = T)
-  })
-  
-  output$homeless <- renderInfoBox({
-    
-    infoBox(title = "Homelessness", value = 22, 
-            subtitle = "TAYs in 2020" , 
-            icon = icon("home"),
-            color = "light-blue",
-            fill = T)
   })
   
   
-  enroll <- reactive({
-    input$enroll
+  familyDemo <- reactive({
+    input$familyDemo
   })
-  ## graphs for enrollment
-  output$enrollment <- renderPlotly({
-    if(enroll() == "med1") {
-      plot <- ggplot() + 
-        geom_line(mapping = aes(Year, `Childless Adults`/1000, group = 1), data = med) + 
-        geom_line(mapping = aes(Year, Children/1000, group = 1), data = med, linetype = "dotted", color="blue", size = 2) + 
-        labs(y = "Persons (1,000) ", 
-             title = "Children and Childless Adults")+ scale_fill_viridis_d() +theme_minimal() + 
+  ##graph for demographics of individuals served Other Programs
+  output$familyPlot <- renderPlotly({
+    if(familyDemo() == "publicRace") {
+      
+      publicR$Race <- factor(publicR$Race, levels=unique(publicR$Race))
+      
+      ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =publicR) + 
+        labs(title = "Public Benefits Race/Ethnicity",
+             y = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              plot.title = element_text(size = 10), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+      
+    }else if (familyDemo() == "publicGender"){
+      
+      publicG$Gender <- factor(publicG$Gender, levels=unique(publicG$Gender))
+      
+      ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =publicG) + 
+        labs(title = "Public Benefits Gender",
+             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1, y = -0.15, text = "Data Source: Data Warehouse 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
+    }else if (familyDemo() == "emerG"){
+      
+      emerG$Gender <- factor(emerG$Gender, levels=unique(emerG$Gender))
+      
+      ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =emerG) + 
+        labs(title = "Emergency Shelters Gender",
+             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
-    } else if (enroll() == "oar") {
+    }else if (familyDemo() == "transG"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
-        labs(title = "Oar Nova 2020",
-             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      transG$Gender <- factor(transG$Gender, levels=unique(transG$Gender))
       
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1.25,  y = .15, text = "Source: OAR Annual Report 2019-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
+      ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =transG) + 
+        labs(title = "Transitional Housing Gender",
+             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
-    }else if (enroll() == "literacy") {
-      plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
-        labs(title = "Adult Literacy Program",
-             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_blank(), axis.title.x = element_text(vjust = -100), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+    }else if (familyDemo() == "transR"){
       
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1.4, y = .15, text = "Source: Loudoun County Public School 2019-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size= 9))) 
+      emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
+      
+      ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
+        labs(title = "Transitional Housing Race/Ethnicity",
+             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
-    }
-    else {
-      plot <- ggplot() + 
-        geom_line(mapping = aes(Year, `Adults, Pregnant Women and Children`/1000, group = 1), data = total) + 
-        geom_line(mapping = aes(Year, Total/1000, group = 1), data = total, linetype = "dashed", color="blue", size = 2) + 
-        labs(y = "Persons (1,000) ", 
-             title = "Adults, Pregnant Women, Children Comapred with Total")+theme_minimal() + 
-        theme(plot.title = element_text(size = 10),
-              axis.text.x = element_text(angle = 45, vjust = .5, color = "black"), 
-              panel.grid.major = element_blank(), panel.grid.minor = element_blank())+scale_fill_viridis_d() 
+      }else {
       
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1,  y = -.15, text = "Data Source: Medicaid Enrollment Reports 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
+        emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
+        
+        ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
+          labs(title = "Emergency Shelters Race/Ethnicity",
+               y = "") +scale_fill_viridis_d() +theme_minimal() + 
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+                legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     }
     
-  }) 
-  
+    
+  })
+
   
   stat <- reactive({
     input$stat
   })
-  ##graph for demographics of individuals served
+  ##graph for demographics of individuals served Other Programs
   output$demographics <- renderPlotly({
-    if(stat() == "literacy") {
+    if(stat() == "literacyR") {
       
       plot <- ggplot() + geom_col(mapping = aes(Race, Percent, fill = Race), data = literacy_demo) + 
         labs(title = "Adult Literacy Program",
@@ -2374,7 +2549,7 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1,  y = -.1, text = "Data Source: Loudoun County Public School 2019", 
+          list(x = 1,  y = -.14, text = "Data Source: Loudoun County Public School 2019", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2410,7 +2585,23 @@ server <- function(input, output) {
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
       
-    }else if (stat() == "oar"){
+    }else if (stat() == "oar") {
+      
+      
+      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
+        labs(title = "Oar Nova 2020",
+             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(plot) %>% layout(
+        annotations = 
+          list(x = 1.25,  y = .15, text = "Source: OAR Annual Report 2019-2020", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10))) 
+      
+      
+      }else if (stat() == "oarD"){
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
         labs(title = "Oar Nova",
@@ -2420,143 +2611,25 @@ server <- function(input, output) {
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1,  y = -.45, text = "Data Source: OAR Annual Report 2019-2020", 
+          list(x = 1,  y = -.42, text = "Data Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
-      
-      
-    }else if (stat() == "mental") {
-      
-      plot <- ggplot(smi, aes(x=Year)) + 
-        geom_line(aes(y = Persons, group = Group, color = Group)) + theme_minimal() + 
-        labs(title = "Severe Mental Illness")+scale_fill_viridis_d() +
-        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1, y = -0.1, text = "Data Source: DMHSA 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
-    }else if (stat() == "publicRace"){
-      
-      plot <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data = publicR) + 
-        labs(title = "Public Benefits",
-             y = "Persons")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1, y = -0.2, text = "Data Source: Data Warehouse 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
-      
-    }else if (stat() == "publicGender"){
-      
-      plot <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data = publicG) + 
-        labs(title = "Public Benefits",
-             y = "Persons")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1, y = -0.1, text = "Data Source: Data Warehouse 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
-      
-      
-    }
-    else if (stat() == "emerG"){
-      
-      plot <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data = emerG) + 
-        labs(title = "Emergency Shelters",
-             y = "Persons")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1, y = -0.1, text = "Data Source: Data Warehouse 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
-      
-    }else if (stat() == "emerR"){
-      
-      plot <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data = emerR) + 
-        labs(title = "Emergency Shelters",
-             y = "Persons")+ scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1, y = -0.14, text = "Data Source: Data Warehouse 2016-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
-      
-      
-      
-      
-    }else if (stat() == "dmhsaGender"){
-      
-      plot <- mhs_sex_relative %>% 
-        ggplot(aes(group = Gender, x = Year, y = `Percent`,
-                   fill = Gender)) + 
-        geom_col() +theme_minimal() + 
-        scale_y_continuous(labels = scales::percent) +
-        labs(title = "Gender of TAY Served") +
-        scale_fill_viridis_d() +
-        theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-                                annotations = 
-                                  list(x = 1, y = -0.1, text = "Data Source: DMHSA 2016-2020", 
-                                       showarrow = F, xref='paper', yref='paper', 
-                                       xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                                       font=list(size=10))) 
-      
-      
-      
       
       
     }else {
       
-      plot <- mhs_race_relative %>% 
-        ggplot(aes(group = `Race.Ethnicity`, x = Year, y = `Percent`,
-                   fill = `Race.Ethnicity`)) + 
-        geom_col() +
-        scale_y_continuous(labels = scales::percent) +
-        labs(title = "Race of TAY Served") +
-        scale_fill_viridis_d() +
-        theme_minimal()+ theme(legend.position="bottom")
+      plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
+        labs(title = "Adult Literacy Program",
+             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_blank(), axis.title.x = element_text(vjust = -100), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(plot) %>% layout(legend = list(orientation = "h", y=-0.2),
-                                annotations = 
-                                  list(x = 1, y = -0.4, text = "Data Source: DMHSA 2016-2020", 
-                                       showarrow = F, xref='paper', yref='paper', 
-                                       xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                                       font=list(size=10)) ) 
-      
-      
-      
-      
-      
-      
+      ggplotly(plot) %>% layout(
+        annotations = 
+          list(x = 1.4, y = .15, text = "Source: Loudoun County Public School 2019-2020", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size= 9))) 
     }
     
     
