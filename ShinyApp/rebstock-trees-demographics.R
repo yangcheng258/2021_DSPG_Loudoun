@@ -109,23 +109,22 @@ fc_virginia <- read_excel(paste0(getwd(),"/data/foster-care-2020-all.xlsx"))
 totals <- data.frame(fc_virginia[c(2:38),])
 
 colnames(totals) <- c("Age Group", "Value")
-groups <- c("<1", "1-5", "6-9", "10-12", "13-15", "16-18", "19+")
+groups <- c("Under 1", "1-5", "6-9", "10-12", "13-15", "16-18", "19+")
 fc_ages <-data.frame(totals[c(24, 26, 28,30,32,34,36),])
 fc_ages$Value <- as.numeric(fc_ages$Value)
+fc_ages$Age.Group <- groups
 #Race and ethnicity 
-fc_races <- data.frame(totals[c(7,9,11,13,15,17),])
+fc_races <- data.frame(totals[c(7,9,13,17),])
+
 colnames(fc_races) <- c("Race", "Value")
-fc_races$Race <- c("Black", "White", "Indian", "Asian", "Hawaiian", "Multi") 
+fc_races[5,2] <- 9
+fc_races$Race <- c("Black", "White", "Asian", "Multi", "Unknown/Missing") 
 fc_races$Race <- factor(fc_races$Race, levels=unique(fc_races$Race))
 
 eth <- rep(c("Hispanic" , "Non-Hispanic") , 1) 
 value <- c(14, 34)
 fc_eth <- data.frame(eth,value)
 
-#TAYs
-age_19 <- rep(c("<19" , "19+") , 1) 
-value <- c(40, 8)
-fc_tays <- data.frame(age_19, value)
 # Sex
 fc_sex <- data.frame(totals[c(1,3),])
 colnames(fc_sex) <- c("Gender", "Value")
@@ -473,19 +472,16 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"),
                                               column(4, 
                                                      h4(strong("Who does Loudoun County Serve?")),
-                                                     p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the residents that the county serves."),
-                                                     p("We retrieved American Community Survey (ACS) data to calculate this information and visualize through graphs.
-                                                      ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets. 
-                                                      We used the most recently available 1-year estimates from 2018/19 to compute statistics for Loudoun county residents by age, race, ethnicity, 
-                                                      employment, health insurance coverage, and other relevant characteristics."), 
+                                                     p("The 2019 American Community Survey (ACS) estimates that transition-aged youths (ages 18-24) make up 5% of the population in Loudoun county.  
+                                                       Of these youths, * are living below the poverty line, and only * percent attaining high school degree.  
+                                                       The number of homeless transition-age youth (TAY) has increased in Loudoun, as 18 more individuals were 
+                                                       counted as homeless in 2020 than in 201. This represents a 450% increase.  "), 
+                                                     p("TAYs are usually faced with these challenges on their way to adulthood, given the lack of financial 
+                                                       resources, support, or knowledge to maintain independence. This includes the difficulty to obtain health 
+                                                       insurance through Medicaid or SCHIP (State Children’s Health Insurance Program). This transition is even more 
+                                                       difficult for those “aging out” of foster care or leaving juvenile detention facilities who face 
+                                                       significant challenges in finding employment and affordable housing given their history. ")
                                                      
-                                                     p("In Loudoun county, 5% of the population makes up transition aged youth (18-24) who are at a disadvantage when trying to live indpendently especially those who have aged out of the foster care
-                                                       system or who have gotten out of juvenile detnetion.They are looking for a way to be more independent and responsible, but
-                                                    because of their past experiences may not have enough resources on their own to make a living and survive. "),
-                                                     p("Based on our literature review done in the first 2 weeks of research, 
-                                                    the problem these young adults face is they want their independence and to create a life for themselves but they do not have the resources (finanical or material) or knowledge to do so on their own. 
-                                                    With many of the programs and services provided in the past, the landlords or renters of apartments and homes would create extra barriers for youths coming out of the foster care system or juvenille detention and still treat
-                                                    them like children but expect them to be adults. However, within the past decade, Loudoun County has created many new programs and services in order to help the TAYs be able to transition more smoothly.")
                                                  ), 
                                               column(8, 
                                                      h4(strong("Visualizations of Residents' Socioeconomic Characteristics")),
@@ -510,31 +506,15 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"),
                                               column(4, 
                                                      h4(strong("Foster Care")),
-                                                     # p("In the US 2019, 423,997 children were in the foster system with 251,359 
-                                                     #   newly entered children and 248,669 exiting. The average age of a child in 
-                                                     #   foster care is 8.4 years old and males are the majority by 4%. For the Transitional 
-                                                     #   Aged Youth (18-24), they only make up about 4% of the total foster care youth in 
-                                                     #   the US. 44% of foster care youth are white and 23% were black. Similar to foster 
-                                                     #   care statistics in Virginia alone, the average time in care is 19.6 months [2]. 
-                                                     #   According to The AFCARS Report in 2019, only 3,335 (1%) children who entered 
-                                                     #   the foster care system were 18+ and it was most likely due to neglect. However, 
-                                                     #   there were 20,465 (8%) youths 18+ who exited the system most likely due to
-                                                     #   aging out and emancipation."), 
-                                                     
-                                                     p("According to the The Adoption and Foster Care Analysis and Reporting System,
-                                                      in 2020 there were 48 children in foster care in only Loudoun County which was
-                                                      .8% in the state of Virginia. Over 2/3
-                                                      of those children were boys and 1/3 were girls and the minority of them of
-                                                      ethnicity of Hispanic. Almost 50% of those children were white, 25% black
-                                                      and less than 5% Asian and multi-racial as you can see from the barplot below.
-                                                      When we are looking at only transitional aged youth from 18-24 where 21 years
-                                                      old is the average time a foster child ages out, there were only 8 children.
-                                                      In Loudoun County, it does not seem like there are many foster care youths
-                                                      who are aging out of the system but only 9 other counties have greater than 9
-                                                      foster care kids over the age of 18. "), 
-                                                     p("It was difficult to retrieve data specifically on those who have aged out of the foster care system and are ages 18-24 because once they have aged out, there
-                                                       is not public record of where they go or how they are."), 
-                                                     br(), 
+                                                     p("According to the Adoption and Foster Care Analysis and Reporting System, in 2020 there were 48 children from infancy to age 
+                                                     21 in foster care in Loudoun County with over half (67%) being boys. There are also significant differences in the racial 
+                                                     demographics as almost 50% are white and about 25% black and less than 5% being Asian.  "),
+                                                     p("When we examine only transitional-aged youths, there were only 8 children reported in the foster care system. 
+                                                       No public record exists for young adults after they leave foster care as such, we do not have information for 
+                                                       youth ages 21-24. Notably, the largest age group currently in foster care, ages 16-18, will be aging out over 
+                                                       the next 5 years. It is therefore important to develop and provide services that will help with their transition into
+                                                       adulthood. ") , 
+                                                     tags$br(), 
                                                      h4(strong("Juvenile Detention")),
                                                      
                                                      # p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
@@ -572,8 +552,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   "Age" = "age",
                                                                   "Sex" = "sex",
                                                                   "Race" = "race",
-                                                                  "Ethnicity" = "eth",
-                                                                  "TAYs" = "tays")
+                                                                  "Ethnicity" = "eth")
                                                                 ),
                                                                 plotlyOutput("plot2"),
                                                                 p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019"))
@@ -603,39 +582,36 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin: 6px;",
                                    h1(strong("Data and Methodology"), align = "center"),
                                    p("", style = "padding-top:10px;"), 
-                                   column(4,
-                                          p("We examined Loudoun County population sociodemographic and socioeconomic characteristics to better understand the residents that the county serves."),
+                                   column(6,
+                                          img(src = 'data-acs.png', style = "display: inline; float: left;", width = "300px"),
+                                          p("We retrieve ",strong("American Community Survey (ACS)")," data to examine demographic and socioeconomic characteristics of our target population. 
+                                            ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets.
+                                            We used the most recently available 1-year/5-year estimates, to characterize Loudoun county’s transitional age youths by age, race,
+                                            gender, educational attainment, health insurance coverage, and poverty level. "),
+
+                                          img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "350px"),
+                                          p("We used ", strong("The Adoption and Foster Care Analysis and Reporting System")," to report the number of youths in foster care in Loudoun County. 
+                                            This allowed us to determine how many youths need services to help with the transition out of the foster care system.  "),
+                                        br(), 
+                                          img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "200px"),
+                                          p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
+                                            the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
+                                            and the total number youth intakes and those leaving the centers.  "),
                                           br(), 
-                                          img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
-                                          p("We retrieved American Community Survey (ACS) data to graph the different characteristics of our targeted population. ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year  and 5-year datasets. We used
-                                          the most recently available 1-year estimates from 2018/2019 to compute percent Loudoun County residents by age, race, gender,educational attainment, health insurance coverage, and poverty level."),
-                                          
-                                          img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "200px"),
-                                          p("We used The Adoption and Foster Care Analysis and Reporting System to report on the number of youths in foster care from 2019 in Loudoun County. 
-                                           We needed a better idea of how many youths need services to transition out of the system. "),
-                                          
-                                          
-                                          img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "100px"),
-                                          p("We used Department of Juvenile Justice to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                                          We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
-                                   
-                                   column(4,
-                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "200px"),
-                                          p("We used Virginia Department of Social Services to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                                           We used these numbers to get a better idea of how many youths need services to transition out of the system."),
-                                          
-                                          img(src = 'data-usCensus.png', style = "display: inline; float: left;", width = "150px"),
-                                          p("We used US Census Bureau to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
+                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "300px"),
+                                          p("We used ", strong("Virginia Department of Social Services"), " to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
                                            We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
                                    
-                                   column(4, 
-                                          
-                                          p("We began our research with a literature review...... "), 
+                                   column(6,
+                                          img(src = 'dmhsa.jpg', style = "display: inline; float: left;", width = "300px"),
+                                          p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and demographics like
+                                            age, gender and race. They split their data based on zipcodes which we used to map out the utilization of their provided services and compare to the area's population density. "),
                                           br(), 
-                                          p("Next we webscraped information on the demographics of our target population: 18-24; in foster care or juvenile detention. "),
-                                          p("Webscrapped the services and programs available and got their locations to map. "),
-                                          br(),
-                                          p("Compare against Fairfax, VA and Allegheny, PA "))
+                                          img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "300px"),
+                                          p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
+                                            and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. ")
+                                          ),
+                                   
                           )
                           
                  ),
@@ -973,14 +949,16 @@ ui <- navbarPage(title = "DSPG 2021",
                             ### Family Services served------------
                             tabPanel("Family Services", value = "family",
                                      fluidRow(style = "margin: 6px;",
-                                              h1(strong("Family Services"), align = "center"),
+                                              h1(strong("Department of Family Services"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                               tabsetPanel(
                                                 tabPanel("Overview", 
                                                          fluidRow(style = "margin: 6px;",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
-                                                                         h4(strong("What programs do Family Services provide? "))
+                                                                         h4(strong("What programs do Family Services provide? ")),
+                                                                         p("The Department of Family Services in Loudoun County provides many services for transition aged youth and we have highlighted the most important ones on this page. 
+                                                                           ")
                                                                   ), 
                                                                   column(8, 
                                                                          h4(strong("programs"))
@@ -994,7 +972,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Who does Family Services serve?")), 
-                                                                         p("Race, Age, backgrounds of programs"), 
+                                                                         p("Family Services prodivded programs served over 100 transition aged youth from 2016 - 2020. As you can see, some programs are used more
+                                                                           often by males and some by females while Asians are served the most with Public benefits like SNAP, Medicaid and TANF while the majority
+                                                                           of those who used the Emergency Shelters and Transtional Housing Program were either White or Black. "), 
                                                                          p("")
                                                                          
                                                                   ), 
@@ -1024,40 +1004,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          fluidRow(style = "margin: 6px;",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
-                                                                         h4(strong("Enrollment Trends")),
-                                                                         p("Visualizing those who have received help compared to those who live in the area give us a better idea of how these programs are being used and if they are being used to 
-                                                                         their full potential. Loudoun County Department of Mental Health, Substance Abuse and Developmental Services provided us with a list of zipcodes corresponding to the number of transition aged youth being served
-                                                                         from 2016 to 2020 by program. Using the dropdown, you can select a specific program and then use the slider to the right to see how the number of individuals being served changes overtime. 
-                                                                         The orange dots are being mapped onto a population density map by census tract of those who live in the area to visualize the utilization of each program within the past 5 years. "),
-                                                                                   p("The number of individuals served mapped on top of the population density map gives us a better idea of those who have mental health issues in the different zipcodes and census tracts but also that the majority 
-                                                                         of those being served by these programs are located on the east side of the county. This leads to another interesting question that could be explored further: Are the gaps in service just by type or also geographically? Are those
-                                                                         living on the west side at a disadvantage in receiving aid for mental health services and potentailly all Living Independently services and programs? ")) ,
+                                                                         h4(strong("Utilization Trends")),
+                                                                         p("Visualizing trends of enrollment and usage for Family Service provided programs is essential in finding and filling gaps for vulnerable transition
+                                                                           aged youth in Loudoun County. Based on data provided by Loudoun County, the animation to the right visualizes persons served for mutliple programs 
+                                                                           from 2015 to 2020. ")
+                                                                        ) ,
                                                                   column(8, 
-                                                                         h4(strong("Map of Individuals Served by Population Density")), 
-                                                                         column(4, 
-                                                                                radioButtons(
-                                                                                  "familyType",
-                                                                                  label = "Select Program Type" ,
-                                                                                  choices = list(
-                                                                                    # "Public Benefits" = "public",
-                                                                                    # "Work Resource Center" = "wrc",
-                                                                                    # "Workforce Innovation and Opportunity" = "wioa",
-                                                                                    # "Emergency Shelters" = "ermShelters",
-                                                                                    "Transitional Housing Program"= "trans")
-                                                                                ),
-                                                                                selected = "Transitional Housing Program") , 
-                                                                         
-                                                                         column(4,
-                                                                                sliderInput(inputId = "yearF", 
-                                                                                            label = "Select a year:",
-                                                                                            value = 2015,
-                                                                                            min = 2015,
-                                                                                            max = 2020,
-                                                                                            sep = "", 
-                                                                                            animate = animationOptions(interval = 4000))) , 
-                                                                         
-                                                                         
-                                                                         plotOutput(outputId = "trendsF"), 
+                                                                         tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
+                                                                         br(), 
                                                                          p(tags$small("Data source: Family Services Data Warehouse 2015-2020 varying years"))
                                                                          
                                                                          
@@ -1361,17 +1315,11 @@ server <- function(input, output) {
              y = "Population Estimate") + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-    }else if(var2() =="sex") {
+    }else {
       ggplot(fc_sex, aes(x = Gender, y = Value, fill = Gender)) + 
         geom_bar(stat="identity") + scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "" , y = "Population Estimate", 
              title = "Sex of Youths in Foster Care") + 
-        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-    }else{
-      ggplot(fc_tays, aes(x = age_19, y = value, fill = age_19)) + 
-        geom_bar(stat="identity") + scale_fill_viridis_d() + theme_minimal() + 
-        labs(x = "" , y = "Population Estimate", 
-             title = "Transitional Aged Youth vs Children in Foster Care") + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     }
     
@@ -2662,6 +2610,16 @@ server <- function(input, output) {
     
     
   }) 
+  
+  output$trendsF <- renderPlotly({
+    
+    ggplot(mapping = aes(Year, Number, color = Age), data =wrc) + geom_line() + 
+      labs(title = "Work Resources Center",
+           y = "Persons", 
+           x= "") +scale_fill_viridis_c() +theme_minimal() + 
+      theme(axis.text.x = element_text(size = 10, angle = 45, vjust = .5, color = "black"), 
+            axis.text.y = element_text(size = 10, vjust = .5, color = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  })
   
   
   
