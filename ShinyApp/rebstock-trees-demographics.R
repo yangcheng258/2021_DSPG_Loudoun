@@ -987,31 +987,41 @@ ui <- navbarPage(title = "DSPG 2021",
                             
                  ),
                  ## Tab Conclusion --------------------------------------------
-                 tabPanel("Conclusion",  value = "conclusion", 
+                 tabPanel("Takeaway",  value = "conclusion", 
                           fluidRow(style = "margin: 6px;",
                                    h1(strong("Conclusion"), align = "center")),  
                           p("", style = "padding-top:10px;"), 
                           p(),
-                          h2("Provision"),
-                          tags$ul(
-                            tags$li("First list item"), 
-                            tags$li("Second list item"), 
-                            tags$li("Third list item")
-                          ),
-                          h2("Utilization"),
-                          tags$ul(
-                            tags$li("First list item"), 
-                            tags$li("Second list item"), 
-                            tags$li("Third list item")
-                          ),
-                          h2("Gaps"),
-                          tags$ul(
-                            tags$li("First list item"), 
-                            tags$li("Second list item"), 
-                            tags$li("Third list item")
-                          )
                           
-                      ), 
+                          fluidRow(style = "margin: 6px;",
+                                   column(4,
+                                           h2("Provision"),
+                                            tags$ul(
+                                            tags$li("First list item"), 
+                                            tags$li("Second list item"), 
+                                            tags$li("Third list item")
+                                          )
+                                        ),
+                                   
+                                   column(4,
+                                          h2("Utilization"),
+                                          tags$ul(
+                                            tags$li("First list item"), 
+                                            tags$li("Second list item"), 
+                                            tags$li("Third list item")
+                                          )
+                                   ),
+                                   column(4,
+                                          h2("Gaps"),
+                                          tags$ul(
+                                            tags$li("First list item"), 
+                                            tags$li("Second list item"), 
+                                            tags$li("Third list item")
+                                          )
+                                   )
+
+                        )
+             ), 
                  ## Tab Team------
                  tabPanel("Team", value = "team",
                           fluidRow(style = "margin-left: 100px; margin-right: 100px;",
