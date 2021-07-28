@@ -396,13 +396,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                           p(),
                                           p(strong("The setting."), a(href = "https://www.loudoun.gov", "Loudoun County", target = "_blank"), 
                                             "is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
-                               in Virginia by area. In 2019, the population was estimated at 413,538, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.
-                               The county's ", a(href = "https://www.census.gov/quickfacts/loudouncountyvirginia", "median household income", target = "_blank"),
+                                           in Virginia by area. In 2019, the population was estimated at 413,538, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.
+                                           The county's ", a(href = "https://www.census.gov/quickfacts/loudouncountyvirginia", "median household income", target = "_blank"),
                                             "of $142,299, 3.1% poverty rate, and median home value of $508,100 makes it the richest county in Virginia in 2019. Our target population, ages 18-24, makes up about 5% of the total population.  
-                               "),
-                                          
-                                          
-                                          
+                                           "),
+                                        
                                           p(),
                                           p(strong("The project."), "This Virginia Tech", a(href = "https://aaec.vt.edu/index.html", "Department of Argicultural and Applied Economics", target = "_blank"),
                                             "Data Science for Public Good (DSPG) project aimed to build local capacity, leverage social and data science to address current and future resident well-being, and enhance
@@ -456,22 +454,6 @@ ui <- navbarPage(title = "DSPG 2021",
                  
                  ## Tab Introduction to Loudoun County-------------------------------------------
                  navbarMenu("Sociodemographics",
-                            # tabPanel("Loudoun",
-                            #          fluidRow(style = "margin: 6px;",
-                            #                     h1(strong("Loudoun County Residents' Sociodemographic Characteristics"), align = "center"),
-                            #                     p("", style = "padding-top:10px;"), 
-                            #                     h4(strong("Who does Loudoun County Serve?")),
-                            #                  
-                            #                       p("The median income of households in Loudoun County, Virginia was $142,299, the poverty rate is 3.4% in 2019. Since 2008, the county has been ranked first in the U.S. in median household income among jurisdictions
-                            #                      with a population of 65,000 or more. " ), 
-                            #                      p("Our targeted population are youths from 18-24 years old, the transitional aged youth, with two subpopulation of those who have aged out of the foster
-                            #                      care system and those who exiting Juvenille Detention. Transitional Aged youth have a harder time adjusting to living 
-                            #                      independently especially when majority of them do not have a at home support system if they have come out the system. In Loudoun county,
-                            #                      this age group makes up about 5% of the population with 28,917 in total according to the American Community Survey 1-year estimates 2019. " ))
-                            #          
-                            #          
-                            #       ),
-                            
                             ### Tab TAY--------------------------------------------
                             tabPanel("Target Population",
                                      fluidRow(style = "margin: 6px;",
@@ -480,7 +462,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                               column(4, 
                                                      h4(strong("Who does Loudoun County Serve?")),
                                                      p("The 2019 American Community Survey (ACS) estimates that transition-aged youths (ages 18-24) make up 5% of the population in Loudoun county.  
-                                                       Of these youths, * are living below the poverty line, and only * percent attaining high school degree.  
+                                                       Of these youths, are living below the poverty line, and only percent attaining high school degree.  
                                                        The number of homeless transition-age youth (TAY) has increased in Loudoun, as 18 more individuals were 
                                                        counted as homeless in 2020 than in 201. This represents a 450% increase.  "), 
                                                      p("TAYs are usually faced with these challenges on their way to adulthood, given the lack of financial 
@@ -510,7 +492,7 @@ ui <- navbarPage(title = "DSPG 2021",
                             ### Tab subpopulation--------------------------------------------
                             tabPanel("Subpopulation",
                                      fluidRow(style = "margin: 6px;",
-                                              h1(strong("Subpopulations" ), align = "center"),
+                                              h1(strong("Subpopulations' Sociodemographic Characteristics" ), align = "center"),
                                               p("", style = "padding-top:10px;"),
                                               column(4, 
                                                      h4(strong("Foster Care")),
@@ -521,7 +503,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        No public record exists for young adults after they leave foster care as such, we do not have information for 
                                                        youth ages 21-24. Notably, the largest age group currently in foster care, ages 16-18, will be aging out over 
                                                        the next 5 years. It is therefore important to develop and provide services that will help with their transition into
-                                                       adulthood. ") , 
+                                                       adulthood within the next few years. ") , 
                                                      tags$br(), 
                                                      h4(strong("Juvenile Detention")),
                                                      
@@ -545,7 +527,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                         about 20 percent, moving from 1,137 to 913 cases."),
                                                         
                                                       p("Though intakes have declined, there 
-                                                        are some significant differences across socioeconomic characteristics.  70 percent of 
+                                                        are some significant differences across socioeconomic characteristics.  70% of 
                                                         newly admitted cases in 2020 are male. While Black youth make up only * percent of Loudoun 
                                                         TAY population, they accounted for 15% of juvenile intakes. The majority of youth admitted 
                                                         are aged 14-17; the largest category (almost 30%) being age 17."),
@@ -605,25 +587,25 @@ ui <- navbarPage(title = "DSPG 2021",
                                           img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "350px"),
                                           p("We used ", strong("The Adoption and Foster Care Analysis and Reporting System")," to report the number of youths in foster care in Loudoun County. 
                                             This allowed us to determine how many youths need services to help with the transition out of the foster care system.  "),
-                                        br(), 
-                                          img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "200px"),
-                                          p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
-                                            the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
-                                            and the total number youth intakes and those leaving the centers.  "),
                                           br(), 
                                           img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "300px"),
                                           p("We used ", strong("Virginia Department of Social Services"), " to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                                           We used these numbers to get a better idea of how many youths need services to transition out of the system.")),
-                                   
-                                   column(6,
+                                           We used these numbers to get a better idea of how many youths need services to transition out of the system."),
+                                         br(), 
+                                         img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "200px"),
+                                         p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
+                                                  the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
+                                                  and the total number youth intakes and those leaving the centers.  ")) ,
+                                  column( 6,
                                           img(src = 'dmhsa.jpg', style = "display: inline; float: left;", width = "300px"),
                                           p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and demographics like
                                             age, gender and race. They split their data based on zipcodes which we used to map out the utilization of their provided services and compare to the area's population density. "),
                                           br(), 
+                                           br(), 
                                           img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "300px"),
                                           p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
                                             and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. ")
-                                          ),
+                                          )
                                    
                           )
                           
@@ -641,12 +623,12 @@ ui <- navbarPage(title = "DSPG 2021",
                                              fluidRow(style = "margin: 6px;",
                                                              p("", style = "padding-top:10px;"), 
                                                     column(6, 
-                                                           h4(strong("What services and programs are available?")),
+                                                           h4(strong("What Services and Programs are available? ")),
                                                            p("The following tables provide counts of programs  
                                                              and services available in each county by subpopulation and by pillar.
                                                              They allow for simple comparison of program types across counties."), 
                                                            
-                                                           p("To gather this information for the interactive tree diagrams, our team researched for three weeks the different programs available to transition aged youth, either
+                                                           p("To gather this information for the interactive tree diagrams, our team researched and webscrapping for three weeks the different programs available to transition aged youth, either
                                                              specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
                                                              Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
                                                              pillar were not easily accessible and were hidden in multiple documents. "),
@@ -674,7 +656,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                            fluidRow(style = "margin: 6px;",
                                                     p("", style = "padding-top:10px;"), 
                                                     column(4, 
-                                                           h4(strong("Trees")),
+                                                           h4(strong("What Services and Programs are Available? ")),
                                                            p("These interactive tree diagrams allow for the comparison of programs/services at the county 
                                                              level in Loudoun, Fairfax and Allegheny county. Each diagram represents
                                                              the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
@@ -692,7 +674,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              in services and programs and which pillar are they under. ")
                                                     ),
                                                     column(8, 
-                                                           h4(strong("Tree Diagram of Programs")),
+                                                           h4(strong("Interactive Trees of Programs")),
                                                            tabsetPanel(
                                                              tabPanel("Loudoun",
                                                                       br(),
@@ -707,7 +689,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree1") 
+                                                                      collapsibleTreeOutput("tree1",height = "550px") 
                                                                       
                                                                       
                                                                       
@@ -725,7 +707,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree3") 
+                                                                      collapsibleTreeOutput("tree3",height = "550px") 
                                                                       
                                                                       
                                                              ), 
@@ -743,12 +725,12 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree2")
+                                                                      collapsibleTreeOutput("tree2",height = "550px")
                                                                       
                                                              )) 
                                                     )) ) ,
                                           
-                                          tabPanel("Comparison", 
+                                          tabPanel("Cross-County Comparison", 
                                             fluidRow(style = "margin: 6px;",
                                                     p("", style = "padding-top:10px;"), 
                                                     column(4,  
@@ -769,11 +751,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
                                                              With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. Also, we can see that 
                                                              many of the programs available in Fairfax are also available to those in Loudoun and vice versa. Since the counties are located close, transition aged youth living in Loudoun may have easy access to those
-                                                             programs and services in Fairfax depending on their location. "), 
-                                                           br(), 
-                                                           br(), 
-                                                           br()
-                                                           
+                                                             programs and services in Fairfax depending on their location. ")
                                                            
                                                            ) ,
                                                     column(8, 
@@ -806,7 +784,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                               h1(strong("Location of Programs and Services"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                               column(4, 
-                                                     h4(strong("Where are these services and programs located?")),
+                                                     h4(strong("Where are these Services and Programs located?")),
                                                      p("The following interactive maps show the office locations of the services and programs available to 
                                                        TAYs in Loudoun county. Hovering over the circle markers will display the name of the service or program. 
                                                        Clicking on the circle markers will open a popup with a detailed description of the service, website link, and whether 
@@ -850,7 +828,7 @@ ui <- navbarPage(title = "DSPG 2021",
                  ## Tab Utilization-------------------------------------------
                  navbarMenu("Utilization",
                             ### DMHSA------
-                            tabPanel("DMHSA", value = "dmhsa", 
+                            tabPanel("MHSADS", value = "MHSADS", 
                                      fluidRow(style = "margin: 6,px;",
                                               h1(strong("Department of Mental Health, Substance Abuse, and Developmental Services"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
@@ -863,16 +841,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                          p("Our target population for this project is transition aged youths. This include those that are “aging out” of the foster care system or 
                                                                            leaving the juvenile detention system. However, there is another subpopulation of TAY that we examine – youths with mental health, 
                                                                            substance use, or developmental/intellectual disabilities.  "),
-                                                                       p("TAYs with disabilities or mental or substance issues face even more barriers as they move towards independence.  
-                                                                         These youths experience an adult poverty rate three times higher than their peers.2 This high level of poverty,
-                                                                         difficulty in accessing health services, and homelessness tend to have a very negative impact on the likelihood of 
-                                                                         employment thereby, compounding the transition to self-sufficient adulthood. 3 Moreover, it is estimated that over 
-                                                                         90% of youth incarcerated in Virginia have significant symptoms of a mental health disorder. Guided by this, we examine 
-                                                                         mental health service utilization and gaps. "),
                                                                        p("We present data on the number of TAYs on the different program waitlists at Loudoun’s Department of Mental Health, Substance Abuse, 
                                                                          and Developmental Services (MHSADS). The programs provided for TAYs with disabilities or mental health issues include:  "),
+                                                                       br(),
                                                                        tags$li("Case management – services delivered for youths with intellectual and developmental disabilities"),
-                                                                       br(), 
                                                                        tags$li("Employment and Day Support – assist youths with obtaining employment and volunteering"),
                                                                        tags$li("Outpatient – psychiatry and individual and group therapy"),
                                                                        tags$li("Residential – housing programs, including group homes. "),
@@ -887,6 +859,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 column(8,
                                                                        h4(strong("Waitlist of MHSADS by Program")), 
                                                                        plotlyOutput("waitlist"),
+                                                                       br(), 
                                                                        p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services"))  ,  
                                                                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                                                                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
@@ -897,7 +870,12 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        p("", style = "padding-top:10px;"), 
                                                        column(4, 
                                                               h4(strong("Who does MHSADS Serve?")),
-                                                              p("")
+                                                              p("TAYs with disabilities or mental or substance issues face even more barriers as they move towards independence.  
+                                                                         These youths experience an adult poverty rate three times higher than their peers.2 This high level of poverty,
+                                                                         difficulty in accessing health services, and homelessness tend to have a very negative impact on the likelihood of 
+                                                                         employment thereby, compounding the transition to self-sufficient adulthood. 3 Moreover, it is estimated that over 
+                                                                         90% of youth incarcerated in Virginia have significant symptoms of a mental health disorder. Guided by this, we examine 
+                                                                         mental health service utilization and gaps. ")
                                                             ), 
                                                        column(8, 
                                                               h4(strong("Demographics")), 
@@ -921,8 +899,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        p("", style = "padding-top:10px;"), 
                                                        column(4, 
                                                              h4(strong("Individuals Served from 2016 – 2020")),
-                                                             p("Visualizing the usage of services allows us to determine whether some services are used more than others. Loudoun County’s Department of Mental Health, Substance Abuse, and Developmental Services (DMHSA) provided us with data on the number of transition aged youth (TAY) served by zip code level. The dropdown box allows for the selection of the various programs. The slider at the right shows how the service number, represented by the orange dots, changes between 2016 and 2020. The orange dots are mapped onto the population density map by census tract of those who live in the area – this shows the utilization of each program by population density."),
-                                                             p("TAYs seems to be consistently utilizing the emergency and outpatient services from the DMHSA. Notably, in comparison to the other services, the residential and employment program is underutilized regardless of location or year.  ")) ,
+                                                             p("Visualizing the usage of services allows us to determine whether some services are used more than others. 
+                                                               Loudoun County’s Department of Mental Health, Substance Abuse, and Developmental Services (DMHSA) provided us with data on 
+                                                               the number of transition aged youth (TAY) served by zip code level. The dropdown box allows for the selection of the various programs. 
+                                                               The slider at the right shows how the service number, represented by the orange dots, changes between 2016 and 2020. 
+                                                               The orange dots are mapped onto the population density map by census tract of those who live in the area – this shows 
+                                                               the utilization of each program by population density."),
+                                                             p("TAYs seems to be consistently utilizing the emergency and outpatient services from the DMHSA. Notably, 
+                                                               in comparison to the other services, the residential and employment program is underutilized regardless of location or year.  ")) ,
                                                       column(8, 
                                                              h4(strong("Individuals Served by Population Density")), 
                                                              column(4, 
@@ -970,8 +954,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("What programs do Family Services provide? ")),
-                                                                         p("The Department of Family Services in Loudoun County provides many services for transition aged youth and we have highlighted the most important ones on this page. 
-                                                                           ")
+                                                                         p("The Department of Family Services in Loudoun County provides many services for transition aged youth and we have
+                                                                         highlighted the most important ones on this page.  ")
                                                                   ), 
                                                                   column(8, 
                                                                          h4(strong("programs"))
@@ -1048,12 +1032,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("What Other Programs are in Loudoun? ")), 
-                                                                         # infoBoxOutput("wioa", width = 4),
-                                                                         # p("Workforce Innovation and Opportunity Act"), 
                                                                          infoBoxOutput("transit" , width = 4),
                                                                          p("Public transportation"),
                                                                          
-                                                                         p("Add paragraph highlighting the most interesting stats of enrollment... ")), 
+                                                                         p("")), 
                                                                   
                                                                   column(8, 
                                                                          h4(strong(""))
@@ -1110,33 +1092,42 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin: 6px;",
                                    h1(strong("Conclusion"), align = "center")),  
                           p("", style = "padding-top:10px;"), 
-                          p(),
                           
                           fluidRow(style = "margin: 6px;",
                                    column(4,
-                                           h2("Provision"),
+                                           h2(strong("Provision")),
                                             tags$ul(
                                             tags$li("Beginning our project with a literature review and initial research, we knew the 5 pillars we wanted to focus our search on: Education, Employment, Housing, Transportation, and Health Services. 
-                                                    For vulnerable Transtion Aged Youth, ages 18-24, it is difficult for them to live independently especially those who have just aged out of the foster care system or gotten out of 
-                                                    juvenile detention. Once we started our webscrapping for the programs available in Loudoun County, we noticed that some of the programs available were difficult to access to gain information to
-                                                    and most of these programs, the person had to call or email for more information. "), 
-                                            tags$li("Second list item"), 
+                                            For vulnerable Transtion Aged Youth, ages 18-24, it is difficult for them to live independently especially those who have just aged out of the foster care system or gotten out of 
+                                            juvenile detention. Once we started our webscrapping for the programs available in Loudoun County, we noticed that some of the programs available were difficult to access to gain information to
+                                            and most of these programs, the person had to call or email for more information. After we webscrapped all of the programs in Loudoun County available for Transition Aged Youth and those specific to former foster care
+                                            youths or juvenile delinquents, we started a cross-county analysis with Fairfax County, VA and Allegheny County, PA. We repeated the webscrapping process with both counties, searching for programs within the same 
+                                            5 pillars for transition aged youth, those who have aged out of the foster care system and those who have gotten out of juvenile detention. To visualize the data we found, we created interactive trees shown
+                                            in the Services, Availability tab and leaflet maps shown in Services, Locations. "), 
+                                            tags$li("The interactive trees are a simple and easy way to display all of the programs and its most important information for each county seperately and together. We noticed gaps in transportation and housing programs in 
+                                            Loudoun compared to Allegheny and Fairfax. The leaflet maps are used to visualize the locations of the services for each county and we noticed geographic gaps in services on the west side of the county. "), 
                                             tags$li("Third list item")
                                           )
                                         ),
                                    
                                    column(4,
-                                          h2("Utilization"),
+                                          h2(strong("Utilization")),
                                           tags$ul(
-                                            tags$li("First list item"), 
+                                            tags$li("Once we noticed the gaps in services in specific pillars like transportation and housing, we searched for more information regarding those who 
+                                                    use these programs in Loudoun. If we can graph which demographics are using these services the most and the least, we may be able to see another gap in services regarding race, socieconomic status, sex, etc. 
+                                                    "), 
                                             tags$li("Second list item"), 
                                             tags$li("Third list item")
                                           )
                                    ),
                                    column(4,
-                                          h2("Gaps"),
+                                          h2(strong("Gaps")),
                                           tags$ul(
-                                            tags$li("First list item"), 
+                                            tags$li("As noted above, once we mapped and visualized the programs' locations and descriptions, it was apparent which pillars Loudoun was lacking in and had an abundance in. 
+                                                    One of the most important gaps that needs to be addressed is the gap in the Transportation pillar. We can infer that most transition aged youth do not have a vehicle of their own and those who have aged out
+                                                    of the foster care system or juvenile detention are even more unlikely to own a vehicle because of the lack of family and friends support. This means that in order to get to one of the programs for employment or education, they would have
+                                                    to have some form of transportation other than a car, public transportation. However, in Loudoun county, the only form of public transportation that was free was one bus route, Safe-T that has 10 stops, most of 
+                                                    them in 3 shopping centers in Leesburg. Because there is no other transportation service that a transition aged youth could qualify for, they are likely not going to be able to get to other programs for employment or education. "), 
                                             tags$li("Second list item"), 
                                             tags$li("Third list item")
                                           )
@@ -1153,9 +1144,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                    p("The", a(href = 'https://aaec.vt.edu/academics/undergraduate/beyond-classroom/dspg.html', 'Data Science for the Public Good (DSPG) Young Scholars program', target = "_blank"),
                                      "is a summer immersive program offered by the", a(href = 'https://aaec.vt.edu/index.html', 'Virginia Tech Department of Agricultural'), "and", a(href = 'https://ext.vt.edu/','Applied Economics and the Virginia Cooperative Extension Service.'),
                                      "In its eighth year, the program engages students from across the country to work together on projects that address state, federal, and local government challenges around
-                              critical social issues relevant in the world today. DSPG young scholars conduct research at the intersection of statistics, computation, and the social sciences
-                              to determine how information generated within every community can be leveraged to improve quality of life and inform public policy. For more information on program
-                              highlights, how to apply, and our annual symposium, please visit", 
+                                    critical social issues relevant in the world today. DSPG young scholars conduct research at the intersection of statistics, computation, and the social sciences
+                                    to determine how information generated within every community can be leveraged to improve quality of life and inform public policy. For more information on program
+                                    highlights, how to apply, and our annual symposium, please visit", 
                                      a(href = 'https://aaec.vt.edu/content/aaec_vt_edu/en/academics/undergraduate/beyond-classroom/dspg.html#select=1.html', 'the official VT DSPG website.', target = "_blank")),
                                    p("", style = "padding-top:10px;")
                           ),
@@ -1188,8 +1179,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                    p(a(href = 'https://loudoun.ext.vt.edu/staff/Vermaak-Stuart.html', 'Stuart Vermaak', target = '_blank'), "(Virginia Cooperative Extension, Loudoun County at Virginia Tech);"),
                                    p(a(href = 'https://loudoun.ext.vt.edu/staff/Hilleary-James.html', 'James Hilleary', target = '_blank'), "(Virginia Cooperative Extension, Loudoun County at Virginia Tech)."),
                                    p("", style = "padding-top:10px;"),
-                                   h4(strong("Acknowledgments"),
-                                      p("We would like to thank Loudoun officials for providing us with data for our project. Specifically, the Department of Mental Health, Substance Abuse, and Developmental Services and the Family Service Department.  "))
+                                   h4(strong("Acknowledgments")) ,
+                                   p("We would like to thank Loudoun officials for providing us with data for our project. Specifically, the Department of Mental Health, Substance Abuse, and Developmental Services and the Family Service Department.  ")
                           )
                  )
                  , inverse = T ) 
@@ -1264,7 +1255,8 @@ server <- function(input, output) {
         ggplot() + geom_col(mapping = aes(x = variables, y = percent, fill = variables ))+ scale_fill_viridis_d()+ 
         labs(title = "Ethnicity By Gender", 
              y = "Percent (%)", 
-             x = "")
+             x = "") + theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       
     }else if (var1() == "home"){
@@ -1320,7 +1312,7 @@ server <- function(input, output) {
       
       
       p <- ggplot(data = fc_ages, aes(x= Age.Group, y = `Population Estimate`, fill = Age.Group) ) + 
-        geom_col(width = .95, alpha = .75) + coord_flip()+ scale_fill_viridis_d() + theme_minimal() + 
+        geom_col() + coord_flip()+ scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Age Groups for Foster Care", 
@@ -1332,7 +1324,7 @@ server <- function(input, output) {
     }else if(var2() == "race"){
       fc_races <- fc_races %>% rename(`Population Estimate` = Value)
       p <- ggplot(data = fc_races, aes(x= Race, y = `Population Estimate`, fill = Race) ) + 
-        geom_col(width = .95, alpha = .75) + coord_flip()+scale_fill_viridis_d() + theme_minimal() + 
+        geom_col() + coord_flip()+scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Racial Demographics for Foster Care", 
