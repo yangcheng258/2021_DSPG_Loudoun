@@ -4,6 +4,7 @@ library(shinyjs)
 library(ggplot2)
 library(maps)
 library(plotly)
+library(DT)
 library(dplyr)
 library(tigris)
 library(tidyverse)
@@ -188,6 +189,8 @@ both <- st_transform(both, '+proj=longlat +datum=WGS84')
 
 # Trees -----------------------------------------------------------
 Tree <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
+# List -----------------------------------------------------------
+list <- read_excel(paste0(getwd(),"/data/complete-list.xlsx")) 
 # Maps -----------------------------------------------------------
 ## Locations ---------
 map <- read_excel(paste0(getwd(),"/data/combined-programs.xlsx")) 
@@ -511,19 +514,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      tags$br(), 
                                                      h4(strong("Juvenile Detention")),
                                                      
-                                                     # p("Youth incarceration in Virginia is run by the Virginia Department of Juvenile Justice (DJJ) 
-                                                     #   and is split between juvenile detention centers (JDCs), group homes, and youth prisons. 
-                                                     #   Black youth are overrepresented among offenders in residential placement, making up 
-                                                     #   40.9% of residents, as compared to 33.3%, 20.3%, .98% and 2.1% for whites, hispanics, 
-                                                     #   asians and native americans, respectively (OJJDP 2019). In regards to sex, males make up 
-                                                     #   the vast majority of offenders in residential placement, at 85.2% of residents. 
-                                                     #   Broken down by age, those aged 16-17 years made up the bulk of residents, accounting for 
-                                                     #   52.4% of them (OJJDP 2019). With respect to mental health, about 73% of all youth entering 
-                                                     #   youth prisons demonstrated significant symptoms of mental disorder and more than 94.9% of
-                                                     #   youth who entered Virginia youth detainment facilities showed some symptoms of Attention 
-                                                     #   Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
-                                                     #   (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
-                                                     
                                                      p("Juvenile legal status lasts through age 20 in Virginia so we could not conduct analysis 
                                                         for the full age range of the TAY population.  However, consistent with the state-level 
                                                         trend, the total number of new youth intakes (ages 8-20) has been declining in Loudoun 
@@ -581,37 +571,39 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin: 6px;",
                                    h1(strong("Data and Methodology"), align = "center"),
                                    p("", style = "padding-top:10px;"), 
-                                   column(6,
+                                   column(4, 
+                                          h4(strong("Methodology")),
+                                          p("Yang")), 
+                                   column(8,  h4(strong("Data Sources"))), 
+                                   column(4,
                                           img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
                                           p("We retrieve ",strong("American Community Survey (ACS)")," data to examine demographic and socioeconomic characteristics of our target population. 
                                             ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets.
-                                            We used the most recently available 1-year/5-year estimates, to characterize Loudoun county’s transitional age youths by age, race,
+                                            We used the most recently available 1-year/5-year estimates, to characterize Loudoun County’s transition aged youths by age, race,
                                             gender, educational attainment, health insurance coverage, and poverty level. "),
-
-                                          img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "300px"),
-                                          p("We used ", strong("The Adoption and Foster Care Analysis and Reporting System")," to report the number of youths in foster care in Loudoun County. 
-                                            This allowed us to determine how many youths need services to help with the transition out of the foster care system.  "),
                                           br(), 
-                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "20px"),
+                                          img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
+                                          p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
+                                            and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. "), 
+                                          br(), 
+                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "200px"),
                                           p("The ", strong("Virginia Department of Social Services"), " ensures that thousands of Virginia's most vulnerable citizens have access to the best services and benefits available to them.
                                             We researched through their website and found various programs and services that are available to transition aged youth in Loudoun and Fairfax in order to find the gaps in
-                                            certain pillars. "),
+                                            certain pillars. ")) ,
+                                  column(4,
+                                          img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
+                                          p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and different demographics like
+                                            age, gender and race. They split their data based on zipcodes which we used to map out the utilization of their provided services and compare to the area's population density. "),
                                          br(), 
-                                         br(), 
+                                         img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "300px"),
+                                         p("We used ", strong("The Adoption and Foster Care Analysis and Reporting System")," to report the number of youths in foster care in Loudoun County. 
+                                            This allowed us to determine how many youths need services to help with the transition out of the foster care system.  "),
                                          br(), 
                                          img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "150px"),
                                          p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
                                                   the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
-                                                  and the total number youth intakes and those leaving the centers.  ")) ,
-                                  column( 6,
-                                          img(src = 'dmhsa.jpg', style = "display: inline; float: left;", width = "200px"),
-                                          p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and demographics like
-                                            age, gender and race. They split their data based on zipcodes which we used to map out the utilization of their provided services and compare to the area's population density. "),
-                                          br(), 
-                                           br(), 
-                                          img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
-                                          p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
-                                            and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. ")
+                                                  and the total number youth intakes and those leaving the centers.  ")
+                                          
                                           )
                                    
                           )
@@ -644,7 +636,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              and services available in each county by subpopulation and by pillar.
                                                              They allow for simple comparison of program types across counties."), 
                                                            
-                                                           p("To gather this information for the interactive tree diagrams, our team researched and webscrapping for three weeks the different programs available to transition aged youth, either
+                                                           p("To gather this information for the interactive tree diagrams, our team researched and web scrapping for three weeks the different programs available to transition aged youth, either
                                                              specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
                                                              Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
                                                              pillar were not easily accessible and were hidden in multiple documents. "),
@@ -656,12 +648,12 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              in the juvenile detention or foster care system."), 
                                                            
                                                            p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
-                                                             the number of programs/services are fairly equal by pillar, with the notible exception 
-                                                             of transportation. Transportation services in Loudoun county useful to vulnerale TAY 
-                                                             are not targeted to those formely involved in Foster Care or Juvenile detention, and 
+                                                             the number of programs/services are fairly equal by pillar, with the notable exception 
+                                                             of transportation. Transportation services in Loudoun county useful to vulnerable TAY 
+                                                             are not targeted to those formally involved in Foster Care or Juvenile detention, and 
                                                              are rather limited outside of medical transportation and commuter buses. This illustrates 
                                                              the potential need to expand transportation services to those TAY formerly involved in Foster Care 
-                                                             or the Juvenile Detention system.")) ,
+                                                             or the Juvenile Detention system. ")) ,
                                                     column(6, 
                                                            h4(strong("Number of Programs by Subpopulation")), 
                                                            tableOutput("table1"),
@@ -676,15 +668,16 @@ ui <- navbarPage(title = "DSPG 2021",
                                                            p("These interactive tree diagrams allow for the comparison of programs/services at the county 
                                                              level in Loudoun, Fairfax and Allegheny county. Each diagram represents
                                                              the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
-                                                             followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office"),
+                                                             followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office. "),
                                                            
-                                                           p("We chose to compare Loudoun County to Fairfax County and Alleghney County for two reasons. 
+                                                           p("We chose to compare Loudoun County to Fairfax County and Allegheny County for two reasons. 
                                                              As the stakeholders had mentioned, Fairfax and Loudoun are constantly being compared because of their close proximity and similar demographics. Therefore, we looked at programs in each of these counties to see 
                                                              if the gaps in services was for only Loudoun county or in the DC Metropolitan area, Northern Virginia area. Second, we chose Allegheny County because based on our research, they have a successful
                                                              transition rate of young adults 18-24 and looking at the programs available for those previously involved in foster care and juvenile detention, it seems that they have more programs specific towards them. 
-                                                             Allegheny County is a great county to look at and see what they are doing compared to a county like Loudoun who wants to provide more programs and services to vulnerable transition aged youth in the future. "), 
+                                                             Allegheny County is a great county to look at and see what they are doing compared to a county like Loudoun who wants to provide more programs and services to vulnerable transition aged youth in the future. 
+                                                             "), 
                                                            
-                                                           p("Using these interactive trees, we can see all of the programs we webscrapped for for each of the counties with the last node being where the person must go to apply. 
+                                                           p("Using these interactive trees, we can see all of the programs we web scrapped for each of the counties with the last node being where the person must go to apply. 
                                                              Since the pandemic, most of the applications can be done online but obviously some of the programs and services are in person. With this information, we can see how easy or difficult it is for 
                                                              these transition aged youth to access each program depending if they have to travel far in order to even apply or if that can be done online within a couple of hours. These trees leads us into the question of where are the gaps 
                                                              in services and programs and which pillar are they under. ")
@@ -764,7 +757,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                           
                                                            p("This combined tree is used to better compare Loudoun County with Fairfax and Allegheny County. As noted above,
                                                              the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
-                                                             in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vounchers and Medicaid. 
+                                                             in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vouchers and Medicaid. 
                                                              With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. Also, we can see that 
                                                              many of the programs available in Fairfax are also available to those in Loudoun and vice versa. Since the counties are located close, transition aged youth living in Loudoun may have easy access to those
                                                              programs and services in Fairfax depending on their location. ")
@@ -835,7 +828,19 @@ ui <- navbarPage(title = "DSPG 2021",
                                               
                                               
                                      )
+                            ), 
+                            
+                            tabPanel("Complete List", 
+                                     fluidRow(style = "margin: 6px;",
+                                              h1(strong("Programs"), align = "center"),
+                                              p("", style = "padding-top:10px;"), 
+                                              DT::dataTableOutput("mytable")
+                                                       
+                                              
+                                              
+                                     )
                             )
+                            
                             
                  ),
                  
@@ -860,7 +865,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                        p("We present data on the number of TAYs on the different program waitlists at Loudoun’s Department of Mental Health, Substance Abuse, 
                                                                          and Developmental Services (MHSADS). The programs provided for TAYs with disabilities or mental health issues include:  "),
                                                                        br(),
-                                                                       tags$li("Case management – services delivered for youths with intellectual and developmental disabilities"),
+                                                                       tags$li("Case Management – services delivered for youths with intellectual and developmental disabilities"),
                                                                        tags$li("Employment and Day Support – assist youths with obtaining employment and volunteering"),
                                                                        tags$li("Outpatient – psychiatry and individual and group therapy"),
                                                                        tags$li("Residential – housing programs, including group homes. "),
@@ -2719,6 +2724,10 @@ server <- function(input, output) {
     
     
   }) 
+  
+  output$mytable = DT::renderDataTable({
+    datatable(list, filter = 'top')
+  })
 
   
   
