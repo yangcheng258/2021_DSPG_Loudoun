@@ -37,7 +37,6 @@ loudoun <- read_excel(paste0(getwd(), "/data/demographics-loudoun.xlsx"))
 l_ages_gender <- read.csv(paste0(getwd(),"/data/ages_gender.csv")) 
 
 # race tays 
-
 race <- loudoun[1:6, 1:2]
 
 colnames(race) <- c("Race", "Estimate", "Sum") 
@@ -46,6 +45,9 @@ race <- race%>%
   mutate(Percent = Estimate/Sum*100)
 
 race$Race <- factor(race$Race, levels=unique(race$Race))
+
+eth_totals <- read.csv(paste0(getwd(), "/data/ethniciy.csv")) 
+
 # education 
 education <- read.csv(paste0(getwd(),"/data/both_education.csv")) 
 
@@ -303,6 +305,11 @@ colnames(transT) <- c( "Number", "Percent", "Year", "Program")
 #DMHSA 
 mhs_race_relative <- read.csv(paste0(getwd(), "/data/race_line.csv")) 
 mhs_sex_relative <- read.csv(paste0(getwd(), "/data/sex_line.csv")) 
+
+# Loudoun Cares
+cares <- loudoun[1:9, 19:20]
+colnames(cares) <- c("Stat", "Name")
+cares$Name <- factor(cares$Name, levels=unique(cares$Name))
 
 
 
@@ -1074,7 +1081,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                              "Adult Literacy Programs" = "literacy",
                                                                              "Adult Literacy Program Race" = "literacyR",
                                                                              "OAR Enrollment"= "oar", 
-                                                                             "OAR Demographics"= "oarD"
+                                                                             "OAR Demographics"= "oarD",
+                                                                             "Loudoun Cares" = "cares"
                                                                              # "Oxford House Average Stay" = "oxford1",
                                                                              # "Oxford House Prior" = "oxford2"
                                                                              
@@ -1108,7 +1116,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                    column(4,
                                            h2("Provision"),
                                             tags$ul(
-                                            tags$li("First list item"), 
+                                            tags$li("Beginning our project with a literature review and initial research, we knew the 5 pillars we wanted to focus our search on: Education, Employment, Housing, Transportation, and Health Services. 
+                                                    For vulnerable Transtion Aged Youth, ages 18-24, it is difficult for them to live independently especially those who have just aged out of the foster care system or gotten out of 
+                                                    juvenile detention. Once we started our webscrapping for the programs available in Loudoun County, we noticed that some of the programs available were difficult to access to gain information to
+                                                    and most of these programs, the person had to call or email for more information. "), 
                                             tags$li("Second list item"), 
                                             tags$li("Third list item")
                                           )
@@ -1249,9 +1260,17 @@ server <- function(input, output) {
       
     }else if (var1() == "ethP"){
       
+      eth_totals %>%
+        ggplot() + geom_col(mapping = aes(x = variables, y = percent, fill = variables ))+ scale_fill_viridis_d()+ 
+        labs(title = "Ethnicity By Gender", 
+             y = "Percent (%)", 
+             x = "")
       
-    }
-    else if (var1() == "education")  { 
+      
+    }else if (var1() == "home"){
+      
+      
+    }else if (var1() == "education")  { 
       
       education %>%
         ggplot(mapping = aes(x = sum, y = variable , fill = variable)) + geom_col()+ scale_fill_viridis_d()+ 
@@ -2608,19 +2627,36 @@ server <- function(input, output) {
       
       
       }else if (stat() == "oarD"){
+        
+        plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
+          labs(title = "Demographics of OAR program",
+               y = "Total TAYs and Adult Residents served in Loudoun") +scale_fill_viridis_d() +theme_minimal() + 
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+                legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+        
+        ggplotly(plot) %>% layout(
+          annotations = 
+            list(x = 1,  y = -.43, text = "Data Source: OAR Annual Report 2019-2020", 
+                 showarrow = F, xref='paper', yref='paper', 
+                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                 font=list(size=10))) 
+        
+        
+      }else if (stat() == "cares"){
       
-      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
-        labs(title = "Demographics of OAR program",
-             y = "Total TAYs and Adult Residents served in Loudoun") +scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
-      ggplotly(plot) %>% layout(
-        annotations = 
-          list(x = 1,  y = -.43, text = "Data Source: OAR Annual Report 2019-2020", 
-               showarrow = F, xref='paper', yref='paper', 
-               xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size=10))) 
+        plot <- ggplot() + geom_col(mapping = aes(Name, Stat, fill = Name), data = cares) + 
+          labs(title = "Statistics of Loudoun Cares Program in 2020",
+               y = "Total Served/Percent Served",
+                x= "") +scale_fill_viridis_d() +theme_minimal() + 
+          theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+                legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+        
+        ggplotly(plot) %>% layout(
+          annotations = 
+            list(x = 1,  y = -.6, text = "Data Source: Loudoun Cares Annual Report 2020", 
+                 showarrow = F, xref='paper', yref='paper', 
+                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                 font=list(size=10))) 
       
       
     }else {
