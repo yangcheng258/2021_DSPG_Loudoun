@@ -91,6 +91,10 @@ healthcare <- loudoun[1:4, 4:5]
 colnames(healthcare) <- c("Type", "Estimate")
 healthcare$Type <- factor(healthcare$Type, levels=unique(healthcare$Type))
 
+#Homelessness
+homeless <- loudoun[1:5, 22:23]
+colnames(homeless) <- c("Year", "TAY")
+
 
 # Mental Illness
 smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
@@ -476,13 +480,13 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      h4(strong("Residents' Socioeconomic Characteristics")),
                                                      selectInput("var1", "Select Socioeconomic Characteristic:", width = "100%", choices = c(
                                                        "Gender and Age Groups" = "age",
-                                                       "Percentage of TAYs by Gender" = "percent", 
+                                                       # "Percentage of TAYs by Gender" = "percent", 
                                                        "Educational Attainment" = "education",
                                                        "Race by Number" = "race", 
                                                        "Race by Percent" = "raceP", 
-                                                       "Ethnicity by Percent" = "ethP", 
+                                                       "Ethnicity by Gender" = "ethP", 
                                                        "Poverty Level by Race" = "poverty",
-                                                       "Homelessness" = "home", 
+                                                       "Homeless TAY in Loudoun" = "home", 
                                                        "Types of Healthcare Coverage" = "health")
                                                      ),
                                                      plotlyOutput("plot1"),
@@ -578,31 +582,34 @@ ui <- navbarPage(title = "DSPG 2021",
                                    h1(strong("Data and Methodology"), align = "center"),
                                    p("", style = "padding-top:10px;"), 
                                    column(6,
-                                          img(src = 'data-acs.png', style = "display: inline; float: left;", width = "300px"),
+                                          img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
                                           p("We retrieve ",strong("American Community Survey (ACS)")," data to examine demographic and socioeconomic characteristics of our target population. 
                                             ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets.
                                             We used the most recently available 1-year/5-year estimates, to characterize Loudoun county’s transitional age youths by age, race,
                                             gender, educational attainment, health insurance coverage, and poverty level. "),
 
-                                          img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "350px"),
+                                          img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "300px"),
                                           p("We used ", strong("The Adoption and Foster Care Analysis and Reporting System")," to report the number of youths in foster care in Loudoun County. 
                                             This allowed us to determine how many youths need services to help with the transition out of the foster care system.  "),
                                           br(), 
-                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "300px"),
-                                          p("We used ", strong("Virginia Department of Social Services"), " to report on the number of youths in Juvenille Detention and how many are transitioning out from 2019 in Loudoun County. 
-                                           We used these numbers to get a better idea of how many youths need services to transition out of the system."),
+                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "20px"),
+                                          p("The ", strong("Virginia Department of Social Services"), " ensures that thousands of Virginia's most vulnerable citizens have access to the best services and benefits available to them.
+                                            We researched through their website and found various programs and services that are available to transition aged youth in Loudoun and Fairfax in order to find the gaps in
+                                            certain pillars. "),
                                          br(), 
-                                         img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "200px"),
+                                         br(), 
+                                         br(), 
+                                         img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "150px"),
                                          p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
                                                   the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
                                                   and the total number youth intakes and those leaving the centers.  ")) ,
                                   column( 6,
-                                          img(src = 'dmhsa.jpg', style = "display: inline; float: left;", width = "300px"),
+                                          img(src = 'dmhsa.jpg', style = "display: inline; float: left;", width = "200px"),
                                           p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and demographics like
                                             age, gender and race. They split their data based on zipcodes which we used to map out the utilization of their provided services and compare to the area's population density. "),
                                           br(), 
                                            br(), 
-                                          img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "300px"),
+                                          img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
                                           p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
                                             and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. ")
                                           )
@@ -671,7 +678,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
                                                              followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office"),
                                                            
-                                                           p("We chose to compare Loudoun County to Farifax County and Alleghney County for two reasons. 
+                                                           p("We chose to compare Loudoun County to Fairfax County and Alleghney County for two reasons. 
                                                              As the stakeholders had mentioned, Fairfax and Loudoun are constantly being compared because of their close proximity and similar demographics. Therefore, we looked at programs in each of these counties to see 
                                                              if the gaps in services was for only Loudoun county or in the DC Metropolitan area, Northern Virginia area. Second, we chose Allegheny County because based on our research, they have a successful
                                                              transition rate of young adults 18-24 and looking at the programs available for those previously involved in foster care and juvenile detention, it seems that they have more programs specific towards them. 
@@ -962,21 +969,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          fluidRow(style = "margin: 6px;",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
-                                                                         h4(strong("What programs do Family Services provide? ")),
-                                                                         p("The Department of Family Services in Loudoun County provides many services for transition aged youth and we have
-                                                                         highlighted the most important ones on this page.  ")
-                                                                  ), 
-                                                                  column(8, 
-                                                                         h4(strong("programs"))
-                                                                         
-                                                                         
-                                                                  ))
-                                                         ), 
-                                                
-                                                tabPanel("Demographics", 
-                                                         fluidRow(style = "margin: 6px;",
-                                                                  p("", style = "padding-top:10px;"), 
-                                                                  column(4, 
                                                                          h4(strong("Who does Family Services serve?")), 
                                                                          p("Family Services prodivded programs served over 100 transition aged youth from 2016 - 2020. As you can see, some programs are used more
                                                                            often by males and some by females while Asians are served the most with Public benefits like SNAP, Medicaid and TANF while the majority
@@ -1073,9 +1065,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                              "Adult Literacy Program Race" = "literacyR",
                                                                              "OAR Enrollment"= "oar", 
                                                                              "OAR Demographics"= "oarD",
-                                                                             "Loudoun Cares" = "cares"
-                                                                             # "Oxford House Average Stay" = "oxford1",
-                                                                             # "Oxford House Prior" = "oxford2"
+                                                                             "Loudoun Cares" = "cares", 
+                                                                             "Oxford House Average Stay" = "oxford1",
+                                                                             "Oxford House Prior" = "oxford2"
                                                                              
                                                                            )
                                                                            
@@ -1214,76 +1206,94 @@ server <- function(input, output) {
       l_ages_gender$variable <- names
       l_ages_gender$gender <-  c("Male", "Male", "Male", "Male", "Female", "Female", "Female",  "Female")
       
-      ggplot(l_ages_gender, aes(x = estimate, y = variable, fill = gender)) +  scale_fill_viridis_d() + 
+      p <- ggplot(l_ages_gender, aes(x = estimate, y = variable, fill = gender)) +  scale_fill_viridis_d() + 
         geom_bar(position="dodge", stat="identity") + theme_minimal() + 
         labs(title = "Gender and Age Groups ", 
              y = "", 
              x = "Population Estimate") +coord_flip()+
         theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      
-    } else if(var1() == "percent") {
-      
-      m_p <- sum(l_ages_gender$estimate[1:4])/205374 * 100 
-      f_p <-sum(l_ages_gender$estimate[5:8])/208164 * 100 
-      
-      percent <- data.frame(rbind(m_p, f_p))
-      colnames(percent) <- "Percent"
-      percent$Gender <- c("Male", "Female")
+      ggplotly(p, tooltip = "x")
       
       
-      percent %>%
-        ggplot() + geom_col(mapping = aes(x = Percent, y = Gender , fill = Gender))+ scale_fill_viridis_d() + 
-        labs(title = "Percent of TAYs by Gender", 
-             y = "", 
-             x = "Percent %") + coord_flip()  + theme_minimal() + 
-        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+    # } else if(var1() == "percent") {
+    #   
+    #   m_p <- sum(l_ages_gender$estimate[1:4])/205374 * 100 
+    #   f_p <-sum(l_ages_gender$estimate[5:8])/208164 * 100 
+    #   
+    #   percent <- data.frame(rbind(m_p, f_p))
+    #   colnames(percent) <- "Percent"
+    #   percent$Gender <- c("Male", "Female")
+    #   
+    #   
+    #   percent %>%
+    #     ggplot() + geom_col(mapping = aes(x = Percent, y = Gender , fill = Gender))+ scale_fill_viridis_d() + 
+    #     labs(title = "Percent of TAYs by Gender", 
+    #          y = "", 
+    #          x = "Percent %") + coord_flip()  + theme_minimal() + 
+    #     theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
     }else if(var1() == "race"){
       
-      race %>%
+      p <- ace %>%
         ggplot() + geom_col(mapping = aes(x = Estimate, y = Race , fill = Race))+  scale_fill_viridis_d() + 
-        labs(title = "Race/Ethnicity", 
+        labs(title = "Race by Number", 
              y = "", 
              x = "Population Estimate")  + theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
+      ggplotly(p, tooltip = "x")
+      
     } else if (var1() == "raceP"){
       
-      race %>% 
+      p <- race %>% 
         ggplot(aes(x = Race, y = Percent, fill = Race)) + 
         geom_col() +scale_fill_viridis_d()+
-        labs(title = "Race/Ethnicity",
+        labs(title = "Race by Percent",
              y = "Percent (%)",
              x="") + coord_flip()+ theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
+      ggplotly(p, tooltip = "x")
+      
     }else if (var1() == "ethP"){
       
-      eth_totals %>%
+      p <- eth_totals %>%
         ggplot() + geom_col(mapping = aes(x = variables, y = percent, fill = variables ))+ scale_fill_viridis_d()+ 
         labs(title = "Ethnicity By Gender", 
              y = "Percent (%)", 
-             x = "") + theme_minimal() + 
+             x = "") + theme_minimal() + theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      ggplotly(p, tooltip = "y")
       
       
     }else if (var1() == "home"){
       
+      p <- ggplot() + geom_col(mapping = aes(Year, TAY, fill = TAY), data = homeless) + 
+        labs(title = "Homeless TAY in Loudoun ",
+             y = "TAY",
+             x = "")+ scale_fill_viridis_c()+ theme_minimal() + 
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(p, tooltip = "y")
+      
+      
       
     }else if (var1() == "education")  { 
       
-      education %>%
+      p <- education %>%
         ggplot(mapping = aes(x = sum, y = variable , fill = variable)) + geom_col()+ scale_fill_viridis_d()+ 
         labs(title = "Educational Attainment", 
              y = "", 
              x = "Population Estimate")  + theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
+      ggplotly(p, tooltip = "x")
+      
       
     }
     else if (var1() == "health"){
-      healthcare %>%
+      p <- healthcare %>%
         ggplot(mapping = aes(x = Estimate, y = Type , fill = Type))  + geom_col()+  scale_fill_viridis_d() + 
         labs(title = "Types of Healthcare Coverage", 
              y = "", 
@@ -1291,9 +1301,11 @@ server <- function(input, output) {
         coord_flip() + theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
+      ggplotly(p, tooltip = "x")
+      
       
     }else {
-      pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
+      p <- pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
       pov$variable <- factor(pov$variable, levels=unique(pov$variable))
       
       pov %>%
@@ -1304,6 +1316,7 @@ server <- function(input, output) {
         theme_minimal() + 
         theme(legend.position = "none",  
               panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      ggplotly(p, tooltip = "x")
       
     }
     
@@ -2447,7 +2460,7 @@ server <- function(input, output) {
   output$dmhsaPlot <- renderPlotly({
     if(dmhsaDemos() == "dmhsaRace") {
       
-      plot <- mhs_race_relative %>% 
+      p <- mhs_race_relative %>% 
         ggplot(aes(group = `Race.Ethnicity`, x = Year, y = `Percent`,
                    fill = `Race.Ethnicity`)) + 
         geom_col() +
@@ -2456,11 +2469,11 @@ server <- function(input, output) {
         scale_fill_viridis_d() +
         theme_minimal()+ theme(legend.position="bottom")
       
-      ggplotly(plot) %>% layout(legend = list(orientation = "h", y=-0.2) ) 
+      ggplotly(p, tooltip = "y")
       
     }else if (dmhsaDemos() == "dmhsaGender"){
       
-      mhs_sex_relative %>% 
+      p <-mhs_sex_relative %>% 
         ggplot(aes(group = Gender, x = Year, y = `Percent`,
                    fill = Gender)) + 
         geom_col() +theme_minimal() + 
@@ -2469,15 +2482,19 @@ server <- function(input, output) {
         scale_fill_viridis_d() +
         theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
+      ggplotly(p, tooltip = "y")
+      
 
       
       
     }else {
       
-      ggplot(smi, aes(x=Year)) + 
+      p <- ggplot(smi, aes(x=Year)) + 
         geom_line(aes(y = Persons, group = Group, color = Group)) + theme_minimal() + 
         labs(title = "Severe Mental Illness, 5 Year Count")+scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(p, tooltip = "y")
 
     }
     
@@ -2493,66 +2510,80 @@ server <- function(input, output) {
     if(familyDemo() == "publicRace") {
       
       publicR$Race <- factor(publicR$Race, levels=unique(publicR$Race))
+      publicR$Number <- as.numeric(publicR$Number)
       
-      ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =publicR) + 
+      
+      p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =publicR) + 
         labs(title = "Public Benefits Race/Ethnicity",
              y = "") +scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+        theme(axis.text.x = element_text(angle = 45, vjust = 1, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+      
+      ggplotly(p, tooltip = "y")
       
     }else if (familyDemo() == "publicGender"){
       
       publicG$Gender <- factor(publicG$Gender, levels=unique(publicG$Gender))
       
-      ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =publicG) + 
+      p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =publicG) + 
         labs(title = "Public Benefits Gender",
              y = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(p, tooltip = "y")
       
       
     }else if (familyDemo() == "emerG"){
       
       emerG$Gender <- factor(emerG$Gender, levels=unique(emerG$Gender))
       
-      ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =emerG) + 
+      p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =emerG) + 
         labs(title = "Emergency Shelters Gender",
              y = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(p, tooltip = "y")
       
       
     }else if (familyDemo() == "transG"){
       
       transG$Gender <- factor(transG$Gender, levels=unique(transG$Gender))
       
-      ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =transG) + 
+      p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =transG) + 
         labs(title = "Transitional Housing Gender",
              y = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(p, tooltip = "y")
       
       
     }else if (familyDemo() == "transR"){
       
       emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
       
-      ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
+      p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
         labs(title = "Transitional Housing Race/Ethnicity",
              y = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(p, tooltip = "y")
       
       
       }else {
       
         emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
         
-        ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
+        p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
           labs(title = "Emergency Shelters Race/Ethnicity",
                y = "") +scale_fill_viridis_d() +theme_minimal() + 
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+        
+        ggplotly(p, tooltip = "y")
     }
     
     
@@ -2572,43 +2603,43 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(plot) %>% layout(
+      ggplotly(plot, tooltip = "y") %>% layout(
         annotations = 
           list(x = 1,  y = -.18, text = "Data Source: Loudoun County Public School 2019", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
       
-    # }else if (stat() == "oxford1"){
-    #   
-    #   plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) + 
-    #     labs(title = "Oxford Houses in VA ",
-    #          y = "Months") +scale_fill_viridis_d() +theme_minimal() + 
-    #     theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-    #           legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-    #   
-    #   ggplotly(plot) %>% layout(
-    #     annotations = 
-    #       list(x = 1,  y = -.3, text = "Data Source: Oxford Annual Report 2019-2020", 
-    #            showarrow = F, xref='paper', yref='paper', 
-    #            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-    #            font=list(size=10))) 
-      
-      
-    # }else if (stat() == "oxford2"){
-    #   
-    #   plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) + 
-    #     labs(title = "Oxford Houses in VA",
-    #          y = "%/Years") +scale_fill_viridis_d() +theme_minimal() + 
-    #     theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
-    #           legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-    #   
-    #   ggplotly(plot) %>% layout(
-    #     annotations = 
-    #       list(x = 1,  y = -.4, text = "Data Source: Oxford Annual Report 2019-2020", 
-    #            showarrow = F, xref='paper', yref='paper', 
-    #            xanchor='right', yanchor='auto', xshift=0, yshift=0,
-    #            font=list(size=10))) 
+    }else if (stat() == "oxford1"){
+
+      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) +
+        labs(title = "Oxford Houses in VA ",
+             y = "Months") +scale_fill_viridis_d() +theme_minimal() +
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+      ggplotly(plot, tooltip = "y") %>% layout(
+        annotations =
+          list(x = 1,  y = -.3, text = "Data Source: Oxford Annual Report 2019-2020",
+               showarrow = F, xref='paper', yref='paper',
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
+
+
+    }else if (stat() == "oxford2"){
+
+      plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) +
+        labs(title = "Oxford Houses in VA",
+             y = "%/Years") +scale_fill_viridis_d() +theme_minimal() +
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
+              legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+      ggplotly(plot, tooltip = "y") %>% layout(
+        annotations =
+          list(x = 1,  y = -.4, text = "Data Source: Oxford Annual Report 2019-2020",
+               showarrow = F, xref='paper', yref='paper',
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
       
     }else if (stat() == "oar") {
       
@@ -2619,7 +2650,7 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),legend.position = "none",
               panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(plot) %>% layout(
+      ggplotly(plot, tooltip = "y") %>% layout(
         annotations = 
           list(x = 1,  y = -.2, text = "Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
@@ -2635,7 +2666,7 @@ server <- function(input, output) {
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
-        ggplotly(plot) %>% layout(
+        ggplotly(plot, tooltip = "y") %>% layout(
           annotations = 
             list(x = 1,  y = -.43, text = "Data Source: OAR Annual Report 2019-2020", 
                  showarrow = F, xref='paper', yref='paper', 
@@ -2652,7 +2683,7 @@ server <- function(input, output) {
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
-        ggplotly(plot) %>% layout(
+        ggplotly(plot, tooltip = "y") %>% layout(
           annotations = 
             list(x = 1,  y = -.6, text = "Data Source: Loudoun Cares Annual Report 2020", 
                  showarrow = F, xref='paper', yref='paper', 
@@ -2663,12 +2694,12 @@ server <- function(input, output) {
     }else {
       
       plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
-        labs(title = "Adult Literacy Program",
+        labs(title = "Adult Literacy Program", 
              y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"), legend.position = "none", 
               panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(plot) %>% layout(
+      ggplotly(plot, tooltip = "y") %>% layout(
         annotations = 
           list(x = 1, y = -.2, text = "Source: Loudoun County Public School 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
