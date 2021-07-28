@@ -531,19 +531,24 @@ ui <- navbarPage(title = "DSPG 2021",
                                                      #   Deficit Hyperactivity Disorder (ADHD), Conduct Disorder (CD), Oppositional Defiant Disorder 
                                                      #   (ODD), Substance Abuse, or Substance Dependence (DJJ 2020)."), 
                                                      
-                                                     p("Virginia has some of the highest referral and incarceration rates of youth,
-                                                      with the highest number of student referrals in the country and a rate of youth
-                                                      incarceration at 75 percent higher than the national average at 79 per 100,000 youths
-                                                      (Data Snapshot of Youth Incarceration in Virginia, smarter_choices_FINAL). While Virginia
-                                                      spends around $171,588 per incarcerated youth annually (DJJ 2016), it still deals with high
-                                                      recidivism rates, with 34.4% of probation placements, 54.4% of direct care Placements and
-                                                      60.7% of parole placements being repeat offenders. In addition to high recidivism rates,
-                                                      youths being released from direct care for the Fiscal Year of 2015 only received high school
-                                                      diplomas or a GED at a rate of 19 percent. During the 2019-2020 school year only 35 total
-                                                      youth offenders received a high school diploma or GED (DJJ 2019). However, the public
-                                                      pattern of youth imprisonment in the U.S. has been declining, and did so too in Virginia,
-                                                      with youth imprisonment down 65% in Virginia between 2003 and 2016. ")
-                                                               
+                                                     p("Juvenile legal status lasts through age 20 in Virginia so we could not conduct analysis 
+                                                        for the full age range of the TAY population.  However, consistent with the state-level 
+                                                        trend, the total number of new youth intakes (ages 8-20) has been declining in Loudoun 
+                                                        over the last several years. Between 2018 and 2020, juvenile intake cases decreased by 
+                                                        about 20 percent, moving from 1,137 to 913 cases."),
+                                                        
+                                                      p("Though intakes have declined, there 
+                                                        are some significant differences across socioeconomic characteristics.  70 percent of 
+                                                        newly admitted cases in 2020 are male. While Black youth make up only * percent of Loudoun 
+                                                        TAY population, they accounted for 15% of juvenile intakes. The majority of youth admitted 
+                                                        are aged 14-17; the largest category (almost 30%) being age 17."),
+                                                        
+                                                        p("It is difficult to analyze socioeconomic patterns for juvenile delinquents after age 20 which would provide us with a 
+                                                        guide of the necessary services they would need to help with their transition to adulthood. 
+                                                        However, in 2019, over 90 percent of youth incarcerated in Virginia had significant mental 
+                                                        health disorder. 1 In addition, there is a high recidivism rate (over 50%) and only 35 total 
+                                                        youth offenders received a high school diploma or GED. This snapshot suggests that TAYs leaving 
+                                                        the juvenile system would greatly benefit from the availability of health services, education, and employment.")
                                                         ), 
                                               column(8, h4(strong("Subpopulations' Socioeconomic Characteristics")),
                                                      tabsetPanel(
@@ -568,7 +573,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   "Ethnicity" = "eth")
                                                                 ),
                                                                 plotlyOutput("plot3"),
-                                                                p(tags$small("Data source: Department of Juvenile Justice (DJJ) "))
+                                                                p(tags$small("Data source: Department of Juvenile Justice (DJJ) 2020 Data Resource Guide"))
                                                                 
                                                        )
                                                      ) 
@@ -1292,8 +1297,10 @@ server <- function(input, output) {
   output$plot2 <- renderPlotly({
     if(var2() == "age") {
       fc_ages$Age.Group <- factor(fc_ages$Age.Group, levels=unique(fc_ages$Age.Group))
+      fc_ages <- fc_ages %>% rename(`Population Estimate` = Value)
       
-      ggplot(data = fc_ages, aes(x= Age.Group, y = Value, fill = Age.Group) ) + 
+      
+      p <- ggplot(data = fc_ages, aes(x= Age.Group, y = `Population Estimate`, fill = Age.Group) ) + 
         geom_col(width = .95, alpha = .75) + coord_flip()+ scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "", 
              y = "Population Estimate",
@@ -1301,29 +1308,38 @@ server <- function(input, output) {
              fill ="") + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
       
+      q <- ggplotly(p, tooltip = "y")
+      q
     }else if(var2() == "race"){
-      ggplot(data = fc_races, aes(x= Race, y = Value, fill = Race) ) + 
+      fc_races <- fc_races %>% rename(`Population Estimate` = Value)
+      p <- ggplot(data = fc_races, aes(x= Race, y = `Population Estimate`, fill = Race) ) + 
         geom_col(width = .95, alpha = .75) + coord_flip()+scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "", 
              y = "Population Estimate",
              title = "Racial Demographics for Foster Care", 
              fill ="") + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
+      q <- ggplotly(p, tooltip = "y")
+      q
     } else if (var2() == "eth") {
-      g <- ggplot(fc_eth, aes(eth, value, fill = eth))
-      g + geom_bar(stat = "identity") + scale_fill_viridis_d() + theme_minimal() + 
+      fc_eth <- fc_eth %>% rename(`Population Estimate` = value)
+      g <- ggplot(fc_eth, aes(eth, `Population Estimate`, fill = eth)) + geom_col() + 
+        scale_fill_viridis_d() + theme_minimal() + 
         labs(title = "Ethinic Demographics of Foster children",
              x = "", 
              y = "Population Estimate") + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-      
+      q <- ggplotly(g, tooltip = "y")
+      q
     }else {
-      ggplot(fc_sex, aes(x = Gender, y = Value, fill = Gender)) + 
+      fc_sex <- fc_sex %>% rename(`Population Estimate` = Value)
+      p <- ggplot(fc_sex, aes(x = Gender, y = `Population Estimate`, fill = Gender)) + 
         geom_bar(stat="identity") + scale_fill_viridis_d() + theme_minimal() + 
         labs(x = "" , y = "Population Estimate", 
              title = "Sex of Youths in Foster Care") + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      q <- ggplotly(p, tooltip = "y")
+      q
     }
     
   }) 
@@ -1338,45 +1354,52 @@ server <- function(input, output) {
       jv_age$Age <- factor(jv_age$Age, levels=unique(jv_age$Age))
       jv_age <- jv_age  %>% 
         rename(`Relative Frequency` = Proportion) %>% 
-        mutate(Age = recode(Age, `12-Aug` = "8-12" ))
+        mutate(Age = recode(Age, `12-Aug` = "8-12" )) %>% 
+        mutate(`Relative Frequency` = `Relative Frequency`/ 100) %>% 
+        filter(Age != "Missing")
       
       
-      jv_age %>% 
+      p <- jv_age %>% 
         ggplot(aes(x = Age, y = `Relative Frequency`, fill = Age)) +
         geom_col() +scale_fill_viridis_d() + 
         labs(x = "", y = "Relative Frequency",
-             title = "Age Groups of Loudoun Intakes") + 
+             title = "Age Groups of Juvenile Intakes") + 
         theme_minimal() + 
-        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-        coord_flip()
+        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+        coord_flip() 
+      q <- ggplotly(p, tooltip = "y")
+      q
     }
     else if(var3() == "race"){
       jv_race$Race <- factor(jv_race$Race, levels=unique(jv_race$Race))
-      jv_race <- jv_race %>% mutate(`Relative Frequency` = Proportion)
+      jv_race <- jv_race %>% mutate(`Relative Frequency` = Proportion) %>% 
+        mutate(`Relative Frequency` = `Relative Frequency`/100)
       
-      jv_race %>% 
+      p <- jv_race %>% 
         ggplot(aes(x = Race, y = `Relative Frequency`, fill =Race)) +
         geom_col() +
         labs(x = "", y = "Relative Frequency",
-             title = "Racial Demographics of Loudoun Intakes") + 
+             title = "Racial Demographics of Juvenile Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
         coord_flip() 
-      
+      q <- ggplotly(p, tooltip = "y")
     }
     else if (var3() == "eth") {
       jv_eth$Ethnicity <- factor(jv_eth$Ethnicity, levels=unique(jv_eth$Ethnicity))
-      jv_eth <- jv_eth %>% mutate(`Relative Frequency` = Proportion)
+      jv_eth <- jv_eth %>% mutate(`Relative Frequency` = Proportion)%>% 
+        mutate(`Relative Frequency` = `Relative Frequency`/100)
       
       
-      jv_eth %>% 
+      p <- jv_eth %>% 
         ggplot(aes(x = Ethnicity, y = `Relative Frequency`, fill = Ethnicity))  +
         geom_col() +
         labs(x = "", y = "Relative Frequency",
-             title = "Ethnic Demographics of Loudoun Intakes") + 
+             title = "Ethnicity of Juvenile Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
         coord_flip()
+      q <- ggplotly(p, tooltip = "y")
       
     }
     else{
@@ -1384,14 +1407,16 @@ server <- function(input, output) {
       jv_sex <- jv_sex %>% mutate(`Relative Frequency` = Proportion)
       
       
-      jv_sex %>% 
+      p <- jv_sex %>% 
         ggplot(aes(x = Sex, y = `Relative Frequency`, fill = Sex)) +
         geom_col() +
         labs(x = "", y = "Relative Frequency",
-             title = "Sex Demographics of Loudoun Intakes") + 
+             title = "Sex Demographics of Juvenile Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
         coord_flip()
+      
+      q <- ggplotly(p, tooltip = "y")
       
       
     }
