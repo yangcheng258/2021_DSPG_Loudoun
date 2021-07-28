@@ -2430,14 +2430,24 @@ server <- function(input, output) {
   ## count -----------------------------------------------------------
   
   output$table1 <- renderTable({
-    table <- read.csv("data/program_subpop_counts.csv")
-    table
+    programs <- read_excel("data/combined-programs.xlsx")
+    subpop_count <- programs %>% 
+      group_by(County) %>% 
+      count(Subpopulation) %>% 
+      pivot_wider(names_from = County, values_from = n) %>% 
+      relocate(Loudoun, .after = Subpopulation)
+    subpop_count
     
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
   
   output$table2 <- renderTable({
-    table <- read.csv("data/program_pillar_counts.csv")
-    table
+    programs <- read_excel("data/combined-programs.xlsx")
+    pillar_count <- programs %>% 
+      group_by(County) %>% 
+      count(Pillars) %>% 
+      pivot_wider(names_from = County, values_from = n) %>% 
+      relocate(Loudoun, .after = Pillars)
+    pillar_count
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
   
   
