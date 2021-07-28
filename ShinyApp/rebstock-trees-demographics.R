@@ -1391,16 +1391,15 @@ server <- function(input, output) {
     if(var3() == "age") {
       jv_age$Age <- factor(jv_age$Age, levels=unique(jv_age$Age))
       jv_age <- jv_age  %>% 
-        rename(`Relative Frequency` = Proportion) %>% 
+        rename(`Percent (%)` = Proportion) %>% 
         mutate(Age = recode(Age, `12-Aug` = "8-12" )) %>% 
-        mutate(`Relative Frequency` = `Relative Frequency`/ 100) %>% 
         filter(Age != "Missing")
       
       
       p <- jv_age %>% 
-        ggplot(aes(x = Age, y = `Relative Frequency`, fill = Age)) +
+        ggplot(aes(x = Age, y = `Percent (%)`, fill = Age)) +
         geom_col() +scale_fill_viridis_d() + 
-        labs(x = "", y = "Relative Frequency",
+        labs(x = "", y = "Percent (%)",
              title = "Age Groups of Juvenile Intakes") + 
         theme_minimal() + 
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
@@ -1410,13 +1409,12 @@ server <- function(input, output) {
     }
     else if(var3() == "race"){
       jv_race$Race <- factor(jv_race$Race, levels=unique(jv_race$Race))
-      jv_race <- jv_race %>% mutate(`Relative Frequency` = Proportion) %>% 
-        mutate(`Relative Frequency` = `Relative Frequency`/100)
+      jv_race <- jv_race %>% mutate(`Percent (%)` = Proportion) 
       
       p <- jv_race %>% 
-        ggplot(aes(x = Race, y = `Relative Frequency`, fill =Race)) +
+        ggplot(aes(x = Race, y = `Percent (%)`, fill =Race)) +
         geom_col() +
-        labs(x = "", y = "Relative Frequency",
+        labs(x = "", y = "Percent (%)",
              title = "Racial Demographics of Juvenile Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -1425,14 +1423,13 @@ server <- function(input, output) {
     }
     else if (var3() == "eth") {
       jv_eth$Ethnicity <- factor(jv_eth$Ethnicity, levels=unique(jv_eth$Ethnicity))
-      jv_eth <- jv_eth %>% mutate(`Relative Frequency` = Proportion)%>% 
-        mutate(`Relative Frequency` = `Relative Frequency`/100)
+      jv_eth <- jv_eth %>% mutate(`Percent (%)` = Proportion)
       
       
       p <- jv_eth %>% 
-        ggplot(aes(x = Ethnicity, y = `Relative Frequency`, fill = Ethnicity))  +
+        ggplot(aes(x = Ethnicity, y = `Percent (%)`, fill = Ethnicity))  +
         geom_col() +
-        labs(x = "", y = "Relative Frequency",
+        labs(x = "", y = "Percent (%)",
              title = "Ethnicity of Juvenile Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
@@ -1442,13 +1439,14 @@ server <- function(input, output) {
     }
     else{
       jv_sex$Sex <- factor(jv_sex$Sex, levels=unique(jv_sex$Sex))
-      jv_sex <- jv_sex %>% mutate(`Relative Frequency` = Proportion)
+      jv_sex <- jv_sex %>% mutate(`Percent (%)` = Proportion) %>% 
+        mutate(`Percent (%)` = 100 * `Percent (%)` )
       
       
       p <- jv_sex %>% 
-        ggplot(aes(x = Sex, y = `Relative Frequency`, fill = Sex)) +
+        ggplot(aes(x = Sex, y = `Percent (%)`, fill = Sex)) +
         geom_col() +
-        labs(x = "", y = "Relative Frequency",
+        labs(x = "", y = "Percent (%)",
              title = "Sex Demographics of Juvenile Intakes") + 
         theme_minimal() + scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
