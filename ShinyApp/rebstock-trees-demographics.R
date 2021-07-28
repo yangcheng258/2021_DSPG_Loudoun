@@ -624,6 +624,15 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              p("", style = "padding-top:10px;"), 
                                                     column(6, 
                                                            h4(strong("What Services and Programs are available? ")),
+                                                           p("The literature suggests that there are five main areas 
+                                                             TAYs struggle in their transition to adulthood: educational 
+                                                             attainment, employment, housing, transportation, and access 
+                                                             to healthcare services. Motivated by the literature, we examine 
+                                                             the availability of services in Loudoun in these five pillars along 
+                                                             with the availability specific to the foster care or juvenile delinquents’ 
+                                                             subpopulation. We also cross-county comparison with Fairfax (also in Virginia) 
+                                                             and Allegheny (Pennsylvania) to determine whether service gaps differ within 
+                                                             Virginia or by states."), 
                                                            p("The following tables provide counts of programs  
                                                              and services available in each county by subpopulation and by pillar.
                                                              They allow for simple comparison of program types across counties."), 
