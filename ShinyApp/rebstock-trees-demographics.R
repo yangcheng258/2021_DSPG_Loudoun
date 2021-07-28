@@ -795,24 +795,17 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4, 
                                                      h4(strong("Where are these services and programs located?")),
-                                                     p("The following interactive maps mark the office locations 
-                                                       of the services and programs found available to vulnerable
-                                                       TAY. Hovering over the circle markers will display the name of the service/program,
-                                                       while clicking on the circle markers will open a popup with a detailed description of 
-                                                       the program/service. Maps are available by county; each county's services and programs can be 
-                                                       catagorized by subpopulation served and by the pillar the program/service best 
-                                                       fits. The radiobuttons at the topright allow the user to further filter locations."),
-                                                     p("The Loudoun county maps make more apparent the higher concentration of 
-                                                     offices for programs/services 
-                                                       found towards the east side of the county, near 
-                                                       the DC Metropolitan area. This divide between the eastern part of the county and the rest of the county
-                                                      highlights the need for greater access to 
-                                                      in-person services and 
-                                                       programs useful to vulnerable TAY in all parts of the county. "), 
-                                                     p("It is to be noted that not all services/programs on the map require 
-                                                       one to go in-person to the office location, for this reason, delivery
-                                                       method of service is listed in the detailed description of each service 
-                                                       through the popup.")
+                                                     p("The following interactive maps show the office locations of the services and programs available to 
+                                                       TAYs in Loudoun county. Hovering over the circle markers will display the name of the service or program. 
+                                                       Clicking on the circle markers will open a popup with a detailed description of the service, website link, and whether 
+                                                       service delivery is online, in-person, or hybrid. "),
+                                                     p("Each service/program is grouped by pillars (education, employment, health, housing, and transportation) and subpopulation
+                                                       (foster care, juvenile delinquent, or generally to TAYs). The radio buttons at the top-right corner of the graph filter the
+                                                       services or programs by subpopulation.  For comparison, we also include county maps for Fairfax, VA, and Alleghany, PA.  "), 
+                                                     p("The Loudoun maps reveal a high concentration of offices in the eastern side of the county, nearer the DC Metropolitan area. 
+                                                       This suggests that TAY that resides in the western region may have difficulty in accessing these in-person services/programs. 
+                                                       Our maps, therefore, highlight the need for greater access to in-person services/programs to vulnerable TAYs in the 
+                                                       non-eastern regions of the county. ")
                                                      
                                               ), 
                                               column(8, 
@@ -858,7 +851,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                          p("Our target population for this project is transition aged youths. This include those that are “aging out” of the foster care system or 
                                                                            leaving the juvenile detention system. However, there is another subpopulation of TAY that we examine – youths with mental health, 
                                                                            substance use, or developmental/intellectual disabilities.  "),
-                                                                       
                                                                        p("TAYs with disabilities or mental or substance issues face even more barriers as they move towards independence.  
                                                                          These youths experience an adult poverty rate three times higher than their peers.2 This high level of poverty,
                                                                          difficulty in accessing health services, and homelessness tend to have a very negative impact on the likelihood of 
@@ -866,7 +858,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                          90% of youth incarcerated in Virginia have significant symptoms of a mental health disorder. Guided by this, we examine 
                                                                          mental health service utilization and gaps. "),
                                                                        p("We present data on the number of TAYs on the different program waitlists at Loudoun’s Department of Mental Health, Substance Abuse, 
-                                                                         and Developmental Services (DMHSA). The programs provided for TAYs with disabilities or mental health issues include:  "),
+                                                                         and Developmental Services (MHSADS). The programs provided for TAYs with disabilities or mental health issues include:  "),
                                                                        tags$li("Case management – services delivered for youths with intellectual and developmental disabilities"),
                                                                        br(), 
                                                                        tags$li("Employment and Day Support – assist youths with obtaining employment and volunteering"),
@@ -881,7 +873,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                          2020 in our analysis as the usage rate may be affected by the COVID pandemic. ")
                                                                   ), 
                                                                 column(8,
-                                                                       h4(strong("Waitlist of DMHSA by Program")), 
+                                                                       h4(strong("Waitlist of MHSADS by Program")), 
                                                                        plotlyOutput("waitlist"),
                                                                        p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services"))  ,  
                                                                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
@@ -892,7 +884,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                               fluidRow(style = "margin: 6px;",
                                                        p("", style = "padding-top:10px;"), 
                                                        column(4, 
-                                                              h4(strong("Who does DMHSA Serve? ")),
+                                                              h4(strong("Who does MHSADS Serve?")),
                                                               p("")
                                                             ), 
                                                        column(8, 
@@ -1077,9 +1069,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                              "Adult Literacy Programs" = "literacy",
                                                                              "Adult Literacy Program Race" = "literacyR",
                                                                              "OAR Enrollment"= "oar", 
-                                                                             "OAR Demographics"= "oarD", 
-                                                                             "Oxford House Average Stay" = "oxford1",
-                                                                             "Oxford House Prior" = "oxford2"
+                                                                             "OAR Demographics"= "oarD"
+                                                                             # "Oxford House Average Stay" = "oxford1",
+                                                                             # "Oxford House Prior" = "oxford2"
                                                                              
                                                                            )
                                                                            
@@ -2531,13 +2523,13 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Race, Percent, fill = Race), data = literacy_demo) + 
         labs(title = "Adult Literacy Program",
-             y = "Percent Served")+scale_fill_viridis_d() +theme_minimal() + 
+             y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1,  y = -.14, text = "Data Source: Loudoun County Public School 2019", 
+          list(x = 1,  y = -.18, text = "Data Source: Loudoun County Public School 2019", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2578,12 +2570,13 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
         labs(title = "Number of Individuals in the OAR program",
-             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+             y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),legend.position = "none",
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.25,  y = .15, text = "Source: OAR Annual Report 2019-2020", 
+          list(x = 1,  y = -.2, text = "Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2593,13 +2586,13 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
         labs(title = "Demographics of OAR program",
-             y = "Percent Served") +scale_fill_viridis_d() +theme_minimal() + 
+             y = "Total TAYs and Adult Residents served in Loudoun") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1,  y = -.42, text = "Data Source: OAR Annual Report 2019-2020", 
+          list(x = 1,  y = -.43, text = "Data Source: OAR Annual Report 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2609,12 +2602,13 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
         labs(title = "Adult Literacy Program",
-             y = "Persons Served")+scale_fill_viridis_d() +theme_minimal() + 
-        theme(axis.text.x = element_blank(), axis.title.x = element_text(vjust = -100), panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+             y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"), legend.position = "none", 
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(plot) %>% layout(
         annotations = 
-          list(x = 1.4, y = .15, text = "Source: Loudoun County Public School 2019-2020", 
+          list(x = 1, y = -.2, text = "Source: Loudoun County Public School 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size= 9))) 
