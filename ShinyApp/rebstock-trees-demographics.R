@@ -19,6 +19,7 @@ library(sf)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(tidygeocoder)
+library(janitor)
 options(tigris_use_cache = TRUE)
 
 # census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
@@ -2438,7 +2439,9 @@ server <- function(input, output) {
       group_by(County) %>% 
       count(Subpopulation) %>% 
       pivot_wider(names_from = County, values_from = n) %>% 
-      relocate(Loudoun, .after = Subpopulation)
+      relocate(Loudoun, .after = Subpopulation) %>% 
+      relocate(`Allegheny, PA`, .after = Fairfax) %>% 
+      adorn_totals("row")
     subpop_count
     
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
@@ -2449,8 +2452,9 @@ server <- function(input, output) {
       group_by(County) %>% 
       count(Pillars) %>% 
       pivot_wider(names_from = County, values_from = n) %>% 
-      relocate(Loudoun, .after = Pillars)
-    pillar_count
+      relocate(Loudoun, .after = Pillars) %>% 
+      relocate(`Allegheny, PA`, .after = Fairfax) %>% 
+      slice(1:2, 4, 5, 3) %>% adorn_totals("row")
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
   
   
