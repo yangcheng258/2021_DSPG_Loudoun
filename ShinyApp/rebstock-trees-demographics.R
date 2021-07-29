@@ -624,29 +624,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              p("", style = "padding-top:10px;"), 
                                                     column(6, 
                                                            h4(strong("What Services and Programs are available? ")),
-                                                           p("The literature suggests that there are five main areas 
-                                                             TAYs struggle in their transition to adulthood: educational 
-                                                             attainment, employment, housing, transportation, and access 
-                                                             to healthcare services. Motivated by the literature, we examine 
-                                                             the availability of services in Loudoun in these five pillars along 
-                                                             with the availability specific to the foster care or juvenile delinquents’ 
-                                                             subpopulation. We also cross-county comparison with Fairfax (also in Virginia) 
-                                                             and Allegheny (Pennsylvania) to determine whether service gaps differ within 
-                                                             Virginia or by states."), 
-                                                           p("The following tables provide counts of programs  
-                                                             and services available in each county by subpopulation and by pillar.
-                                                             They allow for simple comparison of program types across counties."), 
+                                                           p("Research literature suggests that there are five main areas that transition age youth (TAY) struggle with in their transition to adulthood and economic independence:  educational attainment, employment, housing, transportation, and access to healthcare services.    The diagrams presented below show what services exist in Loudoun County along these five dimensions, or pillars.  Branches show services available to all TAY and where available, specifically to TAY from the foster care or juvenile delinquent systems.   The same information is presented for the two comparison counties, Fairfax, Virginia and Allegheny, Pennsylvania, to enable comparisons between jurisdictions. "), 
+                                                           p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA as having exemplary transitional service infrastructure for vulnerable TAY.  "), 
                                                            
-                                                           p("To gather this information for the interactive tree diagrams, our team researched and web scrapping for three weeks the different programs available to transition aged youth, either
-                                                             specific to foster care or juvenile detention subpopulations or in general for 18-24 year olds in Loudoun County, Fairfax County and Allegheny County. 
-                                                             Our team searched as if we were the young adult looking for this information and noticed how some programs and services regarding the transportation and housing 
-                                                             pillar were not easily accessible and were hidden in multiple documents. "),
+                                                           p("The tables to the right summarize the data by providing counts of services and programs available in each county by subpopulation and by pillar.  Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  Programs for foster care and former foster care youth are only slightly more widespread.  The great majority of services and programs are available for vulnerable TAY in general.  "),
+                                                           h5(strong('Types of services and programs')),
+                                                           p("For Loudoun County, the distribution of programs by pillar indicate that the number of services and programs are fairly equal among areas, except there are many fewer transportation services."),
                                                            
-                                                           p("It is to be noted that the greater majority of the programs/services found 
-                                                             across all counties were directed towards vulnerable TAY in general.  This highlights
-                                                             a lack of targeted programs and a potential need to increase the number of those
-                                                             programs and services specifically catering to the needs of those formerly involved
-                                                             in the juvenile detention or foster care system."), 
+                                                           p("While the number of services and programs are an important index of resources available to help TAY in their path toward a viable economic independence, the quality and range of those programs is also critical.  In particular, how well are the programs meeting specific needs for these TAY populations?   The project shows that most services appear to be located in the eastern portion of the county (see Locations tab) and that transportation services are the least well represented.  Getting youth to necessary services from all parts of the county may represent a gap that could be further explored in subsequent projects"), 
                                                            
                                                            p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
                                                              the number of programs/services are fairly equal by pillar, with the notable exception 
@@ -665,24 +650,18 @@ ui <- navbarPage(title = "DSPG 2021",
                                            fluidRow(style = "margin: 6px;",
                                                     p("", style = "padding-top:10px;"), 
                                                     column(4, 
-                                                           h4(strong("What Services and Programs are Available? ")),
-                                                           p("These interactive tree diagrams allow for the comparison of programs/services at the county 
-                                                             level in Loudoun, Fairfax and Allegheny county. Each diagram represents
-                                                             the programs of the selected pillar in the selected county. Nodes represent first the pillar, then the targeted subpopulation,
-                                                             followed by the program/service name, then the intended age range of the program/service and lastly the city or county location of its office. "),
+                                                           h4(strong("How to find access to and provision of services and programs  ")),
+                                                           p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
                                                            
-                                                           p("We chose to compare Loudoun County to Fairfax County and Allegheny County for two reasons. 
-                                                             As the stakeholders had mentioned, Fairfax and Loudoun are constantly being compared because of their close proximity and similar demographics. Therefore, we looked at programs in each of these counties to see 
-                                                             if the gaps in services was for only Loudoun county or in the DC Metropolitan area, Northern Virginia area. Second, we chose Allegheny County because based on our research, they have a successful
-                                                             transition rate of young adults 18-24 and looking at the programs available for those previously involved in foster care and juvenile detention, it seems that they have more programs specific towards them. 
-                                                             Allegheny County is a great county to look at and see what they are doing compared to a county like Loudoun who wants to provide more programs and services to vulnerable transition aged youth in the future. 
-                                                             "), 
+                                                           p("The AVAILABILTY tab allows users to explore types and targeting of services by locality and pillar.  Users can select the county of interest through tabs and specific pillars by filtering on the radio buttons.  Each tree diagram represents programs of the selected pillar in the selected county.  Nodes - circular points from which branching curves or lines extend - represent first the pillar, then the targeted subpopulation, followed by the service or program name, the intended age range of the program/service, and lastly the office location.  Programs accessible online are so noted.   "), 
                                                            
-                                                           p("Using these interactive trees, we can see all of the programs we web scrapped for each of the counties with the last node being where the person must go to apply. 
-                                                             Since the pandemic, most of the applications can be done online but obviously some of the programs and services are in person. With this information, we can see how easy or difficult it is for 
-                                                             these transition aged youth to access each program depending if they have to travel far in order to even apply or if that can be done online within a couple of hours. These trees leads us into the question of where are the gaps 
-                                                             in services and programs and which pillar are they under. ")
+                                                           p("For service and program locations, select the LOCATION tab.  Users can hover over each program node to activate a description of the service.  To obtain a complete description of all services and programs, select the ALL SERVICES tab. "),
+                                                           h5(strong("Key to specific terms used in the branching diagrams: ")),
+                                                           p("Any age - No age restriction applies.  If eligibility is restricted to the foster care population, this means that anyone with a history within that system, for example, is eligible for these services or programs, even once they have aged out of them."),
+                                                           p("Any age - No age restriction applies.  If eligibility is restricted to the foster care population, this means that anyone with a history within that system, for example, is eligible for these services or programs, even once they have aged out of them."),
+                                                           p("Hybrid - Services or programs are delivered both in-person or online ")
                                                     ),
+                                                    
                                                     column(8, 
                                                            h4(strong("Interactive Trees of Programs")),
                                                            tabsetPanel(
@@ -745,24 +724,16 @@ ui <- navbarPage(title = "DSPG 2021",
                                                     p("", style = "padding-top:10px;"), 
                                                     column(4,  
                                                            h4(strong("Where are the gaps?")), 
-                                                            p("These interactive tree diagrams contain all programs and services available in Loudoun, Fairfax and Allegheny county organized by pillar. The diagrams are intended for 
-                                                            comparison between counties. Its nodes first represent pillar, then subpopulation, followed by program name, intended age range of program, and then finally the county 
-                                                            which the program is accessible from."),
+                                                            p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
                                                            
-                                                           p("While going through the interactive trees, you may see that there are an abundant amount of services and programs for pillars like 
-                                                             education and employment in Loudoun but again, not many for transportation and housing. Here is where we noticed the first pillars in what type of programs Loudoun are lacking in. 
-                                                             While Loudoun county has many programs supporting the education and employment pillars, the transition aged youth may have a hard time taking advantage of those programs without 
-                                                             transportation or health services available to them. Due to Loudoun having a gap in the transportation pillar, the other pillars' programs are being used as much as youths want to which is
-                                                             why this age group (18-24) especially those aging out of the foster care and getting out of juvenile detention are having trouble living independently. 
-                                                             "), 
+                                                           p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA as having exemplary transitional service infrastructure for vulnerable TAY."), 
                                                           
-                                                           p("This combined tree is used to better compare Loudoun County with Fairfax and Allegheny County. As noted above,
-                                                             the last node represents the county the program is accessible from when we can use to better visualize the gaps in which pillar in Loudoun County. Most of the programs 
-                                                             in each county are specific to those who live in the county with the exception of Great Expectations, Workforce Innovation and Opportunity Act, Education and Training Vouchers and Medicaid. 
-                                                             With this interactive tree, we can better see where Loudoun County is lacking versus where Allegheny county is sufficient in which led them to having a high success transition rate. Also, we can see that 
-                                                             many of the programs available in Fairfax are also available to those in Loudoun and vice versa. Since the counties are located close, transition aged youth living in Loudoun may have easy access to those
-                                                             programs and services in Fairfax depending on their location. ")
-                                                           
+                                                           p("Not surprisingly, across all counties, services and program available to all 18-24 year olds are the most abundant across all pillars.  Most of these programs are safety net or benefit programs for adults based on income need or educational programs aimed at enabling all adults to advance themselves, such as through the community college systems.   What may be particularly helpful to youth aging out of foster care or emerging from juvenile detention, however, are programs that recognize their unique challenges."),
+                                                           p("Some of these tailored programs are embedded within broader services.  For example, Great Expectations Services for Youth in Foster Care within the Northern Virginia Community College system helps connect this population with higher education.  Others include financial assistance or guidance aimed at assisting with the transition from residential care to independence, such as LIFT 2 for youth aging out of the foster care system.    "), 
+                                                           p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  In Northern Virginia, OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources) offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   Youth who only have juvenile justice involvement are also eligible for these services.    However, these services are broadly available to all post-incarcerated residents. "), 
+                                                           p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  Unique to Loudoun is Mobile Hope's Handcuffs to Hope program , which works with incarcerated youth three to six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to helping TAY with past or current involvement in the criminal justice system train for and find employment.  Both administered by Partner4Work, Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE) provides comprehensive case management as well as a suite of job-focused programs, while the Career Pipeline Project offers paid on-the-job training opportunities. "), 
+                                                           p("Programs for foster care and former foster care youth specifically include programs targeting educational,  employment, housing and health needs, such as LIFT 2 in Fairfax that addresses a wide range of potential needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the Independent Living Program administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
+                                                           p("Reviewing the breadth and number of support services and programs across all counties, it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth, and lack of a case management system for the TAY subpopulations of interest.   "), 
                                                            ) ,
                                                     column(8, 
                                                            h4(strong("Comparison Tree by Pillar")),
@@ -795,17 +766,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(4, 
                                                      h4(strong("Where are these Services and Programs located?")),
-                                                     p("The following interactive maps show the office locations of the services and programs available to 
-                                                       TAYs in Loudoun county. Hovering over the circle markers will display the name of the service or program. 
-                                                       Clicking on the circle markers will open a popup with a detailed description of the service, website link, and whether 
-                                                       service delivery is online, in-person, or hybrid. "),
-                                                     p("Each service/program is grouped by pillars (education, employment, health, housing, and transportation) and subpopulation
-                                                       (foster care, juvenile delinquent, or generally to TAYs). The radio buttons at the top-right corner of the graph filter the
-                                                       services or programs by subpopulation.  For comparison, we also include county maps for Fairfax, VA, and Alleghany, PA.  "), 
-                                                     p("The Loudoun maps reveal a high concentration of offices in the eastern side of the county, nearer the DC Metropolitan area. 
-                                                       This suggests that TAY that resides in the western region may have difficulty in accessing these in-person services/programs. 
-                                                       Our maps, therefore, highlight the need for greater access to in-person services/programs to vulnerable TAYs in the 
-                                                       non-eastern regions of the county. ")
+                                                     p("The following interactive maps show the office locations of the services and programs available to TAYs in Loudoun county. Hovering over the circular markers will display the name of the service or program. Clicking on the circular markers will open a popup with a detailed description of the service, website link, and whether service delivery is online, in-person, or hybrid. "),
+                                                     p("Each service/program is grouped by pillars (education, employment, health, housing, and transportation) and subpopulation (foster care, juvenile delinquent, or generally to TAYs). The radio buttons at the top-right corner of the graph filter the services or programs by subpopulation. For comparison, we also include county maps for Fairfax, VA, and Alleghany, PA.  Not all services require in-person office visits; delivery method of service is listed in the service descriptions, as are links to program websites.  For descriptions of online programs, please select the ALL SERVICES tab. "), 
+                                                     p("The Loudoun maps reveal a high concentration of offices in the eastern side of the county, nearer the DC Metropolitan area. This suggests that TAY that reside in the western region may have more difficulty accessing in-person services or programs.  ")
                                                      
                                               ), 
                                               column(8, 
