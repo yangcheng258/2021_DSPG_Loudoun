@@ -530,7 +530,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                         p("It is difficult to analyze socioeconomic patterns for juvenile delinquents after age 20 which would provide us with a 
                                                         guide of the necessary services they would need to help with their transition to adulthood. 
                                                         However, in 2019, over 90 percent of youth incarcerated in Virginia had significant mental 
-                                                        health disorder. 1 In addition, there is a high recidivism rate (over 50%) and only 35 total 
+                                                        health disorder [1]. In addition, there is a high recidivism rate (over 50%) and only 35 total 
                                                         youth offenders received a high school diploma or GED. This snapshot suggests that TAYs leaving 
                                                         the juvenile system would greatly benefit from the availability of health services, education, and employment.")
                                                         ), 
@@ -561,7 +561,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 
                                                        )
                                                      ) 
-                                              )    
+                                              )   ,
+                                              tags$br(), 
+                                              h4("References: "),
+                                              p("[1] Virginia Dept of Juvenile Justice, & United States of America. (2020). Virginia Department of Juvenile Justice Data Resource Guide Fiscal Year 2020.")
                                      )) 
                  ),
                  
@@ -671,7 +674,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree1",height = "550px") 
+                                                                      collapsibleTreeOutput("tree1",height = "500px") 
                                                                       
                                                                       
                                                                       
@@ -689,7 +692,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree3",height = "550px") 
+                                                                      collapsibleTreeOutput("tree3",height = "500px") 
                                                                       
                                                                       
                                                              ), 
@@ -707,7 +710,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree2",height = "550px")
+                                                                      collapsibleTreeOutput("tree2",height = "500px")
                                                                       
                                                              )) 
                                                     )) ) ,
@@ -717,11 +720,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                     p("", style = "padding-top:10px;"), 
                                                     column(4,  
                                                            h4(strong("Where are the gaps?")), 
-                                                            p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
-                                                           
-                                                           p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA as having exemplary transitional service infrastructure for vulnerable TAY."), 
-                                                          
-                                                           p("Not surprisingly, across all counties, services and program available to all 18-24 year olds are the most abundant across all pillars.  Most of these programs are safety net or benefit programs for adults based on income need or educational programs aimed at enabling all adults to advance themselves, such as through the community college systems.   What may be particularly helpful to youth aging out of foster care or emerging from juvenile detention, however, are programs that recognize their unique challenges."),
+                                                            p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "), 
                                                            p("Some of these tailored programs are embedded within broader services.  For example, Great Expectations Services for Youth in Foster Care within the Northern Virginia Community College system helps connect this population with higher education.  Others include financial assistance or guidance aimed at assisting with the transition from residential care to independence, such as LIFT 2 for youth aging out of the foster care system.    "), 
                                                            p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  In Northern Virginia, OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources) offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   Youth who only have juvenile justice involvement are also eligible for these services.    However, these services are broadly available to all post-incarcerated residents. "), 
                                                            p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  Unique to Loudoun is Mobile Hope's Handcuffs to Hope program , which works with incarcerated youth three to six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to helping TAY with past or current involvement in the criminal justice system train for and find employment.  Both administered by Partner4Work, Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE) provides comprehensive case management as well as a suite of job-focused programs, while the Career Pipeline Project offers paid on-the-job training opportunities. "), 
