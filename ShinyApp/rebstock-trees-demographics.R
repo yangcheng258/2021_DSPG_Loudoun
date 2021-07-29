@@ -631,15 +631,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                            h5(strong('Types of services and programs')),
                                                            p("For Loudoun County, the distribution of programs by pillar indicate that the number of services and programs are fairly equal among areas, except there are many fewer transportation services."),
                                                            
-                                                           p("While the number of services and programs are an important index of resources available to help TAY in their path toward a viable economic independence, the quality and range of those programs is also critical.  In particular, how well are the programs meeting specific needs for these TAY populations?   The project shows that most services appear to be located in the eastern portion of the county (see Locations tab) and that transportation services are the least well represented.  Getting youth to necessary services from all parts of the county may represent a gap that could be further explored in subsequent projects"), 
+                                                           p("While the number of services and programs are an important index of resources available to help TAY in their path toward a viable economic independence, the quality and range of those programs is also critical.  In particular, how well are the programs meeting specific needs for these TAY populations?   The project shows that most services appear to be located in the eastern portion of the county (see Locations tab) and that transportation services are the least well represented.  Getting youth to necessary services from all parts of the county may represent a gap that could be further explored in subsequent projects")
                                                            
-                                                           p("Looking at the distribution of programs by pillar in Loudoun, it can be seen that 
-                                                             the number of programs/services are fairly equal by pillar, with the notable exception 
-                                                             of transportation. Transportation services in Loudoun county useful to vulnerable TAY 
-                                                             are not targeted to those formally involved in Foster Care or Juvenile detention, and 
-                                                             are rather limited outside of medical transportation and commuter buses. This illustrates 
-                                                             the potential need to expand transportation services to those TAY formerly involved in Foster Care 
-                                                             or the Juvenile Detention system. ")) ,
+                                                          ) ,
                                                     column(6, 
                                                            h4(strong("Number of Programs by Subpopulation")), 
                                                            tableOutput("table1"),
@@ -657,7 +651,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                                            
                                                            p("For service and program locations, select the LOCATION tab.  Users can hover over each program node to activate a description of the service.  To obtain a complete description of all services and programs, select the ALL SERVICES tab. "),
                                                            h5(strong("Key to specific terms used in the branching diagrams: ")),
-                                                           p("Any age - No age restriction applies.  If eligibility is restricted to the foster care population, this means that anyone with a history within that system, for example, is eligible for these services or programs, even once they have aged out of them."),
                                                            p("Any age - No age restriction applies.  If eligibility is restricted to the foster care population, this means that anyone with a history within that system, for example, is eligible for these services or programs, even once they have aged out of them."),
                                                            p("Hybrid - Services or programs are delivered both in-person or online ")
                                                     ),
