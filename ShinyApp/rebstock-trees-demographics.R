@@ -22,8 +22,8 @@ library(tidygeocoder)
 library(janitor)
 options(tigris_use_cache = TRUE)
 
-# census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
-# readRenviron("~/.Renviron")
+census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
+readRenviron("~/.Renviron")
 
 
 
@@ -204,7 +204,7 @@ loudoun_locations$Latitude <- as.numeric(loudoun_locations$Latitude)
 
 
 allegheny_locations <- map%>%
-  filter(County == "Allegheny") %>% 
+  filter(County == "Allegheny, PA") %>% 
   filter(Longitude != "Online" & Longitude != "Mulitple locations") %>% drop_na()
 
 allegheny_locations$Longitude <- as.numeric(allegheny_locations$Longitude)
@@ -722,7 +722,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                       
                                                              ), 
                                                              
-                                                             tabPanel("Allegheny",
+                                                             tabPanel("Allegheny, PA",
                                                                       br(),
                                                                       radioButtons(
                                                                         "pillar2",
@@ -814,7 +814,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                             selectInput(
                                                               "county",
                                                               "Select County",
-                                                              choices = c("Loudoun", "Fairfax", "Allegheny"), 
+                                                              choices = c("Loudoun", "Fairfax", "Allegheny, PA"), 
                                                               selected = "Loudoun",
                                                               width = 400
                                                             )),
@@ -1241,7 +1241,7 @@ server <- function(input, output) {
       
     }else if(var1() == "race"){
       
-      p <- ace %>%
+      p <- race %>%
         ggplot() + geom_col(mapping = aes(x = Estimate, y = Race , fill = Race))+  scale_fill_viridis_d() + 
         labs(title = "Race by Number", 
              y = "", 
@@ -1314,7 +1314,7 @@ server <- function(input, output) {
       p <- pov <- rbind(w_p, b_p, i_p, as_p, n_p, o_p)
       pov$variable <- factor(pov$variable, levels=unique(pov$variable))
       
-      pov %>%
+     p <- pov %>%
         ggplot() + geom_col(mapping = aes(x = Percent, y = variable, fill = variable))+  scale_fill_viridis_d() + 
         labs(title = "Poverty Level by Race", 
              y = "", 
@@ -1537,7 +1537,7 @@ server <- function(input, output) {
   ## tree for Allegheny  
   output$tree2 <- renderCollapsibleTree({
     if(input$pillar2%in%"Education"){
-      Tree%>%filter(County == "Allegheny")%>%
+      Tree%>%filter(County == "Allegheny, PA")%>%
         filter(Pillars == "Education")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
@@ -1548,7 +1548,7 @@ server <- function(input, output) {
                         collapsed = T, nodeSize = 'leafCount',
                         fillByLevel = T)
     }else if(input$pillar2%in%"Employment"){
-      Tree%>%filter(County == "Allegheny")%>%
+      Tree%>%filter(County == "Allegheny, PA")%>%
         filter(Pillars == "Employment")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
@@ -1560,7 +1560,7 @@ server <- function(input, output) {
                         fillByLevel = T)
       
     }else if(input$pillar2%in%"Housing"){
-      Tree%>%filter(County == "Allegheny")%>%
+      Tree%>%filter(County == "Allegheny, PA")%>%
         filter(Pillars == "Housing")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
@@ -1572,7 +1572,7 @@ server <- function(input, output) {
                         fillByLevel = T)
       
     }else if(input$pillar2%in%"Transportation"){
-      Tree%>%filter(County == "Allegheny")%>%
+      Tree%>%filter(County == "Allegheny, PA")%>%
         filter(Pillars == "Transportation")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
@@ -1584,7 +1584,7 @@ server <- function(input, output) {
                         fillByLevel = T)
       
     }else{
-      Tree%>%filter(County == "Allegheny")%>%
+      Tree%>%filter(County == "Allegheny, PA")%>%
         filter(Pillars == "Health Services")%>% 
         group_by(Pillars)%>%
         collapsibleTree(hierarchy = c("Subpopulation", "Program", "Age_range", "Delivery"),
@@ -2482,11 +2482,11 @@ server <- function(input, output) {
                    fill = `Race.Ethnicity`)) + 
         geom_col() +
         scale_y_continuous(labels = scales::percent) +
-        labs(title = "Race of TAY Served") +
+        labs(title = "Race of TAY",y = "Percent TAYs served in Loudoun", ) +
         scale_fill_viridis_d() +
         theme_minimal()+ theme(legend.position="bottom")
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = "y")%>% layout(legend = list(orientation = "h", y=-0.2)) 
       
     }else if (dmhsaDemos() == "dmhsaGender"){
       
@@ -2495,7 +2495,7 @@ server <- function(input, output) {
                    fill = Gender)) + 
         geom_col() +theme_minimal() + 
         scale_y_continuous(labels = scales::percent) +
-        labs(title = "Gender of TAY Served") +
+        labs(title = "Gender of TAY", y = "Percent TAYs served in Loudoun", ) +
         scale_fill_viridis_d() +
         theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2508,7 +2508,7 @@ server <- function(input, output) {
       
       p <- ggplot(smi, aes(x=Year)) + 
         geom_line(aes(y = Persons, group = Group, color = Group)) + theme_minimal() + 
-        labs(title = "Severe Mental Illness, 5 Year Count")+scale_fill_viridis_d() +
+        labs(title = "Severe Mental Illness, 5 Year Count", y = "Total TAYs served in Loudoun", )+scale_fill_viridis_d() +
         theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(p, tooltip = "y")
@@ -2532,7 +2532,7 @@ server <- function(input, output) {
       
       p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =publicR) + 
         labs(title = "Public Benefits Race/Ethnicity",
-             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+             x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = 1, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
       
@@ -2543,8 +2543,8 @@ server <- function(input, output) {
       publicG$Gender <- factor(publicG$Gender, levels=unique(publicG$Gender))
       
       p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =publicG) + 
-        labs(title = "Public Benefits Gender",
-             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        labs(title = "Public Benefits Gender",y = "Total TAYs served in Loudoun", 
+             x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2556,8 +2556,8 @@ server <- function(input, output) {
       emerG$Gender <- factor(emerG$Gender, levels=unique(emerG$Gender))
       
       p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =emerG) + 
-        labs(title = "Emergency Shelters Gender",
-             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        labs(title = "Emergency Shelters Gender",y = "Total TAYs served in Loudoun", 
+             x= "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2569,8 +2569,8 @@ server <- function(input, output) {
       transG$Gender <- factor(transG$Gender, levels=unique(transG$Gender))
       
       p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =transG) + 
-        labs(title = "Transitional Housing Gender",
-             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        labs(title = "Transitional Housing Gender",y = "Total TAYs served in Loudoun", 
+             x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2582,8 +2582,8 @@ server <- function(input, output) {
       emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
       
       p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
-        labs(title = "Transitional Housing Race/Ethnicity",
-             y = "") +scale_fill_viridis_d() +theme_minimal() + 
+        labs(title = "Transitional Housing Race/Ethnicity",y = "Total TAYs served in Loudoun", 
+             x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2595,8 +2595,8 @@ server <- function(input, output) {
         emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
         
         p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
-          labs(title = "Emergency Shelters Race/Ethnicity",
-               y = "") +scale_fill_viridis_d() +theme_minimal() + 
+          labs(title = "Emergency Shelters Race/Ethnicity", y = "Total TAYs served in Loudoun",  
+               x = "") +scale_fill_viridis_d() +theme_minimal() + 
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
@@ -2630,7 +2630,7 @@ server <- function(input, output) {
     }else if (stat() == "oxford1"){
 
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) +
-        labs(title = "Oxford Houses in VA ",
+        labs(title = "Oxford Houses in VA ", x="", 
              y = "Months") +scale_fill_viridis_d() +theme_minimal() +
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
@@ -2647,6 +2647,7 @@ server <- function(input, output) {
 
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) +
         labs(title = "Oxford Houses in VA",
+             x="", 
              y = "%/Years") +scale_fill_viridis_d() +theme_minimal() +
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
@@ -2669,7 +2670,7 @@ server <- function(input, output) {
       
       ggplotly(plot, tooltip = "y") %>% layout(
         annotations = 
-          list(x = 1,  y = -.2, text = "Source: OAR Annual Report 2019-2020", 
+          list(x = 1,  y = -.2, text = "Source: OAR Annual Report 2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10))) 
@@ -2679,13 +2680,13 @@ server <- function(input, output) {
         
         plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
           labs(title = "Demographics of OAR program",
-               y = "Total TAYs and Adult Residents served in Loudoun") +scale_fill_viridis_d() +theme_minimal() + 
+               y = "Percent of TAYs and Adult Residents served in Loudoun") +scale_fill_viridis_d() +theme_minimal() + 
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
         ggplotly(plot, tooltip = "y") %>% layout(
           annotations = 
-            list(x = 1,  y = -.43, text = "Data Source: OAR Annual Report 2019-2020", 
+            list(x = 1,  y = -.43, text = "Data Source: OAR Annual Report 2020", 
                  showarrow = F, xref='paper', yref='paper', 
                  xanchor='right', yanchor='auto', xshift=0, yshift=0,
                  font=list(size=10))) 
@@ -2695,7 +2696,7 @@ server <- function(input, output) {
       
         plot <- ggplot() + geom_col(mapping = aes(Name, Stat, fill = Name), data = cares) + 
           labs(title = "Statistics of Loudoun Cares Program in 2020",
-               y = "Total Served/Percent Served",
+               y = "Total TAYs served in Loudoun",
                 x= "") +scale_fill_viridis_d() +theme_minimal() + 
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
