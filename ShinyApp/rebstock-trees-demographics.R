@@ -404,11 +404,13 @@ ui <- navbarPage(title = "DSPG 2021",
                                           p(),
                                           p(a(href = "https://www.loudoun.gov/DocumentCenter/View/152440/Human-Services-Strategic-Plan", strong("The Loudoun County Human Services Strategic Plan 2019-2024 "), target = "_blank"),
                                             "has a vision of creating a healthy, thriving, safe, and inclusive Loudoun community. There are 5 goals to achieve:"),
+                                          tags$ul(
                                           tags$li("Close critical service gaps for vulnerable or underserved members of the Loudoun community. "),
                                           tags$li("Improve health and wellness outcomes by addressing the social determinants of health that challenge the Loudoun community. "),
                                           tags$li("Optimize access for people seeking services by integrating the Loudoun County human services system. "),
                                           tags$li("Meet the growing needs of the Loudoun County community through the development and coordination of resources and funding practices. "),
                                           tags$li("Enhance the quality, capacity and delivery of services by strengthening the network of human services providers in Loudoun County."),
+                                          ),
                                           p()
                                           ),
                                    column(4,
@@ -416,12 +418,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                           p(strong("The goal: "),"Motivated by the Loudoun County Human Services Strategic Plan, this Data Science for the Public Good project aims at identifying service provision for TAY and vulnerable TAY in five major areas: education, employment, housing, transportation, and health to provide a picture of service provision of Loudoun County. "),
                                           
                                           p(strong("Our work")," is as follows:"),
+                                          tags$ul(
                                           tags$li("We provided the ",strong("demographics analysis "),"of the TAY and took a close look at the TAY aging out of foster care system and leaving juvenile detention facilities in Loudoun County, which could reveal reasons for their vulnerability."),
                                           tags$li("We ",strong("web scrapped available services "),"for TAY in Loudoun County ( VA) ",a(href="https://www.fairfaxcounty.gov/","Fairfax County (VA)",target="_blank"), "and",a(href="https://www.alleghenycounty.us/","Allegheny County (PA).",target="_blank"), "At the same time, we collected qualification requirements, application methods, location information, delivery formats and other useful information of services to facilitate the access of services for targeted population."),
                                           tags$li("We conducted a ",strong("cross-county analysis")," between Loudoun, Fairfax, and Allegany to detect the service gaps across similar jurisdictions, to provide insights of the service gaps."),
                                           tags$li("We displayed the services in the collapsible trees and geospatial maps. The ",strong("interactive tools")," examined both intra-county and inter-state variation in services provision, utilization, and geographical gaps in a meaningful and digestible way."),
                                           tags$li("We analyzed the ",strong("utilization of services")," against demographics and mapped the utilization against the locations by using the publicly available data and administrative data to increase the understanding of the supply and the demand of services."),
-                                          p()
+                                          p(),
+                                          )
                                          
                                    ),
                                    column(4,
