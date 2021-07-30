@@ -319,6 +319,12 @@ cares <- loudoun[1:9, 19:20]
 colnames(cares) <- c("Stat", "Name")
 cares$Name <- factor(cares$Name, levels=unique(cares$Name))
 
+# TRansit
+transit <- loudoun[1:3, 25:26]
+colnames(transit) <- c("Day", "Average") 
+transit$Day <- factor(transit$Day, levels=unique(transit$Day))
+
+
 
 
 # CODE TO DETECT ORIGIN OF LINK AND CHANGE LOGO ACCORDINGLY
@@ -1014,7 +1020,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          "OAR Demographics"= "oarD",
                                                          "Loudoun Cares" = "cares", 
                                                          "Oxford House Average Stay" = "oxford1",
-                                                         "Oxford House Prior" = "oxford2"
+                                                         "Oxford House Prior" = "oxford2",
+                                                         "Route 54 Safe-T" = "transit"
                                                        )
                                                      ), 
                                                      plotlyOutput(outputId = "demographics", height = "500px"),
@@ -2388,17 +2395,6 @@ server <- function(input, output) {
   }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%", align = "r", colnames = T, digits = 2)
   
   
-  ## infoBox -----------------------------------------------------------
-  output$transit <- renderInfoBox({
-    
-    infoBox(title = "Route 54 Safe-T", value = "52, 57, 42", 
-            subtitle = "Average Riders Weekdays, Saturday, Sunday",
-            icon = icon("bus"),
-            color = "maroon",
-            fill = T)
-  })
-  
-  
   
   dmhsaDemos <- reactive({
     input$dmhsaDemos
@@ -2637,7 +2633,25 @@ server <- function(input, output) {
                  font=list(size=10))) 
       
       
-    }else {
+    }else if (stat() == "transit") {
+      
+      plot <- transit %>% 
+        ggplot(aes( x = Day, y = Average,fill = Day)) + 
+        geom_col() +
+        labs(title = "Average Riders on Route 54 Safe-T",y = "Riders in Loudoun",
+             x="") +scale_fill_viridis_d() +theme_minimal() + 
+        theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"), legend.position = "none", 
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+      
+      ggplotly(plot, tooltip = "y") %>% layout(
+        annotations = 
+          list(x = 1, y = -.2, text = "Source: Transit Development Plan 2018-2028", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size= 9))) 
+      
+      
+      }else {
       
       plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
         labs(title = "Adult Literacy Program", 
