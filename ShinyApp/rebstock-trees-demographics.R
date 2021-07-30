@@ -484,7 +484,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        "Types of Healthcare Coverage" = "health")
                                                      ),
                                                      plotlyOutput("plot1"),
-                                                     p(tags$small("Data Source: American Community Survey 2019 1-Year/5-Year Estimates."))
+                                                     p(tags$small("Source: American Community Survey 2019 1-Year/5-Year Estimates."))
                                               )
                                      )) ,
                             ### Tab subpopulation--------------------------------------------
@@ -535,7 +535,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   "Ethnicity" = "eth")
                                                                 ),
                                                                 plotlyOutput("plot2"),
-                                                                p(tags$small("Data source: The Adoption and Foster Care Analysis and Reporting System 2019"))
+                                                                p(tags$small(" Source: The Adoption and Foster Care Analysis and Reporting System 2019"))
                                                                 
                                                        ),
                                                        tabPanel("Juvenile Detention",
@@ -547,7 +547,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   "Ethnicity" = "eth")
                                                                 ),
                                                                 plotlyOutput("plot3"),
-                                                                p(tags$small("Data source: Department of Juvenile Justice (DJJ) 2020 Data Resource Guide"))
+                                                                p(tags$small("Source: Department of Juvenile Justice (DJJ) 2020 Data Resource Guide"))
                                                                 
                                                        )
                                                      ) 
@@ -561,16 +561,12 @@ ui <- navbarPage(title = "DSPG 2021",
                  
                  
                  ## Tab Data and Methodology--------------------------------------------
-                 tabPanel("Data and Methodology", value = "data",
+                 tabPanel("Data ", value = "data",
                           fluidRow(style = "margin: 6px;",
-                                   h1(strong("Data and Methodology"), align = "center"),
+                                   h1(strong("Data Sources"), align = "center"),
                                    p("", style = "padding-top:10px;"), 
-                                   column(4, 
-                                          h4(strong("Methodology")),
-                                          p("Yang")), 
-                                   column(8,  h4(strong("Data Sources"))), 
-                                   column(4,
-                                          img(src = 'data-acs.png', style = "display: inline; float: left;", width = "200px"),
+                                   column(6,
+                                          img(src = 'data-acs.png', style = "display: inline; float: left;", width = "250px"),
                                           p("We retrieve ",strong("American Community Survey (ACS)")," data to examine demographic and socioeconomic characteristics of our target population. 
                                             ACS is an ongoing yearly survey conducted by the U.S Census Bureau that samples households to compile 1-year and 5-year datasets.
                                             We used the most recently available 1-year/5-year estimates, to characterize Loudoun County’s transition aged youths by age, race,
@@ -580,20 +576,24 @@ ui <- navbarPage(title = "DSPG 2021",
                                           p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
                                             and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. "), 
                                           br(), 
-                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "200px"),
+                                          br(), 
+                                          br(), 
+                                          img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "250px"),
                                           p("The ", strong("Virginia Department of Social Services"), " ensures that thousands of Virginia's most vulnerable citizens have access to the best services and benefits available to them.
                                             We researched through their website and found various programs and services that are available to transition aged youth in Loudoun and Fairfax in order to find the gaps in
                                             certain pillars. ")) ,
-                                  column(4,
+                                  column(6,
                                           img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
                                           p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and different demographics like
                                             age, gender and race. They split their data based on zipcodes which we used to map out the utilization of their provided services and compare to the area's population density. "),
+                                         br(), 
+                                         br(), 
                                          br(), 
                                          img(src = 'data-afcars.png', style = "display: inline; float: left;", width = "300px"),
                                          p("We used ", strong("The Adoption and Foster Care Analysis and Reporting System")," to report the number of youths in foster care in Loudoun County. 
                                             This allowed us to determine how many youths need services to help with the transition out of the foster care system.  "),
                                          br(), 
-                                         img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "150px"),
+                                         img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "200px"),
                                          p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
                                                   the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
                                                   and the total number youth intakes and those leaving the centers.  ")
@@ -729,14 +729,34 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                                        column(4,  
                                                               h4(strong("Where are the gaps?")), 
-                                                              p("Some of these tailored programs are embedded within broader services.  For example, Great Expectations Services for Youth in Foster Care within the Northern Virginia Community College system helps connect this population with higher education.  Others include financial assistance or guidance aimed at assisting with the transition from residential care to independence, such as LIFT 2 for youth aging out of the foster care system.    "), 
+                                                              p("Some of these tailored programs are embedded within broader services.  
+                                                                For example, ",strong("Great Expectations Services"), " for Youth in Foster Care within the Northern Virginia Community College
+                                                                system helps connect this population with higher education.  Others include financial assistance or 
+                                                                guidance aimed at assisting with the transition from residential care to independence, such as ",strong("LIFT 2")," for 
+                                                                youth aging out of the foster care system.    "), 
                                                               h5(strong("Juvenile Justice Involved Specific Programs/Services")),
-                                                              p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  In Northern Virginia, OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources) offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   Youth who only have juvenile justice involvement are also eligible for these services.    However, these services are broadly available to all post-incarcerated residents. "), 
-                                                              p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  Unique to Loudoun is Mobile Hope's Handcuffs to Hope program , which works with incarcerated youth three to six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to helping TAY with past or current involvement in the criminal justice system train for and find employment.  Both administered by Partner4Work, Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE) provides comprehensive case management as well as a suite of job-focused programs, while the Career Pipeline Project offers paid on-the-job training opportunities. "), 
+                                                              p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority. 
+                                                                In Northern Virginia, ", strong("OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources)"),  " 
+                                                                offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, 
+                                                                providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   
+                                                                Youth who only have juvenile justice involvement are also eligible for these services.    
+                                                                However, these services are broadly available to all post-incarcerated residents. "), 
+                                                              p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  
+                                                                Unique to Loudoun is ", strong("Mobile Hope's Handcuffs to Hope program"),  "which works with incarcerated youth three to 
+                                                                six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to 
+                                                                helping TAY with past or current involvement in the criminal justice system train for and find employment.  
+                                                                Both administered by Partner4Work, ", strong("Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE)"), " 
+                                                                provides comprehensive case management as well as a suite of job-focused programs, while the ", strong("Career Pipeline Project"), 
+                                                                " offers paid on-the-job training opportunities. "), 
                                                               h5(strong("Foster Care Specific Programs")),
-                                                              p("Programs for foster care and former foster care youth specifically include programs targeting educational,  employment, housing and health needs, such as LIFT 2 in Fairfax that addresses a wide range of potential needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the Independent Living Program administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
+                                                              p("Programs for foster care and former foster care youth specifically include programs targeting educational,  
+                                                                employment, housing and health needs, such as ", strong("LIFT 2"), " in Fairfax that addresses a wide range of potential 
+                                                                needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the ", strong("Independent 
+                                                                Living Program"), " administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
                                                               h5(strong("The Biggest Gaps")),
-                                                              p("Reviewing the breadth and number of support services and programs across all counties, it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth, and lack of a case management system for the TAY subpopulations of interest.   "), 
+                                                              p("Reviewing the breadth and number of support services and programs across all counties, 
+                                                                it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth,
+                                                                and lack of a case management system for the TAY subpopulations of interest.   "), 
                                                        ) ,
                                                        column(8, 
                                                               h4(strong("Comparison Tree by Pillar")),
@@ -848,7 +868,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                        h4(strong("Waitlist of MHSADS by Program")), 
                                                                        plotlyOutput("waitlist"),
                                                                        br(), 
-                                                                       p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services"))  ,  
+                                                                       p(tags$small("Source: Department of Mental Health, Substance Abuse and Developmental Services"))  ,  
                                                                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                                                                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
                                               
@@ -878,7 +898,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 
                                                               ), 
                                                               plotlyOutput(outputId = "dmhsaPlot", height = "500px") ,
-                                                              p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services 2016-2020"))
+                                                              p(tags$small("Source: Department of Mental Health, Substance Abuse and Developmental Services 2016-2020"))
                                                               ),
                                                        column(12, 
                                                               h4("References: "),
@@ -927,7 +947,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              
                                                              
                                                              leafletOutput(outputId = "overtime", height = "70vh"), 
-                                                             p(tags$small("Data source: Department of Mental Health, Substance Abuse, and Developmental Services 2019 "))
+                                                             p(tags$small("Source: Department of Mental Health, Substance Abuse, and Developmental Services 2019 "))
                                                              
                                                              
                                                       )
@@ -969,8 +989,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                            )
                                                                            
                                                                          ), 
-                                                                         plotlyOutput(outputId = "familyPlot", height = "500px") ,
-                                                                         p(tags$small("Data Source: Family Services Data Warehouse 2015-2020 varying years"))
+                                                                         plotlyOutput(outputId = "familyPlot", height = "500px") 
                                                                          
                                                                   )
                                                          )
@@ -987,7 +1006,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   column(8, 
                                                                          tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
                                                                          br(), 
-                                                                         p(tags$small("Data source: Family Services Data Warehouse 2015-2020 varying years"))
+                                                                         p(tags$small("Public Benefits Source: Family Services Data Warehouse 2016-2020")),
+                                                                         p(tags$small("Emergency and Transitional Housing Source: ServicePoint & HUD 2016-2020")),
+                                                                         p(tags$small("WRC Source: WRC 2015-2019")),
+                                                                         p(tags$small("WIOA Source: WRC 2017-2020"))
                                                                          
                                                                          
                                                                   )
@@ -1024,8 +1046,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                          "Route 54 Safe-T" = "transit"
                                                        )
                                                      ), 
-                                                     plotlyOutput(outputId = "demographics", height = "500px"),
-                                                     p(tags$small("Data Source Vary based on Program"))) 
+                                                     plotlyOutput(outputId = "demographics", height = "500px")
+                                                    ) 
                                                                          
                                              )
                                               
@@ -2460,7 +2482,12 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = 1, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = "y")%>% layout(
+        annotations = 
+          list(x = 1,  y = -.2, text = "Source: Data Warehouse Public Benefits 2016-20", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
       
     }else if (familyDemo() == "publicGender"){
       
@@ -2472,7 +2499,12 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = "y")%>% layout(
+        annotations = 
+          list(x = 1,  y = -.14, text = "Source: Data Warehouse Public Benefits 2016-20", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
       
       
     }else if (familyDemo() == "emerG"){
@@ -2485,7 +2517,12 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = "y")%>% layout(
+        annotations = 
+          list(x = 1,  y = -.14, text = "Source: ServicePoint & HUD Emergency Shelter 2016-20", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
       
       
     }else if (familyDemo() == "transG"){
@@ -2498,7 +2535,12 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = "y")%>% layout(
+        annotations = 
+          list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Transitional Housing 2016-20", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
       
       
     }else if (familyDemo() == "transR"){
@@ -2511,7 +2553,12 @@ server <- function(input, output) {
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = "y")%>% layout(
+        annotations = 
+          list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Transitional Housing 2016-20", 
+               showarrow = F, xref='paper', yref='paper', 
+               xanchor='right', yanchor='auto', xshift=0, yshift=0,
+               font=list(size=10)))
       
       
       }else {
@@ -2524,7 +2571,12 @@ server <- function(input, output) {
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
-        ggplotly(p, tooltip = "y")
+        ggplotly(p, tooltip = "y")%>% layout(
+          annotations = 
+            list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Emergency Shelter 2016-20", 
+                 showarrow = F, xref='paper', yref='paper', 
+                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                 font=list(size=10))) 
     }
     
     
