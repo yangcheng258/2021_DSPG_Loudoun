@@ -1026,8 +1026,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                               h1(strong("Other Programs"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                                 column(4, 
-                                                     h4(strong("Other programs in Loudoun – who uses them?")), 
-                                                     infoBoxOutput("transit" , width = 4)) ,
+                                                     h4(strong("Other programs in Loudoun – who uses them?")),
+                                                     p("We offer a diverse array of program implementation statistics, presented in figures to the right, for users interested in details of additional program uptake and delivery.  Because each program collects implementation data differently, featured characteristics vary across program.  Each graph represents a single year."),
+                                                     infoBoxOutput("transit" , width = 4)),
+                                              
                                 
                                               column(8, 
                                                      selectInput(
@@ -2620,7 +2622,7 @@ server <- function(input, output) {
     }else if (stat() == "oxford2"){
 
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[3:5,]) +
-        labs(title = "Oxford Houses in VA",
+        labs(title = "Oxford Houses in Virginia",
              x="", 
              y = "%/Years") +scale_fill_viridis_d() +theme_minimal() +
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
