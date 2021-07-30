@@ -1026,24 +1026,27 @@ ui <- navbarPage(title = "DSPG 2021",
                                               h1(strong("Other Programs"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                                 column(4, 
-                                                     h4(strong("Who is served by other programs in Loudoun?")), 
+                                                     h4(strong("Other programs in Loudoun – who uses them?")), 
                                                      infoBoxOutput("transit" , width = 4),
-                                                     p("Public transportation")) ,
+                                                     p("We offer a diverse array of program implementation statistics, presented 
+                                                     in figures to the right, for users interested in details of additional program uptake and delivery.  
+                                                       Because each program collects implementation data differently, featured 
+                                                       characteristics vary across program.  Each graph represents a single year 
+                                                       (2019 and 2020).")) ,
                                 
                                               column(8, 
-                                                     h4(strong("Demographics")), 
                                                      selectInput(
                                                        "stat",
                                                        "Select Program",
                                                        choices = list(
-                                                         "Adult Literacy Programs" = "literacy",
+                                                         "Adult Literacy Programs Enrollment" = "literacy",
                                                          "Adult Literacy Program Race" = "literacyR",
                                                          "OAR Enrollment"= "oar", 
                                                          "OAR Demographics"= "oarD",
-                                                         "Loudoun Cares" = "cares", 
+                                                         "Loudoun Cares Demographics" = "cares", 
                                                          "Oxford House Average Stay" = "oxford1",
                                                          "Oxford House Prior" = "oxford2",
-                                                         "Route 54 Safe-T" = "transit"
+                                                         "Route 54 Safe-T Weekly Usage" = "transit"
                                                        )
                                                      ), 
                                                      plotlyOutput(outputId = "demographics", height = "500px")
@@ -2606,7 +2609,7 @@ server <- function(input, output) {
     }else if (stat() == "oxford1"){
 
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = ox[1:2,]) +
-        labs(title = "Oxford Houses in VA ", x="", 
+        labs(title = "Oxford Houses in Virginia", x="", 
              y = "Months") +scale_fill_viridis_d() +theme_minimal() +
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
@@ -2671,7 +2674,7 @@ server <- function(input, output) {
       }else if (stat() == "cares"){
       
         plot <- ggplot() + geom_col(mapping = aes(Name, Stat, fill = Name), data = cares) + 
-          labs(title = "Statistics of Loudoun Cares Program in 2020",
+          labs(title = "Statistics of Loudoun Cares Program",
                y = "Total TAYs served in Loudoun",
                 x= "") +scale_fill_viridis_d() +theme_minimal() + 
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
