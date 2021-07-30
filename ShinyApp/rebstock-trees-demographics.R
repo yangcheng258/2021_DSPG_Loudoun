@@ -99,13 +99,13 @@ colnames(homeless) <- c("Year", "TAY")
 
 
 # Mental Illness
-smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx") ) 
+smiwaitlist <- read_excel(paste0(getwd(),"/data/smi-waitlist.xlsx")) 
 smi <- smiwaitlist[11:20,1:3]
 colnames(smi) <- c("Group", "Year", "Persons")
 smi$Persons <- as.numeric(smi$Persons)
 
 waitlist <- smiwaitlist[6:25,9:11]
-colnames(waitlist) <- c( "Program", "Year", "Persons")
+colnames(waitlist) <- c("Program", "Year", "Persons")
 
 waitlist$Persons <- as.numeric(waitlist$Persons)
 waitlist$Program <- factor(waitlist$Program, levels=unique(waitlist$Program))
@@ -621,135 +621,153 @@ ui <- navbarPage(title = "DSPG 2021",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Service Availability"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
-                                     tabsetPanel(
-                                           tabPanel("Services", 
-                                             fluidRow(style = "margin: 6px;",
-                                                             p("", style = "padding-top:10px;"), 
-                                                    column(6, 
-                                                           h4(strong("What Services and Programs are available? ")),
-                                                           p("Research literature suggests that there are five main areas that transition age youth (TAY) struggle with in their transition to adulthood and economic independence:  educational attainment, employment, housing, transportation, and access to healthcare services.    The diagrams presented below show what services exist in Loudoun County along these five dimensions, or pillars.  Branches show services available to all TAY and where available, specifically to TAY from the foster care or juvenile delinquent systems.   The same information is presented for the two comparison counties, Fairfax, Virginia and Allegheny, Pennsylvania, to enable comparisons between jurisdictions. "), 
-                                                           p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA as having exemplary transitional service infrastructure for vulnerable TAY.  "), 
-                                                           
-                                                           p("The tables to the right summarize the data by providing counts of services and programs available in each county by subpopulation and by pillar.  Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  Programs for foster care and former foster care youth are only slightly more widespread.  The great majority of services and programs are available for vulnerable TAY in general.  "),
-                                                           h5(strong('Types of services and programs')),
-                                                           p("For Loudoun County, the distribution of programs by pillar indicate that the number of services and programs are fairly equal among areas, except there are many fewer transportation services."),
-                                                           
-                                                           p("While the number of services and programs are an important index of resources available to help TAY in their path toward a viable economic independence, the quality and range of those programs is also critical.  In particular, how well are the programs meeting specific needs for these TAY populations?   The project shows that most services appear to be located in the eastern portion of the county (see Locations tab) and that transportation services are the least well represented.  Getting youth to necessary services from all parts of the county may represent a gap that could be further explored in subsequent projects")
-                                                           
-                                                          ) ,
-                                                    column(6, 
-                                                           h4(strong("Number of Programs by Subpopulation")), 
-                                                           tableOutput("table1"),
-                                                           tags$br(), 
-                                                           h4(strong("Number of Programs by Pillar")), 
-                                                           tableOutput("table2")))  ,
-                                           tags$br(), 
-                                           fluidRow(style = "margin: 6px;",
-                                                    p("", style = "padding-top:10px;"), 
-                                                    column(4, 
-                                                           h4(strong("How to find access to and provision of services and programs  ")),
-                                                           p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
-                                                           
-                                                           p("The AVAILABILTY tab allows users to explore types and targeting of services by locality and pillar.  Users can select the county of interest through tabs and specific pillars by filtering on the radio buttons.  Each tree diagram represents programs of the selected pillar in the selected county.  Nodes - circular points from which branching curves or lines extend - represent first the pillar, then the targeted subpopulation, followed by the service or program name, the intended age range of the program/service, and lastly the office location.  Programs accessible online are so noted.   "), 
-                                                           
-                                                           p("For service and program locations, select the LOCATION tab.  Users can hover over each program node to activate a description of the service.  To obtain a complete description of all services and programs, select the ALL SERVICES tab. "),
-                                                           h5(strong("Key to specific terms used in the branching diagrams: ")),
-                                                           p("Any age - No age restriction applies.  If eligibility is restricted to the foster care population, this means that anyone with a history within that system, for example, is eligible for these services or programs, even once they have aged out of them."),
-                                                           p("Hybrid - Services or programs are delivered both in-person or online ")
-                                                    ),
-                                                    
-                                                    column(8, 
-                                                           h4(strong("Interactive Trees of Programs")),
-                                                           tabsetPanel(
-                                                             tabPanel("Loudoun",
-                                                                      br(),
-                                                                      radioButtons(
-                                                                        "pillar1",
-                                                                        label = "Select Pillar" ,
-                                                                        choices = list(
-                                                                          "Education",
-                                                                          "Employment",
-                                                                          "Housing",
-                                                                          "Transportation",
-                                                                          "Health Services")
-                                                                      ),
-                                                                      selected = "Education", 
-                                                                      collapsibleTreeOutput("tree1",height = "500px") 
-                                                                      
-                                                                      
-                                                                      
-                                                             ),
-                                                             tabPanel("Fairfax",
-                                                                      br(),
-                                                                      radioButtons(
-                                                                        "pillar3",
-                                                                        label = "Select Pillar" ,
-                                                                        choices = list(
-                                                                          "Education",
-                                                                          "Employment",
-                                                                          "Housing",
-                                                                          "Transportation",
-                                                                          "Health Services")
-                                                                      ),
-                                                                      selected = "Education", 
-                                                                      collapsibleTreeOutput("tree3",height = "500px") 
-                                                                      
-                                                                      
-                                                             ), 
-                                                             
-                                                             tabPanel("Allegheny, PA",
-                                                                      br(),
-                                                                      radioButtons(
-                                                                        "pillar2",
-                                                                        label = "Select Pillar" ,
-                                                                        choices = list(
-                                                                          "Education",
-                                                                          "Employment",
-                                                                          "Housing",
-                                                                          "Transportation",
-                                                                          "Health Services")
-                                                                      ),
-                                                                      selected = "Education", 
-                                                                      collapsibleTreeOutput("tree2",height = "500px")
-                                                                      
-                                                             )) 
-                                                    )) ) ,
-                                          
-                                          tabPanel("Cross-County Comparison", 
-                                            fluidRow(style = "margin: 6px;",
-                                                    p("", style = "padding-top:10px;"), 
-                                                    column(4,  
-                                                           h4(strong("Where are the gaps?")), 
-                                                            p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "), 
-                                                           p("Some of these tailored programs are embedded within broader services.  For example, Great Expectations Services for Youth in Foster Care within the Northern Virginia Community College system helps connect this population with higher education.  Others include financial assistance or guidance aimed at assisting with the transition from residential care to independence, such as LIFT 2 for youth aging out of the foster care system.    "), 
-                                                           p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  In Northern Virginia, OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources) offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   Youth who only have juvenile justice involvement are also eligible for these services.    However, these services are broadly available to all post-incarcerated residents. "), 
-                                                           p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  Unique to Loudoun is Mobile Hope's Handcuffs to Hope program , which works with incarcerated youth three to six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to helping TAY with past or current involvement in the criminal justice system train for and find employment.  Both administered by Partner4Work, Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE) provides comprehensive case management as well as a suite of job-focused programs, while the Career Pipeline Project offers paid on-the-job training opportunities. "), 
-                                                           p("Programs for foster care and former foster care youth specifically include programs targeting educational,  employment, housing and health needs, such as LIFT 2 in Fairfax that addresses a wide range of potential needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the Independent Living Program administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
-                                                           p("Reviewing the breadth and number of support services and programs across all counties, it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth, and lack of a case management system for the TAY subpopulations of interest.   "), 
-                                                           ) ,
-                                                    column(8, 
-                                                           h4(strong("Comparison Tree by Pillar")),
-                                                           radioButtons(
-                                                             "compare1",
-                                                             label = "Select Pillar" ,
-                                                             choices = list(
-                                                               "Education",
-                                                               "Employment",
-                                                               "Housing",
-                                                               "Transportation",
-                                                               "Health Services")
-                                                           ),
-                                                           selected = "Education", 
-                                                           collapsibleTreeOutput("compare", height = "500px") , 
-                                                           br(),
-                                                           br()
-                                                           
-                                                    ) 
-                                                    
-                                           )) 
-                                     )
+                                              column(12, 
+                                                  h4(strong("What services and programs are available?")), 
+                                                   p("Research literature suggests that there are five main areas that transition age youth (TAY) struggle 
+                                                     with in their transition to adulthood and economic independence:  educational attainment, employment, 
+                                                     housing, transportation, and access to healthcare services.    The diagrams presented below show 
+                                                     what services exist in Loudoun County along these five dimensions, or pillars.  Branches show services 
+                                                     available to all TAY and where available, specifically to TAY from the foster care or juvenile delinquent systems.  
+                                                     The same information is presented for the two comparison counties, Fairfax, Virginia and Allegheny, Pennsylvania, 
+                                                     to enable comparisons between jurisdictions. "), 
+                                                   p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity 
+                                                     to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making
+                                                     them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is 
+                                                     included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA 
+                                                     as having exemplary transitional service infrastructure for vulnerable TAY.  ")) ,  
+                                              column(4, 
+                                                     h4(strong("How to find access to and provision of services and programs  ")),
+                                                     p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
+                                                     
+                                                     p("The AVAILABILTY tab allows users to explore types and targeting of services by locality and pillar.  Users can select the county of interest through tabs and specific pillars by filtering on the radio buttons.  Each tree diagram represents programs of the selected pillar in the selected county.  Nodes - circular points from which branching curves or lines extend - represent first the pillar, then the targeted subpopulation, followed by the service or program name, the intended age range of the program/service, and lastly the office location.  Programs accessible online are so noted.   "), 
+                                                     
+                                                     p("For service and program locations, select the LOCATION tab.  Users can hover over each program node to activate a description of the service.  To obtain a complete description of all services and programs, select the ALL SERVICES tab. "),
+                                                     h5(strong("Key to specific terms used in the branching diagrams: ")),
+                                                     p("Any age - No age restriction applies.  If eligibility is restricted to the foster care population, this means that anyone with a history within that system, for example, is eligible for these services or programs, even once they have aged out of them."),
+                                                     p("Hybrid - Services or programs are delivered both in-person or online ")
+                                              ),
+                                              
+                                              column(8, 
+                                               h4(strong("Interactive Trees of Programs")),
+                                               tabsetPanel(
+                                                 tabPanel("Loudoun",
+                                                          br(),
+                                                          radioButtons(
+                                                            "pillar1",
+                                                            label = "Select Pillar" ,
+                                                            choices = list(
+                                                              "Education",
+                                                              "Employment",
+                                                              "Housing",
+                                                              "Transportation",
+                                                              "Health Services")
+                                                          ),
+                                                          selected = "Education", 
+                                                          collapsibleTreeOutput("tree1",height = "500px") 
+                                                          
+                                                          
+                                                          
+                                                 ),
+                                                 tabPanel("Fairfax",
+                                                          br(),
+                                                          radioButtons(
+                                                            "pillar3",
+                                                            label = "Select Pillar" ,
+                                                            choices = list(
+                                                              "Education",
+                                                              "Employment",
+                                                              "Housing",
+                                                              "Transportation",
+                                                              "Health Services")
+                                                          ),
+                                                          selected = "Education", 
+                                                          collapsibleTreeOutput("tree3",height = "500px") 
+                                                          
+                                                          
+                                                 ), 
+                                                 
+                                                 tabPanel("Allegheny, PA",
+                                                          br(),
+                                                          radioButtons(
+                                                            "pillar2",
+                                                            label = "Select Pillar" ,
+                                                            choices = list(
+                                                              "Education",
+                                                              "Employment",
+                                                              "Housing",
+                                                              "Transportation",
+                                                              "Health Services")
+                                                          ),
+                                                          selected = "Education", 
+                                                          collapsibleTreeOutput("tree2",height = "500px")
+                                                          
+                                                       )) 
+                                                    )
                                      ) 
                             ),
+                            
+                            tabPanel("Cross-County Analysis", 
+                                     fluidRow(style = "margin: 6px;",
+                                              h1(strong("Gaps in Services and Programs"), align = "center"),
+                                              p("", style = "padding-top:10px;"), 
+                                                       column(6,
+                                                             h4(strong('Types of services and programs')),
+                                                             p("The tables to the right summarize the data by providing counts of services and programs
+                                                               available in each county by subpopulation and by pillar.  Programs specifically targeted at 
+                                                               helping youth transition from the juvenile justice system are a distinct minority.  Programs for foster 
+                                                               care and former foster care youth are only slightly more widespread.  The great majority of services 
+                                                               and programs are available for vulnerable TAY in general.  "), 
+                                                             
+                                                             p("For Loudoun County, the distribution of programs by pillar indicate that the number of 
+                                                               services and programs are fairly equal among areas, except there are many fewer transportation services."),
+                                                             p("While the number of services and programs are an important index of resources available to help TAY in 
+                                                               their path toward a viable economic independence, the quality and range of those programs is also critical. 
+                                                               In particular, how well are the programs meeting specific needs for these TAY populations?  
+                                                               The project shows that most services appear to be located in the eastern portion of the county
+                                                               (see Locations tab) and that transportation services are the least well represented. 
+                                                               Getting youth to necessary services from all parts of the county may represent a gap that 
+                                                               could be further explored in subsequent projects")), 
+                                                 column(6, 
+                                                        h4(strong("Number of Programs by Subpopulation")), 
+                                                        tableOutput("table1"),
+                                                        tags$br(), 
+                                                        h4(strong("Number of Programs by Pillar")), 
+                                                        tableOutput("table2"))
+                                                 
+                                                 ), 
+                                     fluidRow(style = "margin: 6px;",
+                                              p("", style = "padding-top:10px;"), 
+                                                       column(4,  
+                                                              h4(strong("Where are the gaps?")), 
+                                                              p("Some of these tailored programs are embedded within broader services.  For example, Great Expectations Services for Youth in Foster Care within the Northern Virginia Community College system helps connect this population with higher education.  Others include financial assistance or guidance aimed at assisting with the transition from residential care to independence, such as LIFT 2 for youth aging out of the foster care system.    "), 
+                                                              p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  In Northern Virginia, OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources) offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   Youth who only have juvenile justice involvement are also eligible for these services.    However, these services are broadly available to all post-incarcerated residents. "), 
+                                                              p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  Unique to Loudoun is Mobile Hope's Handcuffs to Hope program , which works with incarcerated youth three to six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to helping TAY with past or current involvement in the criminal justice system train for and find employment.  Both administered by Partner4Work, Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE) provides comprehensive case management as well as a suite of job-focused programs, while the Career Pipeline Project offers paid on-the-job training opportunities. "), 
+                                                              p("Programs for foster care and former foster care youth specifically include programs targeting educational,  employment, housing and health needs, such as LIFT 2 in Fairfax that addresses a wide range of potential needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the Independent Living Program administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
+                                                              p("Reviewing the breadth and number of support services and programs across all counties, it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth, and lack of a case management system for the TAY subpopulations of interest.   "), 
+                                                       ) ,
+                                                       column(8, 
+                                                              h4(strong("Comparison Tree by Pillar")),
+                                                              radioButtons(
+                                                                "compare1",
+                                                                label = "Select Pillar" ,
+                                                                choices = list(
+                                                                  "Education",
+                                                                  "Employment",
+                                                                  "Housing",
+                                                                  "Transportation",
+                                                                  "Health Services")
+                                                              ),
+                                                              selected = "Education", 
+                                                              collapsibleTreeOutput("compare", height = "500px") , 
+                                                              br(),
+                                                              br()
+                                                              
+                                                       ) 
+                                                       
+                                              )
+                                     ) , 
+                                     
+                            
                             
                             
                             tabPanel("Locations", 
@@ -786,9 +804,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                      )
                             ), 
                             
-                            tabPanel("Complete List", 
+                            tabPanel("All Services", 
                                      fluidRow(style = "margin: 6px;",
-                                              h1(strong("Programs"), align = "center"),
+                                              h1(strong("All Services"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                               DT::dataTableOutput("mytable")
                                                        
@@ -848,9 +866,9 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        column(4, 
                                                               h4(strong("Who does MHSADS Serve?")),
                                                               p("TAYs with disabilities or mental or substance issues face even more barriers as they move towards independence.  
-                                                                         These youths experience an adult poverty rate three times higher than their peers.2 This high level of poverty,
+                                                                         These youths experience an adult poverty rate three times higher than their peers [1]. This high level of poverty,
                                                                          difficulty in accessing health services, and homelessness tend to have a very negative impact on the likelihood of 
-                                                                         employment thereby, compounding the transition to self-sufficient adulthood. 3 Moreover, it is estimated that over 
+                                                                         employment thereby, compounding the transition to self-sufficient adulthood [2].  Moreover, it is estimated that over 
                                                                          90% of youth incarcerated in Virginia have significant symptoms of a mental health disorder. Guided by this, we examine 
                                                                          mental health service utilization and gaps. ")
                                                             ), 
@@ -860,15 +878,20 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 "dmhsaDemos",
                                                                 "Select Demographic",
                                                                 choices = list(
-                                                                  "Race/Ethnicity" = "dmhsaRace", 
-                                                                  "Gender" = "dmhsaGender", 
-                                                                  "Severe Mental Illness" = "mental"
+                                                                  "Race/Ethnicity" = "dmhsaRace",
+                                                                  "Gender" = "dmhsaGender",
+                                                                  "Severe Mental Health" = "mental"
                                                                 )
                                                                 
                                                               ), 
-                                                              plotlyOutput(outputId = "dmhsaPlot", height = "500px"),
-                                                              p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services 2019"))
-                                                              )
+                                                              plotlyOutput(outputId = "dmhsaPlot", height = "500px") ,
+                                                              p(tags$small("Data Source: Department of Mental Health, Substance Abuse and Developmental Services 2016-2020"))
+                                                              ),
+                                                       column(12, 
+                                                              h4("References: "),
+                                                       p(tags$small("[1] Newman, L., Goscha, S. and Coakley, P. (2021). Transitional Aged Youth with Barriers: Support Needed to Achieve Self Sufficiency. Public Consulting Group Inc.  Retrieved 27 July 2021, from  https://www.publicconsultinggroup.com/media/1299/transitional_aged_youth_with_barriers_white_paper.pdf")),
+                                                       p(tags$small("[2] Hemmeter, Jeffrey (2014). Earnings and Disability Program Participation of Youth Transition Demonstration Participants after 24 Months. Social Security Bulletin, Vol. 74 No. 1. Retrieved from: http://www.ssa.gov/policy/docs/ssb/v74n1/v74n1p1.html" ))
+                                                       )
                                                        
                                               )), 
                                      tabPanel("Trends", 
@@ -969,7 +992,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                            from 2015 to 2020. ")
                                                                         ) ,
                                                                   column(8, 
-                                                                         h4(strong("Enrollment by Program")), 
                                                                          tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
                                                                          br(), 
                                                                          p(tags$small("Data source: Family Services Data Warehouse 2015-2020 varying years"))
@@ -986,67 +1008,34 @@ ui <- navbarPage(title = "DSPG 2021",
                             ### Individual served------------
                             tabPanel("Other Programs", value = "served",
                                      fluidRow(style = "margin: 6px;",
-                                              h1(strong("Individuals Served by Program"), align = "center"),
+                                              h1(strong("Other Programs"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
-                                              tabsetPanel(
-                                                tabPanel("Overview", 
-                                                         fluidRow(style = "margin: 6px;",
-                                                                  p("", style = "padding-top:10px;"), 
-                                                                  column(4, 
-                                                                         h4(strong("What Other Programs are in Loudoun? ")), 
-                                                                         infoBoxOutput("transit" , width = 4),
-                                                                         p("Public transportation"),
+                                                column(4, 
+                                                     h4(strong("Who is served by other programs in Loudoun?")), 
+                                                     infoBoxOutput("transit" , width = 4),
+                                                     p("Public transportation")) ,
+                                
+                                              column(8, 
+                                                     h4(strong("Demographics")), 
+                                                     selectInput(
+                                                       "stat",
+                                                       "Select Program",
+                                                       choices = list(
+                                                         "Adult Literacy Programs" = "literacy",
+                                                         "Adult Literacy Program Race" = "literacyR",
+                                                         "OAR Enrollment"= "oar", 
+                                                         "OAR Demographics"= "oarD",
+                                                         "Loudoun Cares" = "cares", 
+                                                         "Oxford House Average Stay" = "oxford1",
+                                                         "Oxford House Prior" = "oxford2"
+                                                       )
+                                                     ), 
+                                                     plotlyOutput(outputId = "demographics", height = "500px"),
+                                                     p(tags$small("Data Source Vary based on Program"))) 
                                                                          
-                                                                         p("")), 
-                                                                  
-                                                                  column(8, 
-                                                                         h4(strong(""))
-                                                                         
-                                                                         
-                                                                  )
-                                                                  )), 
-                                                
-                                                tabPanel("Demographics", 
-                                                         fluidRow(style = "margin: 6px;",
-                                                                  p("", style = "padding-top:10px;"), 
-                                                                  column(4, 
-                                                                         h4(strong("Who do Other Programs serve?")), 
-                                                                         p("Race, Age, backgrounds of programs"), 
-                                                                         p("")
-                                                                         
-                                                                  ), 
-                                                                  column(8, 
-                                                                         
-                                                                         h4(strong("Graphs of Demographics")), 
-                                                                         selectInput(
-                                                                           "stat",
-                                                                           "Select Program",
-                                                                           choices = list(
-                                                                             "Adult Literacy Programs" = "literacy",
-                                                                             "Adult Literacy Program Race" = "literacyR",
-                                                                             "OAR Enrollment"= "oar", 
-                                                                             "OAR Demographics"= "oarD",
-                                                                             "Loudoun Cares" = "cares", 
-                                                                             "Oxford House Average Stay" = "oxford1",
-                                                                             "Oxford House Prior" = "oxford2"
-                                                                             
-                                                                           )
-                                                                           
-                                                                         ), 
-                                                                         plotlyOutput(outputId = "demographics", height = "500px"),
-                                                                         p(tags$small("Data Source Vary based on Program"))
-                                                                         
-                                                                  )
-                                                         )
-                                                )
-                                                
-                                              )
-                                     ) 
-                            ) 
-                            
-                            
-                            
-                            
+                                             )
+                                              
+                              ) 
                             
                  ),
                  ## Tab Conclusion --------------------------------------------
@@ -1061,11 +1050,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                             tags$ul(
                                             tags$li("Beginning our project with a literature review and initial research, we knew the 5 pillars we wanted to focus our search on: Education, Employment, Housing, Transportation, and Health Services. 
                                             For vulnerable Transtion Aged Youth, ages 18-24, it is difficult for them to live independently especially those who have just aged out of the foster care system or gotten out of 
-                                            juvenile detention. Once we started our webscrapping for the programs available in Loudoun County, we noticed that some of the programs available were difficult to access to gain information to
-                                            and most of these programs, the person had to call or email for more information. After we webscrapped all of the programs in Loudoun County available for Transition Aged Youth and those specific to former foster care
+                                            juvenile detention. After we webscrapped all of the programs in Loudoun County available for Transition Aged Youth and those specific to former foster care
                                             youths or juvenile delinquents, we started a cross-county analysis with Fairfax County, VA and Allegheny County, PA. We repeated the webscrapping process with both counties, searching for programs within the same 
-                                            5 pillars for transition aged youth, those who have aged out of the foster care system and those who have gotten out of juvenile detention. To visualize the data we found, we created interactive trees shown
-                                            in the Services, Availability tab and leaflet maps shown in Services, Locations. "), 
+                                            5 pillars for transition aged youth, those who have aged out of the foster care system and those who have gotten out of juvenile detention. 
+                                             "), 
                                             tags$li("The interactive trees are a simple and easy way to display all of the programs and its most important information for each county seperately and together. We noticed gaps in transportation and housing programs in 
                                             Loudoun compared to Allegheny and Fairfax. The leaflet maps are used to visualize the locations of the services for each county and we noticed geographic gaps in services on the west side of the county. "), 
                                             tags$li("Third list item")
@@ -1104,11 +1092,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                    br(),
                                    h4(strong("VT Data Science for the Public Good")),
                                    p("The", a(href = 'https://aaec.vt.edu/academics/undergraduate/beyond-classroom/dspg.html', 'Data Science for the Public Good (DSPG) Young Scholars program', target = "_blank"),
-                                     "is a summer immersive program offered by the", a(href = 'https://aaec.vt.edu/index.html', 'Virginia Tech Department of Agricultural'), "and", a(href = 'https://ext.vt.edu/','Applied Economics and the Virginia Cooperative Extension Service.'),
-                                     "In its eighth year, the program engages students from across the country to work together on projects that address state, federal, and local government challenges around
-                                    critical social issues relevant in the world today. DSPG young scholars conduct research at the intersection of statistics, computation, and the social sciences
-                                    to determine how information generated within every community can be leveraged to improve quality of life and inform public policy. For more information on program
-                                    highlights, how to apply, and our annual symposium, please visit", 
+                                     "is a summer immersive program offered by the", a(href = 'https://aaec.vt.edu/index.html', 'Virginia Tech Department of Agricultural and Applied Economics'), 
+                                     "In its second year, the program engages students from across the country to work together on projects that address state, federal, and local government challenges 
+                                     around critical social issues relevant in the world today. DSPG young scholars conduct research at the intersection of statistics, computation, and the social sciences to 
+                                     determine how information generated within every community can be leveraged to improve quality of life and inform public policy. For more information on program highlights, 
+                                     how to apply, and our annual symposium, please visit", 
                                      a(href = 'https://aaec.vt.edu/content/aaec_vt_edu/en/academics/undergraduate/beyond-classroom/dspg.html#select=1.html', 'the official VT DSPG website.', target = "_blank")),
                                    p("", style = "padding-top:10px;")
                           ),
@@ -1419,8 +1407,8 @@ server <- function(input, output) {
   output$waitlist <- renderPlotly({
     
     ggplot(waitlist, aes(x=Year)) + 
-      geom_line(aes(y = Persons, group = Program, color = Program))+
-      labs(y = "Total Number of TAY")
+      geom_line(aes(y = Persons, group = Program, color = Program))+theme_minimal()+ 
+      labs(y = "Total Number of TAY") + theme( panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     
   })
   
@@ -2437,11 +2425,11 @@ server <- function(input, output) {
                    fill = `Race.Ethnicity`)) + 
         geom_col() +
         scale_y_continuous(labels = scales::percent) +
-        labs(title = "Race of TAY",y = "Percent TAYs served in Loudoun", ) +
+        labs(title = "Race of TAY",y = "Percent TAYs served in Loudoun", x= "" ) +
         scale_fill_viridis_d() +
         theme_minimal()+ theme(legend.position="bottom")
       
-      ggplotly(p, tooltip = "y")%>% layout(legend = list(orientation = "h", y=-0.2)) 
+      ggplotly(p, tooltip = "y") %>% layout(legend = list(orientation = "h", y=-0.2)) 
       
     }else if (dmhsaDemos() == "dmhsaGender"){
       
@@ -2450,21 +2438,19 @@ server <- function(input, output) {
                    fill = Gender)) + 
         geom_col() +theme_minimal() + 
         scale_y_continuous(labels = scales::percent) +
-        labs(title = "Gender of TAY", y = "Percent TAYs served in Loudoun", ) +
+        labs(title = "Gender of TAY", y = "Percent TAYs served in Loudoun", x="" ) +
         scale_fill_viridis_d() +
         theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(p, tooltip = "y")
-      
-
       
       
     }else {
       
       p <- ggplot(smi, aes(x=Year)) + 
         geom_line(aes(y = Persons, group = Group, color = Group)) + theme_minimal() + 
-        labs(title = "Severe Mental Illness, 5 Year Count", y = "Total TAYs served in Loudoun", )+scale_fill_viridis_d() +
-        theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+        labs(title = "Severe Mental Illness, 5 Year Count", y = "Total TAYs served in Loudoun", x="" )+scale_fill_viridis_d() +
+        theme( panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(p, tooltip = "y")
 
@@ -2534,9 +2520,9 @@ server <- function(input, output) {
       
     }else if (familyDemo() == "transR"){
       
-      emerR$Race <- factor(emerR$Race, levels=unique(emerR$Race))
+      transR$Race <- factor(transR$Race, levels=unique(transR$Race))
       
-      p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =emerR) + 
+      p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =transR) + 
         labs(title = "Transitional Housing Race/Ethnicity",y = "Total TAYs served in Loudoun", 
              x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
@@ -2571,7 +2557,7 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Race, Percent, fill = Race), data = literacy_demo) + 
         labs(title = "Adult Literacy Program",
-             y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
+             y = "Total TAYs and Adult Residents served in Loudoun", x="")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2619,7 +2605,7 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[1:2,]) + 
         labs(title = "Number of Individuals in the OAR program",
-             y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
+             y = "Total TAYs and Adult Residents served in Loudoun", x="")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),legend.position = "none",
               panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
@@ -2635,7 +2621,7 @@ server <- function(input, output) {
         
         plot <- ggplot() + geom_col(mapping = aes(Category, Number, fill = Category), data = all[3:7,]) + 
           labs(title = "Demographics of OAR program",
-               y = "Percent of TAYs and Adult Residents served in Loudoun") +scale_fill_viridis_d() +theme_minimal() + 
+               y = "Percent of TAYs and Adult Residents served in Loudoun", x="") +scale_fill_viridis_d() +theme_minimal() + 
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
@@ -2668,7 +2654,7 @@ server <- function(input, output) {
       
       plot <- ggplot() + geom_col(mapping = aes(Type, Number, fill = Type), data = literacy) + 
         labs(title = "Adult Literacy Program", 
-             y = "Total TAYs and Adult Residents served in Loudoun")+scale_fill_viridis_d() +theme_minimal() + 
+             y = "Total TAYs and Adult Residents served in Loudoun", x="")+scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"), legend.position = "none", 
               panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
