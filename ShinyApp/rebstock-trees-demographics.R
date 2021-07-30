@@ -1027,12 +1027,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                                 column(4, 
                                                      h4(strong("Other programs in Loudoun – who uses them?")), 
-                                                     infoBoxOutput("transit" , width = 4),
-                                                     p("We offer a diverse array of program implementation statistics, presented 
-                                                     in figures to the right, for users interested in details of additional program uptake and delivery.  
-                                                       Because each program collects implementation data differently, featured 
-                                                       characteristics vary across program.  Each graph represents a single year 
-                                                       (2019 and 2020).")) ,
+                                                     infoBoxOutput("transit" , width = 4)) ,
                                 
                                               column(8, 
                                                      selectInput(
