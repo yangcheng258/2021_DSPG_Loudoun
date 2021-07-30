@@ -393,63 +393,43 @@ ui <- navbarPage(title = "DSPG 2021",
                                       br()
                                    )
                           ),
-                          fluidRow(style = "margin: 6px;",
+                          fluidRow(style = "margin: 8px;",
                                    column(4,
-                                          h2(strong("Project Background")),
-                                          p(strong("The problem."), "Rural counties often face challenges in providing health care access to their residents given limited", a(href = "https://www.ruralhealthinfo.org/topics/hospitals", "health facilities", target = "_blank"),
-                                            "available, lack of broadband infrastructure that makes it difficult to provide", a(href = "https://www.ruralhealthinfo.org/topics/telehealth", "telemedicine access", target = "_blank"), "or communicate health information, and individual-level",
-                                            a(href = "https://www.ruralhealthinfo.org/topics/social-determinants-of-health", "inequalities", target = "_blank"), "that pose barriers to health care use and health
-                                            behaviors. Identifying areas of high need or potential solutions may also be difficult for rural areas without adequate resources to acquire, analyze, and interpret
-                                            relevant data."),
+                                          h2(strong("Background")),
+                                          p(a(href = "https://en.wikipedia.org/wiki/Transitional_age_youth#:~:text=Transitional%20age%20youth%20(TAY)%20are,environments%20and%20are%20at%2Drisk.",strong("Transition Aged Youth (TAY): "),target="_blank"), "Transition Aged Youths are young adults aged 18 -24 years old. Transitioning into emerging adulthood, TAY encounter numerous difficulties from different perspectives in life. The transition can be especially difficult for youths formerly involved in foster care system or those leaving juvenile detention facilities. Since they face unique challenges compared to their counterpart. One challenge is that they are cut off the services from these systems abruptly when they age out of the systems, even if their need for services continues. The other challenge is that they usually do not have a supportive family background similar to that of many youths growing up with biological family.  The combination of a disruption of services and a lack of family support put them at high risk. Our project targets at the Transition Aged Youths, meanwhile takes a close look at the vulnerable Transition Aged Youths who are formerly involved in foster care system or those leaving juvenile detention facilities."),
                                           p(),
-                                          p(strong("The setting."), a(href = "https://www.loudoun.gov", "Loudoun County", target = "_blank"), 
-                                            "is located in the northern part of the Commonwealth of Virginia in the United States. It covers 515.6 square miles ranking 20th-largest county 
-                                           in Virginia by area. In 2019, the population was estimated at 413,538, making it Virginia’s third-most populous county. Loudoun County is part of the Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.
-                                           The county's ", a(href = "https://www.census.gov/quickfacts/loudouncountyvirginia", "median household income", target = "_blank"),
-                                            "of $142,299, 3.1% poverty rate, and median home value of $508,100 makes it the richest county in Virginia in 2019. Our target population, ages 18-24, makes up about 5% of the total population.  
-                                           "),
+                                          p(a(href = "https://www.loudoun.gov", strong("Loudoun County"), target = "_blank"), 
+                                            "is located in the northern part of the Commonwealth of Virginia in the United States. Loudoun County is part of the ",a(href="https://www.loudoun.gov/DocumentCenter/View/57003/Map---Washington-DC-Metropolitan-Area","Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.",target="_blank")," It covers 515.8 square miles ranking 20th-largest county in Virginia by area. Loudoun has a large population. In 2019, the population was estimated at 413,538, making it Virginia’s third-most populous county. Our target population TAY, ages 18-24, makes up about 5% of the total population. Loudoun is one of the richest counties in the US. In 2019, the county's median household income is $151,800, which is more than double the amount in the U.S. ($65,712); in addition, the per capita income is $58,522, while the average amount in the U.S. is $35,672.  The poverty rate of Loudoun County is 3.1% in 2019, which is about one-third of the poverty rate in the US."), 
                                         
                                           p(),
-                                          p(strong("The project."), "This Virginia Tech", a(href = "https://aaec.vt.edu/index.html", "Department of Argicultural and Applied Economics", target = "_blank"),
-                                            "Data Science for Public Good (DSPG) project aimed to build local capacity, leverage social and data science to address current and future resident well-being, and enhance
-                                             data-driven decision making about rural health in Floyd County, Virginia.")
-                                   ),
+                                          p(a(href = "https://www.loudoun.gov/DocumentCenter/View/152440/Human-Services-Strategic-Plan", strong("The Loudoun County Human Services Strategic Plan 2019-2024 "), target = "_blank"),
+                                            "has a vision of creating a healthy, thriving, safe, and inclusive Loudoun community. There are 5 goals to achieve:"),
+                                          tags$li("Close critical service gaps for vulnerable or underserved members of the Loudoun community. "),
+                                          tags$li("Improve health and wellness outcomes by addressing the social determinants of health that challenge the Loudoun community. "),
+                                          tags$li("Optimize access for people seeking services by integrating the Loudoun County human services system. "),
+                                          tags$li("Meet the growing needs of the Loudoun County community through the development and coordination of resources and funding practices. "),
+                                          tags$li("Enhance the quality, capacity and delivery of services by strengthening the network of human services providers in Loudoun County."),
+                                          p()
+                                          ),
                                    column(4,
                                           h2(strong("Our Work")),
-                                          p("Our research team worked closely with Floyd County Extension Office, Virginia Department of Health, and Healthy Floyd County coalition stakeholders
-                                            to identify the county’s priority challenges in the area of health. The research team reviewed a prior", a(href = "https://www.vdh.virginia.gov/west-piedmont/2020/05/27/patrick-county-health-needs-improvement-plan-completed/",
-                                                                                                                                                       "community health assessment,", target = "blank"), a(href = "https://www.pubs.ext.vt.edu/VCE/VCE-596/VCE-596-75/VCE-1002-75.html", "situation analysis", target = "_blank"),
-                                            "relevant funding applications, and held a listening meeting with stakeholders to identify these challenges. Lack of
-                                            data on health care access, food access as related to diabetes and heart disease prevalence, older adult health, and digital connectivity that would facilitate
-                                            access to telemedicine emerged as key problems where providing actionable insights could address barriers to Patrick County residents’ health."),
-                                          p(),
-                                          p("We implemented the", a(href = "https://doi.org/10.1162/99608f92.2d83f7f5", "data science framework", target = "_blank"), "and identified, acquired, profiled, and used
-                                            publicly available data to provide Floyd County with data-driven resources in each of the four priority areas. We:"),
-                                          tags$li("Provided census tract- and census block group-level maps of Floyd County residents'", strong("sociodemographic and socioeconomic characteristics,"), " highlighting underprivileged areas."),
-                                          tags$li("Created barplots of", strong("monthly temperatures and precipitation levels"), "to show the geographic distribution of older adults in the county by gender and
-                                                  type of disability, identifying areas where providing telehealth or travelling preventive care services may be particularly important."),
-                                          tags$li("Mapped locations of", strong("streams, lakes, and mines"), "at census block group level, and constructed 10- and 15-minute isochrones (areas of equal travel time) from households to free
-                                                  wifi hotspots to highlight internet gaps that could suggest where new wi-fi hotspots could be optimally placed to provide internet access to more residents."),
-                                          tags$li("Calculated and mapped", strong("water usage"), "of households within 8-, 10-, and 12-minute travel times, identifying areas difficult to reach within
-                                                   standard EMS travel thresholds."),
-                                          tags$li("Constructed", strong("land parcel"), "maps by census tract, 10- and 15-minute isochrones from households to grocery stores and farmers markets, and maps of food security resources in the county,
-                                                highlighting food deserts and areas that could benefit from programs facilitating access to fresh produce."),
-                                          p(),
-                                          p("This dashboard compiles our findings and allows extension professionals, stakeholders, and other users to explore the information interactively.")
+                                          p(strong("The goal: "),"Motivated by the Loudoun County Human Services Strategic Plan, this Data Science for the Public Good project aims at identifying service provision for TAY and vulnerable TAY in five major areas: education, employment, housing, transportation, and health to provide a picture of service provision of Loudoun County. "),
+                                          
+                                          p(strong("Our work")," is as follows:"),
+                                          tags$li("We provided the ",strong("demographics analysis "),"of the TAY and took a close look at the TAY aging out of foster care system and leaving juvenile detention facilities in Loudoun County, which could reveal reasons for their vulnerability."),
+                                          tags$li("We ",strong("web scrapped available services "),"for TAY in Loudoun County ( VA) ",a(href="https://www.fairfaxcounty.gov/","Fairfax County (VA)",target="_blank"), "and",a(href="https://www.alleghenycounty.us/","Allegheny County (PA).",target="_blank"), "At the same time, we collected qualification requirements, application methods, location information, delivery formats and other useful information of services to facilitate the access of services for targeted population."),
+                                          tags$li("We conducted a ",strong("cross-county analysis")," between Loudoun, Fairfax, and Allegany to detect the service gaps across similar jurisdictions, to provide insights of the service gaps."),
+                                          tags$li("We displayed the services in the collapsible trees and geospatial maps. The ",strong("interactive tools")," examined both intra-county and inter-state variation in services provision, utilization, and geographical gaps in a meaningful and digestible way."),
+                                          tags$li("We analyzed the ",strong("utilization of services")," against demographics and mapped the utilization against the locations by using the publicly available data and administrative data to increase the understanding of the supply and the demand of services."),
+                                          p()
+                                         
                                    ),
                                    column(4,
-                                          h2(strong("Dashboard Aims")),
-                                          p("Our dashboard is aimed at:"),
-                                          p(strong("Floyd County extension professionals and the communities they serve."), "Information available through the interface helps extension
-                                            agents identify areas where residents may not have access to internet, or areas with a high smartphone ownership share, suggesting what channels agents may
-                                            want to use to disseminate health-related information most effectively. Information on older adult populations and grocery store access can help extension agents
-                                            better understand where underserved populations live and how to advocate on their behalf."),
-                                          p(strong("Local health-related agencies and departments seeking data insights to inform their decision-making."), "For local stakeholders, identifying broadband
-                                            access gaps that limit access to telemedicine, grocery store access gaps, and areas with high proportions of older adults with independent living difficulty can suggest
-                                            optimal locations for placing free wifi hotspots, providing grocery delivery services, devising mobile health unit routes, or can inform other solutions that would benefit
-                                            a broad population base."),
-                                          p(strong("State government representatives in the Virginia Department of Health and the State Office of Rural Health."), "These and similar stakeholders may
-                                            need small or rural area-specific insights that Centers for Disease Control and other county-level datasets cannot provide.")
+                                          h2(strong("Audience")),
+                                          p("This dashboard compiles our findings and allows extension professionals, stakeholders, and other users to explore the information interactively."),
+                                          p(strong("Transition Aged Youth. "), "The interactive tools in this dashboard supply rich information of services such as location, qualifications, delivery formats, and description of available services in Loudoun County, Fairfax County, and Allegheny County among five major areas--education, employment, housing, transportation, and health. It informs of service availability TAY in need of help when they encounter difficulties transitioning into adulthood. "),
+                                          p(strong("Loudoun County Government Agencies for Human Services."), "The potential geographic gaps and service gaps can inform the decision making of Human Services Strategic Plan implementation and Board of Supervisors Strategic Plan implementation to achieve to goals of providing necessary supports to underserved youth during the critical transition.  In addition, the service utilization analysis can reveal the service usage, and thus help to coordinate of resources among service providers in Loudoun County to optimize the interventions on closing the service gaps.")
+                                         
                                    )
                           ),
                           fluidRow(align = "center",
@@ -530,7 +510,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                         p("It is difficult to analyze socioeconomic patterns for juvenile delinquents after age 20 which would provide us with a 
                                                         guide of the necessary services they would need to help with their transition to adulthood. 
                                                         However, in 2019, over 90 percent of youth incarcerated in Virginia had significant mental 
-                                                        health disorder. 1 In addition, there is a high recidivism rate (over 50%) and only 35 total 
+                                                        health disorder [1]. In addition, there is a high recidivism rate (over 50%) and only 35 total 
                                                         youth offenders received a high school diploma or GED. This snapshot suggests that TAYs leaving 
                                                         the juvenile system would greatly benefit from the availability of health services, education, and employment.")
                                                         ), 
@@ -561,7 +541,10 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                 
                                                        )
                                                      ) 
-                                              )    
+                                              )   ,
+                                              tags$br(), 
+                                              h4("References: "),
+                                              p("[1] Virginia Dept of Juvenile Justice, & United States of America. (2020). Virginia Department of Juvenile Justice Data Resource Guide Fiscal Year 2020.")
                                      )) 
                  ),
                  
@@ -671,7 +654,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree1",height = "550px") 
+                                                                      collapsibleTreeOutput("tree1",height = "500px") 
                                                                       
                                                                       
                                                                       
@@ -689,7 +672,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree3",height = "550px") 
+                                                                      collapsibleTreeOutput("tree3",height = "500px") 
                                                                       
                                                                       
                                                              ), 
@@ -707,7 +690,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                           "Health Services")
                                                                       ),
                                                                       selected = "Education", 
-                                                                      collapsibleTreeOutput("tree2",height = "550px")
+                                                                      collapsibleTreeOutput("tree2",height = "500px")
                                                                       
                                                              )) 
                                                     )) ) ,
@@ -717,11 +700,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                     p("", style = "padding-top:10px;"), 
                                                     column(4,  
                                                            h4(strong("Where are the gaps?")), 
-                                                            p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
-                                                           
-                                                           p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA as having exemplary transitional service infrastructure for vulnerable TAY."), 
-                                                          
-                                                           p("Not surprisingly, across all counties, services and program available to all 18-24 year olds are the most abundant across all pillars.  Most of these programs are safety net or benefit programs for adults based on income need or educational programs aimed at enabling all adults to advance themselves, such as through the community college systems.   What may be particularly helpful to youth aging out of foster care or emerging from juvenile detention, however, are programs that recognize their unique challenges."),
+                                                            p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "), 
                                                            p("Some of these tailored programs are embedded within broader services.  For example, Great Expectations Services for Youth in Foster Care within the Northern Virginia Community College system helps connect this population with higher education.  Others include financial assistance or guidance aimed at assisting with the transition from residential care to independence, such as LIFT 2 for youth aging out of the foster care system.    "), 
                                                            p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority.  In Northern Virginia, OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources) offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   Youth who only have juvenile justice involvement are also eligible for these services.    However, these services are broadly available to all post-incarcerated residents. "), 
                                                            p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  Unique to Loudoun is Mobile Hope's Handcuffs to Hope program , which works with incarcerated youth three to six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to helping TAY with past or current involvement in the criminal justice system train for and find employment.  Both administered by Partner4Work, Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE) provides comprehensive case management as well as a suite of job-focused programs, while the Career Pipeline Project offers paid on-the-job training opportunities. "), 
@@ -1133,8 +1112,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                           img(src = "faculty-chanita.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "faculty-isabel.jpg", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
-                                          p(a(href = "", 'Chanita Holmes', target = '_blank'), "(Project Lead, VT Research Assistant Professor);") , 
-                                          p(a(href = "", 'Isabel Bradburn', target = '_blank'), "(Research Faulty, Department of Human Development and Family Science, VT)."),
+                                          p(a(href = "https://aaec.vt.edu/people/faculty/holmes-chanita.html", 'Chanita Holmes', target = '_blank'), "(Project Lead, Virgina Tech, Research Assistant Professor);") , 
+                                          p(a(href = "https://liberalarts.vt.edu/departments-and-schools/department-of-human-development-and-family-science/faculty/isabel-bradburn.html", 'Isabel Bradburn', target = '_blank'), "(Research Faulty,Virgina Tech, Department of Human Development and Family Science)."),
                                           p("", style = "padding-top:10px;")
                                    )) ,
                           fluidRow(style = "margin-left: 100px; margin-right: 100px;",
