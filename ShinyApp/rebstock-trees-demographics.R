@@ -402,7 +402,7 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin: 8px;",
                                    column(4,
                                           h2(strong("Background")),
-                                          p(a(href = "https://en.wikipedia.org/wiki/Transitional_age_youth#:~:text=Transitional%20age%20youth%20(TAY)%20are,environments%20and%20are%20at%2Drisk.",strong("Transition Aged Youth (TAY): "),target="_blank"), "Transition Aged Youths are young adults aged 18 -24 years old. Transitioning into emerging adulthood, TAY encounter numerous difficulties from different perspectives in life. The transition can be especially difficult for youths formerly involved in foster care system or those leaving juvenile detention facilities. Since they face unique challenges compared to their counterpart. One challenge is that they are cut off the services from these systems abruptly when they age out of the systems, even if their need for services continues. The other challenge is that they usually do not have a supportive family background similar to that of many youths growing up with biological family.  The combination of a disruption of services and a lack of family support put them at high risk. Our project targets at the Transition Aged Youths, meanwhile takes a close look at the vulnerable Transition Aged Youths who are formerly involved in foster care system or those leaving juvenile detention facilities."),
+                                          p(a(href = "https://en.wikipedia.org/wiki/Transitional_age_youth#:~:text=Transitional%20age%20youth%20(TAY)%20are,environments%20and%20are%20at%2Drisk.",strong("Transition Aged Youth (TAY): "),target="_blank"), "Transition Aged Youths are young adults aged 18 -24 years old.  Transitioning into adulthood, all TAY can encounter numerous challenges in becoming economically independent. However, the transition can be especially difficult for youth formerly involved in the foster care system or those leaving juvenile detention facilities. A major challenge for many as they age out of these systems is a continued need for basic services with little to no guidance about how to access them. The combination of a disruption in services and for many, a lack of family support put them at high risk.  Our project targets Transition Aged Youth (TAY) with particular attention to those formerly involved in foster care system or those leaving juvenile detention facilities. "),
                                           p(),
                                           p(a(href = "https://www.loudoun.gov", strong("Loudoun County"), target = "_blank"), 
                                             "is located in the northern part of the Commonwealth of Virginia in the United States. Loudoun County is part of the ",a(href="https://www.loudoun.gov/DocumentCenter/View/57003/Map---Washington-DC-Metropolitan-Area","Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.",target="_blank")," It covers 515.8 square miles ranking 20th-largest county in Virginia by area. Loudoun has a large population. In 2019, the population was estimated at 413,538, making it Virginia’s third-most populous county. Our target population TAY, ages 18-24, makes up about 5% of the total population. Loudoun is one of the richest counties in the US. In 2019, the county's median household income is $151,800, which is more than double the amount in the U.S. ($65,712); in addition, the per capita income is $58,522, while the average amount in the U.S. is $35,672.  The poverty rate of Loudoun County is 3.1% in 2019, which is about one-third of the poverty rate in the US."), 
@@ -420,12 +420,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                           p()
                                           ),
                                    column(4,
-                                          h2(strong("Our Work")),
+                                         h2(strong("Our Work")),
                                           p(strong("The goal: "),"Motivated by the Loudoun County Human Services Strategic Plan, this Data Science for the Public Good project aims at identifying service provision for TAY and vulnerable TAY in five major areas: education, employment, housing, transportation, and health to provide a picture of service provision of Loudoun County. "),
-                                          
+                                         p(),
+                                         img(src = "pillars.png", style = "display: inline; margin-left: auto; margin-right: auto; border: 0px solid #C0C0C0;", width = "300px"),
+                                         
                                           p(strong("Our work")," is as follows:"),
                                           tags$ul(
-                                          tags$li("We provided the ",strong("demographics analysis "),"of the TAY and took a close look at the TAY aging out of foster care system and leaving juvenile detention facilities in Loudoun County, which could reveal reasons for their vulnerability."),
+                                          tags$li("We provided the ",strong("demographics analysis "),"of TAY and took a close look at the TAY aging out of foster care system and leaving juvenile detention facilities in Loudoun County."),
                                           tags$li("We ",strong("web scrapped available services "),"for TAY in Loudoun County ( VA) ",a(href="https://www.fairfaxcounty.gov/","Fairfax County (VA)",target="_blank"), "and",a(href="https://www.alleghenycounty.us/","Allegheny County (PA).",target="_blank"), "At the same time, we collected qualification requirements, application methods, location information, delivery formats and other useful information of services to facilitate the access of services for targeted population."),
                                           tags$li("We conducted a ",strong("cross-county analysis")," between Loudoun, Fairfax, and Allegany to detect the service gaps across similar jurisdictions, to provide insights of the service gaps."),
                                           tags$li("We displayed the services in the collapsible trees and geospatial maps. The ",strong("interactive tools")," examined both intra-county and inter-state variation in services provision, utilization, and geographical gaps in a meaningful and digestible way."),
@@ -967,10 +969,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Who does Family Services serve?")), 
-                                                                         p("Family Services prodivded programs served over 100 transition aged youth from 2016 - 2020. As you can see, some programs are used more
-                                                                           often by males and some by females while Asians are served the most with Public benefits like SNAP, Medicaid and TANF while the majority
-                                                                           of those who used the Emergency Shelters and Transtional Housing Program were either White or Black. "), 
-                                                                         p("")
+                                                                         p("Loudoun Family Services is a department within the county ",a(href="https://www.loudoun.gov/107/Family-Services-Department","Health and Human Services agency ",target="_blank")," that administers the local foster care program as well as other support services.  From 2016 – 2020, family service programs served more than 2,500 transition aged youth (TAY).  "),
+                                                                         p("Transition aged youth used public benefits by far the most during this time period and used transitional housing minimally.  Public benefits here include financial assistance for food (Supplemental Nutritional Assistance Program, or SNAP), health insurance (Medicaid) and for low-income families with children (Temporary Assistance for Needy Families, TANF).  White TAY used these supports more than any other racial group (59%), with 63% of recipients being female.  While more White TAY used emergency shelters, Black TAY used emergency shelter more than other groups proportional to their representation in the county.  Slightly more male than female TAY (56%) made use of emergency shelter.   The only service Asian residents used to any extent was public benefits.  Hispanic ethnicity was not reported for these statistics. "),
+                                                                         p("On the Trends tab, counts of TAY service use are presented for each year for these as well as two workforce programs.  Note that counts differ for transitional housing between the demographic graphs presented here and the trend counts.  For this program only, demographic information includes all program users.  "),
+                                                                         p()
+                                                                         
                                                                          
                                                                   ), 
                                                                   column(8, 
@@ -980,8 +983,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                            "familyDemo",
                                                                            "Select Demographic",
                                                                            choices = list(
-                                                                             "Public Benefits Race" = "publicRace",
                                                                              "Public Benefits Gender" = "publicGender",
+                                                                             "Public Benefits Race" = "publicRace",
                                                                              "Emergency Shelter Gender" = "emerG",
                                                                              "Emergency Shelter Race" = "emerR",
                                                                              "Transitional Housing Gender" = "transG",
@@ -999,9 +1002,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Utilization Trends")),
-                                                                         p("Visualizing trends of enrollment and usage for Family Service provided programs is essential in finding and filling gaps for vulnerable transition
-                                                                           aged youth in Loudoun County. Based on data provided by Loudoun County, the animation to the right visualizes persons served for mutliple programs 
-                                                                           from 2015 to 2020. ")
+                                                                         p("Based on data provided by Loudoun County, the animation to the right shows how many TAY were served by year, from 2016 to 2019, for unique programs.   Medicaid was the most widely used benefit by a large margin.  Not surprisingly for these young adults, few used the family support TANF, but approximately 300 TAY used career support services through the Workforce Resource Center. ")
                                                                         ) ,
                                                                   column(8, 
                                                                          tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
@@ -1106,7 +1107,7 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin-left: 100px; margin-right: 100px;",
                                    h1(strong("Team"), align = "center"),
                                    br(),
-                                   h4(strong("VT Data Science for the Public Good")),
+                                   h4(strong("VT Data Science for the Public Good"), align = "center"),
                                    p("The", a(href = 'https://aaec.vt.edu/academics/undergraduate/beyond-classroom/dspg.html', 'Data Science for the Public Good (DSPG) Young Scholars program', target = "_blank"),
                                      "is a summer immersive program offered by the", a(href = 'https://aaec.vt.edu/index.html', 'Virginia Tech Department of Agricultural and Applied Economics'), 
                                      "In its second year, the program engages students from across the country to work together on projects that address state, federal, and local government challenges 
@@ -2530,14 +2531,16 @@ server <- function(input, output) {
       transG$Gender <- factor(transG$Gender, levels=unique(transG$Gender))
       
       p <- ggplot() + geom_col(mapping = aes(Gender, Number, fill = Gender), data =transG) + 
-        labs(title = "Transitional Housing Gender",y = "Total TAYs served in Loudoun", 
+        #Yang's change add "All users)
+        #labs(title = "Transitional Housing Gender ",y = "Total TAYs served in Loudoun", 
+        labs(title = "Transitional Housing Gender ",y = "All adults served in Loudoun", 
              x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(p, tooltip = "y")%>% layout(
         annotations = 
-          list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Transitional Housing 2016-20", 
+          list(x = 1,  y = -.15, text = " Transitional Housing Gender serves all adults including TAY. \n Source: ServicePoint & HUD Transitional Housing 2016-20 ", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10)))
@@ -2548,14 +2551,14 @@ server <- function(input, output) {
       transR$Race <- factor(transR$Race, levels=unique(transR$Race))
       
       p <- ggplot() + geom_col(mapping = aes(Race, Number, fill = Race), data =transR) + 
-        labs(title = "Transitional Housing Race/Ethnicity",y = "Total TAYs served in Loudoun", 
+        labs(title = "Transitional Housing Race/Ethnicity",y = "All adults served in Loudoun", 
              x = "") +scale_fill_viridis_d() +theme_minimal() + 
         theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
               legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
       ggplotly(p, tooltip = "y")%>% layout(
         annotations = 
-          list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Transitional Housing 2016-20", 
+          list(x = 1,  y = -.15, text = "Transitional Housing Gender serves all adults including TAY. \n Source: ServicePoint & HUD Transitional Housing 2016-20", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10)))
@@ -2571,7 +2574,7 @@ server <- function(input, output) {
           theme(axis.text.x = element_text(angle = 45, vjust = .5, color = "black"),
                 legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         
-        ggplotly(p, tooltip = "y")%>% layout(
+        ggplotly(p, tooltip = "y",caption = "This program serves all adults including TAY.")%>% layout(
           annotations = 
             list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Emergency Shelter 2016-20", 
                  showarrow = F, xref='paper', yref='paper', 
@@ -2700,7 +2703,7 @@ server <- function(input, output) {
           list(x = 1, y = -.2, text = "Source: Transit Development Plan 2018-2028", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size= 9))) 
+               font=list(size= 10))) 
       
       
       }else {
@@ -2716,7 +2719,7 @@ server <- function(input, output) {
           list(x = 1, y = -.2, text = "Source: Loudoun County Public School 2019-2020", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
-               font=list(size= 9))) 
+               font=list(size= 10))) 
     }
     
     
