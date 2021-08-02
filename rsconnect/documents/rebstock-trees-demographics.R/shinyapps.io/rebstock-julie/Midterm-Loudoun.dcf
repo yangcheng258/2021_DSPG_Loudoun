@@ -1,0 +1,14 @@
+name: Midterm-Loudoun
+title: Midterm-Loudoun
+username:
+account: rebstock-julie
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4369791
+bundleId: 4861732
+url: https://rebstock-julie.shinyapps.io/Midterm-Loudoun/
+when: 1627417221.33492
+lastSyncTime: 1627417221.33493
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: program_counts.R
