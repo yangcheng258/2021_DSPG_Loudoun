@@ -22,18 +22,8 @@ library(tidygeocoder)
 library(janitor)
 options(tigris_use_cache = TRUE)
 
-# census_api_key("6f1a78212175773dd80d1a03bd303e8d181a6096", install = TRUE, overwrite = T)
-# readRenviron("~/.Renviron")
 
-
-
-# # Yang's API Key
-# census_api_key("58cb9357dee9edf8330e47865d207929ab8baeb3", install = FALSE )
-# Sys.getenv("CENSUS_API_KEY")
-# # I am seeting my working directory
-# setwd("G:/My Drive/PhD/Internship/Loudoun/2021_DSPG_Loudoun/2021_DSPG_Loudoun/ShinyApp")
-
-# Data-----------------------------------------------------------
+# READING DATA-----------------------------------------------------------
 loudoun <- read_excel(paste0(getwd(), "/data/demographics-loudoun.xlsx"))
 ## gender and age tays
 l_ages_gender <- read.csv(paste0(getwd(),"/data/ages_gender.csv")) 
@@ -359,8 +349,8 @@ jscode <- "function getUrlVars() {
            var x = document.getElementsByClassName('navbar-brand');
 
            if (mytype != 'economic') {
-             x[0].innerHTML = '<div style=\"margin-top:-14px\"><a href=\"https://datascienceforthepublicgood.org/events/symposium2020/poster-sessions\">' +
-                              '<img src=\"DSPG_black-01.png\", alt=\"DSPG 2020 Symposium Proceedings\", style=\"height:42px;\">' +
+             x[0].innerHTML = '<div style=\"margin-top:-14px\"><a href=\"https://datascienceforthepublicgood.org/events/data%20science%20for%20the%20public%20good%202021/%20symposium%202021%20poster%20sessions\">' +
+                              '<img src=\"DSPG_black-01.png\", alt=\"DSPG 2021 Symposium Proceedings\", style=\"height:42px;\">' +
                               '</a></div>';
 
              //changeLinks('dspg');
@@ -376,8 +366,8 @@ jscode <- "function getUrlVars() {
 
 
 
-# UI -----------------------------------------------------------
-ui <- navbarPage(title = "DSPG 2021",
+# THIS IS THE BEGINNING OF UI -----------------------------------------------------------
+ui <- navbarPage(title = "Loudoun",
                  selected = "overview",
                  theme = shinytheme("lumen"),
                  tags$head(tags$style('.selectize-dropdown {z-index: 10000}')), 
@@ -389,10 +379,8 @@ ui <- navbarPage(title = "DSPG 2021",
                  tabPanel("Overview", value = "overview",
                           fluidRow(style = "margin: 6px;",
                                    align = "center",
-                                   # br("", style = "padding-top:2px;"),
-                                   # img(src = "uva-dspg-logo.jpg", class = "topimage", width = "20%", style = "display: block; margin-left: auto; margin-right: auto;"),
-                                   br(""),
-                                   h1(strong("Service Provision For Vulnerable Transition Aged Youth In Loudoun County"),
+                                    br(""),
+                                   h1(strong("Service Provision for Vulnerable Transition Aged Youth in Loudoun County"),
                                       br(""),
                                       h4("Data Science for the Public Good Program"),
                                       h4("Virginia Tech"),
@@ -402,7 +390,7 @@ ui <- navbarPage(title = "DSPG 2021",
                           fluidRow(style = "margin: 6px;",
                                    column(4,
                                           h2(strong("Background")),
-                                          p(a(href = "https://en.wikipedia.org/wiki/Transitional_age_youth#:~:text=Transitional%20age%20youth%20(TAY)%20are,environments%20and%20are%20at%2Drisk.",strong("Transition Aged Youth (TAY): "),target="_blank"), "Transition Aged Youths are young adults aged 18 -24 years old.  Transitioning into adulthood, all TAY can encounter numerous challenges in becoming economically independent. However, the transition can be especially difficult for youth formerly involved in the foster care system or those leaving juvenile detention facilities. A major challenge for many as they age out of these systems is a continued need for basic services with little to no guidance about how to access them. The combination of a disruption in services and for many, a lack of family support put them at high risk.  Our project targets Transition Aged Youth (TAY) with particular attention to those formerly involved in foster care system or those leaving juvenile detention facilities. "),
+                                          p(a(href = "https://en.wikipedia.org/wiki/Transitional_age_youth#:~:text=Transitional%20age%20youth%20(TAY)%20are,environments%20and%20are%20at%2Drisk.",strong("Transition Aged Youth (TAY): "),target="_blank"), "Transition Aged Youth are young adults aged 18 -24 years old.  Transitioning into adulthood, all TAY can encounter numerous challenges in becoming economically independent. However, the transition can be especially difficult for youth formerly involved in the foster care system or those leaving juvenile detention facilities. A major challenge for many as they age out of these systems is a continued need for basic services with little to no guidance about how to access them. The combination of a disruption in services and for many, a lack of family support put them at high risk.  Our project targets Transition Aged Youth (TAY) with particular attention to those formerly involved in foster care system or those leaving juvenile detention facilities. "),
                                           p(),
                                           p(a(href = "https://www.loudoun.gov", strong("Loudoun County"), target = "_blank"), 
                                             "is located in the northern part of the Commonwealth of Virginia in the United States. Loudoun County is part of the ",a(href="https://www.loudoun.gov/DocumentCenter/View/57003/Map---Washington-DC-Metropolitan-Area","Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area.",target="_blank")," It covers 515.8 square miles ranking 20th-largest county in Virginia by area. Loudoun has a large population. In 2019, the population was estimated at 413,538, making it Virginia’s third-most populous county. Our target population TAY, ages 18-24, makes up about 5% of the total population. Loudoun is one of the richest counties in the US. In 2019, the county's median household income is $151,800, which is more than double the amount in the U.S. ($65,712); in addition, the per capita income is $58,522, while the average amount in the U.S. is $35,672.  The poverty rate of Loudoun County is 3.1% in 2019, which is about one-third of the poverty rate in the US."), 
@@ -447,12 +435,12 @@ ui <- navbarPage(title = "DSPG 2021",
                           
                  ),
                  
-                 ## Tab Introduction to Loudoun County-------------------------------------------
+                 ## Tab Demographics-------------------------------------------
                  navbarMenu("Sociodemographics",
-                            ### Tab TAY--------------------------------------------
+                            ### TAY--------------------------------------------
                             tabPanel("Target Population",
                                      fluidRow(style = "margin: 6px;",
-                                              h1(strong("Transition Aged Youths' Sociodemographic Characteristics"), align = "center"),
+                                              h1(strong("Transition Aged Youth's Sociodemographic Characteristics"), align = "center"),
                                               p("", style = "padding-top:10px;"),
                                               column(4, 
                                                      h4(strong("Who does Loudoun County Serve?")),
@@ -480,11 +468,11 @@ ui <- navbarPage(title = "DSPG 2021",
                                                        "Homeless TAY in Loudoun" = "home", 
                                                        "Types of Healthcare Coverage" = "health")
                                                      ),
-                                                     plotlyOutput("plot1"),
+                                                     withSpinner(plotlyOutput("plot1")),
                                                      p(tags$small("Source: American Community Survey 2019 1-Year/5-Year Estimates."))
                                               )
                                      )) ,
-                            ### Tab subpopulation--------------------------------------------
+                            ###  subpopulation
                             tabPanel("Subpopulation",
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Subpopulations' Sociodemographic Characteristics" ), align = "center"),
@@ -510,7 +498,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                         
                                                       p("Though intakes have declined, there 
                                                         are some significant differences across socioeconomic characteristics.  70% of 
-                                                        newly admitted cases in 2020 are male. While Black youth make up only * percent of Loudoun 
+                                                        newly admitted cases in 2020 are male. While Black youth make up only 8 percent of Loudoun 
                                                         TAY population, they accounted for 15% of juvenile intakes. The majority of youth admitted 
                                                         are aged 14-17; the largest category (almost 30%) being age 17."),
                                                         
@@ -568,7 +556,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                               p("", style = "padding-top:10px;"), 
                                               column(12, 
                                                   h4(strong("What services and programs are available?")), 
-                                                   p("Research literature suggests that there are five main areas that transition age youth (TAY) struggle 
+                                                   p("Research literature suggests that there are five main areas that transition aged youths (TAY) struggle 
                                                      with in their transition to adulthood and economic independence:  educational attainment, employment, 
                                                      housing, transportation, and access to healthcare services.    The diagrams presented below show 
                                                      what services exist in Loudoun County along these five dimensions, or pillars.  Branches show services 
@@ -651,93 +639,6 @@ ui <- navbarPage(title = "DSPG 2021",
                                      ) 
                             ),
                             
-                            tabPanel("Cross-County Analysis", 
-                                     fluidRow(style = "margin: 6px;",
-                                              h1(strong("Gaps in Services and Programs"), align = "center"),
-                                              p("", style = "padding-top:10px;"), 
-                                                       column(6,
-                                                             h4(strong('Types of services and programs')),
-                                                             p("The tables to the right summarize the data by providing counts of services and programs
-                                                               available in each county by subpopulation and by pillar.  Programs specifically targeted at 
-                                                               helping youth transition from the juvenile justice system are a distinct minority.  Programs for foster 
-                                                               care and former foster care youth are only slightly more widespread.  The great majority of services 
-                                                               and programs are available for vulnerable TAY in general.  "), 
-                                                             
-                                                             p("For Loudoun County, the distribution of programs by pillar indicate that the number of 
-                                                               services and programs are fairly equal among areas, except there are many fewer transportation services."),
-                                                             p("While the number of services and programs are an important index of resources available to help TAY in 
-                                                               their path toward a viable economic independence, the quality and range of those programs is also critical. 
-                                                               In particular, how well are the programs meeting specific needs for these TAY populations?  
-                                                               The project shows that most services appear to be located in the eastern portion of the county
-                                                               (see Locations tab) and that transportation services are the least well represented. 
-                                                               Getting youth to necessary services from all parts of the county may represent a gap that 
-                                                               could be further explored in subsequent projects")), 
-                                                 column(6, 
-                                                        h4(strong("Number of Programs by Subpopulation")), 
-                                                        tableOutput("table1"),
-                                                        tags$br(), 
-                                                        h4(strong("Number of Programs by Pillar")), 
-                                                        tableOutput("table2"))
-                                                 
-                                                 ), 
-                                     fluidRow(style = "margin: 6px;",
-                                              p("", style = "padding-top:10px;"), 
-                                                       column(4,  
-                                                              h4(strong("Where are the gaps?")), 
-                                                              p("Some of these tailored programs are embedded within broader services.  
-                                                                For example, ",strong("Great Expectations Services"), " for Youth in Foster Care within the Northern Virginia Community College
-                                                                system helps connect this population with higher education.  Others include financial assistance or 
-                                                                guidance aimed at assisting with the transition from residential care to independence, such as ",strong("LIFT 2")," for 
-                                                                youth aging out of the foster care system.    "), 
-                                                              h5(strong("Juvenile Justice Involved Specific Programs/Services")),
-                                                              p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority. 
-                                                                In Northern Virginia, ", strong("OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources)"),  " 
-                                                                offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, 
-                                                                providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   
-                                                                Youth who only have juvenile justice involvement are also eligible for these services.    
-                                                                However, these services are broadly available to all post-incarcerated residents. "), 
-                                                              p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  
-                                                                Unique to Loudoun is ", strong("Mobile Hope's Handcuffs to Hope program"),  "which works with incarcerated youth three to 
-                                                                six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to 
-                                                                helping TAY with past or current involvement in the criminal justice system train for and find employment.  
-                                                                Both administered by Partner4Work, ", strong("Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE)"), " 
-                                                                provides comprehensive case management as well as a suite of job-focused programs, while the ", strong("Career Pipeline Project"), 
-                                                                " offers paid on-the-job training opportunities. "), 
-                                                              h5(strong("Foster Care Specific Programs")),
-                                                              p("Programs for foster care and former foster care youth specifically include programs targeting educational,  
-                                                                employment, housing and health needs, such as ", strong("LIFT 2"), " in Fairfax that addresses a wide range of potential 
-                                                                needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the ", strong("Independent 
-                                                                Living Program"), " administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
-                                                              h5(strong("The Biggest Gaps")),
-                                                              p("Reviewing the breadth and number of support services and programs across all counties, 
-                                                                it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth,
-                                                                and lack of a case management system for the TAY subpopulations of interest.   "), 
-                                                       ) ,
-                                                       column(8, 
-                                                              h4(strong("Comparison Tree by Pillar")),
-                                                              radioButtons(
-                                                                "compare1",
-                                                                label = "Select Pillar" ,
-                                                                choices = list(
-                                                                  "Education",
-                                                                  "Employment",
-                                                                  "Housing",
-                                                                  "Transportation",
-                                                                  "Health Services")
-                                                              ),
-                                                              selected = "Education", 
-                                                              collapsibleTreeOutput("compare", height = "500px") , 
-                                                              br(),
-                                                              br()
-                                                              
-                                                       ) 
-                                                       
-                                              )
-                                     ) , 
-                                     
-                            
-                            
-                            
                             tabPanel("Locations", 
                                      fluidRow(style = "margin: 6px;",
                                               h1(strong("Location of Programs and Services"), align = "center"),
@@ -786,7 +687,105 @@ ui <- navbarPage(title = "DSPG 2021",
                             
                  ),
                  
+                 ## Tab Cross-county----------------
                  
+                 navbarMenu( "Cross-County Analysis",
+                  
+                           tabPanel("Numbers", 
+                            fluidRow(style = "margin: 6px;",
+                                     h1(strong("Types of services and programs"), align = "center"),
+                                     p("", style = "padding-top:10px;"), 
+                                     column(6,
+                                            h4(strong('')),
+                                            p(""),
+                                            p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity 
+                                                     to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making
+                                                     them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is 
+                                                     included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA 
+                                                     as having exemplary transitional service infrastructure for vulnerable TAY.  "),
+                                            p("The tables to the right summarize the data by providing counts of services and programs
+                                                               available in each county by subpopulation and by pillar.  Programs specifically targeted at 
+                                                               helping youth transition from the juvenile justice system are a distinct minority.  Programs for foster 
+                                                               care and former foster care youth are only slightly more widespread.  The great majority of services 
+                                                               and programs are available for vulnerable TAY in general.  "), 
+                                            
+                                            p("For Loudoun County, the distribution of programs by pillar indicate that the number of 
+                                                               services and programs are fairly equal among areas, except there are many fewer transportation services."),
+                                            p("While the number of services and programs are an important index of resources available to help TAY in 
+                                                               their path toward a viable economic independence, the quality and range of those programs is also critical. 
+                                                               In particular, how well are the programs meeting specific needs for these TAY populations?  
+                                                               The project shows that most services appear to be located in the eastern portion of the county
+                                                               (see Locations tab) and that transportation services are the least well represented. 
+                                                               Getting youth to necessary services from all parts of the county may represent a gap that 
+                                                               could be further explored in subsequent projects")), 
+                                     column(6, 
+                                            h4(strong("Number of Programs by Subpopulation")), 
+                                            tableOutput("table1"),
+                                            tags$br(), 
+                                            h4(strong("Number of Programs by Pillar")), 
+                                            tableOutput("table2"))
+                                     
+                            )), 
+                            
+                            tabPanel("Gaps",
+                            fluidRow(style = "margin: 6px;",
+                                     h1(strong("Gaps in Services and Programs"), align = "center"),
+                                     
+                                     p("", style = "padding-top:10px;"), 
+                                     column(4,  
+                                            
+                                            p("Some of these tailored programs are embedded within broader services.  
+                                                                For example, ",strong("Great Expectations Services"), " for Youth in Foster Care within the Northern Virginia Community College
+                                                                system helps connect this population with higher education.  Others include financial assistance or 
+                                                                guidance aimed at assisting with the transition from residential care to independence, such as ",strong("LIFT 2")," for 
+                                                                youth aging out of the foster care system.    "), 
+                                            h5(strong("Juvenile Justice Involved Specific Programs/Services")),
+                                            p("Programs specifically targeted at helping youth transition from the juvenile justice system are a distinct minority. 
+                                                                In Northern Virginia, ", strong("OAR (Breaking the Cycle of Crime through Opportunities, Alternatives and Resources)"),  " 
+                                                                offers post-release and family services, including case manager and emergency services for formerly incarcerated adults, 
+                                                                providing programs to residents of both Loudoun and Fairfax (as well as another Virginia county).   
+                                                                Youth who only have juvenile justice involvement are also eligible for these services.    
+                                                                However, these services are broadly available to all post-incarcerated residents. "), 
+                                            p("Three programs that are exclusively tailored to post-detention TAY needs focus on housing and employment.  
+                                                                Unique to Loudoun is ", strong("Mobile Hope's Handcuffs to Hope program"),  "which works with incarcerated youth three to 
+                                                                six months prior to release to prevent future homelessness.   Allegheny County, PA, hosts two programs tailored to 
+                                                                helping TAY with past or current involvement in the criminal justice system train for and find employment.  
+                                                                Both administered by Partner4Work, ", strong("Skills and Training from Reentry to Integrated Vocation and Employment (STRIVE)"), " 
+                                                                provides comprehensive case management as well as a suite of job-focused programs, while the ", strong("Career Pipeline Project"), 
+                                              " offers paid on-the-job training opportunities. "), 
+                                            h5(strong("Foster Care Specific Programs")),
+                                            p("Programs for foster care and former foster care youth specifically include programs targeting educational,  
+                                                                employment, housing and health needs, such as ", strong("LIFT 2"), " in Fairfax that addresses a wide range of potential 
+                                                                needs for this population, including mental health concerns.  For Loudoun, the most wide-ranging program is the ", strong("Independent 
+                                                                Living Program"), " administered by the Department of Social Services.  However, both these programs stop serving youth after age 21. "), 
+                                            h5(strong("The Biggest Gaps")),
+                                            p("Reviewing the breadth and number of support services and programs across all counties, 
+                                                                it appears the biggest gaps for Loudoun may lie in specialized attention to older transitional youth,
+                                                                and lack of a case management system for the TAY subpopulations of interest.   "), 
+                                     ) ,
+                                     column(8, 
+                                            h4(strong("Comparison Tree by Pillar")),
+                                            radioButtons(
+                                              "compare1",
+                                              label = "Select Pillar" ,
+                                              choices = list(
+                                                "Education",
+                                                "Employment",
+                                                "Housing",
+                                                "Transportation",
+                                                "Health Services")
+                                            ),
+                                            selected = "Education", 
+                                            collapsibleTreeOutput("compare", height = "500px") , 
+                                            br(),
+                                            br()
+                                            
+                                     ) 
+                                     
+                            )
+                   ) 
+                 
+                 ),
                  
                  ## Tab Utilization-------------------------------------------
                  navbarMenu("Utilization",
@@ -801,7 +800,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Vulnerable Transition Aged Youth")),
-                                                                         p("Our target population for this project is transition aged youths. This include those that are “aging out” of the foster care system or 
+                                                                         p("Our target population for this project are transition aged youths. This include those that are “aging out” of the foster care system or 
                                                                            leaving the juvenile detention system. However, there is another subpopulation of TAY that we examine – youths with mental health, 
                                                                            substance use, or developmental/intellectual disabilities.  "),
                                                                        p("We present data on the number of TAYs on the different program waitlists at Loudoun’s Department of Mental Health, Substance Abuse, 
@@ -869,7 +868,7 @@ ui <- navbarPage(title = "DSPG 2021",
                                                              h4(strong("Individuals Served from 2016 – 2020")),
                                                              p("Visualizing the usage of services allows us to determine whether some services are used more than others. 
                                                                Loudoun County’s Department of Mental Health, Substance Abuse, and Developmental Services (DMHSA) provided us with data on 
-                                                               the number of transition aged youth (TAY) served by zip code level. The dropdown box allows for the selection of the various programs. 
+                                                               the number of transition aged youths (TAY) served by zip code level. The dropdown box allows for the selection of the various programs. 
                                                                The slider at the right shows how the service number, represented by the orange dots, changes between 2016 and 2020. 
                                                                The orange dots are mapped onto the population density map by census tract of those who live in the area – this shows 
                                                                the utilization of each program by population density."),
@@ -922,8 +921,8 @@ ui <- navbarPage(title = "DSPG 2021",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Who does Family Services serve?")), 
-                                                                         p("Loudoun Family Services is a department within the county ",a(href="https://www.loudoun.gov/107/Family-Services-Department","Health and Human Services agency ",target="_blank")," that administers the local foster care program as well as other support services.  From 2016 – 2020, family service programs served more than 2,500 transition aged youth (TAY).  "),
-                                                                         p("Transition aged youth used public benefits by far the most during this time period and used transitional housing minimally.  Public benefits here include financial assistance for food (Supplemental Nutritional Assistance Program, or SNAP), health insurance (Medicaid) and for low-income families with children (Temporary Assistance for Needy Families, TANF).  White TAY used these supports more than any other racial group (59%), with 63% of recipients being female.  While more White TAY used emergency shelters, Black TAY used emergency shelter more than other groups proportional to their representation in the county.  Slightly more male than female TAY (56%) made use of emergency shelter.   The only service Asian residents used to any extent was public benefits.  Hispanic ethnicity was not reported for these statistics. "),
+                                                                         p("Loudoun Family Services is a department within the county ",a(href="https://www.loudoun.gov/107/Family-Services-Department","Health and Human Services agency ",target="_blank")," that administers the local foster care program as well as other support services.  From 2016 – 2020, family service programs served more than 2,500 transition aged youths (TAY).  "),
+                                                                         p("Transition aged youths used public benefits by far the most during this time period and used transitional housing minimally.  Public benefits here include financial assistance for food (Supplemental Nutritional Assistance Program, or SNAP), health insurance (Medicaid) and for low-income families with children (Temporary Assistance for Needy Families, TANF).  White TAY used these supports more than any other racial group (59%), with 63% of recipients being female.  While more White TAY used emergency shelters, Black TAY used emergency shelter more than other groups proportional to their representation in the county.  Slightly more male than female TAY (56%) made use of emergency shelter.   The only service Asian residents used to any extent was public benefits.  Hispanic ethnicity was not reported for these statistics. "),
                                                                          p("On the Trends tab, counts of TAY service use are presented for each year for these as well as two workforce programs.  Note that counts differ for transitional housing between the demographic graphs presented here and the trend counts.  For this program only, demographic information includes all program users.  "),
                                                                          p()
                                                                          
@@ -1068,14 +1067,14 @@ ui <- navbarPage(title = "DSPG 2021",
                                             gender, educational attainment, health insurance coverage, and poverty level. "),
                                       br(), 
                                       img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
-                                      p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youth 
+                                      p("The ", strong("Loudoun County Department of Family Services"), "holds record of those who use their provided services based on number of persons, percent of transition aged youths 
                                             and year. We graphed several demographics like gender, race and age for mulitple programs and showed a timeseries of utilization from 2016-2020. "), 
                                       br(), 
                                       br(), 
                                       br(), 
                                       img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "250px"),
                                       p("The ", strong("Virginia Department of Social Services"), " ensures that thousands of Virginia's most vulnerable citizens have access to the best services and benefits available to them.
-                                            We researched through their website and found various programs and services that are available to transition aged youth in Loudoun and Fairfax in order to find the gaps in
+                                            We researched through their website and found various programs and services that are available to transition aged youths in Loudoun and Fairfax in order to find the gaps in
                                             certain pillars. ")) ,
                                column(6,
                                       img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
