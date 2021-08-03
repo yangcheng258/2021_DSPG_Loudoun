@@ -943,8 +943,7 @@ ui <- navbarPage(title = "Loudoun",
                                                                            Hispanic ethnicity was not reported for these statistics. "),
                                                                          p("On the Trends tab, counts of TAY service use are presented for each year for these as well as two workforce programs.  
                                                                            Note that counts differ for transitional housing between the demographic graphs presented here and the trend counts.  
-                                                                           For this program only, demographic information includes all program users.  "),
-                                                                         p(tags$small("Transitional Housing Programs serves all adults including TAYs. ")) 
+                                                                           For this program only, demographic information includes all program users.  ")
                                                                          
                                                                          
                                                                   ), 
@@ -977,8 +976,7 @@ ui <- navbarPage(title = "Loudoun",
                                                                          h4(strong("Utilization Trends")),
                                                                          p("Based on data provided by Loudoun County, the animation to the right shows how many TAY were served by year, from 2016 to 2019, for unique programs.  
                                                                            Medicaid was the most widely used benefit by a large margin.  Not surprisingly for these young adults, few used the family support TANF,
-                                                                           but approximately 300 TAY used career support services through the Workforce Resource Center. "),
-                                                                         p(tags$small("Transitional Housing Programs serves all adults including TAYs. ")) 
+                                                                           but approximately 300 TAY used career support services through the Workforce Resource Center. ")
                                                                         ) ,
                                                                   column(8, 
                                                                          tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
