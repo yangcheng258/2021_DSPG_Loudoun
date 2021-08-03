@@ -428,7 +428,8 @@ ui <- navbarPage(title = "Loudoun",
                                    )
                           ),
                           fluidRow(align = "center",
-                                   p(tags$small(em('Last updated: August 2021')))
+                                   p(tags$small(em('Last updated: August 2021'))),
+                                   p("", style = "padding-top:10px;")
                                    
                                    
                           ) 
@@ -470,7 +471,8 @@ ui <- navbarPage(title = "Loudoun",
                                                      ),
                                                      withSpinner(plotlyOutput("plot1")),
                                                      p(tags$small("Source: American Community Survey 2019 1-Year/5-Year Estimates."))
-                                              )
+                                              ),
+                                              p("", style = "padding-top:10px;")
                                      )) ,
                             ###  subpopulation
                             tabPanel("Subpopulation",
@@ -540,7 +542,8 @@ ui <- navbarPage(title = "Loudoun",
                                               tags$br(), 
                                               h4("References: "),
                                               p("[1] Virginia Dept of Juvenile Justice, & United States of America. (2020). Virginia Department of Juvenile Justice Data Resource Guide Fiscal Year 2020.")
-                                     )) 
+                                     ),
+                                     p("", style = "padding-top:10px;")) 
                  ),
                  
                  
@@ -555,7 +558,7 @@ ui <- navbarPage(title = "Loudoun",
                                               h1(strong("Service Availability"), align = "center"),
                                               p("", style = "padding-top:10px;"), 
                                               column(12, 
-                                                  h4(strong("What services and programs are available?")), 
+                                                  h4(strong("What Services and Programs are available?")), 
                                                    p("Research literature suggests that there are five main areas that transition aged youths (TAY) struggle 
                                                      with in their transition to adulthood and economic independence:  educational attainment, employment, 
                                                      housing, transportation, and access to healthcare services.    The diagrams presented below show 
@@ -569,7 +572,7 @@ ui <- navbarPage(title = "Loudoun",
                                                      included in the Pittsburgh metropolitan statistical area.   Project stakeholders identified Allegheny County PA 
                                                      as having exemplary transitional service infrastructure for vulnerable TAY.  ")) ,  
                                               column(4, 
-                                                     h4(strong("How to find access to and provision of services and programs  ")),
+                                                     h4(strong("How to find access to and provision of Services and Programs  ")),
                                                      p("The tree diagrams to the right display each service or program available for TAY in Loudoun, Fairfax and Allegheny PA counties as of July, 2021, grouped by pillar (education, employment, health, housing, and transportation) and eligible subpopulation (foster care, juvenile delinquent, or generally to TAY).   "),
                                                      
                                                      p("The AVAILABILTY tab allows users to explore types and targeting of services by locality and pillar.  Users can select the county of interest through tabs and specific pillars by filtering on the radio buttons.  Each tree diagram represents programs of the selected pillar in the selected county.  Nodes - circular points from which branching curves or lines extend - represent first the pillar, then the targeted subpopulation, followed by the service or program name, the intended age range of the program/service, and lastly the office location.  Programs accessible online are so noted.   "), 
@@ -636,7 +639,8 @@ ui <- navbarPage(title = "Loudoun",
                                                           
                                                        )) 
                                                     )
-                                     ) 
+                                     ) ,
+                                     p("", style = "padding-top:10px;")
                             ),
                             
                             tabPanel("Locations", 
@@ -670,7 +674,8 @@ ui <- navbarPage(title = "Loudoun",
                                                      leafletOutput(outputId = "map1", height = "600px")) 
                                               
                                               
-                                     )
+                                     ),
+                                     p("", style = "padding-top:10px;")
                             ), 
                             
                             tabPanel("All Services", 
@@ -682,7 +687,8 @@ ui <- navbarPage(title = "Loudoun",
                                               
                                               
                                      )
-                            )
+                            ),
+                            p("", style = "padding-top:10px;")
                             
                             
                  ),
@@ -693,11 +699,10 @@ ui <- navbarPage(title = "Loudoun",
                   
                            tabPanel("Numbers", 
                             fluidRow(style = "margin: 6px;",
-                                     h1(strong("Types of services and programs"), align = "center"),
+                                     h1(strong("Types of Services and Programs"), align = "center"),
                                      p("", style = "padding-top:10px;"), 
                                      column(6,
-                                            h4(strong('')),
-                                            p(""),
+                                            h4(strong("What services is Loudoun in need of? ")), 
                                             p("Loudoun and Fairfax, both large, Northern Virginia counties, have similar demographics and close proximity 
                                                      to one another and to large metropolitan areas (Washington D.C., Richmond, VA and Baltimore, MD), making
                                                      them logical comparison peer localities.  Allegheny County, PA, is located in southwest Pennsylvania and is 
@@ -725,7 +730,8 @@ ui <- navbarPage(title = "Loudoun",
                                             h4(strong("Number of Programs by Pillar")), 
                                             tableOutput("table2"))
                                      
-                            )), 
+                            ),
+                            p("", style = "padding-top:10px;")), 
                             
                             tabPanel("Gaps",
                             fluidRow(style = "margin: 6px;",
@@ -733,7 +739,7 @@ ui <- navbarPage(title = "Loudoun",
                                      
                                      p("", style = "padding-top:10px;"), 
                                      column(4,  
-                                            
+                                            h4(strong("Where are the gaps in Services and Programs? ")), 
                                             p("Some of these tailored programs are embedded within broader services.  
                                                                 For example, ",strong("Great Expectations Services"), " for Youth in Foster Care within the Northern Virginia Community College
                                                                 system helps connect this population with higher education.  Others include financial assistance or 
@@ -782,7 +788,8 @@ ui <- navbarPage(title = "Loudoun",
                                             
                                      ) 
                                      
-                            )
+                            ),
+                            p("", style = "padding-top:10px;")
                    ) 
                  
                  ),
@@ -826,7 +833,8 @@ ui <- navbarPage(title = "Loudoun",
                                                                        p(tags$small("*The Case Management waitlist does not include I/DD individuals waiting for Support Coordination as this is largely dependent on state-allotted waivers."))  ,  
                                                                        p(tags$small("**Since the start of the Same Day Access program in 2019, MHSADS has gotten rid of the Outpatient Services waitlist. ")))
                                               
-                                     )), 
+                                     ),
+                                     p("", style = "padding-top:10px;")), 
                                      tabPanel("Demographics", 
                                               fluidRow(style = "margin: 6px;",
                                                        p("", style = "padding-top:10px;"), 
@@ -860,7 +868,8 @@ ui <- navbarPage(title = "Loudoun",
                                                        p(tags$small("[2] Hemmeter, Jeffrey (2014). Earnings and Disability Program Participation of Youth Transition Demonstration Participants after 24 Months. Social Security Bulletin, Vol. 74 No. 1. Retrieved from: http://www.ssa.gov/policy/docs/ssb/v74n1/v74n1p1.html" ))
                                                        )
                                                        
-                                              )), 
+                                              ),
+                                              p("", style = "padding-top:10px;")), 
                                      tabPanel("Trends", 
                                               fluidRow(style = "margin: 6px;",
                                                        p("", style = "padding-top:10px;"), 
@@ -905,7 +914,8 @@ ui <- navbarPage(title = "Loudoun",
                                                              
                                                              
                                                       )
-                                              ) 
+                                              ) ,
+                                              p("", style = "padding-top:10px;")
                                      )
                                      )  
                             ))  ,
@@ -921,10 +931,20 @@ ui <- navbarPage(title = "Loudoun",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Who does Family Services serve?")), 
-                                                                         p("Loudoun Family Services is a department within the county ",a(href="https://www.loudoun.gov/107/Family-Services-Department","Health and Human Services agency ",target="_blank")," that administers the local foster care program as well as other support services.  From 2016 – 2020, family service programs served more than 2,500 transition aged youths (TAY).  "),
-                                                                         p("Transition aged youths used public benefits by far the most during this time period and used transitional housing minimally.  Public benefits here include financial assistance for food (Supplemental Nutritional Assistance Program, or SNAP), health insurance (Medicaid) and for low-income families with children (Temporary Assistance for Needy Families, TANF).  White TAY used these supports more than any other racial group (59%), with 63% of recipients being female.  While more White TAY used emergency shelters, Black TAY used emergency shelter more than other groups proportional to their representation in the county.  Slightly more male than female TAY (56%) made use of emergency shelter.   The only service Asian residents used to any extent was public benefits.  Hispanic ethnicity was not reported for these statistics. "),
-                                                                         p("On the Trends tab, counts of TAY service use are presented for each year for these as well as two workforce programs.  Note that counts differ for transitional housing between the demographic graphs presented here and the trend counts.  For this program only, demographic information includes all program users.  "),
-                                                                         p()
+                                                                         p("Loudoun Family Services is a department within the county ",a(href="https://www.loudoun.gov/107/Family-Services-Department","Health and Human 
+                                                                        Services agency ",target="_blank")," that administers the local foster care program as well as other support services.  From 2016 – 2020, family service 
+                                                                           programs served more than 2,500 transition aged youths (TAY).  "),
+                                                                         p("Transition aged youths used public benefits by far the most during this time period and used transitional housing minimally.  
+                                                                           Public benefits here include financial assistance for food (Supplemental Nutritional Assistance Program, or SNAP), 
+                                                                           health insurance (Medicaid) and for low-income families with children (Temporary Assistance for Needy Families, TANF).  
+                                                                           White TAY used these supports more than any other racial group (59%), with 63% of recipients being female.  While more White 
+                                                                           TAY used emergency shelters, Black TAY used emergency shelter more than other groups proportional to their representation in the county.  
+                                                                           Slightly more male than female TAY (56%) made use of emergency shelter.   The only service Asian residents used to any extent was public benefits.  
+                                                                           Hispanic ethnicity was not reported for these statistics. "),
+                                                                         p("On the Trends tab, counts of TAY service use are presented for each year for these as well as two workforce programs.  
+                                                                           Note that counts differ for transitional housing between the demographic graphs presented here and the trend counts.  
+                                                                           For this program only, demographic information includes all program users.  "),
+                                                                         p(tags$small("Transitional Housing Programs serves all adults including TAYs. ")) 
                                                                          
                                                                          
                                                                   ), 
@@ -947,14 +967,18 @@ ui <- navbarPage(title = "Loudoun",
                                                                          plotlyOutput(outputId = "familyPlot", height = "500px") 
                                                                          
                                                                   )
-                                                         )
+                                                         ),
+                                                         p("", style = "padding-top:10px;")
                                                 ),
                                                 tabPanel("Trends", 
                                                          fluidRow(style = "margin: 6px;",
                                                                   p("", style = "padding-top:10px;"), 
                                                                   column(4, 
                                                                          h4(strong("Utilization Trends")),
-                                                                         p("Based on data provided by Loudoun County, the animation to the right shows how many TAY were served by year, from 2016 to 2019, for unique programs.   Medicaid was the most widely used benefit by a large margin.  Not surprisingly for these young adults, few used the family support TANF, but approximately 300 TAY used career support services through the Workforce Resource Center. ")
+                                                                         p("Based on data provided by Loudoun County, the animation to the right shows how many TAY were served by year, from 2016 to 2019, for unique programs.  
+                                                                           Medicaid was the most widely used benefit by a large margin.  Not surprisingly for these young adults, few used the family support TANF,
+                                                                           but approximately 300 TAY used career support services through the Workforce Resource Center. "),
+                                                                         p(tags$small("Transitional Housing Programs serves all adults including TAYs. ")) 
                                                                         ) ,
                                                                   column(8, 
                                                                          tags$img(src="gganim.gif", controls = "controls", height = "800px", width = "900px") , 
@@ -966,7 +990,8 @@ ui <- navbarPage(title = "Loudoun",
                                                                          
                                                                          
                                                                   )
-                                                         ) 
+                                                         ) ,
+                                                         p("", style = "padding-top:10px;")
                                                 )
                                                 
                                               )
@@ -1002,7 +1027,8 @@ ui <- navbarPage(title = "Loudoun",
                                                      plotlyOutput(outputId = "demographics", height = "500px")
                                                     ) 
                                                                          
-                                             )
+                                             ),
+                                     p("", style = "padding-top:10px;")
                                               
                               ) 
                             
@@ -1075,7 +1101,8 @@ ui <- navbarPage(title = "Loudoun",
                                       img(src = 'data-virginiaDSS.jpeg', style = "display: inline; float: left;", width = "250px"),
                                       p("The ", strong("Virginia Department of Social Services"), " ensures that thousands of Virginia's most vulnerable citizens have access to the best services and benefits available to them.
                                             We researched through their website and found various programs and services that are available to transition aged youths in Loudoun and Fairfax in order to find the gaps in
-                                            certain pillars. ")) ,
+                                            certain pillars. "),
+                                      p("", style = "padding-top:10px;")) ,
                                column(6,
                                       img(src = 'family-services.jpg', style = "display: inline; float: left;", width = "200px"),
                                       p("The ", strong("Loudoun County Department of Mental Health, Substance Abuse, and Developmental Services"), "reports the number of individuals that use their provided programs and different demographics like
@@ -1090,7 +1117,8 @@ ui <- navbarPage(title = "Loudoun",
                                       img(src = 'data-djj.jpg', style = "display: inline; float: left;", width = "200px"),
                                       p("The ", strong("Virginia’s Department of Juvenile Justice")," produces a Data Resource Guide annually highlighting data and trends on
                                                   the juvenile detention centers through the Commonwealth. We used the 2019 report to determine the demographic characteristics 
-                                                  and the total number youth intakes and those leaving the centers.  ")
+                                                  and the total number youth intakes and those leaving the centers.  "),
+                                      p("", style = "padding-top:10px;")
                                       
                                )
                                
@@ -1120,6 +1148,7 @@ ui <- navbarPage(title = "Loudoun",
                                           img(src = "team-rebstock.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "team-austin.png", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "team-kyle.jpg", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
+                                          p("", style = "padding-top:10px;"), 
                                           p(a(href = 'https://www.linkedin.com/in/yang-cheng-200118191/', 'Yang Cheng', target = '_blank'), "(Virginia Tech, Graduate in Agricultural and Applied Microeconomics);"),
                                           p(a(href = 'https://www.linkedin.com/in/jaida-robinson-92856b194/', 'JaiDa Robinson', target = '_blank'), "(Virginia State University, Graduate in Counselor Education );"),
                                           p(a(href = 'https://www.linkedin.com/in/julie-rebstock', 'Julie Rebstock', target = '_blank'), "(Virgina Tech, Undergraduate in Economics and Computational Modeling and Data Analytics);"),
@@ -1131,7 +1160,7 @@ ui <- navbarPage(title = "Loudoun",
                                           h4(strong("VT Faculty Team Members")),
                                           img(src = "faculty-chanita.png", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
                                           img(src = "faculty-isabel.jpg", style = "display: inline; margin-right: 5px; border: 1px solid #C0C0C0;", width = "150px"),
-                                          img(src = "", style = "display: inline; border: 1px solid #C0C0C0;", width = "150px"),
+                                          p("", style = "padding-top:10px;"), 
                                           p(a(href = "https://aaec.vt.edu/people/faculty/holmes-chanita.html", 'Chanita Holmes', target = '_blank'), "(Project Lead, Virgina Tech, Research Assistant Professor);") , 
                                           p(a(href = "https://liberalarts.vt.edu/departments-and-schools/department-of-human-development-and-family-science/faculty/isabel-bradburn.html", 'Isabel Bradburn', target = '_blank'), "(Research Faulty,Virgina Tech, Department of Human Development and Family Science)."),
                                           p("", style = "padding-top:10px;")
@@ -1142,7 +1171,8 @@ ui <- navbarPage(title = "Loudoun",
                                    p(a(href = 'https://loudoun.ext.vt.edu/staff/Hilleary-James.html', 'James Hilleary', target = '_blank'), "(Virginia Cooperative Extension, Loudoun County at Virginia Tech)."),
                                    p("", style = "padding-top:10px;"),
                                    h4(strong("Acknowledgments")) ,
-                                   p("We would like to thank Loudoun officials for providing us with data for our project. Specifically, the Department of Mental Health, Substance Abuse, and Developmental Services and the Family Service Department.  ")
+                                   p("We would like to thank Loudoun officials for providing us with data for our project. Specifically, the Department of Mental Health, Substance Abuse, and Developmental Services and the Family Service Department.  "),
+                                   p("", style = "padding-top:10px;")
                           )
                  ), inverse = T ) 
 
@@ -1417,9 +1447,11 @@ server <- function(input, output) {
   #Waitlist for programs in Loudoun 
   output$waitlist <- renderPlotly({
     
-    ggplot(waitlist, aes(x=Year)) + 
+    p <- ggplot(waitlist, aes(x=Year)) + 
       geom_line(aes(y = Persons, group = Program, color = Program))+theme_minimal()+ 
       labs(y = "Total Number of TAY") + theme( panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+    
+    ggplotly(p, tooltip = c("y", "x", "group")) 
     
   })
   
@@ -1798,7 +1830,7 @@ server <- function(input, output) {
         
         f_sub <- fairfax %>% 
           leaflet( options = leafletOptions(minzoom = 12)) %>%
-          setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
+          setView(lng = -77.4, lat = 38.9, zoom = 10) %>% 
           addTiles() %>%
           addCircleMarkers(lng = ~Longitude,
                            lat = ~Latitude,
@@ -1833,7 +1865,7 @@ server <- function(input, output) {
         
         f_pill <- fairfax %>%  
           leaflet(options = leafletOptions(minzoom = 12)) %>% 
-          setView(lng = -77.2, lat = 38.8, zoom = 10) %>% 
+          setView(lng = -77.4, lat = 38.9, zoom = 10) %>% 
           addTiles() %>%
           addCircleMarkers(lng = ~Longitude, 
                            lat = ~Latitude,
@@ -2429,7 +2461,7 @@ server <- function(input, output) {
         scale_fill_viridis_d() +
         theme_minimal()+ theme(legend.position="bottom")
       
-      ggplotly(p, tooltip = "y") %>% layout(legend = list(orientation = "h", y=-0.2)) 
+      ggplotly(p, tooltip = c("y", "group")) %>% layout(legend = list(orientation = "h", y=-0.2)) 
       
     }else if (dmhsaDemos() == "dmhsaGender"){
       
@@ -2442,7 +2474,7 @@ server <- function(input, output) {
         scale_fill_viridis_d() +
         theme_minimal()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = c("y", "group"))
       
       
     }else {
@@ -2452,7 +2484,7 @@ server <- function(input, output) {
         labs(title = "Severe Mental Illness, 5 Year Count", y = "Total TAYs served in Loudoun", x="" )+scale_fill_viridis_d() +
         theme( panel.grid.major = element_blank(), panel.grid.minor = element_blank())
       
-      ggplotly(p, tooltip = "y")
+      ggplotly(p, tooltip = c("y", "x","group"))
 
     }
     
@@ -2534,7 +2566,7 @@ server <- function(input, output) {
       
       ggplotly(p, tooltip = "y")%>% layout(
         annotations = 
-          list(x = 1,  y = -.15, text = " Transitional Housing Gender serves all adults including TAY. \n Source: ServicePoint & HUD Transitional Housing 2016-20 ", 
+          list(x = 1,  y = -.15, text = "Source: ServicePoint & HUD Transitional Housing 2016-20 ", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10)))
@@ -2552,7 +2584,7 @@ server <- function(input, output) {
       
       ggplotly(p, tooltip = "y")%>% layout(
         annotations = 
-          list(x = 1,  y = -.15, text = "Transitional Housing Gender serves all adults including TAY. \n Source: ServicePoint & HUD Transitional Housing 2016-20", 
+          list(x = 1,  y = -.16, text = "Source: ServicePoint & HUD Transitional Housing 2016-20", 
                showarrow = F, xref='paper', yref='paper', 
                xanchor='right', yanchor='auto', xshift=0, yshift=0,
                font=list(size=10)))
