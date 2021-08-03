@@ -218,15 +218,15 @@ Pillar_pal <- colorFactor(pal = c('red', 'yellow', 'blue', 'orange', 'green'),
 
 
 ## Zipcodes and map of Loudoun-------
-va_zips <- readRDS(paste0(getwd(),"/data/va_zips.rds")) 
-va_zips <- st_transform(va_zips, '+proj=longlat +datum=WGS84')
-loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
-loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
-  html_table() %>% dplyr::select(c(1,2)) %>% dplyr::rename(`Zip Code` = X1, City = X2) %>%
-  slice(-c(1, 2)) 
-loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
-loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
-loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
+# va_zips <- readRDS(paste0(getwd(),"/data/va_zips.rds")) 
+# va_zips <- st_transform(va_zips, '+proj=longlat +datum=WGS84')
+# loudoun_zip_link <- "http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=va&StName=Virginia&StFIPS=51&FIPS=51107"
+# loudoun_zip_codes <- read_html(loudoun_zip_link) %>% html_node("td table") %>%  
+#   html_table(fill = T) %>% dplyr::select(c(1,2)) %>% dplyr::rename(`Zip Code` = X1, City = X2) %>%
+#   slice(-c(1, 2)) 
+# loudoun_zip_code_city_names <- loudoun_zip_codes %>% pull(City)
+# loudoun_zip_codes <- pull(loudoun_zip_codes, `Zip Code`)
+# loudoun_zips <- va_zips %>% filter(ZCTA5CE10 %in% loudoun_zip_codes)
 
 
 overtime <- read_excel(paste0(getwd(), "/data/program-services-overtime.xlsx"))
