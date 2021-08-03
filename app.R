@@ -447,7 +447,7 @@ ui <- navbarPage(title = "Loudoun",
                                                      p("The 2019 American Community Survey (ACS) estimates that transition-aged youths (ages 18-24) make up 5% of the population in Loudoun county.  
                                                        Of these youths, are living below the poverty line, and only percent attaining high school degree.  
                                                        The number of homeless transition-age youth (TAY) has increased in Loudoun, as 18 more individuals were 
-                                                       counted as homeless in 2020 than in 201. This represents a 450% increase.  "), 
+                                                       counted as homeless in 2020 than in 2016. This represents a 450% increase.  "), 
                                                      p("TAYs are usually faced with these challenges on their way to adulthood, given the lack of financial 
                                                        resources, support, or knowledge to maintain independence. This includes the difficulty to obtain health 
                                                        insurance through Medicaid or SCHIP (State Children’s Health Insurance Program). This transition is even more 
